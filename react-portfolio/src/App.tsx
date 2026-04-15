@@ -9,8 +9,10 @@ import { LoadingScreen } from './components/ui/LoadingScreen';
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
 const Projects = lazy(() => import('./pages/Projects'));
+const Blog = lazy(() => import('./pages/Blog'));
 const Contact = lazy(() => import('./pages/Contact'));
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
+const BlogPostDetail = lazy(() => import('./pages/BlogPostDetail'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Scroll-to-top on route change
@@ -35,6 +37,8 @@ function AnimatedRoutes() {
         <Route path="/about" element={<Suspense fallback={<LoadingScreen />}><About /></Suspense>} />
         <Route path="/projects" element={<Suspense fallback={<LoadingScreen />}><Projects /></Suspense>} />
         <Route path="/projects/:id" element={<Suspense fallback={<LoadingScreen />}><ProjectDetail /></Suspense>} />
+        <Route path="/blog" element={<Suspense fallback={<LoadingScreen />}><Blog /></Suspense>} />
+        <Route path="/blog/:id" element={<Suspense fallback={<LoadingScreen />}><BlogPostDetail /></Suspense>} />
         <Route path="/contact" element={<Suspense fallback={<LoadingScreen />}><Contact /></Suspense>} />
         <Route path="*" element={<Suspense fallback={<LoadingScreen />}><NotFound /></Suspense>} />
       </Routes>
