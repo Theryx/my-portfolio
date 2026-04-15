@@ -958,6 +958,28 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
     resize: vertical;
 }
 
+.contact__success {
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background: rgba(0, 211, 149, 0.1);
+    border: 1px solid rgba(0, 211, 149, 0.3);
+    border-radius: var(--radius-md);
+    color: var(--color-accent);
+    font-size: var(--font-size-sm);
+    text-align: center;
+}
+
+.contact__error {
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: var(--radius-md);
+    color: #ef4444;
+    font-size: var(--font-size-sm);
+    text-align: center;
+}
+
 .contact__info {
     padding: var(--spacing-xl);
     background: var(--color-bg-card);
