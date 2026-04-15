@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ndouken Theryx - Lead Product Designer & Tech Entrepreneur based in Cameroon">
+    <title>Ndouken Theryx | Lead Product Designer & Tech Entrepreneur</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container header__inner">
+            <a href="#" class="header__logo">NT</a>
+            <nav class="header__nav">
+                <ul class="nav__list">
+                    <li><a href="#home" class="nav__link" data-en="Home" data-fr="Accueil">Home</a></li>
+                    <li><a href="#about" class="nav__link" data-en="About" data-fr="À propos">About</a></li>
+                    <li><a href="#projects" class="nav__link" data-en="Projects" data-fr="Projets">Projects</a></li>
+                    <li><a href="#skills" class="nav__link" data-en="Skills" data-fr="Compétences">Skills</a></li>
+                    <li><a href="#contact" class="nav__link" data-en="Contact" data-fr="Contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header__actions">
+                <span class="status-badge" data-en="🟢 Currently Lead Product Designer at PaySika" data-fr="🟢 Actuellement Lead Product Designer chez PaySika">🟢 Currently Lead Product Designer at PaySika</span>
+                <button class="lang-toggle" id="langToggle">FR</button>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <nav class="mobile-menu__nav">
+            <ul class="mobile-menu__list">
+                <li><a href="#home" class="mobile-menu__link" data-en="Home" data-fr="Accueil">Home</a></li>
+                <li><a href="#about" class="mobile-menu__link" data-en="About" data-fr="À propos">About</a></li>
+                <li><a href="#projects" class="mobile-menu__link" data-en="Projects" data-fr="Projets">Projects</a></li>
+                <li><a href="#skills" class="mobile-menu__link" data-en="Skills" data-fr="Compétences">Skills</a></li>
+                <li><a href="#contact" class="mobile-menu__link" data-en="Contact" data-fr="Contact">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="container hero__inner">
+                <div class="hero__content">
+                    <h1 class="hero__title" data-en="Lead Product Designer & Tech Entrepreneur." data-fr="Lead Product Designer & Entrepreneur Tech.">Lead Product Designer & Tech Entrepreneur.</h1>
+                    <p class="hero__subtitle" data-en="I design user-centric fintech experiences, lead creative teams, and build tech communities. Based in Cameroon." data-fr="Je conçois des expériences fintech centrées sur l'utilisateur, dirige des équipes créatives et bâtis des communautés tech. Basé au Cameroun.">I design user-centric fintech experiences, lead creative teams, and build tech communities. Based in Cameroon.</p>
+                    <div class="hero__cta">
+                        <a href="#projects" class="btn btn--primary" data-en="View Selected Work" data-fr="Voir mes projets">View Selected Work</a>
+                        <a href="#" class="btn btn--secondary" data-en="Download Resume" data-fr="Télécharger le CV">Download Resume</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Selected Work Section -->
+        <section class="projects" id="projects">
+            <div class="container">
+                <h2 class="section__title" data-en="Selected Work" data-fr="Projets Sélectionnés">Selected Work</h2>
+                <div class="projects__grid">
+                    <!-- Project 1: PaySika -->
+                    <article class="project-card">
+                        <div class="project-card__image">
+                            <div class="project-card__placeholder project-card__placeholder--paysika">
+                                <svg viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="20" y="10" width="160" height="380" rx="20" fill="#1a1a1a"/>
+                                    <rect x="30" y="30" width="140" height="340" rx="10" fill="#0a0a0a"/>
+                                    <circle cx="100" cy="50" r="5" fill="#333"/>
+                                    <rect x="45" y="80" width="110" height="20" rx="4" fill="#00D4AA"/>
+                                    <rect x="45" y="120" width="80" height="10" rx="2" fill="#333"/>
+                                    <rect x="45" y="145" width="110" height="60" rx="8" fill="#1a1a2e"/>
+                                    <rect x="45" y="220" width="50" height="50" rx="8" fill="#1a1a2e"/>
+                                    <rect x="105" y="220" width="50" height="50" rx="8" fill="#1a1a2e"/>
+                                    <rect x="45" y="285" width="110" height="40" rx="8" fill="#00D4AA"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="project-card__content">
+                            <span class="project-card__tag" data-en="Fintech Innovation" data-fr="Innovation Fintech">Fintech Innovation</span>
+                            <h3 class="project-card__title" data-en="PaySika" data-fr="PaySika">PaySika</h3>
+                            <p class="project-card__tagline" data-en="Redefining mobile finance in Africa." data-fr="Redéfinir la finance mobile en Afrique.">Redefining mobile finance in Africa.</p>
+                            <p class="project-card__desc" data-en="As Lead Product Designer, I manage a team of two to design intuitive, scalable financial tools. Streamlined the user journey from onboarding to daily transactions." data-fr="En tant que Lead Product Designer, je gère une équipe de deux personnes pour concevoir des outils financiers intuitifs et évolutifs. J'ai simplifié le parcours utilisateur de l'onboarding aux transactions quotidiennes.">As Lead Product Designer, I manage a team of two to design intuitive, scalable financial tools. Streamlined the user journey from onboarding to daily transactions.</p>
+                            <p class="project-card__impact" data-en="Impact: Reduced cognitive load for users and improved cross-functional collaboration." data-fr="Impact: Réduction de la charge cognitive des utilisateurs et amélioration de la collaboration transversale."><strong data-en="Impact:" data-fr="Impact:">Impact:</strong> <span data-en="Reduced cognitive load for users and improved cross-functional collaboration." data-fr="Réduction de la charge cognitive des utilisateurs et amélioration de la collaboration transversale.">Reduced cognitive load for users and improved cross-functional collaboration.</span></p>
+                        </div>
+                    </article>
+
+                    <!-- Project 2: Loving Tech -->
+                    <article class="project-card">
+                        <div class="project-card__image">
+                            <div class="project-card__placeholder project-card__placeholder--lovingtech">
+                                <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="20" y="20" width="360" height="260" rx="12" fill="#1a1a1a"/>
+                                    <rect x="40" y="40" width="120" height="30" rx="4" fill="#8B5CF6"/>
+                                    <rect x="40" y="90" width="320" height="80" rx="8" fill="#2a2a3e"/>
+                                    <rect x="40" y="190" width="100" height="60" rx="8" fill="#2a2a3e"/>
+                                    <rect x="155" y="190" width="100" height="60" rx="8" fill="#2a2a3e"/>
+                                    <rect x="270" y="190" width="90" height="60" rx="8" fill="#2a2a3e"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="project-card__content">
+                            <span class="project-card__tag" data-en="E-commerce & Brand" data-fr="E-commerce & Marque">E-commerce & Brand</span>
+                            <h3 class="project-card__title" data-en="Loving Tech" data-fr="Loving Tech">Loving Tech</h3>
+                            <p class="project-card__tagline" data-en="Launching a modern tech retail experience." data-fr="Lancer une expérience de vente au détail tech moderne.">Launching a modern tech retail experience.</p>
+                            <p class="project-card__desc" data-en="Founder and lead designer for Loving Tech. Handled end-to-end brand identity, digital storefront UX, and customer onboarding strategies." data-fr="Fondateur et lead designer de Loving Tech. J'ai géré l'identité de marque de bout en bout, l'UX de la vitrine numérique et les stratégies d'onboarding client.">Founder and lead designer for Loving Tech. Handled end-to-end brand identity, digital storefront UX, and customer onboarding strategies.</p>
+                            <p class="project-card__impact" data-en="Impact: Merged physical field marketing with digital user acquisition." data-fr="Impact: Fusion du marketing terrain physique avec l'acquisition d'utilisateurs numériques."><strong data-en="Impact:" data-fr="Impact:">Impact:</strong> <span data-en="Merged physical field marketing with digital user acquisition." data-fr="Fusion du marketing terrain physique avec l'acquisition d'utilisateurs numériques.">Merged physical field marketing with digital user acquisition.</span></p>
+                        </div>
+                    </article>
+
+                    <!-- Project 3: WhatsApp Tech Community -->
+                    <article class="project-card">
+                        <div class="project-card__image">
+                            <div class="project-card__placeholder project-card__placeholder--community">
+                                <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="200" cy="150" r="80" fill="#25D366" opacity="0.2"/>
+                                    <circle cx="200" cy="150" r="60" fill="#25D366" opacity="0.4"/>
+                                    <circle cx="200" cy="150" r="40" fill="#25D366" opacity="0.6"/>
+                                    <circle cx="200" cy="150" r="20" fill="#25D366"/>
+                                    <circle cx="100" cy="100" r="15" fill="#25D366" opacity="0.5"/>
+                                    <circle cx="300" cy="100" r="15" fill="#25D366" opacity="0.5"/>
+                                    <circle cx="100" cy="200" r="15" fill="#25D366" opacity="0.5"/>
+                                    <circle cx="300" cy="200" r="15" fill="#25D366" opacity="0.5"/>
+                                    <line x1="100" y1="100" x2="200" y2="150" stroke="#25D366" stroke-width="2" opacity="0.3"/>
+                                    <line x1="300" y1="100" x2="200" y2="150" stroke="#25D366" stroke-width="2" opacity="0.3"/>
+                                    <line x1="100" y1="200" x2="200" y2="150" stroke="#25D366" stroke-width="2" opacity="0.3"/>
+                                    <line x1="300" y1="200" x2="200" y2="150" stroke="#25D366" stroke-width="2" opacity="0.3"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="project-card__content">
+                            <span class="project-card__tag" data-en="Community Building" data-fr="Construction Communautaire">Community Building</span>
+                            <h3 class="project-card__title" data-en="WhatsApp Tech Community" data-fr="Communauté Tech WhatsApp">WhatsApp Tech Community</h3>
+                            <p class="project-card__tagline" data-en="Building ecosystems through community." data-fr="Construire des écosystèmes par la communauté.">Building ecosystems through community.</p>
+                            <p class="project-card__desc" data-en="Built and scaled a hyper-engaged tech community. Leveraged field marketing and direct user onboarding to foster a space for tech enthusiasts." data-fr="J'ai construit et développé une communauté tech hyper-engagée. J'ai utilisé le marketing terrain et l'onboarding direct pour créer un espace pour les passionnés de tech.">Built and scaled a hyper-engaged tech community. Leveraged field marketing and direct user onboarding to foster a space for tech enthusiasts.</p>
+                            <p class="project-card__impact" data-en="Impact: High engagement rates, real-time user feedback loops, and successful networking events." data-fr="Impact: Taux d'engagement élevés, boucles de feedback utilisateur en temps réel et événements de réseautage réussis."><strong data-en="Impact:" data-fr="Impact:">Impact:</strong> <span data-en="High engagement rates, real-time user feedback loops, and successful networking events." data-fr="Taux d'engagement élevés, boucles de feedback utilisateur en temps réel et événements de réseautage réussis.">High engagement rates, real-time user feedback loops, and successful networking events.</span></p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Philosophy Section -->
+        <section class="philosophy" id="philosophy">
+            <div class="container philosophy__inner">
+                <div class="philosophy__content">
+                    <h2 class="philosophy__title" data-en="I don't just design interfaces—I understand how they are built." data-fr="Je ne conçois pas seulement des interfaces—je comprends comment elles sont construites.">I don't just design interfaces—I understand how they are built.</h2>
+                    <p class="philosophy__text" data-en="I am a Lead Product Designer based in Cameroon with a unique edge. By combining expert-level UX/UI design with front-end development skills in React, I bridge the gap between design and engineering. This ensures faster iterations, realistic solutions, and seamless team collaboration." data-fr="Je suis Lead Product Designer au Cameroun avec un avantage unique. En combinant un design UX/UI de niveau expert avec des compétences en développement front-end React, je comble le fossé entre design et ingénierie. Cela garantit des itérations plus rapides, des solutions réalistes et une collaboration d'équipe transparente.">I am a Lead Product Designer based in Cameroon with a unique edge. By combining expert-level UX/UI design with front-end development skills in React, I bridge the gap between design and engineering. This ensures faster iterations, realistic solutions, and seamless team collaboration.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="skills" id="skills">
+            <div class="container">
+                <h2 class="section__title" data-en="What I Do Best" data-fr="Ce que je fais de mieux">What I Do Best</h2>
+                <div class="skills__grid">
+                    <div class="skill-card">
+                        <div class="skill-card__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                        </div>
+                        <h3 class="skill-card__title" data-en="Product Design (UX/UI)" data-fr="Design Produit (UX/UI)">Product Design (UX/UI)</h3>
+                        <p class="skill-card__desc" data-en="Wireframing, high-fidelity prototyping, and solving complex user flows for fintech and e-commerce." data-fr="Wireframing, prototypage haute fidélité et résolution de flux utilisateurs complexes pour la fintech et l'e-commerce.">Wireframing, high-fidelity prototyping, and solving complex user flows for fintech and e-commerce.</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-card__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        </div>
+                        <h3 class="skill-card__title" data-en="Design Leadership" data-fr="Leadership Design">Design Leadership</h3>
+                        <p class="skill-card__desc" data-en="Managing and mentoring design teams, establishing design systems, and aligning creative vision with business goals." data-fr="Gestion et mentorat d'équipes design, création de design systems et alignement de la vision créative avec les objectifs business.">Managing and mentoring design teams, establishing design systems, and aligning creative vision with business goals.</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-card__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                        </div>
+                        <h3 class="skill-card__title" data-en="Front-End Development" data-fr="Développement Front-End">Front-End Development</h3>
+                        <p class="skill-card__desc" data-en="Translating designs into clean, maintainable code using React, HTML, and CSS." data-fr="Traduction des designs en code propre et maintenable avec React, HTML et CSS.">Translating designs into clean, maintainable code using React, HTML, and CSS.</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-card__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        </div>
+                        <h3 class="skill-card__title" data-en="Growth & Operations" data-fr="Croissance & Opérations">Growth & Operations</h3>
+                        <p class="skill-card__desc" data-en="Customer onboarding, field marketing, and community management." data-fr="Onboarding client, marketing terrain et gestion de communauté.">Customer onboarding, field marketing, and community management.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about" id="about">
+            <div class="container about__inner">
+                <div class="about__content">
+                    <h2 class="section__title" data-en="The Story" data-fr="L'Histoire">The Story</h2>
+                    <p class="about__text" data-en="From a tech enthusiast to Lead Designer and Founder. My journey started with a deep curiosity about how technology shapes human behavior. Today, I lead product design at PaySika, where I build financial tools that empower thousands of users across Africa." data-fr="D'un passionné de tech à Lead Designer et Fondateur. Mon parcours a commencé par une curiosité profonde sur comment la technologie façonne le comportement humain. Aujourd'hui, je dirige le design produit chez PaySika, où je construis des outils financiers qui autonomisent des milliers d'utilisateurs à travers l'Afrique.">From a tech enthusiast to Lead Designer and Founder. My journey started with a deep curiosity about how technology shapes human behavior. Today, I lead product design at PaySika, where I build financial tools that empower thousands of users across Africa.</p>
+                    <p class="about__text" data-en="I also founded Loving Tech, a modern tech retail experience, and built one of the most engaged tech communities on WhatsApp. I believe in the power of community and direct user feedback to shape products that truly matter." data-fr="J'ai également fondé Loving Tech, une expérience de vente au détail tech moderne, et construit l'une des communautés tech les plus engagées sur WhatsApp. Je crois au pouvoir de la communauté et du feedback utilisateur direct pour façonner des produits qui comptent vraiment.">I also founded Loving Tech, a modern tech retail experience, and built one of the most engaged tech communities on WhatsApp. I believe in the power of community and direct user feedback to shape products that truly matter.</p>
+                    
+                    <div class="about__interests">
+                        <h3 class="about__interests-title" data-en="Interests" data-fr="Centres d'intérêt">Interests</h3>
+                        <ul class="about__interests-list">
+                            <li data-en="Exploring the latest tech gadgets" data-fr="Explorer les derniers gadgets tech">Exploring the latest tech gadgets</li>
+                            <li data-en="Public speaking" data-fr="Prise de parole en public">Public speaking</li>
+                            <li data-en="Networking" data-fr="Réseautage">Networking</li>
+                            <li data-en="Analyzing fintech trends" data-fr="Analyser les tendances fintech">Analyzing fintech trends</li>
+                        </ul>
+                    </div>
+
+                    <div class="about__fun-fact">
+                        <p class="about__fun-fact-text" data-en="Fun Fact: I value direct opinions, simple language, and a good plate of fish." data-fr="Fun Fact: J'apprécie les opinions directes, le langage simple et un bon plat de poisson.">Fun Fact: I value direct opinions, simple language, and a good plate of fish.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq" id="faq">
+            <div class="container">
+                <h2 class="section__title" data-en="Frequently Asked Questions" data-fr="Questions Fréquentes">Frequently Asked Questions</h2>
+                <div class="faq__list">
+                    <div class="faq__item">
+                        <button class="faq__question" aria-expanded="false">
+                            <span data-en="What is your design process?" data-fr="Quel est votre processus de design ?">What is your design process?</span>
+                            <svg class="faq__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                        </button>
+                        <div class="faq__answer" hidden>
+                            <p data-en="Direct and data-driven. I focus on the core problem, wireframe solutions, test, and deliver high-fidelity designs ready for engineering." data-fr="Direct et axé sur les données. Je me concentre sur le problème central, esquisse des solutions, teste et livre des designs haute fidélité prêts pour l'ingénierie.">Direct and data-driven. I focus on the core problem, wireframe solutions, test, and deliver high-fidelity designs ready for engineering.</p>
+                        </div>
+                    </div>
+                    <div class="faq__item">
+                        <button class="faq__question" aria-expanded="false">
+                            <span data-en="Do you write code?" data-fr="Écrivez-vous du code ?">Do you write code?</span>
+                            <svg class="faq__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                        </button>
+                        <div class="faq__answer" hidden>
+                            <p data-en="Yes. I am expanding my technical stack and actively building front-end interfaces using React." data-fr="Oui. J'étends ma stack technique et je construis activement des interfaces front-end avec React.">Yes. I am expanding my technical stack and actively building front-end interfaces using React.</p>
+                        </div>
+                    </div>
+                    <div class="faq__item">
+                        <button class="faq__question" aria-expanded="false">
+                            <span data-en="Are you open to speaking engagements?" data-fr="Êtes-vous ouvert aux invitations pour parler ?">Are you open to speaking engagements?</span>
+                            <svg class="faq__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                        </button>
+                        <div class="faq__answer" hidden>
+                            <p data-en="Absolutely. I love public speaking, networking, and sharing insights on fintech and design." data-fr="Absolument. J'adore la prise de parole en public, le réseautage et le partage d'insights sur la fintech et le design.">Absolutely. I love public speaking, networking, and sharing insights on fintech and design.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact" id="contact">
+            <div class="container contact__inner">
+                <h2 class="section__title" data-en="Let's build something impactful." data-fr="Construisons quelque chose d'impactant.">Let's build something impactful.</h2>
+                <form class="contact__form" id="contactForm">
+                    <div class="contact__form-group">
+                        <label for="name" class="contact__label" data-en="Name" data-fr="Nom">Name</label>
+                        <input type="text" id="name" name="name" class="contact__input" required>
+                    </div>
+                    <div class="contact__form-group">
+                        <label for="email" class="contact__label" data-en="Email" data-fr="Email">Email</label>
+                        <input type="email" id="email" name="email" class="contact__input" required>
+                    </div>
+                    <div class="contact__form-group">
+                        <label for="subject" class="contact__label" data-en="Subject" data-fr="Sujet">Subject</label>
+                        <input type="text" id="subject" name="subject" class="contact__input" required>
+                    </div>
+                    <div class="contact__form-group">
+                        <label for="message" class="contact__label" data-en="Message" data-fr="Message">Message</label>
+                        <textarea id="message" name="message" rows="5" class="contact__input contact__textarea" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn--primary contact__submit" data-en="Send Message" data-fr="Envoyer le Message">Send Message</button>
+                </form>
+
+                <div class="contact__info">
+                    <h3 class="contact__info-title" data-en="Direct Contact" data-fr="Contact Direct">Direct Contact</h3>
+                    <div class="contact__info-item">
+                        <span class="contact__info-label" data-en="Location:" data-fr="Localisation:">Location:</span>
+                        <span class="contact__info-value" data-en="Cameroon (Yaoundé / Douala)" data-fr="Cameroun (Yaoundé / Douala)">Cameroon (Yaoundé / Douala)</span>
+                    </div>
+                    <div class="contact__info-item">
+                        <span class="contact__info-label" data-en="Email:" data-fr="Email:">Email:</span>
+                        <a href="mailto:your.email@example.com" class="contact__info-value">your.email@example.com</a>
+                    </div>
+                    <div class="contact__socials">
+                        <a href="#" class="contact__social-link" aria-label="LinkedIn">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                            <span>LinkedIn</span>
+                        </a>
+                        <a href="#" class="contact__social-link" aria-label="Twitter/X">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z"/><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></svg>
+                            <span>Twitter/X</span>
+                        </a>
+                        <a href="#" class="contact__social-link" aria-label="Dribbble">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M19.13 5.09C15.22 9.14 10 10.44 2.25 10.94"/><path d="M21.75 12.84c-6.62-1.41-12.14 1-16.38 6.32"/><path d="M8.56 2.75c4.37 6 6 9.42 8 17.72"/></svg>
+                            <span>Dribbble</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer__inner">
+            <p class="footer__copyright">© <span id="currentYear"></span> Ndouken Theryx. <span data-en="All rights reserved." data-fr="Tous droits réservés.">All rights reserved.</span></p>
+        </div>
+    </footer>
+
+    <script src="scripts/main.js"></script>
+</body>
+</html>
