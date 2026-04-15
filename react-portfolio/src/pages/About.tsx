@@ -64,7 +64,7 @@ export default function About() {
               { date: 'Dec 2021 - Jan 2026', title: 'Lead Product Designer', company: 'PaySika', desc: 'Managed a two-person design team, optimized payment flows, and utilized Mixpanel for user retention tracking. Awarded the Team Spirit Award.' },
               { date: 'Nov 2020 - Nov 2021', title: 'Freelance Designer', company: 'Freelance', desc: 'Provided design services for various clients. Designed reports on Cameroon Cybersecurity and Central/West Africa cybersecurity state.' },
               { date: 'Dec 2022 - Feb 2024', title: 'UI Designer (Part-time)', company: 'Matanga Agency', desc: 'Designed local and international digital products using Figma.' },
-            ].map((item, _i) => (
+            ].map((item) => (
               <motion.div className="experience__item" key={item.company} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
                 <span className="experience__date">{item.date}</span>
                 <h3 className="experience__title">{item.title}</h3>
@@ -86,7 +86,7 @@ export default function About() {
               { title: 'Property Management', role: 'Concierge', desc: 'Acting as concierge for a private residential estate. Handling tenant operations, infrastructure maintenance, and Starlink data monetization.' },
               { title: 'Kody (shomi)', role: 'Product Lead & Co-founder', desc: 'Building shomi, an all-in-one platform for postgraduate students. Raised pre-seed funding to drive edTech innovation in Africa.' },
               { title: 'GEFONA Digital Foundation', role: 'Communication & Finance', desc: 'Leading communication and finance for a foundation supporting policy research on the digital economy and cybersecurity in Africa.' },
-            ].map((v, _i) => (
+            ].map((v) => (
               <motion.div className="venture-card" key={v.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
                 <h3 className="venture-card__title">{v.title}</h3>
                 <span className="venture-card__role">{v.role}</span>
@@ -118,7 +118,7 @@ export default function About() {
               { title: 'Design', desc: 'Figma, Adobe Creative Suite, Protopie, User Research, Usability Testing, Fintech UI/UX, Minimalist Aesthetics, Product Photography.', image: userResearch, alt: 'User Research' },
               { title: 'Technical', desc: 'Angular, AI Coding Tools (OpenCode AI, Antigravity), Mixpanel.' },
               { title: 'Business', desc: 'Field Marketing, Customer Onboarding, Team Leadership, Public Speaking.' },
-            ].map((skill, _i) => (
+            ].map((skill) => (
               <motion.div className="skill-card" key={skill.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
                 {'image' in skill && skill.image && (
                   <div className="skill-card__image">
