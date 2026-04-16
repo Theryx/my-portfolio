@@ -12,6 +12,59 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: 'how-to-contribute-to-open-source-as-a-designer',
+    title: 'How to Contribute to Open Source as a Designer',
+    excerpt: 'A practical guide on how to contribute to open source projects without writing a single line of code.',
+    content: `
+      <p>Hi, I’m Theryx. I’m a digital designer. In this blog, I will tell you practically how I contribute to Open source as a non-tech person. This blog could also be titled “How to contribute to Open Source without coding knowledge” or “how to contribute to open source as a UI designer”. I will try to write the blog as simple as possible because this is intended for non-tech people.</p>
+
+      <h3>What is Open Source?</h3>
+      <p>The term Open Source refers to intellectual property people can modify and share because it is made to be publicly accessible. Most open source projects are usually run by one or more people called maintainers.</p>
+      <p>An Open source project, product, or initiative is one that cherishes strong values like collaboration, participation, rapid prototyping, transparency, meritocracy, and community-oriented development.</p>
+
+      <h3>How Contribution is Done… Practically</h3>
+      <p>I have broken down the process into five simple steps:</p>
+      <ul>
+        <li><strong>Step 0: Ask how you could help?</strong> Join the community's Discord, Telegram, or ask on social media.</li>
+        <li><strong>Step 1: Find a project on GitHub</strong> Find a project that matches your interests or area of expertise.</li>
+        <li><strong>Step 2: Read the documentation</strong> Document yourself about the project, usually found in the README file.</li>
+        <li><strong>Step 3: Check possible issues</strong> Go to the issue tab and see if there are any design-related issues.</li>
+        <li><strong>Step 4: Create an issue</strong> If the problem hasn't been reported yet, raise a new issue yourself.</li>
+        <li><strong>Step 5: Review the implementation</strong> Work with developers to ensure your design is implemented correctly.</li>
+      </ul>
+
+      <h3>Conclusion</h3>
+      <p>I hope this blog will motivate you to contribute to open source even if you don’t have coding knowledge. There are various ways you could contribute—from UI improvements to updating documentation and sharing the project with your friends.</p>
+    `,
+    date: 'September 24, 2022',
+    author: 'Ndouken Theryx',
+    readTime: '6 min read',
+    tags: ['Open Source', 'Design', 'Community'],
+    image: 'theryx giving a lecture to a comunity of open source.png'
+  },
+  {
+    id: 'why-i-switched-from-illustrator-to-affinity-designer',
+    title: 'Why I Switched from Illustrator to Affinity Designer',
+    excerpt: 'Exploring the reasons behind moving my design workflow from Adobe Illustrator to Affinity Designer.',
+    content: `
+      <p>Adobe Illustrator has been the industry standard for vector design for decades. However, the rise of powerful alternatives like Affinity Designer has changed the landscape for many professionals.</p>
+      
+      <h3>The Performance Factor</h3>
+      <p>One of the most immediate benefits of Affinity Designer is its speed. The software is built for modern hardware, offering smooth zooming and panning even with complex documents.</p>
+      
+      <h3>One-Time Purchase vs Subscription</h3>
+      <p>The pricing model of Affinity is a major draw. Moving away from the Creative Cloud subscription model allows for better long-term budgeting without losing professional-grade features.</p>
+      
+      <h3>The Persona Workflow</h3>
+      <p>The ability to switch between vector and pixel workspaces (Personas) seamlessly within the same app is a game-changer for digital illustrators.</p>
+    `,
+    date: 'August 15, 2022',
+    author: 'Ndouken Theryx',
+    readTime: '5 min read',
+    tags: ['Design Tools', 'Affinity Designer', 'Workflow'],
+    image: 'Editor and designer for Report on Cameroon Cybersecurity.jfif'
+  },
+  {
     id: 'future-of-fintech-africa',
     title: 'The Future of Fintech in Africa: Beyond Payments',
     excerpt: 'Exploring how fintech is evolving from simple payment solutions to comprehensive financial ecosystems in Africa.',
@@ -57,13 +110,17 @@ export const blogPosts: BlogPost[] = [
   }
 ];
 
-// Reusing project images for now, or you can add new ones to assets/img
+// Image mapping
 import paysikaImage from '../assets/img/PaySika website.PNG';
 import jobsikaImage from '../assets/img/Screenshot of the UI of Jobsika.PNG';
+import ossImage from '../assets/img/theryx giving a lecture to a comunity of open source.png';
+import affinityImage from '../assets/img/Editor and designer for Report on Cameroon Cybersecurity.jfif';
 
 export const blogImageMap: Record<string, string> = {
   'future-of-fintech-africa': paysikaImage,
   'designing-for-accessibility': jobsikaImage,
+  'how-to-contribute-to-open-source-as-a-designer': ossImage,
+  'why-i-switched-from-illustrator-to-affinity-designer': affinityImage,
 };
 
-export const blogTags = ['All', 'Fintech', 'Africa', 'Product Design', 'UX Design', 'Accessibility', 'Emerging Markets'];
+export const blogTags = ['All', 'Fintech', 'Africa', 'Product Design', 'UX Design', 'Accessibility', 'Emerging Markets', 'Open Source', 'Design Tools'];

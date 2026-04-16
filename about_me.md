@@ -1,5 +1,5 @@
 # Ndouken Theryx
-**Lead Product Designer | Tech Entrepreneur | Front-End Developer**
+**Lead Product Designer at PaySika  | Tech Entrepreneur | Front-End Developer**
 📍 Douala, Cameroon | 🗣️ English & French
 
 ## About Me

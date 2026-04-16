@@ -123,6 +123,7 @@ export default function Contact() {
 
               <div className="contact__socials">
                 <a href="https://www.linkedin.com/in/ndoukentheryx" target="_blank" rel="noopener noreferrer" className="contact__social-link" aria-label="LinkedIn Profile (opens in new tab)">LinkedIn</a>
+                <a href="https://github.com/Theryx" target="_blank" rel="noopener noreferrer" className="contact__social-link" aria-label="GitHub Profile (opens in new tab)">GitHub</a>
                 <a href="https://x.com/NTheryx" target="_blank" rel="noopener noreferrer" className="contact__social-link" aria-label="X / Twitter Profile (opens in new tab)">X / Twitter</a>
               </div>
             </div>
