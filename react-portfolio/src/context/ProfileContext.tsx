@@ -21,21 +21,29 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const profileId = searchParams.get('profile') || 'default';
+  const profileIdParam = searchParams.get('profile');
 
   const fetchData = async () => {
     setLoading(true);
     setError(null);
 
     try {
-      const [profileRes, projectsRes, blogRes] = await Promise.all([
-        supabase.from('profiles').select('*').eq('id', profileId).single(),
-        supabase.from('projects').select('*').eq('profile_id', profileId).eq('is_hidden', false).order('sort_order', { ascending: true }),
-        supabase.from('blog_posts').select('*').eq('profile_id', profileId).eq('is_hidden', false).order('sort_order', { ascending: true }),
-      ]);
+      let profileQuery = supabase.from('profiles').select('*');
+      if (profileIdParam) {
+        profileQuery = profileQuery.eq('id', profileIdParam);
+      } else {
+        profileQuery = profileQuery.eq('is_active', true).limit(1);
+      }
+      const profileRes = await profileQuery.single();
 
       if (profileRes.error) throw profileRes.error;
       setProfile(profileRes.data);
+
+      const profileId = profileRes.data.id;
+      const [projectsRes, blogRes] = await Promise.all([
+        supabase.from('projects').select('*').eq('profile_id', profileId).eq('is_hidden', false).order('sort_order', { ascending: true }),
+        supabase.from('blog_posts').select('*').eq('profile_id', profileId).eq('is_hidden', false).order('sort_order', { ascending: true }),
+      ]);
 
       if (projectsRes.data) setProjects(projectsRes.data);
       if (blogRes.data) setBlogPosts(blogRes.data);
@@ -49,7 +57,7 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     fetchData();
-  }, [profileId]);
+  }, [profileIdParam]);
 
   const refresh = () => {
     fetchData();

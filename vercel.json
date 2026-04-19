@@ -1,4 +1,10 @@
 {
   "buildCommand": "cd react-portfolio && npm install && npm run build",
-  "outputDirectory": "react-portfolio/dist"
+  "outputDirectory": "react-portfolio/dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
