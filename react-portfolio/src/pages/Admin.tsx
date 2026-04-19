@@ -1,8 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { PageTransition } from '../components/PageTransition';
 import { supabase, type Profile, type Project, type BlogPost } from '../lib/supabase';
 
 type Tab = 'profiles' | 'projects' | 'blog';
+
+interface Toast {
+  id: number;
+  message: string;
+  type: 'success' | 'error';
+}
+
+let toastId = 0;
 
 export default function Admin() {
   const [password, setPassword] = useState('');
@@ -14,12 +22,19 @@ export default function Admin() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [editingItem, setEditingItem] = useState<Profile | Project | BlogPost | null>(null);
+  const [toasts, setToasts] = useState<Toast[]>([]);
+
+  const addToast = useCallback((message: string, type: 'success' | 'error') => {
+    const id = ++toastId;
+    setToasts((t) => [...t, { id, message, type }]);
+    setTimeout(() => setToasts((t) => t.filter((x) => x.id !== id)), 3500);
+  }, []);
 
   const handleLogin = () => {
     if (password === 'theryx2026') {
       setIsAuthenticated(true);
     } else {
-      alert('Invalid password');
+      addToast('Invalid password', 'error');
     }
   };
 
@@ -36,15 +51,14 @@ export default function Admin() {
       if (blogRes.data) setBlogPosts(blogRes.data);
     } catch (err) {
       console.error('Error fetching data:', err);
+      addToast('Failed to load data', 'error');
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (isAuthenticated) {
-      fetchAll();
-    }
+    if (isAuthenticated) fetchAll();
   }, [isAuthenticated]);
 
   const saveProfile = async (profile: Partial<Profile>) => {
@@ -57,9 +71,10 @@ export default function Admin() {
       if (error) throw error;
       await fetchAll();
       setEditingItem(null);
+      addToast('Profile saved', 'success');
     } catch (err) {
-      console.error('Error saving profile:', err);
-      alert('Failed to save profile');
+      console.error(err);
+      addToast('Failed to save profile', 'error');
     } finally {
       setSaving(false);
     }
@@ -75,9 +90,10 @@ export default function Admin() {
       if (error) throw error;
       await fetchAll();
       setEditingItem(null);
+      addToast('Project saved', 'success');
     } catch (err) {
-      console.error('Error saving project:', err);
-      alert('Failed to save project');
+      console.error(err);
+      addToast('Failed to save project', 'error');
     } finally {
       setSaving(false);
     }
@@ -93,38 +109,44 @@ export default function Admin() {
       if (error) throw error;
       await fetchAll();
       setEditingItem(null);
+      addToast('Blog post saved', 'success');
     } catch (err) {
-      console.error('Error saving blog post:', err);
-      alert('Failed to save blog post');
+      console.error(err);
+      addToast('Failed to save blog post', 'error');
     } finally {
       setSaving(false);
     }
   };
 
   const toggleHidden = async (table: 'projects' | 'blog_posts', item: Project | BlogPost) => {
-    const newHidden = !item.is_hidden;
     try {
       const { error } = await supabase
         .from(table)
-        .update({ is_hidden: newHidden })
+        .update({ is_hidden: !item.is_hidden })
         .eq('id', item.id);
       if (error) throw error;
       await fetchAll();
+      addToast(`Item ${item.is_hidden ? 'shown' : 'hidden'}`, 'success');
     } catch (err) {
-      console.error('Error toggling visibility:', err);
+      console.error(err);
+      addToast('Failed to update visibility', 'error');
     }
   };
 
   const deleteItem = async (table: 'projects' | 'blog_posts' | 'profiles', id: string) => {
-    if (!confirm('Are you sure you want to delete this item?')) return;
+    if (!confirm('Delete this item? This cannot be undone.')) return;
     try {
       const { error } = await supabase.from(table).delete().eq('id', id);
       if (error) throw error;
       await fetchAll();
+      addToast('Item deleted', 'success');
     } catch (err) {
-      console.error('Error deleting item:', err);
+      console.error(err);
+      addToast('Failed to delete item', 'error');
     }
   };
+
+  const defaultProfileId = profiles[0]?.id || '';
 
   if (!isAuthenticated) {
     return (
@@ -143,6 +165,7 @@ export default function Admin() {
               <button onClick={handleLogin} className="btn btn--primary">Login</button>
             </div>
           </div>
+          <ToastContainer toasts={toasts} />
         </section>
       </PageTransition>
     );
@@ -152,41 +175,39 @@ export default function Admin() {
     <PageTransition>
       <section className="admin">
         <div className="container">
-          <h2 className="section__title">Admin Dashboard</h2>
-          
+          <div className="admin__topbar">
+            <h2 className="section__title" style={{ marginBottom: 0 }}>CMS Dashboard</h2>
+            <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+              <button className="btn btn--secondary" style={{ fontSize: '14px', padding: '8px 16px' }} onClick={fetchAll}>
+                Refresh
+              </button>
+            </div>
+          </div>
+
           <div className="admin__tabs">
-            <button
-              className={`admin__tab ${activeTab === 'profiles' ? 'admin__tab--active' : ''}`}
-              onClick={() => setActiveTab('profiles')}
-            >
-              Profiles ({profiles.length})
-            </button>
-            <button
-              className={`admin__tab ${activeTab === 'projects' ? 'admin__tab--active' : ''}`}
-              onClick={() => setActiveTab('projects')}
-            >
-              Projects ({projects.length})
-            </button>
-            <button
-              className={`admin__tab ${activeTab === 'blog' ? 'admin__tab--active' : ''}`}
-              onClick={() => setActiveTab('blog')}
-            >
-              Blog Posts ({blogPosts.length})
-            </button>
+            {(['profiles', 'projects', 'blog'] as Tab[]).map((tab) => (
+              <button
+                key={tab}
+                className={`admin__tab ${activeTab === tab ? 'admin__tab--active' : ''}`}
+                onClick={() => setActiveTab(tab)}
+              >
+                {tab === 'blog' ? 'Blog Posts' : tab.charAt(0).toUpperCase() + tab.slice(1)}
+                <span className="admin__tab-count">
+                  {tab === 'profiles' ? profiles.length : tab === 'projects' ? projects.length : blogPosts.length}
+                </span>
+              </button>
+            ))}
           </div>
 
           {loading ? (
-            <p>Loading...</p>
+            <div className="admin__loading">Loading…</div>
           ) : (
             <>
               {activeTab === 'profiles' && (
                 <div className="admin__section">
                   <div className="admin__header">
                     <h3>Portfolio Profiles</h3>
-                    <button
-                      className="btn btn--primary"
-                      onClick={() => setEditingItem({} as Profile)}
-                    >
+                    <button className="btn btn--primary" onClick={() => setEditingItem({} as Profile)}>
                       + New Profile
                     </button>
                   </div>
@@ -194,15 +215,15 @@ export default function Admin() {
                     {profiles.map((profile) => (
                       <div key={profile.id} className="admin__item">
                         <div className="admin__item-info">
-                          <strong>{profile.name}</strong>
+                          <strong>{profile.name || '(unnamed)'}</strong>
                           <span>ID: {profile.id}</span>
-                          <span className={`admin__status ${profile.is_active ? 'admin__status--active' : ''}`}>
+                          <span className={`admin__status ${profile.is_active ? 'admin__status--active' : 'admin__status--hidden'}`}>
                             {profile.is_active ? 'Active' : 'Inactive'}
                           </span>
                         </div>
                         <div className="admin__item-actions">
                           <button onClick={() => setEditingItem(profile)}>Edit</button>
-                          <button onClick={() => deleteItem('profiles', profile.id)}>Delete</button>
+                          <button className="admin__btn-danger" onClick={() => deleteItem('profiles', profile.id)}>Delete</button>
                         </div>
                       </div>
                     ))}
@@ -216,7 +237,7 @@ export default function Admin() {
                     <h3>Projects</h3>
                     <button
                       className="btn btn--primary"
-                      onClick={() => setEditingItem({ profile_id: 'default' } as Project)}
+                      onClick={() => setEditingItem({ profile_id: defaultProfileId, is_hidden: false, sort_order: projects.length } as Project)}
                     >
                       + New Project
                     </button>
@@ -226,7 +247,7 @@ export default function Admin() {
                       <div key={project.id} className="admin__item">
                         <div className="admin__item-info">
                           <strong>{project.title}</strong>
-                          <span>Profile: {project.profile_id}</span>
+                          <span>{project.tag} · Profile: {project.profile_id}</span>
                           <span className={`admin__status ${project.is_hidden ? 'admin__status--hidden' : 'admin__status--visible'}`}>
                             {project.is_hidden ? 'Hidden' : 'Visible'}
                           </span>
@@ -236,7 +257,7 @@ export default function Admin() {
                             {project.is_hidden ? 'Show' : 'Hide'}
                           </button>
                           <button onClick={() => setEditingItem(project)}>Edit</button>
-                          <button onClick={() => deleteItem('projects', project.id)}>Delete</button>
+                          <button className="admin__btn-danger" onClick={() => deleteItem('projects', project.id)}>Delete</button>
                         </div>
                       </div>
                     ))}
@@ -250,7 +271,7 @@ export default function Admin() {
                     <h3>Blog Posts</h3>
                     <button
                       className="btn btn--primary"
-                      onClick={() => setEditingItem({ profile_id: 'default' } as BlogPost)}
+                      onClick={() => setEditingItem({ profile_id: defaultProfileId, is_hidden: true, sort_order: blogPosts.length } as BlogPost)}
                     >
                       + New Post
                     </button>
@@ -260,17 +281,17 @@ export default function Admin() {
                       <div key={post.id} className="admin__item">
                         <div className="admin__item-info">
                           <strong>{post.title}</strong>
-                          <span>Profile: {post.profile_id}</span>
+                          <span>{post.date} · Profile: {post.profile_id}</span>
                           <span className={`admin__status ${post.is_hidden ? 'admin__status--hidden' : 'admin__status--visible'}`}>
-                            {post.is_hidden ? 'Hidden' : 'Visible'}
+                            {post.is_hidden ? 'Draft' : 'Published'}
                           </span>
                         </div>
                         <div className="admin__item-actions">
                           <button onClick={() => toggleHidden('blog_posts', post)}>
-                            {post.is_hidden ? 'Show' : 'Hide'}
+                            {post.is_hidden ? 'Publish' : 'Unpublish'}
                           </button>
                           <button onClick={() => setEditingItem(post)}>Edit</button>
-                          <button onClick={() => deleteItem('blog_posts', post.id)}>Delete</button>
+                          <button className="admin__btn-danger" onClick={() => deleteItem('blog_posts', post.id)}>Delete</button>
                         </div>
                       </div>
                     ))}
@@ -281,45 +302,127 @@ export default function Admin() {
           )}
 
           {editingItem && (
-            <div className="admin__modal">
+            <div className="admin__modal" onClick={(e) => e.target === e.currentTarget && setEditingItem(null)}>
               <div className="admin__modal-content">
-                <h3>
-                  {editingItem && 'id' in editingItem && editingItem.id ? 'Edit' : 'Create'}{' '}
-                  {activeTab === 'profiles' ? 'Profile' : activeTab === 'projects' ? 'Project' : 'Blog Post'}
-                </h3>
-                
+                <div className="admin__modal-header">
+                  <h3>
+                    {'id' in editingItem && editingItem.id ? 'Edit' : 'Create'}{' '}
+                    {activeTab === 'profiles' ? 'Profile' : activeTab === 'projects' ? 'Project' : 'Blog Post'}
+                  </h3>
+                  <button className="admin__modal-close" onClick={() => setEditingItem(null)}>✕</button>
+                </div>
                 {activeTab === 'profiles' ? (
-                  <ProfileForm
-                    profile={editingItem as Profile}
-                    onSave={saveProfile}
-                    onCancel={() => setEditingItem(null)}
-                    saving={saving}
-                  />
+                  <ProfileForm profile={editingItem as Profile} onSave={saveProfile} onCancel={() => setEditingItem(null)} saving={saving} />
                 ) : activeTab === 'projects' ? (
-                  <ProjectForm
-                    project={editingItem as Project}
-                    profiles={profiles}
-                    onSave={saveProject}
-                    onCancel={() => setEditingItem(null)}
-                    saving={saving}
-                  />
+                  <ProjectForm project={editingItem as Project} profiles={profiles} onSave={saveProject} onCancel={() => setEditingItem(null)} saving={saving} />
                 ) : (
-                  <BlogForm
-                    post={editingItem as BlogPost}
-                    profiles={profiles}
-                    onSave={saveBlogPost}
-                    onCancel={() => setEditingItem(null)}
-                    saving={saving}
-                  />
+                  <BlogForm post={editingItem as BlogPost} profiles={profiles} onSave={saveBlogPost} onCancel={() => setEditingItem(null)} saving={saving} />
                 )}
               </div>
             </div>
           )}
         </div>
       </section>
+      <ToastContainer toasts={toasts} />
     </PageTransition>
   );
 }
+
+/* ─── Toast ──────────────────────────────────────────────────────────────── */
+
+function ToastContainer({ toasts }: { toasts: Toast[] }) {
+  return (
+    <div className="admin__toasts">
+      {toasts.map((t) => (
+        <div key={t.id} className={`admin__toast admin__toast--${t.type}`}>{t.message}</div>
+      ))}
+    </div>
+  );
+}
+
+/* ─── Array field editor ─────────────────────────────────────────────────── */
+
+function ArrayEditor({ label, values, onChange, placeholder }: {
+  label: string;
+  values: string[];
+  onChange: (v: string[]) => void;
+  placeholder?: string;
+}) {
+  const [draft, setDraft] = useState('');
+  const add = () => {
+    const trimmed = draft.trim();
+    if (trimmed && !values.includes(trimmed)) {
+      onChange([...values, trimmed]);
+    }
+    setDraft('');
+  };
+  const remove = (i: number) => onChange(values.filter((_, idx) => idx !== i));
+
+  return (
+    <div className="admin__field">
+      <label>{label}</label>
+      <div className="admin__array-tags">
+        {values.map((v, i) => (
+          <span key={i} className="admin__tag">
+            {v}
+            <button type="button" onClick={() => remove(i)}>✕</button>
+          </span>
+        ))}
+      </div>
+      <div className="admin__array-input">
+        <input
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); add(); } }}
+          placeholder={placeholder || 'Type and press Enter'}
+        />
+        <button type="button" className="admin__array-add" onClick={add}>Add</button>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Key-value editor (for social_links) ───────────────────────────────── */
+
+function KVEditor({ label, value, onChange }: {
+  label: string;
+  value: Record<string, string>;
+  onChange: (v: Record<string, string>) => void;
+}) {
+  const [draftKey, setDraftKey] = useState('');
+  const [draftVal, setDraftVal] = useState('');
+  const entries = Object.entries(value);
+  const add = () => {
+    const k = draftKey.trim(), v = draftVal.trim();
+    if (k && v) { onChange({ ...value, [k]: v }); setDraftKey(''); setDraftVal(''); }
+  };
+  const remove = (k: string) => {
+    const next = { ...value };
+    delete next[k];
+    onChange(next);
+  };
+
+  return (
+    <div className="admin__field">
+      <label>{label}</label>
+      <div className="admin__array-tags">
+        {entries.map(([k, v]) => (
+          <span key={k} className="admin__tag">
+            <strong>{k}:</strong> {v}
+            <button type="button" onClick={() => remove(k)}>✕</button>
+          </span>
+        ))}
+      </div>
+      <div className="admin__kv-input">
+        <input value={draftKey} onChange={(e) => setDraftKey(e.target.value)} placeholder="platform (e.g. github)" />
+        <input value={draftVal} onChange={(e) => setDraftVal(e.target.value)} placeholder="URL" onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); add(); } }} />
+        <button type="button" className="admin__array-add" onClick={add}>Add</button>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Profile Form ───────────────────────────────────────────────────────── */
 
 function ProfileForm({ profile, onSave, onCancel, saving }: {
   profile: Profile | null;
@@ -337,95 +440,74 @@ function ProfileForm({ profile, onSave, onCancel, saving }: {
     hero_subtitle: profile?.hero_subtitle || '',
     philosophy_title: profile?.philosophy_title || '',
     philosophy_text: profile?.philosophy_text || '',
+    badges: profile?.badges || [],
+    social_links: profile?.social_links || {},
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSave(form);
-  };
+  const set = (k: string, v: unknown) => setForm((f) => ({ ...f, [k]: v }));
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="admin__field">
-        <label>Profile ID (slug)</label>
-        <input
-          value={form.id}
-          onChange={(e) => setForm({ ...form, id: e.target.value })}
-          placeholder="e.g., fintech, design-engineer"
-          required
-        />
+    <form onSubmit={(e) => { e.preventDefault(); onSave(form); }}>
+      <div className="admin__form-grid">
+        <div className="admin__field">
+          <label>Profile ID (slug)</label>
+          <input value={form.id} onChange={(e) => set('id', e.target.value)} placeholder="e.g. fintech, design-engineer" required />
+        </div>
+        <div className="admin__field">
+          <label>Display Name</label>
+          <input value={form.name} onChange={(e) => set('name', e.target.value)} required />
+        </div>
       </div>
-      <div className="admin__field">
-        <label>Display Name</label>
-        <input
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-          required
-        />
-      </div>
-      <div className="admin__field">
+      <div className="admin__field admin__field--checkbox">
         <label>
-          <input
-            type="checkbox"
-            checked={form.is_active}
-            onChange={(e) => setForm({ ...form, is_active: e.target.checked })}
-          />
-          Active
+          <input type="checkbox" checked={form.is_active} onChange={(e) => set('is_active', e.target.checked)} />
+          Active (visible to visitors)
         </label>
       </div>
-      <div className="admin__field">
-        <label>Bio (short)</label>
-        <textarea
-          value={form.bio}
-          onChange={(e) => setForm({ ...form, bio: e.target.value })}
-        />
-      </div>
-      <div className="admin__field">
-        <label>Tagline</label>
-        <textarea
-          value={form.tagline}
-          onChange={(e) => setForm({ ...form, tagline: e.target.value })}
-        />
-      </div>
+
+      <div className="admin__form-section">Hero</div>
       <div className="admin__field">
         <label>Hero Title</label>
-        <input
-          value={form.hero_title}
-          onChange={(e) => setForm({ ...form, hero_title: e.target.value })}
-        />
+        <input value={form.hero_title} onChange={(e) => set('hero_title', e.target.value)} />
       </div>
       <div className="admin__field">
         <label>Hero Subtitle</label>
-        <textarea
-          value={form.hero_subtitle}
-          onChange={(e) => setForm({ ...form, hero_subtitle: e.target.value })}
-        />
+        <textarea value={form.hero_subtitle} onChange={(e) => set('hero_subtitle', e.target.value)} rows={2} />
       </div>
       <div className="admin__field">
+        <label>Tagline</label>
+        <textarea value={form.tagline} onChange={(e) => set('tagline', e.target.value)} rows={2} />
+      </div>
+
+      <div className="admin__form-section">About</div>
+      <div className="admin__field">
+        <label>Bio</label>
+        <textarea value={form.bio} onChange={(e) => set('bio', e.target.value)} rows={4} />
+      </div>
+      <ArrayEditor label="Badges" values={form.badges} onChange={(v) => set('badges', v)} placeholder="e.g. Available for projects" />
+
+      <div className="admin__form-section">Philosophy</div>
+      <div className="admin__field">
         <label>Philosophy Title</label>
-        <input
-          value={form.philosophy_title}
-          onChange={(e) => setForm({ ...form, philosophy_title: e.target.value })}
-        />
+        <input value={form.philosophy_title} onChange={(e) => set('philosophy_title', e.target.value)} />
       </div>
       <div className="admin__field">
         <label>Philosophy Text</label>
-        <textarea
-          value={form.philosophy_text}
-          onChange={(e) => setForm({ ...form, philosophy_text: e.target.value })}
-        />
+        <textarea value={form.philosophy_text} onChange={(e) => set('philosophy_text', e.target.value)} rows={4} />
       </div>
+
+      <div className="admin__form-section">Social Links</div>
+      <KVEditor label="Social Links" value={form.social_links} onChange={(v) => set('social_links', v)} />
+
       <div className="admin__actions">
-        <button type="submit" disabled={saving} className="btn btn--primary">
-          {saving ? 'Saving...' : 'Save'}
-        </button>
-        <button type="button" onClick={onCancel} className="btn btn--secondary">
-          Cancel
-        </button>
+        <button type="submit" disabled={saving} className="btn btn--primary">{saving ? 'Saving…' : 'Save Profile'}</button>
+        <button type="button" onClick={onCancel} className="btn btn--secondary">Cancel</button>
       </div>
     </form>
   );
 }
+
+/* ─── Project Form ───────────────────────────────────────────────────────── */
 
 function ProjectForm({ project, profiles, onSave, onCancel, saving }: {
   project: Project | null;
@@ -436,16 +518,18 @@ function ProjectForm({ project, profiles, onSave, onCancel, saving }: {
 }) {
   const [form, setForm] = useState({
     id: project?.id || '',
-    profile_id: project?.profile_id || 'default',
+    profile_id: project?.profile_id || profiles[0]?.id || '',
     tag: project?.tag || '',
     title: project?.title || '',
     tagline: project?.tagline || '',
     description: project?.description || '',
     impact: project?.impact || '',
+    image: project?.image || '',
     site: project?.site || '',
     role: project?.role || '',
     period: project?.period || '',
     location: project?.location || '',
+    responsibilities: project?.responsibilities || [],
     challenge: project?.challenge || '',
     challenge_text: project?.challenge_text || '',
     solution: project?.solution || '',
@@ -456,168 +540,126 @@ function ProjectForm({ project, profiles, onSave, onCancel, saving }: {
     sort_order: project?.sort_order ?? 0,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSave(form);
-  };
+  const set = (k: string, v: unknown) => setForm((f) => ({ ...f, [k]: v }));
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="admin__field">
-        <label>Project ID</label>
-        <input
-          value={form.id}
-          onChange={(e) => setForm({ ...form, id: e.target.value })}
-          placeholder="e.g., paysika, jobsika"
-          required
-        />
+    <form onSubmit={(e) => { e.preventDefault(); onSave(form); }}>
+      <div className="admin__form-section">Basic Info</div>
+      <div className="admin__form-grid">
+        <div className="admin__field">
+          <label>Project ID</label>
+          <input value={form.id} onChange={(e) => set('id', e.target.value)} placeholder="e.g. paysika" required />
+        </div>
+        <div className="admin__field">
+          <label>Profile</label>
+          <select value={form.profile_id} onChange={(e) => set('profile_id', e.target.value)}>
+            {profiles.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
+          </select>
+        </div>
       </div>
-      <div className="admin__field">
-        <label>Profile</label>
-        <select
-          value={form.profile_id}
-          onChange={(e) => setForm({ ...form, profile_id: e.target.value })}
-        >
-          {profiles.map((p) => (
-            <option key={p.id} value={p.id}>{p.name}</option>
-          ))}
-        </select>
-      </div>
-      <div className="admin__field">
-        <label>Tag</label>
-        <input
-          value={form.tag}
-          onChange={(e) => setForm({ ...form, tag: e.target.value })}
-        />
+      <div className="admin__form-grid">
+        <div className="admin__field">
+          <label>Tag / Category</label>
+          <input value={form.tag} onChange={(e) => set('tag', e.target.value)} placeholder="e.g. Fintech" />
+        </div>
+        <div className="admin__field">
+          <label>Sort Order</label>
+          <input type="number" value={form.sort_order} onChange={(e) => set('sort_order', parseInt(e.target.value) || 0)} />
+        </div>
       </div>
       <div className="admin__field">
         <label>Title</label>
-        <input
-          value={form.title}
-          onChange={(e) => setForm({ ...form, title: e.target.value })}
-          required
-        />
+        <input value={form.title} onChange={(e) => set('title', e.target.value)} required />
       </div>
       <div className="admin__field">
         <label>Tagline</label>
-        <input
-          value={form.tagline}
-          onChange={(e) => setForm({ ...form, tagline: e.target.value })}
-        />
+        <input value={form.tagline} onChange={(e) => set('tagline', e.target.value)} />
       </div>
       <div className="admin__field">
         <label>Description</label>
-        <textarea
-          value={form.description}
-          onChange={(e) => setForm({ ...form, description: e.target.value })}
-        />
+        <textarea value={form.description} onChange={(e) => set('description', e.target.value)} rows={3} />
+      </div>
+
+      <div className="admin__form-section">Details</div>
+      <div className="admin__form-grid">
+        <div className="admin__field">
+          <label>Role</label>
+          <input value={form.role} onChange={(e) => set('role', e.target.value)} />
+        </div>
+        <div className="admin__field">
+          <label>Period</label>
+          <input value={form.period} onChange={(e) => set('period', e.target.value)} placeholder="e.g. Jan 2024 – Present" />
+        </div>
+      </div>
+      <div className="admin__form-grid">
+        <div className="admin__field">
+          <label>Location</label>
+          <input value={form.location} onChange={(e) => set('location', e.target.value)} />
+        </div>
+        <div className="admin__field">
+          <label>Impact</label>
+          <input value={form.impact} onChange={(e) => set('impact', e.target.value)} />
+        </div>
+      </div>
+      <div className="admin__form-grid">
+        <div className="admin__field">
+          <label>Site URL</label>
+          <input value={form.site} onChange={(e) => set('site', e.target.value)} placeholder="https://..." />
+        </div>
+        <div className="admin__field">
+          <label>Image URL</label>
+          <input value={form.image} onChange={(e) => set('image', e.target.value)} placeholder="https://..." />
+        </div>
+      </div>
+      <ArrayEditor label="Responsibilities" values={form.responsibilities} onChange={(v) => set('responsibilities', v)} placeholder="Add a responsibility and press Enter" />
+
+      <div className="admin__form-section">Case Study</div>
+      <div className="admin__form-grid">
+        <div className="admin__field">
+          <label>Challenge Title</label>
+          <input value={form.challenge} onChange={(e) => set('challenge', e.target.value)} />
+        </div>
+        <div className="admin__field">
+          <label>Solution Title</label>
+          <input value={form.solution} onChange={(e) => set('solution', e.target.value)} />
+        </div>
+      </div>
+      <div className="admin__form-grid">
+        <div className="admin__field">
+          <label>Challenge Text</label>
+          <textarea value={form.challenge_text} onChange={(e) => set('challenge_text', e.target.value)} rows={3} />
+        </div>
+        <div className="admin__field">
+          <label>Solution Text</label>
+          <textarea value={form.solution_text} onChange={(e) => set('solution_text', e.target.value)} rows={3} />
+        </div>
       </div>
       <div className="admin__field">
-        <label>Impact</label>
-        <input
-          value={form.impact}
-          onChange={(e) => setForm({ ...form, impact: e.target.value })}
-        />
-      </div>
-      <div className="admin__field">
-        <label>Site URL</label>
-        <input
-          value={form.site}
-          onChange={(e) => setForm({ ...form, site: e.target.value })}
-        />
-      </div>
-      <div className="admin__field">
-        <label>Role</label>
-        <input
-          value={form.role}
-          onChange={(e) => setForm({ ...form, role: e.target.value })}
-        />
-      </div>
-      <div className="admin__field">
-        <label>Period</label>
-        <input
-          value={form.period}
-          onChange={(e) => setForm({ ...form, period: e.target.value })}
-        />
-      </div>
-      <div className="admin__field">
-        <label>Location</label>
-        <input
-          value={form.location}
-          onChange={(e) => setForm({ ...form, location: e.target.value })}
-        />
-      </div>
-      <div className="admin__field">
-        <label>Challenge</label>
-        <input
-          value={form.challenge}
-          onChange={(e) => setForm({ ...form, challenge: e.target.value })}
-        />
-      </div>
-      <div className="admin__field">
-        <label>Challenge Text</label>
-        <textarea
-          value={form.challenge_text}
-          onChange={(e) => setForm({ ...form, challenge_text: e.target.value })}
-        />
-      </div>
-      <div className="admin__field">
-        <label>Solution</label>
-        <input
-          value={form.solution}
-          onChange={(e) => setForm({ ...form, solution: e.target.value })}
-        />
-      </div>
-      <div className="admin__field">
-        <label>Solution Text</label>
-        <textarea
-          value={form.solution_text}
-          onChange={(e) => setForm({ ...form, solution_text: e.target.value })}
-        />
-      </div>
-      <div className="admin__field">
-        <label>Result</label>
-        <input
-          value={form.result}
-          onChange={(e) => setForm({ ...form, result: e.target.value })}
-        />
+        <label>Result Title</label>
+        <input value={form.result} onChange={(e) => set('result', e.target.value)} />
       </div>
       <div className="admin__field">
         <label>Result Text</label>
-        <textarea
-          value={form.result_text}
-          onChange={(e) => setForm({ ...form, result_text: e.target.value })}
-        />
+        <textarea value={form.result_text} onChange={(e) => set('result_text', e.target.value)} rows={3} />
       </div>
-      <div className="admin__field">
+
+      <div className="admin__form-section">Visibility</div>
+      <div className="admin__field admin__field--checkbox">
         <label>
-          <input
-            type="checkbox"
-            checked={form.is_hidden}
-            onChange={(e) => setForm({ ...form, is_hidden: e.target.checked })}
-          />
-          Hidden
+          <input type="checkbox" checked={form.is_hidden} onChange={(e) => set('is_hidden', e.target.checked)} />
+          Hidden (not shown on site)
         </label>
       </div>
-      <div className="admin__field">
-        <label>Sort Order</label>
-        <input
-          type="number"
-          value={form.sort_order}
-          onChange={(e) => setForm({ ...form, sort_order: parseInt(e.target.value) || 0 })}
-        />
-      </div>
+
       <div className="admin__actions">
-        <button type="submit" disabled={saving} className="btn btn--primary">
-          {saving ? 'Saving...' : 'Save'}
-        </button>
-        <button type="button" onClick={onCancel} className="btn btn--secondary">
-          Cancel
-        </button>
+        <button type="submit" disabled={saving} className="btn btn--primary">{saving ? 'Saving…' : 'Save Project'}</button>
+        <button type="button" onClick={onCancel} className="btn btn--secondary">Cancel</button>
       </div>
     </form>
   );
 }
+
+/* ─── Blog Form ──────────────────────────────────────────────────────────── */
 
 function BlogForm({ post, profiles, onSave, onCancel, saving }: {
   post: BlogPost | null;
@@ -628,123 +670,91 @@ function BlogForm({ post, profiles, onSave, onCancel, saving }: {
 }) {
   const [form, setForm] = useState({
     id: post?.id || '',
-    profile_id: post?.profile_id || 'default',
+    profile_id: post?.profile_id || profiles[0]?.id || '',
     title: post?.title || '',
     excerpt: post?.excerpt || '',
     content: post?.content || '',
-    date: post?.date || '',
+    date: post?.date || new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
     author: post?.author || 'Ndouken Theryx',
     read_time: post?.read_time || '',
+    tags: post?.tags || [],
     image: post?.image || '',
-    is_hidden: post?.is_hidden ?? false,
+    is_hidden: post?.is_hidden ?? true,
     sort_order: post?.sort_order ?? 0,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSave(form);
-  };
+  const set = (k: string, v: unknown) => setForm((f) => ({ ...f, [k]: v }));
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="admin__field">
-        <label>Post ID</label>
-        <input
-          value={form.id}
-          onChange={(e) => setForm({ ...form, id: e.target.value })}
-          placeholder="e.g., my-blog-post"
-          required
-        />
-      </div>
-      <div className="admin__field">
-        <label>Profile</label>
-        <select
-          value={form.profile_id}
-          onChange={(e) => setForm({ ...form, profile_id: e.target.value })}
-        >
-          {profiles.map((p) => (
-            <option key={p.id} value={p.id}>{p.name}</option>
-          ))}
-        </select>
+    <form onSubmit={(e) => { e.preventDefault(); onSave(form); }}>
+      <div className="admin__form-section">Basic Info</div>
+      <div className="admin__form-grid">
+        <div className="admin__field">
+          <label>Post ID</label>
+          <input value={form.id} onChange={(e) => set('id', e.target.value)} placeholder="e.g. my-blog-post" required />
+        </div>
+        <div className="admin__field">
+          <label>Profile</label>
+          <select value={form.profile_id} onChange={(e) => set('profile_id', e.target.value)}>
+            {profiles.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
+          </select>
+        </div>
       </div>
       <div className="admin__field">
         <label>Title</label>
-        <input
-          value={form.title}
-          onChange={(e) => setForm({ ...form, title: e.target.value })}
-          required
-        />
+        <input value={form.title} onChange={(e) => set('title', e.target.value)} required />
       </div>
       <div className="admin__field">
         <label>Excerpt</label>
-        <textarea
-          value={form.excerpt}
-          onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
-        />
+        <textarea value={form.excerpt} onChange={(e) => set('excerpt', e.target.value)} rows={2} placeholder="Short summary shown in the blog list" />
       </div>
+
+      <div className="admin__form-section">Content</div>
       <div className="admin__field">
         <label>Content (HTML)</label>
-        <textarea
-          value={form.content}
-          onChange={(e) => setForm({ ...form, content: e.target.value })}
-          rows={10}
-        />
+        <textarea value={form.content} onChange={(e) => set('content', e.target.value)} rows={12} style={{ fontFamily: 'monospace', fontSize: '13px' }} />
       </div>
-      <div className="admin__field">
-        <label>Date</label>
-        <input
-          value={form.date}
-          onChange={(e) => setForm({ ...form, date: e.target.value })}
-          placeholder="e.g., April 19, 2026"
-        />
+
+      <div className="admin__form-section">Metadata</div>
+      <div className="admin__form-grid">
+        <div className="admin__field">
+          <label>Date</label>
+          <input value={form.date} onChange={(e) => set('date', e.target.value)} placeholder="e.g. April 20, 2026" />
+        </div>
+        <div className="admin__field">
+          <label>Read Time</label>
+          <input value={form.read_time} onChange={(e) => set('read_time', e.target.value)} placeholder="e.g. 5 min read" />
+        </div>
       </div>
-      <div className="admin__field">
-        <label>Author</label>
-        <input
-          value={form.author}
-          onChange={(e) => setForm({ ...form, author: e.target.value })}
-        />
+      <div className="admin__form-grid">
+        <div className="admin__field">
+          <label>Author</label>
+          <input value={form.author} onChange={(e) => set('author', e.target.value)} />
+        </div>
+        <div className="admin__field">
+          <label>Image URL</label>
+          <input value={form.image} onChange={(e) => set('image', e.target.value)} placeholder="https://..." />
+        </div>
       </div>
-      <div className="admin__field">
-        <label>Read Time</label>
-        <input
-          value={form.read_time}
-          onChange={(e) => setForm({ ...form, read_time: e.target.value })}
-          placeholder="e.g., 5 min read"
-        />
+      <ArrayEditor label="Tags" values={form.tags} onChange={(v) => set('tags', v)} placeholder="e.g. Engineering, AI" />
+
+      <div className="admin__form-section">Visibility</div>
+      <div className="admin__form-grid">
+        <div className="admin__field admin__field--checkbox">
+          <label>
+            <input type="checkbox" checked={form.is_hidden} onChange={(e) => set('is_hidden', e.target.checked)} />
+            Draft (hidden from visitors)
+          </label>
+        </div>
+        <div className="admin__field">
+          <label>Sort Order</label>
+          <input type="number" value={form.sort_order} onChange={(e) => set('sort_order', parseInt(e.target.value) || 0)} />
+        </div>
       </div>
-      <div className="admin__field">
-        <label>Image</label>
-        <input
-          value={form.image}
-          onChange={(e) => setForm({ ...form, image: e.target.value })}
-        />
-      </div>
-      <div className="admin__field">
-        <label>
-          <input
-            type="checkbox"
-            checked={form.is_hidden}
-            onChange={(e) => setForm({ ...form, is_hidden: e.target.checked })}
-          />
-          Hidden
-        </label>
-      </div>
-      <div className="admin__field">
-        <label>Sort Order</label>
-        <input
-          type="number"
-          value={form.sort_order}
-          onChange={(e) => setForm({ ...form, sort_order: parseInt(e.target.value) || 0 })}
-        />
-      </div>
+
       <div className="admin__actions">
-        <button type="submit" disabled={saving} className="btn btn--primary">
-          {saving ? 'Saving...' : 'Save'}
-        </button>
-        <button type="button" onClick={onCancel} className="btn btn--secondary">
-          Cancel
-        </button>
+        <button type="submit" disabled={saving} className="btn btn--primary">{saving ? 'Saving…' : 'Save Post'}</button>
+        <button type="button" onClick={onCancel} className="btn btn--secondary">Cancel</button>
       </div>
     </form>
   );
