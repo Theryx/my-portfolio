@@ -1,11 +1,34 @@
 import { useParams, Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { PageTransition } from '../components/PageTransition';
 import { ArrowLeft, Calendar, MapPin, ExternalLink } from 'lucide-react';
-import { projects, projectImageMap } from '../data/projects';
+import { getProjectById, type Project } from '../lib/supabase';
+import { projectImageMap } from '../data/projects';
 
 export default function ProjectDetail() {
   const { id } = useParams();
-  const project = projects.find(p => p.id === id);
+  const [project, setProject] = useState<Project | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchProject() {
+      if (!id) return;
+      const data = await getProjectById(id);
+      setProject(data);
+      setLoading(false);
+    }
+    fetchProject();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <PageTransition>
+        <div className="container" style={{ padding: '120px 0', textAlign: 'center' }}>
+          <p>Loading...</p>
+        </div>
+      </PageTransition>
+    );
+  }
 
   if (!project) {
     return (
@@ -78,25 +101,25 @@ export default function ProjectDetail() {
             <section className="project-detail__section">
               <h2>Responsibilities</h2>
               <ul>
-                {project.responsibilities.map((item) => (
+                {(project.responsibilities || []).map((item: string) => (
                   <li key={item}>{item}</li>
                 ))}
               </ul>
             </section>
 
             <section className="project-detail__section">
-              <h2>{project.challenge}</h2>
-              <p>{project.challengeText}</p>
+              <h2>{project.challenge || 'The Challenge'}</h2>
+              <p>{project.challenge_text}</p>
             </section>
 
             <section className="project-detail__section">
-              <h2>{project.solution}</h2>
-              <p>{project.solutionText}</p>
+              <h2>{project.solution || 'The Solution'}</h2>
+              <p>{project.solution_text}</p>
             </section>
 
             <section className="project-detail__section project-detail__result">
-              <h2>{project.result}</h2>
-              <p>{project.resultText}</p>
+              <h2>{project.result || 'The Result'}</h2>
+              <p>{project.result_text}</p>
             </section>
           </div>
 

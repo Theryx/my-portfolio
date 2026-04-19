@@ -1,8 +1,43 @@
 import { Link } from 'react-router-dom';
 import { PageTransition } from '../components/PageTransition';
+import { useProfile } from '../context/ProfileContext';
 import myProfile from '../assets/img/My profile black and white.png';
 
 export default function Home() {
+  const { profile, loading, error } = useProfile();
+
+  if (loading) {
+    return (
+      <PageTransition>
+        <section className="hero">
+          <div className="container">
+            <div className="hero__inner">
+              <div className="hero__content">
+                <div className="hero__badge">Loading...</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </PageTransition>
+    );
+  }
+
+  if (error || !profile) {
+    return (
+      <PageTransition>
+        <section className="hero">
+          <div className="container">
+            <div className="hero__inner">
+              <div className="hero__content">
+                <p>Error loading profile</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </PageTransition>
+    );
+  }
+
   return (
     <PageTransition>
       <section className="hero">
@@ -10,13 +45,13 @@ export default function Home() {
           <div className="hero__inner">
             <div className="hero__content">
               <div className="hero__badge">
-                Available for projects
+                {profile.badges?.[0] || 'Available for projects'}
               </div>
               <h1 className="hero__title">
-                Design Engineer & <span>Tech Entrepreneur</span>
+                {profile.hero_title || 'Design Engineer & Tech Entrepreneur'}
               </h1>
               <p className="hero__subtitle">
-                I design and build user-centric digital products. Combining expert UX/UI design with front-end development to create beautiful, functional experiences. Based in Douala, Cameroon.
+                {profile.hero_subtitle || 'I design and build user-centric digital products.'}
               </p>
               <div className="hero__cta">
                 <Link to="/projects" className="btn btn--primary">View Selected Work</Link>
@@ -34,10 +69,10 @@ export default function Home() {
         <div className="container">
           <div className="philosophy__inner">
             <h2 className="philosophy__title">
-              I design experiences that bridge technology and human needs.
+              {profile.philosophy_title || 'I design experiences that bridge technology and human needs.'}
             </h2>
             <p className="philosophy__text">
-              As a Design Engineer, I bridge the gap between design and development. With 4+ years leading design at PaySika and now building my own ventures, I combine UX/UI expertise with hands-on coding to create products that are both beautiful and functional. I believe in clean design, simple language, and practical problem-solving.
+              {profile.philosophy_text || 'As a Design Engineer, I bridge the gap between design and development.'}
             </p>
           </div>
         </div>

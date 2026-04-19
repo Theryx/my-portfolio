@@ -1,4 +1,5 @@
 import { PageTransition } from '../components/PageTransition';
+import { useProfile } from '../context/ProfileContext';
 import teamDiscussion from '../assets/img/Me discussion with my collegue.jfif';
 import teamAward from '../assets/img/Team spirit award_2025.jfif';
 import userResearch from '../assets/img/Conducting a user research.jfif';
@@ -16,6 +17,8 @@ const fadeUp = {
 };
 
 export default function About() {
+  const { profile } = useProfile();
+
   return (
     <PageTransition>
       <section className="about">
@@ -26,10 +29,10 @@ export default function About() {
             </div>
             <h2 className="section__title" style={{ textAlign: 'left' }}>About Me</h2>
             <p className="about__text">
-              I am a Design Engineer specializing in fintech UI/UX, mobile applications, and minimalist aesthetics. After building and leading the design team at PaySika for over four years, I stepped down in January 2026 to focus on tech entrepreneurship, building real-world applications, and managing real estate operations.
+              {profile?.bio || 'I am a Design Engineer specializing in fintech UI/UX, mobile applications, and minimalist aesthetics. After building and leading the design team at PaySika for over four years, I stepped down in January 2026 to focus on tech entrepreneurship, building real-world applications, and managing real estate operations.'}
             </p>
             <p className="about__text">
-              I bridge the gap between design and development. I believe in clean design, simple language, and practical problem-solving. My journey spans from leading a design team at Africa's leading fintech to building my own products end-to-end.
+              {profile?.tagline || 'I bridge the gap between design and development. I believe in clean design, simple language, and practical problem-solving.'}
             </p>
             
             <div className="about__photos">
