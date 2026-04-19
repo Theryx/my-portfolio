@@ -51,14 +51,14 @@ function AnimatedRoutes() {
 
 function App() {
   return (
-    <ProfileProvider>
-      <Router>
-        <ScrollToTop />
+    <Router>
+      <ScrollToTop />
+      <ProfileProvider>
         <Layout>
           <AnimatedRoutes />
         </Layout>
-      </Router>
-    </ProfileProvider>
+      </ProfileProvider>
+    </Router>
   );
 }
 
