@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import Layout from './components/Layout';
 import { usePageTitle } from './hooks/usePageTitle';
 import { LoadingScreen } from './components/ui/LoadingScreen';
@@ -58,6 +59,7 @@ function App() {
           <AnimatedRoutes />
         </Layout>
       </ProfileProvider>
+      <SpeedInsights />
     </Router>
   );
 }
