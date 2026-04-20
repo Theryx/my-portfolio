@@ -44,7 +44,7 @@ export default function Blog() {
                 {filteredPosts.map((post) => (
                   <Link to={`/blog/${post.id}`} key={post.id} className="blog-card">
                     <div className="blog-card__image">
-                      <img src={blogImageMap[post.id] || ''} alt={post.title} loading="lazy" />
+                      <img src={blogImageMap[post.image] || ''} alt={post.title} loading="lazy" />
                     </div>
                     <div className="blog-card__content">
                       <div className="blog-card__meta">

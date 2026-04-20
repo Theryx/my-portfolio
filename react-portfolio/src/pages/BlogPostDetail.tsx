@@ -1,11 +1,34 @@
 import { useParams, Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { PageTransition } from '../components/PageTransition';
 import { ArrowLeft, Calendar, Clock, User } from 'lucide-react';
-import { blogPosts, blogImageMap } from '../data/blog';
+import { getBlogPostById, type BlogPost } from '../lib/supabase';
+import { blogImageMap } from '../data/blog';
 
 export default function BlogPostDetail() {
   const { id } = useParams();
-  const post = blogPosts.find(p => p.id === id);
+  const [post, setPost] = useState<BlogPost | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchPost() {
+      if (!id) return;
+      const data = await getBlogPostById(id);
+      setPost(data);
+      setLoading(false);
+    }
+    fetchPost();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <PageTransition>
+        <div className="container" style={{ padding: '120px 0', textAlign: 'center' }}>
+          <p>Loading...</p>
+        </div>
+      </PageTransition>
+    );
+  }
 
   if (!post) {
     return (
@@ -20,7 +43,7 @@ export default function BlogPostDetail() {
     );
   }
 
-  const imageSrc = blogImageMap[post.id];
+  const imageSrc = blogImageMap[post.image];
 
   return (
     <PageTransition>
@@ -33,7 +56,7 @@ export default function BlogPostDetail() {
 
           <header className="blog-detail__header">
             <div className="blog-detail__tags">
-              {post.tags.map(tag => (
+              {(post.tags || []).map(tag => (
                 <span key={tag} className="blog-detail__tag">{tag}</span>
               ))}
             </div>
@@ -50,7 +73,7 @@ export default function BlogPostDetail() {
               </div>
               <div className="blog-detail__meta-item">
                 <Clock size={16} />
-                <span>{post.readTime}</span>
+                <span>{post.read_time}</span>
               </div>
             </div>
           </header>

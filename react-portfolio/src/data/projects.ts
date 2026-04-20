@@ -176,12 +176,12 @@ import gefonaImage from '../assets/img/gefona website.PNG';
 import matangaImage from '../assets/img/Matanga agancy website.PNG';
 
 export const projectImageMap: Record<string, string> = {
-  'paysika': paysikaImage,
-  'jobsika': jobsikaImage,
-  'shomi': shomiImage,
-  'citetsap': citetsapImage,
-  'gefona': gefonaImage,
-  'matanga': matangaImage
+  'PaySika website.PNG': paysikaImage,
+  'Screenshot of the UI of Jobsika.PNG': jobsikaImage,
+  'Shomi app_all in one solution for graduate students.jfif': shomiImage,
+  'an app I coded myself.PNG': citetsapImage,
+  'gefona website.PNG': gefonaImage,
+  'Matanga agancy website.PNG': matangaImage
 };
 
 // Unique tags for filtering

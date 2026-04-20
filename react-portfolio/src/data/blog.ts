@@ -117,10 +117,10 @@ import ossImage from '../assets/img/theryx giving a lecture to a comunity of ope
 import affinityImage from '../assets/img/Editor and designer for Report on Cameroon Cybersecurity.jfif';
 
 export const blogImageMap: Record<string, string> = {
-  'future-of-fintech-africa': paysikaImage,
-  'designing-for-accessibility': jobsikaImage,
-  'how-to-contribute-to-open-source-as-a-designer': ossImage,
-  'why-i-switched-from-illustrator-to-affinity-designer': affinityImage,
+  'PaySika website.PNG': paysikaImage,
+  'Screenshot of the UI of Jobsika.PNG': jobsikaImage,
+  'theryx giving a lecture to a comunity of open source.png': ossImage,
+  'Editor and designer for Report on Cameroon Cybersecurity.jfif': affinityImage,
 };
 
 export const blogTags = ['All', 'Fintech', 'Africa', 'Product Design', 'UX Design', 'Accessibility', 'Emerging Markets', 'Open Source', 'Design Tools'];

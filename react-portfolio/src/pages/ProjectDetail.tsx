@@ -43,7 +43,7 @@ export default function ProjectDetail() {
     );
   }
 
-  const imageSrc = projectImageMap[project.id];
+  const imageSrc = projectImageMap[project.image];
 
   return (
     <PageTransition>

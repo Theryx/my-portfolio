@@ -48,7 +48,7 @@ export default function Projects() {
                       <h3 className="project-card__title">{project.title}</h3>
                       <p className="project-card__tagline">{project.tagline}</p>
                       <div className="project-card__image">
-                        <img src={projectImageMap[project.id]} alt={project.title} loading="lazy" />
+                        <img src={projectImageMap[project.image]} alt={project.title} loading="lazy" />
                       </div>
                       <span className="project-card__cta">View Case Study <span className="project-card__cta-arrow">→</span></span>
                     </div>
