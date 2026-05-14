@@ -1,12 +1,12 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { lazy, Suspense, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Layout from './components/Layout';
 import { usePageTitle } from './hooks/usePageTitle';
 import { LoadingScreen } from './components/ui/LoadingScreen';
 import { ProfileProvider } from './context/ProfileContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import { supabase } from './lib/supabase';
+
 
 // Route-level code splitting
 const Home = lazy(() => import('./pages/Home'));
@@ -20,18 +20,6 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 const Admin = lazy(() => import('./pages/Admin'));
 
 function AdminRoute() {
-  const [checked, setChecked] = useState(false);
-  const [authed, setAuthed] = useState(false);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setAuthed(!!data.session);
-      setChecked(true);
-    });
-  }, []);
-
-  if (!checked) return <LoadingScreen />;
-  if (!authed) return <Navigate to="/" replace />;
   return <Suspense fallback={<LoadingScreen />}><Admin /></Suspense>;
 }
 
