@@ -30,13 +30,13 @@ CREATE POLICY "blog_posts_public_read" ON blog_posts
 -- Replace <YOUR_ADMIN_UUID> with the UUID from Supabase Auth > Users for your account.
 -- This restricts all writes to exactly one admin user instead of any authenticated user.
 CREATE POLICY "admin_write_profiles" ON profiles
-  FOR ALL USING (auth.uid() = '<YOUR_ADMIN_UUID>'::uuid)
-  WITH CHECK (auth.uid() = '<YOUR_ADMIN_UUID>'::uuid);
+  FOR ALL USING (auth.uid() = 'f81bdc2b-6ba4-4640-bd0f-ab72f0a13987'::uuid)
+  WITH CHECK (auth.uid() = 'f81bdc2b-6ba4-4640-bd0f-ab72f0a13987'::uuid);
 
 CREATE POLICY "admin_write_projects" ON projects
-  FOR ALL USING (auth.uid() = '<YOUR_ADMIN_UUID>'::uuid)
-  WITH CHECK (auth.uid() = '<YOUR_ADMIN_UUID>'::uuid);
+  FOR ALL USING (auth.uid() = 'f81bdc2b-6ba4-4640-bd0f-ab72f0a13987'::uuid)
+  WITH CHECK (auth.uid() = 'f81bdc2b-6ba4-4640-bd0f-ab72f0a13987'::uuid);
 
 CREATE POLICY "admin_write_blog_posts" ON blog_posts
-  FOR ALL USING (auth.uid() = '<YOUR_ADMIN_UUID>'::uuid)
-  WITH CHECK (auth.uid() = '<YOUR_ADMIN_UUID>'::uuid);
+  FOR ALL USING (auth.uid() = 'f81bdc2b-6ba4-4640-bd0f-ab72f0a13987'::uuid)
+  WITH CHECK (auth.uid() = 'f81bdc2b-6ba4-4640-bd0f-ab72f0a13987'::uuid);
