@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import DOMPurify from 'dompurify';
 import { PageTransition } from '../components/PageTransition';
 import { ArrowLeft, Calendar, Clock, User } from 'lucide-react';
 import { getBlogPostById, type BlogPost } from '../lib/supabase';
@@ -79,10 +80,15 @@ export default function BlogPostDetail() {
           </header>
 
           <div className="blog-detail__hero">
-            <img src={imageSrc} alt={post.title} loading="eager" />
+            <img
+              src={imageSrc}
+              alt={post.title}
+              loading="eager"
+              onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+            />
           </div>
 
-          <div className="blog-detail__body" dangerouslySetInnerHTML={{ __html: post.content }} />
+          <div className="blog-detail__body" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }} />
 
           <footer className="blog-detail__footer">
             <div className="blog-detail__navigation">

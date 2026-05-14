@@ -1,7 +1,11 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://peheavvvckblmlqelbtn.supabase.co';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBlaGVhdnZ2Y2tibG1scWVsYnRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1ODU3NzEsImV4cCI6MjA5MjE2MTc3MX0.4sFP0RWm5FFHnZl5ZA094SW8971qJ5hIG1reJqXkf_4';
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Missing Supabase environment variables. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to .env.local');
+}
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
@@ -65,7 +69,7 @@ export async function getProjectById(id: string): Promise<Project | null> {
     .eq('id', id)
     .single();
   if (error) {
-    console.error('Error fetching project:', error);
+    if (import.meta.env.DEV) console.error('Error fetching project:', error);
     return null;
   }
   return data;
@@ -78,7 +82,7 @@ export async function getBlogPostById(id: string): Promise<BlogPost | null> {
     .eq('id', id)
     .single();
   if (error) {
-    console.error('Error fetching blog post:', error);
+    if (import.meta.env.DEV) console.error('Error fetching blog post:', error);
     return null;
   }
   return data;
@@ -90,7 +94,7 @@ export async function getAllProfiles(): Promise<Profile[]> {
     .select('*')
     .order('id');
   if (error) {
-    console.error('Error fetching profiles:', error);
+    if (import.meta.env.DEV) console.error('Error fetching profiles:', error);
     return [];
   }
   return data || [];

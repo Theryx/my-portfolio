@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { Calendar, Clock } from 'lucide-react';
 
 export default function Blog() {
-  const { blogPosts, loading } = useProfile();
+  const { blogPosts, loading, error } = useProfile();
   const [activeTag, setActiveTag] = useState('All');
 
   const uniqueTags = ['All', ...new Set(blogPosts.flatMap(p => p.tags || []))];
@@ -24,27 +24,43 @@ export default function Blog() {
           <p className="section__subtitle">Thoughts on design, technology, and the future of fintech in Africa.</p>
 
           {loading ? (
-            <p>Loading blog posts...</p>
+            <p role="status" aria-live="polite">Loading blog posts...</p>
+          ) : error ? (
+            <p role="alert" style={{ color: 'var(--color-error, #e53e3e)', textAlign: 'center', padding: '60px 0' }}>
+              Failed to load posts. Please try again later.
+            </p>
           ) : (
             <>
-              <div className="projects__filters">
+              <div className="blog__filters" role="group" aria-label="Filter posts by tag">
                 {uniqueTags.map(tag => (
                   <button
                     key={tag}
                     className={`projects__filter-btn ${activeTag === tag ? 'projects__filter-btn--active' : ''}`}
                     onClick={() => setActiveTag(tag)}
                     type="button"
+                    aria-pressed={activeTag === tag}
                   >
                     {tag}
                   </button>
                 ))}
               </div>
 
+              {filteredPosts.length === 0 && (
+                <p style={{ textAlign: 'center', padding: '60px 0', color: 'var(--color-text-muted)' }}>
+                  {activeTag === 'All' ? 'No posts published yet.' : `No posts tagged "${activeTag}".`}
+                </p>
+              )}
+
               <motion.div className="blog__grid" layout>
                 {filteredPosts.map((post) => (
                   <Link to={`/blog/${post.id}`} key={post.id} className="blog-card">
                     <div className="blog-card__image">
-                      <img src={blogImageMap[post.image] || ''} alt={post.title} loading="lazy" />
+                      <img
+                        src={blogImageMap[post.image] || ''}
+                        alt={post.title}
+                        loading="lazy"
+                        onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                      />
                     </div>
                     <div className="blog-card__content">
                       <div className="blog-card__meta">

@@ -80,8 +80,8 @@ export default function Layout({ children }: LayoutProps) {
       </header>
 
       {isMobileMenuOpen && (
-        <div className="mobile-menu" role="dialog" aria-label="Mobile navigation">
-          <nav className="mobile-menu__nav" aria-label="Mobile navigation">
+        <div className="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+          <nav className="mobile-menu__nav" aria-label="Main navigation">
             {NAV_LINKS.map(link => (
               <Link
                 key={link.to}

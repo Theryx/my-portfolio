@@ -7,7 +7,7 @@ import teamDiscussion from '../assets/img/Me discussion with my collegue.jfif';
 import { motion } from 'framer-motion';
 
 export default function Projects() {
-  const { projects, loading } = useProfile();
+  const { projects, loading, error } = useProfile();
   const [activeTag, setActiveTag] = useState('All');
 
   const uniqueTags = ['All', ...new Set(projects.map(p => p.tag).filter(Boolean))];
@@ -23,21 +23,32 @@ export default function Projects() {
           <h2 className="section__title">Selected Work</h2>
 
           {loading ? (
-            <p>Loading projects...</p>
+            <p role="status" aria-live="polite">Loading projects...</p>
+          ) : error ? (
+            <p role="alert" style={{ color: 'var(--color-error, #e53e3e)', textAlign: 'center', padding: '60px 0' }}>
+              Failed to load projects. Please try again later.
+            </p>
           ) : (
             <>
-              <div className="projects__filters">
+              <div className="projects__filters" role="group" aria-label="Filter projects by category">
                 {uniqueTags.map(tag => (
                   <button
                     key={tag}
                     className={`projects__filter-btn ${activeTag === tag ? 'projects__filter-btn--active' : ''}`}
                     onClick={() => setActiveTag(tag)}
                     type="button"
+                    aria-pressed={activeTag === tag}
                   >
                     {tag}
                   </button>
                 ))}
               </div>
+
+              {filteredProjects.length === 0 && (
+                <p style={{ textAlign: 'center', padding: '60px 0', color: 'var(--color-text-muted)' }}>
+                  {activeTag === 'All' ? 'No projects yet.' : `No projects in "${activeTag}".`}
+                </p>
+              )}
 
               <motion.div className="projects__grid" layout>
                 {filteredProjects.map((project) => (
@@ -48,7 +59,12 @@ export default function Projects() {
                       <h3 className="project-card__title">{project.title}</h3>
                       <p className="project-card__tagline">{project.tagline}</p>
                       <div className="project-card__image">
-                        <img src={projectImageMap[project.image]} alt={project.title} loading="lazy" />
+                        <img
+                          src={projectImageMap[project.image]}
+                          alt={project.title}
+                          loading="lazy"
+                          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                        />
                       </div>
                       <span className="project-card__cta">View Case Study <span className="project-card__cta-arrow">→</span></span>
                     </div>

@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { supabase, type Profile, type Project, type BlogPost } from '../lib/supabase';
 
@@ -23,7 +23,7 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
 
   const profileIdParam = searchParams.get('profile');
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     setError(null);
 
@@ -48,23 +48,19 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
       if (projectsRes.data) setProjects(projectsRes.data);
       if (blogRes.data) setBlogPosts(blogRes.data);
     } catch (err) {
-      console.error('Error fetching profile data:', err);
+      if (import.meta.env.DEV) console.error('Error fetching profile data:', err);
       setError(err instanceof Error ? err.message : 'Failed to load profile');
     } finally {
       setLoading(false);
     }
-  };
+  }, [profileIdParam]);
 
   useEffect(() => {
     fetchData();
-  }, [profileIdParam]);
-
-  const refresh = () => {
-    fetchData();
-  };
+  }, [fetchData]);
 
   return (
-    <ProfileContext.Provider value={{ profile, projects, blogPosts, loading, error, refresh }}>
+    <ProfileContext.Provider value={{ profile, projects, blogPosts, loading, error, refresh: fetchData }}>
       {children}
     </ProfileContext.Provider>
   );

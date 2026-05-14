@@ -29,7 +29,8 @@ export default function Contact() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          access_key: 'YOUR_ACCESS_KEY', // TODO: Replace with your Web3Forms access key
+          access_key: import.meta.env.VITE_WEB3FORMS_KEY || '',
+          botcheck: false,
           ...data,
         }),
       });
@@ -37,6 +38,7 @@ export default function Contact() {
       if (response.ok) {
         setFormStatus('success');
         (e.target as HTMLFormElement).reset();
+        setTimeout(() => setFormStatus('idle'), 5000);
       } else {
         setFormStatus('error');
       }

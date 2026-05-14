@@ -1,6 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { PageTransition } from '../components/PageTransition';
 import { supabase, type Profile, type Project, type BlogPost } from '../lib/supabase';
+
+const MAX_ATTEMPTS = 5;
+const LOCKOUT_MS = 15 * 60 * 1000;
 
 type Tab = 'profiles' | 'projects' | 'blog';
 
@@ -10,11 +13,13 @@ interface Toast {
   type: 'success' | 'error';
 }
 
-let toastId = 0;
+let toastIdCounter = 0;
 
 export default function Admin() {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<Tab>('profiles');
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -23,19 +28,66 @@ export default function Admin() {
   const [saving, setSaving] = useState(false);
   const [editingItem, setEditingItem] = useState<Profile | Project | BlogPost | null>(null);
   const [toasts, setToasts] = useState<Toast[]>([]);
+  const [loginSubmitting, setLoginSubmitting] = useState(false);
+  const [deleteConfirm, setDeleteConfirm] = useState<{ table: 'projects' | 'blog_posts' | 'profiles'; id: string } | null>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
 
+  const toastIdRef = useRef(toastIdCounter);
   const addToast = useCallback((message: string, type: 'success' | 'error') => {
-    const id = ++toastId;
+    toastIdCounter += 1;
+    toastIdRef.current = toastIdCounter;
+    const id = toastIdRef.current;
     setToasts((t) => [...t, { id, message, type }]);
     setTimeout(() => setToasts((t) => t.filter((x) => x.id !== id)), 3500);
   }, []);
 
-  const handleLogin = () => {
-    if (password === 'theryx2026') {
-      setIsAuthenticated(true);
-    } else {
-      addToast('Invalid password', 'error');
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setIsAuthenticated(!!data.session);
+      setAuthLoading(false);
+    });
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(!!session);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const getLockout = () => {
+    try {
+      const raw = localStorage.getItem('admin_lockout');
+      if (!raw) return null;
+      return JSON.parse(raw) as { attempts: number; since: number };
+    } catch { return null; }
+  };
+
+  const handleLogin = async () => {
+    const lockout = getLockout();
+    if (lockout && lockout.attempts >= MAX_ATTEMPTS) {
+      const elapsed = Date.now() - lockout.since;
+      if (elapsed < LOCKOUT_MS) {
+        const remaining = Math.ceil((LOCKOUT_MS - elapsed) / 60000);
+        addToast(`Too many failed attempts. Try again in ${remaining} minute${remaining !== 1 ? 's' : ''}.`, 'error');
+        return;
+      }
+      localStorage.removeItem('admin_lockout');
     }
+
+    setLoginSubmitting(true);
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    setLoginSubmitting(false);
+
+    if (error) {
+      const lockout = getLockout();
+      const attempts = (lockout?.attempts ?? 0) + 1;
+      localStorage.setItem('admin_lockout', JSON.stringify({ attempts, since: lockout?.since ?? Date.now() }));
+      addToast(attempts >= MAX_ATTEMPTS ? 'Account locked for 15 minutes after too many failed attempts.' : 'Invalid credentials', 'error');
+    } else {
+      localStorage.removeItem('admin_lockout');
+    }
+  };
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
   };
 
   const fetchAll = async () => {
@@ -50,7 +102,7 @@ export default function Admin() {
       if (projectsRes.data) setProjects(projectsRes.data);
       if (blogRes.data) setBlogPosts(blogRes.data);
     } catch (err) {
-      console.error('Error fetching data:', err);
+      if (import.meta.env.DEV) console.error('Error fetching data:', err);
       addToast('Failed to load data', 'error');
     } finally {
       setLoading(false);
@@ -73,7 +125,7 @@ export default function Admin() {
       setEditingItem(null);
       addToast('Profile saved', 'success');
     } catch (err) {
-      console.error(err);
+      if (import.meta.env.DEV) console.error(err);
       addToast('Failed to save profile', 'error');
     } finally {
       setSaving(false);
@@ -92,7 +144,7 @@ export default function Admin() {
       setEditingItem(null);
       addToast('Project saved', 'success');
     } catch (err) {
-      console.error(err);
+      if (import.meta.env.DEV) console.error(err);
       addToast('Failed to save project', 'error');
     } finally {
       setSaving(false);
@@ -111,7 +163,7 @@ export default function Admin() {
       setEditingItem(null);
       addToast('Blog post saved', 'success');
     } catch (err) {
-      console.error(err);
+      if (import.meta.env.DEV) console.error(err);
       addToast('Failed to save blog post', 'error');
     } finally {
       setSaving(false);
@@ -128,25 +180,41 @@ export default function Admin() {
       await fetchAll();
       addToast(`Item ${item.is_hidden ? 'shown' : 'hidden'}`, 'success');
     } catch (err) {
-      console.error(err);
+      if (import.meta.env.DEV) console.error(err);
       addToast('Failed to update visibility', 'error');
     }
   };
 
-  const deleteItem = async (table: 'projects' | 'blog_posts' | 'profiles', id: string) => {
-    if (!confirm('Delete this item? This cannot be undone.')) return;
+  const deleteItem = (table: 'projects' | 'blog_posts' | 'profiles', id: string) => {
+    setDeleteConfirm({ table, id });
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteConfirm) return;
     try {
-      const { error } = await supabase.from(table).delete().eq('id', id);
+      const { error } = await supabase.from(deleteConfirm.table).delete().eq('id', deleteConfirm.id);
       if (error) throw error;
       await fetchAll();
       addToast('Item deleted', 'success');
     } catch (err) {
-      console.error(err);
+      if (import.meta.env.DEV) console.error(err);
       addToast('Failed to delete item', 'error');
+    } finally {
+      setDeleteConfirm(null);
     }
   };
 
   const defaultProfileId = profiles[0]?.id || '';
+
+  if (authLoading) {
+    return (
+      <PageTransition>
+        <div className="container" style={{ padding: '120px 0', textAlign: 'center' }}>
+          <p>Loading...</p>
+        </div>
+      </PageTransition>
+    );
+  }
 
   if (!isAuthenticated) {
     return (
@@ -155,14 +223,31 @@ export default function Admin() {
           <div className="container">
             <div className="admin-login__form">
               <h2>Admin Login</h2>
-              <input
-                type="password"
-                placeholder="Enter password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
-              />
-              <button onClick={handleLogin} className="btn btn--primary">Login</button>
+              <div className="admin__field">
+                <label htmlFor="admin-email">Email</label>
+                <input
+                  id="admin-email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
+                  autoComplete="email"
+                />
+              </div>
+              <div className="admin__field">
+                <label htmlFor="admin-password">Password</label>
+                <input
+                  id="admin-password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
+                  autoComplete="current-password"
+                />
+              </div>
+              <button onClick={handleLogin} disabled={loginSubmitting} className="btn btn--primary">
+                {loginSubmitting ? 'Signing in…' : 'Login'}
+              </button>
             </div>
           </div>
           <ToastContainer toasts={toasts} />
@@ -181,13 +266,20 @@ export default function Admin() {
               <button className="btn btn--secondary" style={{ fontSize: '14px', padding: '8px 16px' }} onClick={fetchAll}>
                 Refresh
               </button>
+              <button className="btn btn--secondary" style={{ fontSize: '14px', padding: '8px 16px' }} onClick={handleLogout}>
+                Logout
+              </button>
             </div>
           </div>
 
-          <div className="admin__tabs">
+          <div className="admin__tabs" role="tablist" aria-label="CMS sections">
             {(['profiles', 'projects', 'blog'] as Tab[]).map((tab) => (
               <button
                 key={tab}
+                role="tab"
+                aria-selected={activeTab === tab}
+                aria-controls={`tabpanel-${tab}`}
+                id={`tab-${tab}`}
                 className={`admin__tab ${activeTab === tab ? 'admin__tab--active' : ''}`}
                 onClick={() => setActiveTab(tab)}
               >
@@ -204,7 +296,7 @@ export default function Admin() {
           ) : (
             <>
               {activeTab === 'profiles' && (
-                <div className="admin__section">
+                <div className="admin__section" role="tabpanel" id="tabpanel-profiles" aria-labelledby="tab-profiles">
                   <div className="admin__header">
                     <h3>Portfolio Profiles</h3>
                     <button className="btn btn--primary" onClick={() => setEditingItem({} as Profile)}>
@@ -232,7 +324,7 @@ export default function Admin() {
               )}
 
               {activeTab === 'projects' && (
-                <div className="admin__section">
+                <div className="admin__section" role="tabpanel" id="tabpanel-projects" aria-labelledby="tab-projects">
                   <div className="admin__header">
                     <h3>Projects</h3>
                     <button
@@ -266,7 +358,7 @@ export default function Admin() {
               )}
 
               {activeTab === 'blog' && (
-                <div className="admin__section">
+                <div className="admin__section" role="tabpanel" id="tabpanel-blog" aria-labelledby="tab-blog">
                   <div className="admin__header">
                     <h3>Blog Posts</h3>
                     <button
@@ -302,14 +394,22 @@ export default function Admin() {
           )}
 
           {editingItem && (
-            <div className="admin__modal" onClick={(e) => e.target === e.currentTarget && setEditingItem(null)}>
+            <div
+              className="admin__modal"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="admin-modal-title"
+              ref={modalRef}
+              onClick={(e) => e.target === e.currentTarget && setEditingItem(null)}
+              onKeyDown={(e) => e.key === 'Escape' && setEditingItem(null)}
+            >
               <div className="admin__modal-content">
                 <div className="admin__modal-header">
-                  <h3>
+                  <h3 id="admin-modal-title">
                     {'id' in editingItem && editingItem.id ? 'Edit' : 'Create'}{' '}
                     {activeTab === 'profiles' ? 'Profile' : activeTab === 'projects' ? 'Project' : 'Blog Post'}
                   </h3>
-                  <button className="admin__modal-close" onClick={() => setEditingItem(null)}>✕</button>
+                  <button className="admin__modal-close" onClick={() => setEditingItem(null)} aria-label="Close dialog">✕</button>
                 </div>
                 {activeTab === 'profiles' ? (
                   <ProfileForm profile={editingItem as Profile} onSave={saveProfile} onCancel={() => setEditingItem(null)} saving={saving} />
@@ -318,6 +418,26 @@ export default function Admin() {
                 ) : (
                   <BlogForm post={editingItem as BlogPost} profiles={profiles} onSave={saveBlogPost} onCancel={() => setEditingItem(null)} saving={saving} />
                 )}
+              </div>
+            </div>
+          )}
+
+          {deleteConfirm && (
+            <div
+              className="admin__modal"
+              role="alertdialog"
+              aria-modal="true"
+              aria-labelledby="delete-modal-title"
+              aria-describedby="delete-modal-desc"
+              onKeyDown={(e) => e.key === 'Escape' && setDeleteConfirm(null)}
+            >
+              <div className="admin__modal-content admin__modal-content--sm">
+                <h3 id="delete-modal-title">Confirm Delete</h3>
+                <p id="delete-modal-desc" style={{ margin: '12px 0 24px' }}>This item will be permanently deleted and cannot be recovered.</p>
+                <div className="admin__actions">
+                  <button className="btn admin__btn-danger" onClick={confirmDelete}>Delete</button>
+                  <button className="btn btn--secondary" onClick={() => setDeleteConfirm(null)}>Cancel</button>
+                </div>
               </div>
             </div>
           )}
@@ -332,7 +452,7 @@ export default function Admin() {
 
 function ToastContainer({ toasts }: { toasts: Toast[] }) {
   return (
-    <div className="admin__toasts">
+    <div className="admin__toasts" role="status" aria-live="polite" aria-atomic="false">
       {toasts.map((t) => (
         <div key={t.id} className={`admin__toast admin__toast--${t.type}`}>{t.message}</div>
       ))}
@@ -363,7 +483,7 @@ function ArrayEditor({ label, values, onChange, placeholder }: {
       <label>{label}</label>
       <div className="admin__array-tags">
         {values.map((v, i) => (
-          <span key={i} className="admin__tag">
+          <span key={v} className="admin__tag">
             {v}
             <button type="button" onClick={() => remove(i)}>✕</button>
           </span>

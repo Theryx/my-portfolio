@@ -7,8 +7,11 @@ export function LoadingScreen() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className="loading-screen"
+      role="status"
+      aria-label="Loading"
     >
-      <div className="loading-screen__spinner" />
+      <div className="loading-screen__spinner" aria-hidden="true" />
+      <span className="sr-only">Loading…</span>
     </motion.div>
   );
 }
