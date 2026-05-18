@@ -117,7 +117,7 @@ export async function getActiveProfile(): Promise<Profile | null> {
 
 export async function updateProfile(id: string, data: Partial<Profile>): Promise<Profile> {
   return apiFetch<Profile>(`/api/profiles/${id}`, {
-    method: 'PUT',
+    method: 'POST',
     body: JSON.stringify(data),
   });
 }
