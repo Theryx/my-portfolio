@@ -1,6 +1,14 @@
 import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { supabase, type Profile, type Project, type BlogPost } from '../lib/supabase';
+import {
+  getProfileById,
+  getActiveProfile,
+  getProjectsByProfile,
+  getBlogPostsByProfile,
+  type Profile,
+  type Project,
+  type BlogPost,
+} from '../lib/api';
 
 interface ProfileContextType {
   profile: Profile | null;
@@ -28,25 +36,21 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
     setError(null);
 
     try {
-      let profileQuery = supabase.from('profiles').select('*');
-      if (profileIdParam) {
-        profileQuery = profileQuery.eq('id', profileIdParam);
-      } else {
-        profileQuery = profileQuery.eq('is_active', true).limit(1);
-      }
-      const profileRes = await profileQuery.single();
+      const resolvedProfile = profileIdParam
+        ? await getProfileById(profileIdParam)
+        : await getActiveProfile();
 
-      if (profileRes.error) throw profileRes.error;
-      setProfile(profileRes.data);
+      if (!resolvedProfile) throw new Error('Profile not found');
+      setProfile(resolvedProfile);
 
-      const profileId = profileRes.data.id;
-      const [projectsRes, blogRes] = await Promise.all([
-        supabase.from('projects').select('*').eq('profile_id', profileId).eq('is_hidden', false).order('sort_order', { ascending: true }),
-        supabase.from('blog_posts').select('*').eq('profile_id', profileId).eq('is_hidden', false).order('sort_order', { ascending: true }),
+      const profileId = resolvedProfile.id;
+      const [fetchedProjects, fetchedPosts] = await Promise.all([
+        getProjectsByProfile(profileId),
+        getBlogPostsByProfile(profileId),
       ]);
 
-      if (projectsRes.data) setProjects(projectsRes.data);
-      if (blogRes.data) setBlogPosts(blogRes.data);
+      setProjects(fetchedProjects);
+      setBlogPosts(fetchedPosts);
     } catch (err) {
       if (import.meta.env.DEV) console.error('Error fetching profile data:', err);
       setError(err instanceof Error ? err.message : 'Failed to load profile');

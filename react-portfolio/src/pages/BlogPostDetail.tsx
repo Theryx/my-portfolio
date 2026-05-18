@@ -1,9 +1,10 @@
 import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import DOMPurify from 'dompurify';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { PageTransition } from '../components/PageTransition';
 import { ArrowLeft, Calendar, Clock, User } from 'lucide-react';
-import { getBlogPostById, type BlogPost } from '../lib/supabase';
+import { getBlogPostById, type BlogPost } from '../lib/api';
 import { blogImageMap } from '../data/blog';
 
 export default function BlogPostDetail() {
@@ -88,7 +89,9 @@ export default function BlogPostDetail() {
             />
           </div>
 
-          <div className="blog-detail__body" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }} />
+          <div className="blog-detail__body">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
+          </div>
 
           <footer className="blog-detail__footer">
             <div className="blog-detail__navigation">

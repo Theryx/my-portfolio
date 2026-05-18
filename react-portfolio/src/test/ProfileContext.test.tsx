@@ -7,11 +7,11 @@ vi.mock('../lib/supabase', () => ({
   supabase: {
     from: vi.fn(() => ({
       select: vi.fn(() => ({
-        eq: vi.fn(() => ({
-          single: vi.fn(() => Promise.resolve({ 
-            data: { 
-              id: 'default', 
-              name: 'Default', 
+        eq: vi.fn(() => {
+          const profileResult = {
+            data: {
+              id: 'default',
+              name: 'Default',
               is_active: true,
               bio: 'Test Bio',
               tagline: 'Test Tagline',
@@ -21,10 +21,10 @@ vi.mock('../lib/supabase', () => ({
               philosophy_text: 'Philosophy text',
               badges: ['Available'],
               social_links: {}
-            }, 
-            error: null 
-          })),
-          order: vi.fn(() => Promise.resolve({ 
+            },
+            error: null
+          };
+          const projectsResult = {
             data: [
               {
                 id: 'paysika',
@@ -49,10 +49,16 @@ vi.mock('../lib/supabase', () => ({
                 is_hidden: false,
                 sort_order: 1
               }
-            ], 
-            error: null 
-          }))
-        })),
+            ],
+            error: null
+          };
+          return {
+            single: vi.fn(() => Promise.resolve(profileResult)),
+            limit: vi.fn(() => ({ single: vi.fn(() => Promise.resolve(profileResult)) })),
+            order: vi.fn(() => Promise.resolve(projectsResult)),
+            eq: vi.fn(() => ({ order: vi.fn(() => Promise.resolve(projectsResult)) })),
+          };
+        }),
         order: vi.fn(() => Promise.resolve({ 
           data: [
             {

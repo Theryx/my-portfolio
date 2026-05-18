@@ -1,11 +1,19 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { PageTransition } from '../components/PageTransition';
-import { supabase, type Profile, type Project, type BlogPost } from '../lib/supabase';
+import { MarkdownEditor } from '../components/MarkdownEditor';
+import { Eye, EyeOff } from 'lucide-react';
+import {
+  login, logout, getSession, changePassword,
+  getAllProfiles, getAllProjects, getAllBlogPosts,
+  updateProfile, upsertProject, updateProject, deleteProject,
+  upsertBlogPost, updateBlogPost, deleteBlogPost,
+  type Profile, type Project, type BlogPost,
+} from '../lib/api';
 
 const MAX_ATTEMPTS = 5;
 const LOCKOUT_MS = 15 * 60 * 1000;
 
-type Tab = 'profiles' | 'projects' | 'blog';
+type Tab = 'profiles' | 'projects' | 'blog' | 'security';
 
 interface Toast {
   id: number;
@@ -18,9 +26,11 @@ let toastIdCounter = 0;
 export default function Admin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authLoading, setAuthLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<Tab>('profiles');
+  const [profileFilter, setProfileFilter] = useState<string>('all');
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
@@ -42,14 +52,12 @@ export default function Admin() {
   }, []);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setIsAuthenticated(!!data.session);
-      setAuthLoading(false);
-    });
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setIsAuthenticated(!!session);
-    });
-    return () => subscription.unsubscribe();
+    getSession()
+      .then((authenticated) => {
+        setIsAuthenticated(authenticated);
+        setAuthLoading(false);
+      })
+      .catch(() => setAuthLoading(false));
   }, []);
 
   const getLockout = () => {
@@ -73,34 +81,37 @@ export default function Admin() {
     }
 
     setLoginSubmitting(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    setLoginSubmitting(false);
-
-    if (error) {
-      const lockout = getLockout();
-      const attempts = (lockout?.attempts ?? 0) + 1;
-      localStorage.setItem('admin_lockout', JSON.stringify({ attempts, since: lockout?.since ?? Date.now() }));
-      addToast(attempts >= MAX_ATTEMPTS ? 'Account locked for 15 minutes after too many failed attempts.' : 'Invalid credentials', 'error');
-    } else {
+    try {
+      await login(email, password);
       localStorage.removeItem('admin_lockout');
+      setIsAuthenticated(true);
+    } catch {
+      const current = getLockout();
+      const attempts = (current?.attempts ?? 0) + 1;
+      localStorage.setItem('admin_lockout', JSON.stringify({ attempts, since: current?.since ?? Date.now() }));
+      addToast(
+        attempts >= MAX_ATTEMPTS
+          ? 'Account locked for 15 minutes after too many failed attempts.'
+          : 'Invalid credentials',
+        'error'
+      );
+    } finally {
+      setLoginSubmitting(false);
     }
   };
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    await logout();
+    setIsAuthenticated(false);
   };
 
   const fetchAll = async () => {
     setLoading(true);
     try {
-      const [profilesRes, projectsRes, blogRes] = await Promise.all([
-        supabase.from('profiles').select('*').order('id'),
-        supabase.from('projects').select('*').order('sort_order', { ascending: true }),
-        supabase.from('blog_posts').select('*').order('sort_order', { ascending: true }),
-      ]);
-      if (profilesRes.data) setProfiles(profilesRes.data);
-      if (projectsRes.data) setProjects(projectsRes.data);
-      if (blogRes.data) setBlogPosts(blogRes.data);
+      const [p, pr, b] = await Promise.all([getAllProfiles(), getAllProjects(), getAllBlogPosts()]);
+      setProfiles(p);
+      setProjects(pr);
+      setBlogPosts(b);
     } catch (err) {
       if (import.meta.env.DEV) console.error('Error fetching data:', err);
       addToast('Failed to load data', 'error');
@@ -116,11 +127,7 @@ export default function Admin() {
   const saveProfile = async (profile: Partial<Profile>) => {
     setSaving(true);
     try {
-      const { error } = await supabase
-        .from('profiles')
-        .upsert({ ...profile, updated_at: new Date().toISOString() })
-        .select();
-      if (error) throw error;
+      await updateProfile(profile.id!, profile);
       await fetchAll();
       setEditingItem(null);
       addToast('Profile saved', 'success');
@@ -135,11 +142,7 @@ export default function Admin() {
   const saveProject = async (project: Partial<Project>) => {
     setSaving(true);
     try {
-      const { error } = await supabase
-        .from('projects')
-        .upsert({ ...project, updated_at: new Date().toISOString() })
-        .select();
-      if (error) throw error;
+      await upsertProject(project as Project);
       await fetchAll();
       setEditingItem(null);
       addToast('Project saved', 'success');
@@ -154,11 +157,7 @@ export default function Admin() {
   const saveBlogPost = async (post: Partial<BlogPost>) => {
     setSaving(true);
     try {
-      const { error } = await supabase
-        .from('blog_posts')
-        .upsert({ ...post, updated_at: new Date().toISOString() })
-        .select();
-      if (error) throw error;
+      await upsertBlogPost(post as BlogPost);
       await fetchAll();
       setEditingItem(null);
       addToast('Blog post saved', 'success');
@@ -172,11 +171,11 @@ export default function Admin() {
 
   const toggleHidden = async (table: 'projects' | 'blog_posts', item: Project | BlogPost) => {
     try {
-      const { error } = await supabase
-        .from(table)
-        .update({ is_hidden: !item.is_hidden })
-        .eq('id', item.id);
-      if (error) throw error;
+      if (table === 'projects') {
+        await updateProject(item.id, { is_hidden: !item.is_hidden });
+      } else {
+        await updateBlogPost(item.id, { is_hidden: !item.is_hidden });
+      }
       await fetchAll();
       addToast(`Item ${item.is_hidden ? 'shown' : 'hidden'}`, 'success');
     } catch (err) {
@@ -192,8 +191,8 @@ export default function Admin() {
   const confirmDelete = async () => {
     if (!deleteConfirm) return;
     try {
-      const { error } = await supabase.from(deleteConfirm.table).delete().eq('id', deleteConfirm.id);
-      if (error) throw error;
+      if (deleteConfirm.table === 'projects') await deleteProject(deleteConfirm.id);
+      else if (deleteConfirm.table === 'blog_posts') await deleteBlogPost(deleteConfirm.id);
       await fetchAll();
       addToast('Item deleted', 'success');
     } catch (err) {
@@ -236,14 +235,25 @@ export default function Admin() {
               </div>
               <div className="admin__field">
                 <label htmlFor="admin-password">Password</label>
-                <input
-                  id="admin-password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
-                  autoComplete="current-password"
-                />
+                <div style={{ position: 'relative' }}>
+                  <input
+                    id="admin-password"
+                    type={showPassword ? 'text' : 'password'}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
+                    autoComplete="current-password"
+                    style={{ paddingRight: '40px', width: '100%' }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((v) => !v)}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                    style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', opacity: 0.6, padding: 0, display: 'flex' }}
+                  >
+                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
+                </div>
               </div>
               <button onClick={handleLogin} disabled={loginSubmitting} className="btn btn--primary">
                 {loginSubmitting ? 'Signing in…' : 'Login'}
@@ -273,7 +283,7 @@ export default function Admin() {
           </div>
 
           <div className="admin__tabs" role="tablist" aria-label="CMS sections">
-            {(['profiles', 'projects', 'blog'] as Tab[]).map((tab) => (
+            {(['profiles', 'projects', 'blog', 'security'] as Tab[]).map((tab) => (
               <button
                 key={tab}
                 role="tab"
@@ -284,9 +294,11 @@ export default function Admin() {
                 onClick={() => setActiveTab(tab)}
               >
                 {tab === 'blog' ? 'Blog Posts' : tab.charAt(0).toUpperCase() + tab.slice(1)}
-                <span className="admin__tab-count">
-                  {tab === 'profiles' ? profiles.length : tab === 'projects' ? projects.length : blogPosts.length}
-                </span>
+                {tab !== 'security' && (
+                  <span className="admin__tab-count">
+                    {tab === 'profiles' ? profiles.length : tab === 'projects' ? projects.length : blogPosts.length}
+                  </span>
+                )}
               </button>
             ))}
           </div>
@@ -299,9 +311,6 @@ export default function Admin() {
                 <div className="admin__section" role="tabpanel" id="tabpanel-profiles" aria-labelledby="tab-profiles">
                   <div className="admin__header">
                     <h3>Portfolio Profiles</h3>
-                    <button className="btn btn--primary" onClick={() => setEditingItem({} as Profile)}>
-                      + New Profile
-                    </button>
                   </div>
                   <div className="admin__list">
                     {profiles.map((profile) => (
@@ -327,15 +336,21 @@ export default function Admin() {
                 <div className="admin__section" role="tabpanel" id="tabpanel-projects" aria-labelledby="tab-projects">
                   <div className="admin__header">
                     <h3>Projects</h3>
-                    <button
-                      className="btn btn--primary"
-                      onClick={() => setEditingItem({ profile_id: defaultProfileId, is_hidden: false, sort_order: projects.length } as Project)}
-                    >
-                      + New Project
-                    </button>
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                      <select value={profileFilter} onChange={(e) => setProfileFilter(e.target.value)} style={{ fontSize: '13px', padding: '4px 8px' }}>
+                        <option value="all">All profiles</option>
+                        {profiles.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
+                      </select>
+                      <button
+                        className="btn btn--primary"
+                        onClick={() => setEditingItem({ profile_id: defaultProfileId, is_hidden: false, sort_order: projects.length } as Project)}
+                      >
+                        + New Project
+                      </button>
+                    </div>
                   </div>
                   <div className="admin__list">
-                    {projects.map((project) => (
+                    {projects.filter((p) => profileFilter === 'all' || p.profile_id === profileFilter).map((project) => (
                       <div key={project.id} className="admin__item">
                         <div className="admin__item-info">
                           <strong>{project.title}</strong>
@@ -361,15 +376,21 @@ export default function Admin() {
                 <div className="admin__section" role="tabpanel" id="tabpanel-blog" aria-labelledby="tab-blog">
                   <div className="admin__header">
                     <h3>Blog Posts</h3>
-                    <button
-                      className="btn btn--primary"
-                      onClick={() => setEditingItem({ profile_id: defaultProfileId, is_hidden: true, sort_order: blogPosts.length } as BlogPost)}
-                    >
-                      + New Post
-                    </button>
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                      <select value={profileFilter} onChange={(e) => setProfileFilter(e.target.value)} style={{ fontSize: '13px', padding: '4px 8px' }}>
+                        <option value="all">All profiles</option>
+                        {profiles.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
+                      </select>
+                      <button
+                        className="btn btn--primary"
+                        onClick={() => setEditingItem({ profile_id: defaultProfileId, is_hidden: true, sort_order: blogPosts.length } as BlogPost)}
+                      >
+                        + New Post
+                      </button>
+                    </div>
                   </div>
                   <div className="admin__list">
-                    {blogPosts.map((post) => (
+                    {blogPosts.filter((p) => profileFilter === 'all' || p.profile_id === profileFilter).map((post) => (
                       <div key={post.id} className="admin__item">
                         <div className="admin__item-info">
                           <strong>{post.title}</strong>
@@ -388,6 +409,14 @@ export default function Admin() {
                       </div>
                     ))}
                   </div>
+                </div>
+              )}
+              {activeTab === 'security' && (
+                <div className="admin__section" role="tabpanel" id="tabpanel-security" aria-labelledby="tab-security">
+                  <div className="admin__header">
+                    <h3>Security Settings</h3>
+                  </div>
+                  <SecurityForm onSuccess={(msg) => addToast(msg, 'success')} onError={(msg) => addToast(msg, 'error')} />
                 </div>
               )}
             </>
@@ -456,6 +485,163 @@ function ToastContainer({ toasts }: { toasts: Toast[] }) {
       {toasts.map((t) => (
         <div key={t.id} className={`admin__toast admin__toast--${t.type}`}>{t.message}</div>
       ))}
+    </div>
+  );
+}
+
+/* ─── Security Form ─────────────────────────────────────────────────────── */
+
+function PasswordInput({ id, value, onChange, placeholder, autoComplete }: {
+  id: string; value: string; onChange: (v: string) => void; placeholder?: string; autoComplete?: string;
+}) {
+  const [show, setShow] = useState(false);
+  return (
+    <div style={{ position: 'relative' }}>
+      <input
+        id={id}
+        type={show ? 'text' : 'password'}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        autoComplete={autoComplete}
+        style={{ paddingRight: '40px', width: '100%' }}
+      />
+      <button
+        type="button"
+        onClick={() => setShow((v) => !v)}
+        aria-label={show ? 'Hide password' : 'Show password'}
+        style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', opacity: 0.6, padding: 0, display: 'flex' }}
+      >
+        {show ? <EyeOff size={16} /> : <Eye size={16} />}
+      </button>
+    </div>
+  );
+}
+
+function SecurityForm({ onSuccess, onError }: { onSuccess: (m: string) => void; onError: (m: string) => void }) {
+  const [form, setForm] = useState({ currentPassword: '', newEmail: '', newPassword: '', confirmPassword: '' });
+  const [saving, setSaving] = useState(false);
+  const set = (k: string, v: string) => setForm((f) => ({ ...f, [k]: v }));
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (form.newPassword && form.newPassword !== form.confirmPassword) {
+      onError('New passwords do not match');
+      return;
+    }
+    if (form.newPassword && form.newPassword.length < 8) {
+      onError('New password must be at least 8 characters');
+      return;
+    }
+    setSaving(true);
+    try {
+      await changePassword(
+        form.currentPassword,
+        form.newPassword || undefined,
+        form.newEmail || undefined,
+      );
+      onSuccess('Credentials updated successfully');
+      setForm({ currentPassword: '', newEmail: '', newPassword: '', confirmPassword: '' });
+    } catch (err) {
+      onError(err instanceof Error ? err.message : 'Failed to update credentials');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} style={{ maxWidth: '480px' }}>
+      <div className="admin__form-section">Current Credentials</div>
+      <div className="admin__field">
+        <label>Current Password <span style={{ color: 'var(--color-error, red)' }}>*</span></label>
+        <PasswordInput id="current-password" value={form.currentPassword} onChange={(v) => set('currentPassword', v)} autoComplete="current-password" />
+      </div>
+
+      <div className="admin__form-section">Update Email (optional)</div>
+      <div className="admin__field">
+        <label>New Email</label>
+        <input type="email" value={form.newEmail} onChange={(e) => set('newEmail', e.target.value)} placeholder="Leave blank to keep current" autoComplete="email" />
+      </div>
+
+      <div className="admin__form-section">Update Password (optional)</div>
+      <div className="admin__field">
+        <label>New Password</label>
+        <PasswordInput id="new-password" value={form.newPassword} onChange={(v) => set('newPassword', v)} placeholder="Leave blank to keep current" autoComplete="new-password" />
+      </div>
+      <div className="admin__field">
+        <label>Confirm New Password</label>
+        <PasswordInput id="confirm-password" value={form.confirmPassword} onChange={(v) => set('confirmPassword', v)} placeholder="Repeat new password" autoComplete="new-password" />
+      </div>
+
+      <div className="admin__actions">
+        <button type="submit" disabled={saving} className="btn btn--primary">{saving ? 'Saving…' : 'Update Credentials'}</button>
+      </div>
+    </form>
+  );
+}
+
+/* ─── Cloudinary Upload Widget ───────────────────────────────────────────── */
+
+declare global {
+  interface Window {
+    cloudinary: {
+      createUploadWidget: (
+        options: Record<string, unknown>,
+        callback: (error: unknown, result: { event: string; info: { secure_url: string } }) => void
+      ) => { open: () => void };
+    };
+  }
+}
+
+function CloudinaryUploadButton({ onUpload, label }: { onUpload: (url: string) => void; label?: string }) {
+  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME as string | undefined;
+  const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET as string | undefined;
+
+  const handleClick = () => {
+    if (!window.cloudinary || !cloudName || !uploadPreset) {
+      alert('Cloudinary is not configured. Set VITE_CLOUDINARY_CLOUD_NAME and VITE_CLOUDINARY_UPLOAD_PRESET.');
+      return;
+    }
+    const widget = window.cloudinary.createUploadWidget(
+      { cloudName, uploadPreset, multiple: false, maxFiles: 1, resourceType: 'image' },
+      (error, result) => {
+        if (!error && result?.event === 'success') {
+          onUpload(result.info.secure_url);
+        }
+      }
+    );
+    widget.open();
+  };
+
+  return (
+    <button type="button" className="btn btn--secondary" style={{ fontSize: '13px' }} onClick={handleClick}>
+      {label ?? 'Upload Image'}
+    </button>
+  );
+}
+
+/* ─── Image field with upload + manual URL ───────────────────────────────── */
+
+function ImageField({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
+  return (
+    <div className="admin__field">
+      <label>{label}</label>
+      <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+        <input
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder="https://... or upload below"
+          style={{ flex: 1 }}
+        />
+        <CloudinaryUploadButton onUpload={onChange} label="Upload" />
+      </div>
+      {value && (
+        <img
+          src={value}
+          alt="preview"
+          style={{ marginTop: '8px', maxHeight: '80px', borderRadius: '4px', objectFit: 'cover' }}
+        />
+      )}
     </div>
   );
 }
@@ -650,14 +836,9 @@ function ProjectForm({ project, profiles, onSave, onCancel, saving }: {
     period: project?.period || '',
     location: project?.location || '',
     responsibilities: project?.responsibilities || [],
-    challenge: project?.challenge || '',
-    challenge_text: project?.challenge_text || '',
-    solution: project?.solution || '',
-    solution_text: project?.solution_text || '',
-    result: project?.result || '',
-    result_text: project?.result_text || '',
     is_hidden: project?.is_hidden ?? false,
     sort_order: project?.sort_order ?? 0,
+    content: project?.content || '',
   });
 
   const set = (k: string, v: unknown) => setForm((f) => ({ ...f, [k]: v }));
@@ -695,10 +876,7 @@ function ProjectForm({ project, profiles, onSave, onCancel, saving }: {
         <label>Tagline</label>
         <input value={form.tagline} onChange={(e) => set('tagline', e.target.value)} />
       </div>
-      <div className="admin__field">
-        <label>Description</label>
-        <textarea value={form.description} onChange={(e) => set('description', e.target.value)} rows={3} />
-      </div>
+      <MarkdownEditor label="Description" value={form.description} onChange={(v) => set('description', v)} rows={5} />
 
       <div className="admin__form-section">Details</div>
       <div className="admin__form-grid">
@@ -721,47 +899,12 @@ function ProjectForm({ project, profiles, onSave, onCancel, saving }: {
           <input value={form.impact} onChange={(e) => set('impact', e.target.value)} />
         </div>
       </div>
-      <div className="admin__form-grid">
-        <div className="admin__field">
-          <label>Site URL</label>
-          <input value={form.site} onChange={(e) => set('site', e.target.value)} placeholder="https://..." />
-        </div>
-        <div className="admin__field">
-          <label>Image URL</label>
-          <input value={form.image} onChange={(e) => set('image', e.target.value)} placeholder="https://..." />
-        </div>
+      <div className="admin__field">
+        <label>Site URL</label>
+        <input value={form.site} onChange={(e) => set('site', e.target.value)} placeholder="https://..." />
       </div>
+      <ImageField label="Project Image" value={form.image} onChange={(v) => set('image', v)} />
       <ArrayEditor label="Responsibilities" values={form.responsibilities} onChange={(v) => set('responsibilities', v)} placeholder="Add a responsibility and press Enter" />
-
-      <div className="admin__form-section">Case Study</div>
-      <div className="admin__form-grid">
-        <div className="admin__field">
-          <label>Challenge Title</label>
-          <input value={form.challenge} onChange={(e) => set('challenge', e.target.value)} />
-        </div>
-        <div className="admin__field">
-          <label>Solution Title</label>
-          <input value={form.solution} onChange={(e) => set('solution', e.target.value)} />
-        </div>
-      </div>
-      <div className="admin__form-grid">
-        <div className="admin__field">
-          <label>Challenge Text</label>
-          <textarea value={form.challenge_text} onChange={(e) => set('challenge_text', e.target.value)} rows={3} />
-        </div>
-        <div className="admin__field">
-          <label>Solution Text</label>
-          <textarea value={form.solution_text} onChange={(e) => set('solution_text', e.target.value)} rows={3} />
-        </div>
-      </div>
-      <div className="admin__field">
-        <label>Result Title</label>
-        <input value={form.result} onChange={(e) => set('result', e.target.value)} />
-      </div>
-      <div className="admin__field">
-        <label>Result Text</label>
-        <textarea value={form.result_text} onChange={(e) => set('result_text', e.target.value)} rows={3} />
-      </div>
 
       <div className="admin__form-section">Visibility</div>
       <div className="admin__field admin__field--checkbox">
@@ -830,10 +973,12 @@ function BlogForm({ post, profiles, onSave, onCancel, saving }: {
       </div>
 
       <div className="admin__form-section">Content</div>
-      <div className="admin__field">
-        <label>Content (HTML)</label>
-        <textarea value={form.content} onChange={(e) => set('content', e.target.value)} rows={12} style={{ fontFamily: 'monospace', fontSize: '13px' }} />
-      </div>
+      <MarkdownEditor
+        label="Content (Markdown)"
+        value={form.content}
+        onChange={(v) => set('content', v)}
+        placeholder="Write your blog post in **markdown**…"
+      />
 
       <div className="admin__form-section">Metadata</div>
       <div className="admin__form-grid">
@@ -851,11 +996,8 @@ function BlogForm({ post, profiles, onSave, onCancel, saving }: {
           <label>Author</label>
           <input value={form.author} onChange={(e) => set('author', e.target.value)} />
         </div>
-        <div className="admin__field">
-          <label>Image URL</label>
-          <input value={form.image} onChange={(e) => set('image', e.target.value)} placeholder="https://..." />
-        </div>
       </div>
+      <ImageField label="Cover Image" value={form.image} onChange={(v) => set('image', v)} />
       <ArrayEditor label="Tags" values={form.tags} onChange={(v) => set('tags', v)} placeholder="e.g. Engineering, AI" />
 
       <div className="admin__form-section">Visibility</div>

@@ -1,8 +1,10 @@
 import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { PageTransition } from '../components/PageTransition';
 import { ArrowLeft, Calendar, MapPin, ExternalLink } from 'lucide-react';
-import { getProjectById, type Project } from '../lib/supabase';
+import { getProjectById, type Project } from '../lib/api';
 import { projectImageMap } from '../data/projects';
 
 export default function ProjectDetail() {
@@ -84,13 +86,18 @@ export default function ProjectDetail() {
           </header>
 
           <div className="project-detail__hero">
-            <img src={imageSrc} alt={project.title} loading="eager" />
+            <img
+              src={imageSrc}
+              alt={project.title}
+              loading="eager"
+              onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+            />
           </div>
 
           <div className="project-detail__body">
             <section className="project-detail__section">
               <h2>Overview</h2>
-              <p>{project.description}</p>
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.description}</ReactMarkdown>
             </section>
 
             <section className="project-detail__section">
@@ -107,20 +114,6 @@ export default function ProjectDetail() {
               </ul>
             </section>
 
-            <section className="project-detail__section">
-              <h2>{project.challenge || 'The Challenge'}</h2>
-              <p>{project.challenge_text}</p>
-            </section>
-
-            <section className="project-detail__section">
-              <h2>{project.solution || 'The Solution'}</h2>
-              <p>{project.solution_text}</p>
-            </section>
-
-            <section className="project-detail__section project-detail__result">
-              <h2>{project.result || 'The Result'}</h2>
-              <p>{project.result_text}</p>
-            </section>
           </div>
 
           <footer className="project-detail__footer">
