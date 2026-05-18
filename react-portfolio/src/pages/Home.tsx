@@ -29,7 +29,10 @@ export default function Home() {
           <div className="container">
             <div className="hero__inner">
               <div className="hero__content">
-                <p>Error loading profile</p>
+                <p style={{ color: 'var(--color-error, #e53e3e)' }}>{error || 'Profile not found'}</p>
+                <button className="btn btn--primary" onClick={() => window.location.reload()}>
+                  Retry
+                </button>
               </div>
             </div>
           </div>

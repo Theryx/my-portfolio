@@ -1,18 +1,18 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { getDb } from '../_lib/db.js';
-import { requireAuth } from '../_lib/auth.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const sql = getDb();
-  const { id } = req.query as { id: string };
+  try {
+    const sql = getDb();
+    const { id } = req.query as { id: string };
 
-  if (req.method === 'GET') {
-    const rows = await sql`SELECT * FROM profiles WHERE id = ${id}`;
-    if (!rows.length) return res.status(404).json({ error: 'Not found' });
-    return res.status(200).json(rows[0]);
-  }
+    if (req.method === 'GET') {
+      const rows = await sql`SELECT * FROM profiles WHERE id = ${id}`;
+      if (!rows.length) return res.status(404).json({ error: 'Not found' });
+      return res.status(200).json(rows[0]);
+    }
 
-  if (req.method === 'PUT') {
+    if (req.method === 'PUT') {
     try { requireAuth(req); } catch { return res.status(401).json({ error: 'Unauthorized' }); }
     const body = req.body;
     const now = new Date().toISOString();
@@ -36,4 +36,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   return res.status(405).end();
+  } catch (err) {
+    console.error(`GET/PUT /api/profiles/${req.query.id} error:`, err);
+    return res.status(500).json({ error: err instanceof Error ? err.message : 'Database error' });
+  }
 }

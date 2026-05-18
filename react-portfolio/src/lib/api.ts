@@ -104,8 +104,9 @@ export async function getAllProfiles(): Promise<Profile[]> {
 export async function getProfileById(id: string): Promise<Profile | null> {
   try {
     return await apiFetch<Profile>(`/api/profiles/${id}`);
-  } catch {
-    return null;
+  } catch (err) {
+    if (err instanceof Error && err.message === 'Not found') return null;
+    throw err;
   }
 }
 

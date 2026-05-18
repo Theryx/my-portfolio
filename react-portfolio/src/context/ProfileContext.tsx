@@ -52,7 +52,7 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
       setProjects(fetchedProjects);
       setBlogPosts(fetchedPosts);
     } catch (err) {
-      if (import.meta.env.DEV) console.error('Error fetching profile data:', err);
+      console.error('Error fetching profile data:', err);
       setError(err instanceof Error ? err.message : 'Failed to load profile');
     } finally {
       setLoading(false);
