@@ -876,7 +876,10 @@ function ProjectForm({ project, profiles, onSave, onCancel, saving }: {
         <label>Tagline</label>
         <input value={form.tagline} onChange={(e) => set('tagline', e.target.value)} />
       </div>
-      <MarkdownEditor label="Description" value={form.description} onChange={(v) => set('description', v)} rows={5} />
+      <MarkdownEditor label="Overview (Short Description)" value={form.description} onChange={(v) => set('description', v)} rows={3} />
+      
+      <div className="admin__form-section">Full Case Study</div>
+      <MarkdownEditor label="Case Study Content" value={form.content} onChange={(v) => set('content', v)} rows={15} placeholder="Write the detailed case study using Markdown here..." />
 
       <div className="admin__form-section">Details</div>
       <div className="admin__form-grid">
