@@ -29,7 +29,7 @@ export default function About() {
             </div>
             <h2 className="section__title" style={{ textAlign: 'left' }}>About Me</h2>
             <p className="about__text">
-              {profile?.bio || 'I am a Design Engineer specializing in fintech UI/UX, mobile applications, and minimalist aesthetics. After building and leading the design team at PaySika for over four years, I stepped down in January 2026 to focus on tech entrepreneurship and building real-world applications.'}
+              {profile?.bio || 'I am a Product Designer specializing in fintech UI/UX, mobile applications, and minimalist aesthetics. I have been building and leading the design team at PaySika since December 2021, while also focusing on tech entrepreneurship and building real-world applications.'}
             </p>
             <p className="about__text">
               {profile?.tagline || 'I bridge the gap between design and development. I believe in clean design, simple language, and practical problem-solving.'}
