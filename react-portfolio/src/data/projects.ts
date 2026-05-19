@@ -175,8 +175,11 @@ import citetsapImage from '../assets/img/an app I coded myself.PNG';
 import gefonaImage from '../assets/img/gefona website.PNG';
 import matangaImage from '../assets/img/Matanga agancy website.PNG';
 
+import paysikaMockup from '../assets/img/paysika_mockup.png';
+
 export const projectImageMap: Record<string, string> = {
   'PaySika website.PNG': paysikaImage,
+  'paysika_mockup.png': paysikaMockup,
   'Screenshot of the UI of Jobsika.PNG': jobsikaImage,
   'Shomi app_all in one solution for graduate students.jfif': shomiImage,
   'an app I coded myself.PNG': citetsapImage,

@@ -51,25 +51,57 @@ export default function Projects() {
               )}
 
               <motion.div className="projects__grid" layout>
-                {filteredProjects.map((project) => (
-                  <Link to={`/projects/${project.id}`} key={project.id} className="project-card">
-                    <div className="project-card__gradient" />
-                    <div className="project-card__content">
-                      <span className="project-card__tag">{project.tag}</span>
-                      <h3 className="project-card__title">{project.title}</h3>
-                      <p className="project-card__tagline">{project.tagline}</p>
-                      <div className="project-card__image">
-                        <img
-                          src={projectImageMap[project.image]}
-                          alt={project.title}
-                          loading="lazy"
-                          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
-                        />
+                {filteredProjects.map((project, index) => {
+                  const isFeatured = index === 0 && activeTag === 'All';
+                  return (
+                    <Link 
+                      to={`/projects/${project.id}`} 
+                      key={project.id} 
+                      className={`project-card ${isFeatured ? 'project-card--featured' : ''}`}
+                    >
+                      <div className="project-card__gradient" />
+                      <div className="project-card__content">
+                        <span className="project-card__tag">{project.tag}</span>
+                        <h3 className="project-card__title">{project.title}</h3>
+                        <p className="project-card__tagline">{project.tagline}</p>
+                        
+                        {isFeatured && (
+                          <>
+                            <p className="project-card__desc">
+                              {project.description}
+                            </p>
+                            <div className="project-card__achievements">
+                                <div className="achievement-item">
+                                    <h4>Team Leadership</h4>
+                                    <p>Recruited and scaled the creative team (#TheBestTeam).</p>
+                                </div>
+                                <div className="achievement-item">
+                                    <h4>Process Engineering</h4>
+                                    <p>Built robust Design-Marketing & Design-Mobile workflows.</p>
+                                </div>
+                            </div>
+                            <div className="project-skills">
+                                {(project.responsibilities || []).slice(0, 5).map(skill => (
+                                    <span key={skill} className="project-skill-pill">{skill}</span>
+                                ))}
+                            </div>
+                          </>
+                        )}
+
+                        <div className="project-card__image">
+                          <img
+                            src={projectImageMap[project.image]}
+                            alt={project.title}
+                            loading={isFeatured ? "eager" : "lazy"}
+                            onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                          />
+                        </div>
+                        
+                        <span className="project-card__cta">View Case Study <span className="project-card__cta-arrow">→</span></span>
                       </div>
-                      <span className="project-card__cta">View Case Study <span className="project-card__cta-arrow">→</span></span>
-                    </div>
-                  </Link>
-                ))}
+                    </Link>
+                  );
+                })}
               </motion.div>
             </>
           )}

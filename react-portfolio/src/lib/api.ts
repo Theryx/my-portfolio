@@ -133,11 +133,13 @@ export async function getAllProjects(): Promise<Project[]> {
 }
 
 export async function getProjectById(id: string): Promise<Project | null> {
-  // Fetch all and find by id (avoids needing a separate GET /api/projects/:id public route)
   try {
-    const all = await getAllProjects();
-    return all.find((p) => p.id === id) ?? null;
-  } catch {
+    const activeProfile = await getActiveProfile();
+    if (!activeProfile) return null;
+    const profileProjects = await getProjectsByProfile(activeProfile.id);
+    return profileProjects.find((p) => p.id === id) ?? null;
+  } catch (err) {
+    console.error('getProjectById error:', err);
     return null;
   }
 }

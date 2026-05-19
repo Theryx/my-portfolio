@@ -438,6 +438,82 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
     opacity: 0.8;
 }
 
+/* Featured Project Styling */
+.project-card--featured {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+    .project-card--featured {
+        flex-direction: row;
+        align-items: stretch;
+    }
+    .project-card--featured .project-card__image {
+        flex: 1;
+        height: auto;
+        min-height: 400px;
+        margin: 0;
+        border-radius: 0;
+    }
+    .project-card--featured .project-card__content {
+        flex: 1.2;
+        padding: var(--spacing-2xl);
+    }
+}
+
+.project-card__achievements {
+    margin-top: var(--spacing-lg);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+}
+
+@media (min-width: 600px) {
+    .project-card__achievements {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.achievement-item {
+    background: rgba(255, 255, 255, 0.03);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.achievement-item h4 {
+    font-size: var(--font-size-sm);
+    color: var(--color-accent);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.achievement-item p {
+    font-size: 13px;
+    color: var(--color-text-muted);
+    line-height: 1.4;
+}
+
+.project-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: var(--spacing-lg);
+}
+
+.project-skill-pill {
+    padding: 6px 14px;
+    background: rgba(0, 211, 149, 0.05);
+    border: 1px solid rgba(0, 211, 149, 0.1);
+    border-radius: var(--radius-full);
+    font-size: 12px;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-accent);
+}
+
 /* PROJECT DETAIL PAGE */
 .project-detail {
     padding: var(--spacing-3xl) 0;
