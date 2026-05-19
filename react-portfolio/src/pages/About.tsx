@@ -33,13 +33,27 @@ export default function About() {
             <p className="about__text">
               {profile?.bio || 'I am a Product Designer specializing in fintech UI/UX, mobile applications, and minimalist aesthetics. I have been building and leading the design team at PaySika since December 2021, while also focusing on tech entrepreneurship and building real-world applications.'}
             </p>
+
+            <div className="about__fun-fact-top">
+              <p className="about__fun-fact-text">
+                Fun Fact: I value direct opinions, simple language, and a good plate of fish.
+              </p>
+            </div>
+
             <p className="about__text">
               {profile?.tagline || 'I bridge the gap between design and development. I believe in clean design, simple language, and practical problem-solving.'}
             </p>
             
-            <div className="about__photos">
-              <img src={teamDiscussion} alt="Discussion with colleague" className="about__photo" loading="lazy" />
-              <img src={teamAward} alt="Team Spirit Award 2025" className="about__photo" loading="lazy" />
+            <div className="about__galerie-section">
+              <h3 className="about__galerie-title">Galerie</h3>
+              <div className="about__galerie-grid">
+                <img src={teamDiscussion} alt="Discussion with colleague" loading="lazy" />
+                <img src={teamAward} alt="Team Spirit Award 2025" loading="lazy" />
+                <img src={userResearch} alt="Conducting User Research" loading="lazy" />
+                <img src={givingLecture} alt="Giving a lecture" loading="lazy" />
+                <img src={jobsikaProcess} alt="JobSika Building Process" loading="lazy" />
+                <img src={codedApp} alt="Custom Application Code" loading="lazy" />
+              </div>
             </div>
           </motion.div>
         </div>
@@ -136,11 +150,7 @@ export default function About() {
             </ul>
           </div>
 
-          <div className="about__fun-fact">
-            <p className="about__fun-fact-text">
-              Fun Fact: I value direct opinions, simple language, and a good plate of fish.
-            </p>
-          </div>
+
         </div>
       </section>
     </PageTransition>
