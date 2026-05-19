@@ -7,7 +7,8 @@ import myProfile from '../assets/img/My profile.jfif';
 import givingLecture from '../assets/img/theryx giving a lecture to a comunity of open source.png';
 import jobsikaProcess from '../assets/img/Screenshot of Jobsika sowing our building process.jfif';
 import codedApp from '../assets/img/an app I coded myself.PNG';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -20,6 +21,11 @@ const fadeUp = {
 
 export default function About() {
   const { profile } = useProfile();
+  const [selectedImage, setSelectedImage] = useState<{ src: string; caption: string } | null>(null);
+
+  const handleImageClick = (src: string, caption: string) => {
+    setSelectedImage({ src, caption });
+  };
 
   return (
     <PageTransition>
@@ -47,12 +53,12 @@ export default function About() {
             <div className="about__galerie-section">
               <h3 className="about__galerie-title">Galerie</h3>
               <div className="about__galerie-grid">
-                <img src={teamDiscussion} alt="Discussion with colleague" loading="lazy" />
-                <img src={teamAward} alt="Team Spirit Award 2025" loading="lazy" />
-                <img src={userResearch} alt="Conducting User Research" loading="lazy" />
-                <img src={givingLecture} alt="Giving a lecture" loading="lazy" />
-                <img src={jobsikaProcess} alt="JobSika Building Process" loading="lazy" />
-                <img src={codedApp} alt="Custom Application Code" loading="lazy" />
+                <img src={teamDiscussion} alt="Discussion with colleague" onClick={() => handleImageClick(teamDiscussion, "Brainstorming and collaborative session with my colleague on product flows.")} loading="lazy" style={{ cursor: 'pointer' }} />
+                <img src={teamAward} alt="Team Spirit Award 2025" onClick={() => handleImageClick(teamAward, "Receiving the Team Spirit Award in 2025 for collaboration and leadership.")} loading="lazy" style={{ cursor: 'pointer' }} />
+                <img src={userResearch} alt="Conducting User Research" onClick={() => handleImageClick(userResearch, "Active user research session gathering deep insights for fintech features.")} loading="lazy" style={{ cursor: 'pointer' }} />
+                <img src={givingLecture} alt="Giving a lecture" onClick={() => handleImageClick(givingLecture, "Sharing knowledge on product design and open source with the community.")} loading="lazy" style={{ cursor: 'pointer' }} />
+                <img src={jobsikaProcess} alt="JobSika Building Process" onClick={() => handleImageClick(jobsikaProcess, "Operational workflow and building process documented for JobSika.")} loading="lazy" style={{ cursor: 'pointer' }} />
+                <img src={codedApp} alt="Custom Application Code" onClick={() => handleImageClick(codedApp, "A snapshot of the clean UI and architecture of an app I coded from scratch.")} loading="lazy" style={{ cursor: 'pointer' }} />
               </div>
             </div>
           </motion.div>
@@ -125,7 +131,7 @@ export default function About() {
             ].map((skill) => (
               <motion.div className="skill-card" key={skill.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
                 {'image' in skill && skill.image && (
-                  <div className="skill-card__image">
+                  <div className="skill-card__image" onClick={() => handleImageClick(skill.image as string, skill.alt || skill.title)} style={{ cursor: 'pointer' }}>
                     <img src={skill.image} alt={skill.alt || ''} loading="lazy" />
                   </div>
                 )}
@@ -154,6 +160,31 @@ export default function About() {
 
         </div>
       </section>
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div 
+            className="image-lightbox"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedImage(null)}
+          >
+            <motion.div 
+              className="image-lightbox__content"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button className="image-lightbox__close" onClick={() => setSelectedImage(null)}>&times;</button>
+              <img src={selectedImage.src} alt={selectedImage.caption} />
+              <div className="image-lightbox__caption">
+                <p>{selectedImage.caption}</p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </PageTransition>
   );
 }
