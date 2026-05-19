@@ -29,7 +29,7 @@ export default function About() {
             </div>
             <h2 className="section__title" style={{ textAlign: 'left' }}>About Me</h2>
             <p className="about__text">
-              {profile?.bio || 'I am a Design Engineer specializing in fintech UI/UX, mobile applications, and minimalist aesthetics. After building and leading the design team at PaySika for over four years, I stepped down in January 2026 to focus on tech entrepreneurship, building real-world applications, and managing real estate operations.'}
+              {profile?.bio || 'I am a Design Engineer specializing in fintech UI/UX, mobile applications, and minimalist aesthetics. After building and leading the design team at PaySika for over four years, I stepped down in January 2026 to focus on tech entrepreneurship and building real-world applications.'}
             </p>
             <p className="about__text">
               {profile?.tagline || 'I bridge the gap between design and development. I believe in clean design, simple language, and practical problem-solving.'}
@@ -86,8 +86,6 @@ export default function About() {
             {[
               { title: 'Loving Tech', role: 'Founder', desc: 'Launching an e-commerce tech shop specializing in premium, original Logitech peripherals. Focusing on high-end, "museum-quality" product branding and minimalist layouts for the African market.' },
               { title: 'CITE Tsap', role: 'Creator & Developer', desc: 'Building a custom real estate management application using Angular to digitize tenant records and rent tracking.' },
-              { title: 'Property Management', role: 'Concierge', desc: 'Acting as concierge for a private residential estate. Handling tenant operations, infrastructure maintenance, and Starlink data monetization.' },
-              { title: 'Kody (shomi)', role: 'Product Lead & Co-founder', desc: 'Building shomi, an all-in-one platform for postgraduate students. Raised pre-seed funding to drive edTech innovation in Africa.' },
               { title: 'GEFONA Digital Foundation', role: 'Communication & Finance', desc: 'Leading communication and finance for a foundation supporting policy research on the digital economy and cybersecurity in Africa.' },
             ].map((v) => (
               <motion.div className="venture-card" key={v.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
