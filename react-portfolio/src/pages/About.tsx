@@ -116,7 +116,7 @@ export default function About() {
           <h2 className="section__title">Skills & Toolkit</h2>
           <div className="skills__grid">
             {[
-              { title: 'Design & UX', desc: 'Figma, Protopie, B2B/B2C Fintech UI/UX, User Research, Usability Testing, Minimalist Aesthetics.', image: userResearch, alt: 'User Research' },
+              { title: 'Design & UX', desc: 'Figma, User Research, Usability Testing.', image: userResearch, alt: 'User Research' },
               { title: 'Design Ops & AI', desc: 'Wireframing, User Flow Mapping, Claude/GPT Integration for UX Copy and Edge-case testing.' },
               { title: 'Technical & Data', desc: 'Angular, React, HTML/CSS, Mixpanel (Retention/Funnel Analysis).' },
               { title: 'Business', desc: 'Cross-functional Collaboration (Agile/Scrum), Tech Entrepreneurship, Team Leadership.' },
