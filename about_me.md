@@ -6,8 +6,8 @@
 I am a Product Designer specializing in fintech UI/UX, mobile applications, and minimalist aesthetics. After building and leading the design team at PaySika for over four years, I stepped down in January 2026 to focus on tech entrepreneurship and learning front-end development. I value clean design, simple language, and practical problem-solving.
 
 ## Current Ventures & Focus
-* **Loving Tech (Founder):** Launching an e-commerce tech shop specializing in premium, original Logitech peripherals. Focusing on high-end, "museum-quality" product branding and minimalist layouts for the African market.
-* **CITE Tsap (Creator & Developer):** Building a custom real estate management application using Angular to digitize tenant records and rent tracking.
+* **GEFONA Digital Foundation:** Leading communication and finance for a foundation supporting policy research on the digital economy and cybersecurity in Africa.
+* **osscameroon (Project Maintainer & Contributor):** Part of the founding team for JobSika. Involved in maintaining the platform and contributing to various open-source initiatives within the community.
 
 ## Professional Experience
 * **PaySika (Dec 2021 - Present)**
@@ -16,10 +16,7 @@ I am a Product Designer specializing in fintech UI/UX, mobile applications, and 
 * **Matanga Agency (Dec 2022 - Feb 2024)**
   * **UI Designer (Part-time):** Designed local and international digital products using Figma.
 
-## Open Source & Community
-* **osscameroon (Jan 2021 - Present):** Project Maintainer and Designer overseeing the development of open-source solutions and designing user flows.
-* **GEFONA Digital Foundation (Nov 2020 - Present):** Communication and Finance. Supporting policy research on the digital economy and cybersecurity in Africa.
-* **Community Management:** Managing and growing WhatsApp-based communities.
+
 
 ## Skills & Toolkit
 * **Design & UX:** Figma, User Research, Usability Testing.

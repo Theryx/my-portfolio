@@ -84,9 +84,8 @@ export default function About() {
           <h2 className="section__title">Current Ventures</h2>
           <div className="ventures__grid">
             {[
-              { title: 'Loving Tech', role: 'Founder', desc: 'Launching an e-commerce tech shop specializing in premium, original Logitech peripherals. Focusing on high-end, "museum-quality" product branding and minimalist layouts for the African market.' },
-              { title: 'CITE Tsap', role: 'Creator & Developer', desc: 'Building a custom real estate management application using Angular to digitize tenant records and rent tracking.' },
               { title: 'GEFONA Digital Foundation', role: 'Communication & Finance', desc: 'Leading communication and finance for a foundation supporting policy research on the digital economy and cybersecurity in Africa.' },
+              { title: 'osscameroon', role: 'Project Maintainer & Contributor', desc: 'Part of the founding team for JobSika. Involved in maintaining the platform and contributing to various open-source initiatives within the community.' },
             ].map((v) => (
               <motion.div className="venture-card" key={v.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
                 <h3 className="venture-card__title">{v.title}</h3>
@@ -94,19 +93,6 @@ export default function About() {
                 <p className="venture-card__desc">{v.desc}</p>
               </motion.div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="community">
-        <div className="container">
-          <h2 className="section__title">Open Source & Community</h2>
-          <div className="community__grid">
-            <motion.div className="community__item" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
-              <h3>osscameroon</h3>
-              <span>Project Maintainer & Designer</span>
-              <p>Jan 2021 - Present</p>
-            </motion.div>
           </div>
         </div>
       </section>
