@@ -15,8 +15,8 @@ I am a Product Designer specializing in fintech UI/UX, mobile applications, and 
   * **Founding Designer:** Shaped the initial product experience and brand identity from the ground up.
 * **Matanga Agency (Dec 2022 - Feb 2024)**
   * **UI Designer (Part-time):** Designed local and international digital products using Figma.
-
-
+## Research & Speaking
+* **OSS Cameroon (2022):** Invited speaker presenting "State of the Design Ecosystem in Cameroon" research. Focused on industry trends and advocating for designer involvement in open source.
 
 ## Skills & Toolkit
 * **Design & UX:** Figma, User Research, Usability Testing.

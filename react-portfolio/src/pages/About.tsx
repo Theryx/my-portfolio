@@ -68,12 +68,22 @@ export default function About() {
       <section className="speaking">
         <div className="container">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp}>
-            <h2 className="section__title">Speaking & Community</h2>
+            <h2 className="section__title">Research & Speaking</h2>
             <div className="speaking__content">
-              <img src={givingLecture} alt="Theryx giving a lecture" className="speaking__image" loading="lazy" />
+              <img 
+                src={givingLecture} 
+                alt="Theryx presenting research at OSS Cameroon" 
+                className="speaking__image" 
+                loading="lazy" 
+                onClick={() => handleImageClick(givingLecture, "Presenting research on the Cameroon Design Ecosystem at the 2022 OSS Cameroon meetup.")}
+                style={{ cursor: 'pointer' }}
+              />
               <div className="speaking__text">
                 <p>
-                  I am passionate about sharing knowledge and growing the tech community in Africa. I regularly give lectures to open source communities, mentor young designers, and speak at tech events about fintech innovation and product design.
+                  In 2022, I was invited by the **OSS Cameroon** community to present the findings of my research on the **State of the Design Ecosystem in Cameroon**. 
+                </p>
+                <p>
+                  The objective of the talk was to provide data-driven insights into our local industry while passionately encouraging more designers to bridge the gap between design and development by contributing to **Open Source** projects.
                 </p>
               </div>
             </div>
