@@ -24,5 +24,10 @@ I am a Product Designer specializing in fintech UI/UX, mobile applications, and 
 * **Technical & Data:** Angular, React, HTML/CSS, Mixpanel (Retention/Funnel Analysis).
 * **Business:** Cross-functional Collaboration (Agile/Scrum), Tech Entrepreneurship, Team Leadership, Field Marketing.
 
-## Interests
-I am highly interested in premium tech hardware (specifically Logitech MX and G-series gear) and fintech innovation. When I am not designing or coding, I enjoy networking, social interactions, and eating fish.
+## Tools I Use to Work
+* **Logitech MX Master 3s**
+* **Logitech G413 TKL**
+* **Desktop**
+* **Webcam**
+* **Starlink**
+* **HP 27-inch monitor screen**

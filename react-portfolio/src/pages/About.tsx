@@ -140,13 +140,14 @@ export default function About() {
       <section className="interests">
         <div className="container">
           <div className="about__interests">
-            <h3 className="about__interests-title">Interests</h3>
+            <h3 className="about__interests-title">Tools I use to work</h3>
             <ul className="about__interests-list">
-              <li>Premium Tech Hardware</li>
-              <li>Logitech MX & G-series</li>
-              <li>Fintech Innovation</li>
-              <li>Networking</li>
-              <li>Eating Fish</li>
+              <li>Logitech MX Master 3s</li>
+              <li>Logitech G413 TKL</li>
+              <li>Desktop</li>
+              <li>Webcam</li>
+              <li>Starlink</li>
+              <li>HP 27-inch monitor screen</li>
             </ul>
           </div>
 
