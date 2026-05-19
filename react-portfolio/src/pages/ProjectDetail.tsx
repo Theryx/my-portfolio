@@ -105,14 +105,7 @@ export default function ProjectDetail() {
               <p><strong>{project.role}</strong></p>
             </section>
 
-            <section className="project-detail__section">
-              <h2>Responsibilities</h2>
-              <ul>
-                {(project.responsibilities || []).map((item: string) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </section>
+
 
             {project.content && (
               <section className="project-detail__section project-detail__full-content">
