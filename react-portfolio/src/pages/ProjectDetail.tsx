@@ -114,6 +114,33 @@ export default function ProjectDetail() {
               </ul>
             </section>
 
+            {project.challenge_text && (
+              <section className="project-detail__section">
+                <h2>{project.challenge || 'The Challenge'}</h2>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.challenge_text}</ReactMarkdown>
+              </section>
+            )}
+
+            {project.solution_text && (
+              <section className="project-detail__section">
+                <h2>{project.solution || 'The Solution'}</h2>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.solution_text}</ReactMarkdown>
+              </section>
+            )}
+
+            {project.content && (
+              <section className="project-detail__section project-detail__full-content">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.content}</ReactMarkdown>
+              </section>
+            )}
+
+            {project.result_text && (
+              <section className="project-detail__section project-detail__result">
+                <h2>{project.result || 'The Impact'}</h2>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.result_text}</ReactMarkdown>
+              </section>
+            )}
+
           </div>
 
           <footer className="project-detail__footer">

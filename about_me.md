@@ -25,9 +25,10 @@ I am a Product Designer specializing in fintech UI/UX, mobile applications, and 
 * **Community Management:** Managing and growing WhatsApp-based communities.
 
 ## Skills & Toolkit
-* **Design:** Figma, Adobe Creative Suite, Protopie, User Research, Usability Testing, Fintech UI/UX, Minimalist Aesthetics, Product Photography.
-* **Technical:** Angular, AI Coding Tools (OpenCode AI, Antigravity), Mixpanel.
-* **Business:** Field Marketing, Customer Onboarding, Team Leadership, Public Speaking.
+* **Design & UX:** Figma, Protopie, B2B/B2C Fintech UI/UX, User Research, Usability Testing, Minimalist Aesthetics.
+* **Design Ops & AI:** Wireframing, User Flow Mapping, Claude/GPT Integration for UX Copy and edge case testing.
+* **Technical & Data:** Angular, React, HTML/CSS, Mixpanel (Retention/Funnel Analysis).
+* **Business:** Cross-functional Collaboration (Agile/Scrum), Tech Entrepreneurship, Team Leadership, Field Marketing.
 
 ## Interests
 I am highly interested in premium tech hardware (specifically Logitech MX and G-series gear) and fintech innovation. When I am not designing or coding, I enjoy networking, social interactions, and eating fish.

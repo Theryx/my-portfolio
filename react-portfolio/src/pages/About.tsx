@@ -118,9 +118,10 @@ export default function About() {
           <h2 className="section__title">Skills & Toolkit</h2>
           <div className="skills__grid">
             {[
-              { title: 'Design', desc: 'Figma, Adobe Creative Suite, Protopie, User Research, Usability Testing, Fintech UI/UX, Minimalist Aesthetics, Product Photography.', image: userResearch, alt: 'User Research' },
-              { title: 'Technical', desc: 'Angular, AI Coding Tools (OpenCode AI, Antigravity), Mixpanel.' },
-              { title: 'Business', desc: 'Field Marketing, Customer Onboarding, Team Leadership, Public Speaking.' },
+              { title: 'Design & UX', desc: 'Figma, Protopie, B2B/B2C Fintech UI/UX, User Research, Usability Testing, Minimalist Aesthetics.', image: userResearch, alt: 'User Research' },
+              { title: 'Design Ops & AI', desc: 'Wireframing, User Flow Mapping, Claude/GPT Integration for UX Copy and Edge-case testing.' },
+              { title: 'Technical & Data', desc: 'Angular, React, HTML/CSS, Mixpanel (Retention/Funnel Analysis).' },
+              { title: 'Business', desc: 'Cross-functional Collaboration (Agile/Scrum), Tech Entrepreneurship, Team Leadership.' },
             ].map((skill) => (
               <motion.div className="skill-card" key={skill.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
                 {'image' in skill && skill.image && (
