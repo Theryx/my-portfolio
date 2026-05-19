@@ -1,5 +1,5 @@
 # Ndouken Theryx
-**Lead Product Designer at PaySika  | Tech Entrepreneur | Front-End Developer**
+**Product Designer | Tech Entrepreneur | Front-End Developer**
 📍 Douala, Cameroon | 🗣️ English & French
 
 ## About Me
@@ -12,7 +12,7 @@ I am a Product Designer specializing in fintech UI/UX, mobile applications, and 
 
 ## Professional Experience
 * **PaySika (Dec 2021 - Jan 2026)**
-  * **Lead/Product Designer:** Managed a two-person design team (#TheBestTeam), optimized payment flows, and utilized Mixpanel for user retention tracking. Awarded the Team Spirit Award.
+  * **Product Designer:** Managed a two-person design team (#TheBestTeam), optimized payment flows, and utilized Mixpanel for user retention tracking. Awarded the Team Spirit Award.
   * **Founding Designer:** Shaped the initial product experience and brand identity from the ground up.
 * **Kody (Jan 2022 - Present)**
   * **Product Lead & Co-founder:** Raised pre-seed funding to build *shomi*, an all-in-one platform for postgraduate students.

@@ -299,6 +299,70 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
     border-left: 3px solid var(--color-success);
 }
 
+/* Featured Project Styling */
+.project-card--featured {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+}
+@media (min-width: 1024px) {
+    .project-card--featured {
+        flex-direction: row;
+        align-items: stretch;
+    }
+    .project-card--featured .project-card__image {
+        flex: 1;
+        min-height: 450px;
+    }
+    .project-card--featured .project-card__content {
+        flex: 1.2;
+        padding: var(--spacing-xl);
+    }
+}
+.project-card__achievements {
+    margin-top: var(--spacing-md);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+}
+@media (min-width: 600px) {
+    .project-card__achievements {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+.achievement-item {
+    background-color: rgba(0, 0, 0, 0.03);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-sm);
+}
+.achievement-item h4 {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-sm);
+    margin-bottom: 4px;
+    color: var(--color-accent);
+}
+.achievement-item p {
+    font-size: 14px;
+    color: #505a63;
+    line-height: 1.4;
+    margin: 0;
+}
+.project-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: var(--spacing-md);
+}
+.project-skill-pill {
+    padding: 6px 14px;
+    background-color: rgba(25, 28, 31, 0.05);
+    border: 1px solid rgba(25, 28, 31, 0.1);
+    border-radius: var(--radius-full);
+    font-size: 13px;
+    font-weight: var(--font-weight-semibold);
+    color: #191c1f;
+}
+
 /* ========== PHILOSOPHY ========== */
 .philosophy {
     padding: var(--spacing-3xl) 0;
