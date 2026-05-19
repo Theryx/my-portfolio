@@ -64,7 +64,7 @@ export default function About() {
           <h2 className="section__title">Professional Experience</h2>
           <div className="experience__grid">
             {[
-              { date: 'Dec 2021 - Jan 2026', title: 'Lead Product Designer', company: 'PaySika', desc: 'Managed a two-person design team, optimized payment flows, and utilized Mixpanel for user retention tracking. Awarded the Team Spirit Award.' },
+              { date: 'Dec 2021 - Present', title: 'Product Designer', company: 'PaySika', desc: 'Managed a two-person design team, optimized payment flows, and utilized Mixpanel to track user patterns and behavior in the app. Awarded the Team Spirit Award twice.' },
               { date: 'Nov 2020 - Nov 2021', title: 'Freelance Designer', company: 'Freelance', desc: 'Provided design services for various clients. Designed reports on Cameroon Cybersecurity and Central/West Africa cybersecurity state.' },
               { date: 'Dec 2022 - Feb 2024', title: 'UI Designer (Part-time)', company: 'Matanga Agency', desc: 'Designed local and international digital products using Figma.' },
             ].map((item) => (
