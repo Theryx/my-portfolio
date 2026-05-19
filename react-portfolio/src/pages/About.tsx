@@ -5,6 +5,8 @@ import teamAward from '../assets/img/Team spirit award_2025.jfif';
 import userResearch from '../assets/img/Conducting a user research.jfif';
 import myProfile from '../assets/img/My profile.jfif';
 import givingLecture from '../assets/img/theryx giving a lecture to a comunity of open source.png';
+import jobsikaProcess from '../assets/img/Screenshot of Jobsika sowing our building process.jfif';
+import codedApp from '../assets/img/an app I coded myself.PNG';
 import { motion } from 'framer-motion';
 
 const fadeUp = {
@@ -103,8 +105,8 @@ export default function About() {
           <div className="skills__grid">
             {[
               { title: 'Design & UX', desc: 'Figma, User Research, Usability Testing.', image: userResearch, alt: 'User Research' },
-              { title: 'Design Ops & AI', desc: 'Wireframing, User Flow Mapping, Claude/GPT Integration for UX Copy and Edge-case testing.' },
-              { title: 'Technical & Data', desc: 'Angular, React, HTML/CSS, Mixpanel (Retention/Funnel Analysis).' },
+              { title: 'Design Ops & AI', desc: 'Wireframing, User Flow Mapping, Claude/GPT Integration for UX Copy and Edge-case testing.', image: jobsikaProcess, alt: 'Design Ops Workflow' },
+              { title: 'Technical & Data', desc: 'Angular, React, HTML/CSS, Mixpanel (Retention/Funnel Analysis).', image: codedApp, alt: 'Technical Coding App' },
               { title: 'Business', desc: 'Cross-functional Collaboration (Agile/Scrum), Tech Entrepreneurship, Team Leadership.' },
             ].map((skill) => (
               <motion.div className="skill-card" key={skill.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
