@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { PageTransition } from '../components/PageTransition';
 import { ArrowLeft, Calendar, MapPin, ExternalLink, Award, FileText, Users } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { getProjectById, type Project } from '../lib/api';
 import { projectImageMap } from '../data/projects';
 import paysikaPartnership from '../assets/img/paysika/paysika-visa-partnership.jpg';
@@ -13,6 +14,7 @@ import paysikaProductAssets from '../assets/img/paysika/paysika-product-assets.p
 import paysikaMailerAssets from '../assets/img/paysika/paysika-mailer-assets.png';
 import paysikaResearchArchive from '../assets/img/paysika/paysika-research-archive.png';
 import paysikaRecognition from '../assets/img/paysika/paysika-recognition.png';
+import paysikaMockup from '../assets/img/paysika_mockup.png';
 
 const paysikaProcessArtifacts = [
   {
@@ -46,6 +48,11 @@ export default function ProjectDetail() {
   const { id } = useParams();
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState<{ src: string; caption: string } | null>(null);
+
+  const handleImageClick = (src: string, caption: string) => {
+    setSelectedImage({ src, caption });
+  };
 
   useEffect(() => {
     async function fetchProject() {
@@ -81,7 +88,7 @@ export default function ProjectDetail() {
   }
 
   const isPaySika = project.id === 'paysika';
-  const imageSrc = isPaySika ? paysikaPartnership : projectImageMap[project.image];
+  const imageSrc = isPaySika ? paysikaMockup : projectImageMap[project.image];
 
   return (
     <PageTransition>
@@ -121,10 +128,14 @@ export default function ProjectDetail() {
             </div>
           </header>
 
-          <div className="project-detail__hero">
+          <div 
+            className="project-detail__hero" 
+            onClick={() => handleImageClick(imageSrc, isPaySika ? 'PaySika mobile interface phone mockup' : project.title)}
+            style={{ cursor: 'pointer' }}
+          >
             <img
               src={imageSrc}
-              alt={isPaySika ? 'PaySika team during the PaySika-Visa strategic partnership milestone' : project.title}
+              alt={isPaySika ? 'PaySika mobile interface phone mockup' : project.title}
               loading="eager"
               onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
             />
@@ -174,7 +185,11 @@ export default function ProjectDetail() {
                 </section>
 
                 <section className="project-detail__section paysika-partnership">
-                  <div className="paysika-partnership__image">
+                  <div 
+                    className="paysika-partnership__image" 
+                    onClick={() => handleImageClick(paysikaPartnership, "PaySika and Visa strategic partnership team photo")}
+                    style={{ cursor: 'pointer' }}
+                  >
                     <img
                       src={paysikaPartnership}
                       alt="PaySika and Visa partnership team photo"
@@ -206,7 +221,13 @@ export default function ProjectDetail() {
                   <div className="paysika-process__grid">
                     {paysikaProcessArtifacts.map((artifact) => (
                       <article className="paysika-process__item" key={artifact.title}>
-                        <img src={artifact.image} alt={artifact.title} loading="lazy" />
+                        <img 
+                          src={artifact.image} 
+                          alt={artifact.title} 
+                          loading="lazy" 
+                          onClick={() => handleImageClick(artifact.image, `${artifact.title} - ${artifact.description}`)}
+                          style={{ cursor: 'pointer' }}
+                        />
                         <div>
                           <h3>{artifact.title}</h3>
                           <p>{artifact.description}</p>
@@ -230,6 +251,8 @@ export default function ProjectDetail() {
                     src={paysikaRecognition}
                     alt="Receiving recognition during the PaySika journey"
                     loading="lazy"
+                    onClick={() => handleImageClick(paysikaRecognition, "Receiving recognition for outstanding teamwork and reliability during the PaySika journey")}
+                    style={{ cursor: 'pointer' }}
                   />
                 </section>
               </>
@@ -255,6 +278,31 @@ export default function ProjectDetail() {
           </footer>
         </div>
       </article>
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div 
+            className="image-lightbox"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedImage(null)}
+          >
+            <motion.div 
+              className="image-lightbox__content"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button className="image-lightbox__close" onClick={() => setSelectedImage(null)}>&times;</button>
+              <img src={selectedImage.src} alt={selectedImage.caption} />
+              <div className="image-lightbox__caption">
+                <p>{selectedImage.caption}</p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </PageTransition>
   );
 }
