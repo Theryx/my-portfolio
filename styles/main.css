@@ -517,6 +517,188 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
 .footer { padding: var(--spacing-xl) 0; background-color: var(--color-bg-alt); text-align: center; border-top: 1px solid var(--color-border); }
 .footer__copyright { color: var(--color-text-mid); font-size: var(--font-size-sm); }
 
+/* ========== DELIVERABLES EXPLORER & TEAM PHOTO ========== */
+.project-card__showcase {
+    margin-top: var(--spacing-lg);
+    border: 1px solid rgba(25, 28, 31, 0.1);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-bg-pure-white);
+    overflow: hidden;
+}
+
+.explorer__header {
+    background-color: var(--color-bg-light);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-bottom: 1px solid rgba(25, 28, 31, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.explorer__title {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: #191c1f;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.explorer__tabs {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.explorer__tab-btn {
+    background: transparent;
+    border: 1px solid rgba(25, 28, 31, 0.15);
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--radius-full);
+    color: #505a63;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.explorer__tab-btn:hover {
+    border-color: #191c1f;
+    color: #191c1f;
+}
+
+.explorer__tab-btn.explorer__tab-btn--active {
+    background-color: #191c1f;
+    border-color: #191c1f;
+    color: #ffffff;
+}
+
+.explorer__content {
+    padding: var(--spacing-md);
+}
+
+.explorer__panel {
+    display: none;
+}
+
+.explorer__panel.explorer__panel--active {
+    display: block;
+}
+
+.explorer__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+}
+
+@media (min-width: 768px) {
+    .explorer__list {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.explorer__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background-color: #f8f9fa;
+    border: 1px solid rgba(25, 28, 31, 0.05);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+.explorer__item:hover {
+    background-color: #f0f1f2;
+    border-color: rgba(25, 28, 31, 0.15);
+}
+
+.explorer__icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.explorer__info {
+    display: flex;
+    flex-direction: column;
+}
+
+.explorer__name {
+    font-family: var(--font-family-display);
+    font-size: 14px;
+    font-weight: var(--font-weight-medium);
+    color: #191c1f;
+}
+
+.explorer__meta {
+    font-size: 11px;
+    color: var(--color-text-mid);
+    margin-top: 2px;
+}
+
+/* PaySika Visa Team Photo Showcase */
+.project-card__team-section {
+    margin-top: var(--spacing-lg);
+    border-top: 1px solid rgba(25, 28, 31, 0.1);
+    padding-top: var(--spacing-lg);
+}
+
+.team-showcase {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+    .team-showcase {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+.team-showcase__image-container {
+    flex: 1;
+    position: relative;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    aspect-ratio: 3 / 2;
+    background-color: #191c1f;
+    border: 1px solid rgba(25, 28, 31, 0.1);
+}
+
+.team-showcase__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.team-showcase__image-container:hover .team-showcase__image {
+    transform: scale(1.03);
+}
+
+.team-showcase__content {
+    flex: 1.2;
+}
+
+.team-showcase__title {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-xl);
+    color: #191c1f;
+    margin-bottom: var(--spacing-xs);
+}
+
+.team-showcase__desc {
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+    color: #505a63;
+}
+
 /* ========== RESPONSIVE ========== */
 @media (max-width: 1024px) {
     :root { --font-size-hero: 64px; }

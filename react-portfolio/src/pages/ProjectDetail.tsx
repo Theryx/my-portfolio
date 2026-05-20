@@ -3,9 +3,44 @@ import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { PageTransition } from '../components/PageTransition';
-import { ArrowLeft, Calendar, MapPin, ExternalLink } from 'lucide-react';
+import { ArrowLeft, Calendar, MapPin, ExternalLink, Award, FileText, Users } from 'lucide-react';
 import { getProjectById, type Project } from '../lib/api';
 import { projectImageMap } from '../data/projects';
+import paysikaPartnership from '../assets/img/paysika/paysika-visa-partnership.jpg';
+import paysikaDesignDocs from '../assets/img/paysika/paysika-design-docs.png';
+import paysikaDesignRequirements from '../assets/img/paysika/paysika-design-requirements.png';
+import paysikaProductAssets from '../assets/img/paysika/paysika-product-assets.png';
+import paysikaMailerAssets from '../assets/img/paysika/paysika-mailer-assets.png';
+import paysikaResearchArchive from '../assets/img/paysika/paysika-research-archive.png';
+import paysikaRecognition from '../assets/img/paysika/paysika-recognition.png';
+
+const paysikaProcessArtifacts = [
+  {
+    title: 'Design system and team process',
+    description: 'Documentation for UI standards, collaboration rituals, and repeatable design delivery.',
+    image: paysikaDesignDocs,
+  },
+  {
+    title: 'Product and marketing requirements',
+    description: 'Requirements archives connecting dashboard needs, branding, email, KYC, fees, and mobile flows.',
+    image: paysikaDesignRequirements,
+  },
+  {
+    title: 'Mobile flow and product assets',
+    description: 'Screens, onboarding references, transaction history, secure card flows, animations, and app assets.',
+    image: paysikaProductAssets,
+  },
+  {
+    title: 'Card mailer production assets',
+    description: 'Packaging, print, envelope, manufacturing, and presentation materials for physical card delivery.',
+    image: paysikaMailerAssets,
+  },
+  {
+    title: 'Usability testing archive',
+    description: 'Consent forms, scripts, observer guides, reports, and recordings used to structure user research.',
+    image: paysikaResearchArchive,
+  },
+];
 
 export default function ProjectDetail() {
   const { id } = useParams();
@@ -45,7 +80,8 @@ export default function ProjectDetail() {
     );
   }
 
-  const imageSrc = projectImageMap[project.image];
+  const isPaySika = project.id === 'paysika';
+  const imageSrc = isPaySika ? paysikaPartnership : projectImageMap[project.image];
 
   return (
     <PageTransition>
@@ -88,7 +124,7 @@ export default function ProjectDetail() {
           <div className="project-detail__hero">
             <img
               src={imageSrc}
-              alt={project.title}
+              alt={isPaySika ? 'PaySika team during the PaySika-Visa strategic partnership milestone' : project.title}
               loading="eager"
               onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
             />
@@ -104,6 +140,100 @@ export default function ProjectDetail() {
               <h2>Role</h2>
               <p><strong>{project.role}</strong></p>
             </section>
+
+            {isPaySika && (
+              <>
+                <section className="project-detail__section paysika-story">
+                  <div className="paysika-story__intro">
+                    <span className="paysika-story__eyebrow">Flagship case study</span>
+                    <h2>From product screens to product operations</h2>
+                    <p>
+                      PaySika was not only a UI project. It became a system of product flows,
+                      team rituals, research documents, brand assets, and stakeholder-ready
+                      materials that helped the fintech move faster with more trust.
+                    </p>
+                  </div>
+
+                  <div className="paysika-story__stats">
+                    <div className="paysika-story__stat">
+                      <Users size={22} />
+                      <strong>Team leadership</strong>
+                      <span>Managed the design team and collaborated across product, engineering, business, and support.</span>
+                    </div>
+                    <div className="paysika-story__stat">
+                      <FileText size={22} />
+                      <strong>Design operations</strong>
+                      <span>Built documentation around design systems, KYC, onboarding, fees, mobile flows, and research.</span>
+                    </div>
+                    <div className="paysika-story__stat">
+                      <Award size={22} />
+                      <strong>Recognition</strong>
+                      <span>Recognized for collaboration, ownership, and team contribution during the PaySika journey.</span>
+                    </div>
+                  </div>
+                </section>
+
+                <section className="project-detail__section paysika-partnership">
+                  <div className="paysika-partnership__image">
+                    <img
+                      src={paysikaPartnership}
+                      alt="PaySika and Visa partnership team photo"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="paysika-partnership__content">
+                    <span className="paysika-story__eyebrow">Partnership and stakeholder work</span>
+                    <h2>Designing in a serious fintech context</h2>
+                    <p>
+                      The PaySika-Visa partnership moment shows the kind of environment the work
+                      had to support: cross-functional teams, external stakeholders, compliance
+                      constraints, and a product experience that needed to feel simple while
+                      carrying real financial responsibility.
+                    </p>
+                  </div>
+                </section>
+
+                <section className="project-detail__section paysika-process">
+                  <div className="paysika-process__header">
+                    <span className="paysika-story__eyebrow">Behind the process</span>
+                    <h2>The work behind the screens</h2>
+                    <p>
+                      These archives show the operating layer behind the shipped interface:
+                      documentation, research, branding, mobile flows, and physical card materials.
+                    </p>
+                  </div>
+
+                  <div className="paysika-process__grid">
+                    {paysikaProcessArtifacts.map((artifact) => (
+                      <article className="paysika-process__item" key={artifact.title}>
+                        <img src={artifact.image} alt={artifact.title} loading="lazy" />
+                        <div>
+                          <h3>{artifact.title}</h3>
+                          <p>{artifact.description}</p>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+
+                <section className="project-detail__section paysika-recognition">
+                  <div className="paysika-recognition__content">
+                    <span className="paysika-story__eyebrow">Recognition</span>
+                    <h2>Work people could rely on</h2>
+                    <p>
+                      Product design at PaySika also meant being dependable inside the team:
+                      clarifying flows, helping teammates move, and turning messy product
+                      questions into usable decisions.
+                    </p>
+                  </div>
+                  <img
+                    src={paysikaRecognition}
+                    alt="Receiving recognition during the PaySika journey"
+                    loading="lazy"
+                  />
+                </section>
+              </>
+            )}
 
 
 

@@ -148,6 +148,31 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+// ========== DELIVERABLES EXPLORER TABS ==========
+document.querySelectorAll('.explorer__tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const tabName = btn.getAttribute('data-tab');
+        const parentCard = btn.closest('.project-card__showcase');
+        
+        // Remove active class from all buttons in this explorer
+        parentCard.querySelectorAll('.explorer__tab-btn').forEach(b => {
+            b.classList.remove('explorer__tab-btn--active');
+        });
+        
+        // Hide all panels in this explorer
+        parentCard.querySelectorAll('.explorer__panel').forEach(panel => {
+            panel.classList.remove('explorer__panel--active');
+        });
+        
+        // Activate selected tab & panel
+        btn.classList.add('explorer__tab-btn--active');
+        const activePanel = parentCard.querySelector(`#${tabName}`);
+        if (activePanel) {
+            activePanel.classList.add('explorer__panel--active');
+        }
+    });
+});
+
 // ========== INTERSECTION OBSERVER FOR ANIMATIONS ==========
 const observerOptions = {
     threshold: 0.1,
@@ -164,6 +189,6 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 // Observe sections for animations
-document.querySelectorAll('.project-card, .skill-card, .about__content, .philosophy__content').forEach(el => {
+document.querySelectorAll('.project-card, .skill-card, .about__content, .philosophy__content, .project-card__showcase, .project-card__team-section').forEach(el => {
     observer.observe(el);
 });
