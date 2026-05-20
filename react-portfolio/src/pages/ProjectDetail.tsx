@@ -149,7 +149,9 @@ export default function ProjectDetail() {
 
             <section className="project-detail__section">
               <h2>Role</h2>
-              <p><strong>{project.role}</strong></p>
+              {(project.role || '').split('\n').map((r, i) => (
+                <p key={i} style={{ margin: 0 }}><strong>{r.trim()}</strong></p>
+              ))}
             </section>
 
             {isPaySika && (
