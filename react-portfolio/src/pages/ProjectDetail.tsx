@@ -7,7 +7,7 @@ import { ArrowLeft, Calendar, MapPin, ExternalLink, Award, FileText, Users } fro
 import { motion, AnimatePresence } from 'framer-motion';
 import { getProjectById, type Project } from '../lib/api';
 import { projectImageMap } from '../data/projects';
-import paysikaPartnership from '../assets/img/paysika/paysika-visa-partnership.jpg';
+
 import paysikaDesignDocs from '../assets/img/paysika/paysika-design-docs.png';
 import paysikaDesignRequirements from '../assets/img/paysika/paysika-design-requirements.png';
 import paysikaProductAssets from '../assets/img/paysika/paysika-product-assets.png';
@@ -184,29 +184,7 @@ export default function ProjectDetail() {
                   </div>
                 </section>
 
-                <section className="project-detail__section paysika-partnership">
-                  <div 
-                    className="paysika-partnership__image" 
-                    onClick={() => handleImageClick(paysikaPartnership, "PaySika and Visa strategic partnership team photo")}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    <img
-                      src={paysikaPartnership}
-                      alt="PaySika and Visa partnership team photo"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="paysika-partnership__content">
-                    <span className="paysika-story__eyebrow">Partnership and stakeholder work</span>
-                    <h2>Designing in a serious fintech context</h2>
-                    <p>
-                      The PaySika-Visa partnership moment shows the kind of environment the work
-                      had to support: cross-functional teams, external stakeholders, compliance
-                      constraints, and a product experience that needed to feel simple while
-                      carrying real financial responsibility.
-                    </p>
-                  </div>
-                </section>
+
 
                 <section className="project-detail__section paysika-process">
                   <div className="paysika-process__header">
