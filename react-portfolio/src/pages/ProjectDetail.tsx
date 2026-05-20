@@ -161,9 +161,7 @@ export default function ProjectDetail() {
                     <span className="paysika-story__eyebrow">Flagship case study</span>
                     <h2>From product screens to product operations</h2>
                     <p>
-                      PaySika was not only a UI project. It became a system of product flows,
-                      team rituals, research documents, brand assets, and stakeholder-ready
-                      materials that helped the fintech move faster with more trust.
+                      PaySika was not only a UI/UX project for me. It became a system of product flows, team rituals, research documents, brand assets, and stakeholder-ready materials that helped the team move faster.
                     </p>
                   </div>
 
