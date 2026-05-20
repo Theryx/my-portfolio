@@ -1,4 +1,4 @@
-import { useState } from 'react';
+
 import { Link } from 'react-router-dom';
 import { PageTransition } from '../components/PageTransition';
 import { useProfile } from '../context/ProfileContext';
@@ -8,13 +8,7 @@ import { motion } from 'framer-motion';
 
 export default function Projects() {
   const { projects, loading, error } = useProfile();
-  const [activeTag, setActiveTag] = useState('All');
 
-  const uniqueTags = ['All', ...new Set(projects.map(p => p.tag).filter(Boolean))];
-
-  const filteredProjects = activeTag === 'All'
-    ? projects
-    : projects.filter(p => p.tag === activeTag);
 
   return (
     <PageTransition>
@@ -30,29 +24,17 @@ export default function Projects() {
             </p>
           ) : (
             <>
-              <div className="projects__filters" role="group" aria-label="Filter projects by category">
-                {uniqueTags.map(tag => (
-                  <button
-                    key={tag}
-                    className={`projects__filter-btn ${activeTag === tag ? 'projects__filter-btn--active' : ''}`}
-                    onClick={() => setActiveTag(tag)}
-                    type="button"
-                    aria-pressed={activeTag === tag}
-                  >
-                    {tag}
-                  </button>
-                ))}
-              </div>
 
-              {filteredProjects.length === 0 && (
+
+              {projects.length === 0 && (
                 <p style={{ textAlign: 'center', padding: '60px 0', color: 'var(--color-text-muted)' }}>
-                  {activeTag === 'All' ? 'No projects yet.' : `No projects in "${activeTag}".`}
+                  No projects yet.
                 </p>
               )}
 
               <motion.div className="projects__grid" layout>
-                {filteredProjects.map((project, index) => {
-                  const isFeatured = index === 0 && activeTag === 'All';
+                {projects.map((project, index) => {
+                  const isFeatured = index === 0;
                   return (
                     <Link 
                       to={`/projects/${project.id}`} 
@@ -80,11 +62,7 @@ export default function Projects() {
                                     <p>Built robust Design-Marketing & Design-Mobile workflows.</p>
                                 </div>
                             </div>
-                            <div className="project-skills">
-                                {(project.responsibilities || []).slice(0, 5).map(skill => (
-                                    <span key={skill} className="project-skill-pill">{skill}</span>
-                                ))}
-                            </div>
+
                           </>
                         )}
 
