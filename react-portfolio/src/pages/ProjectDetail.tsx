@@ -19,27 +19,27 @@ import paysikaMockup from '../assets/img/paysika_mockup.png';
 const paysikaProcessArtifacts = [
   {
     title: 'Design system and team process',
-    description: 'Documentation for UI standards, collaboration rituals, and repeatable design delivery.',
+    description: 'I built the documentation for UI standards, established collaboration rituals, and created the repeatable design delivery pipeline.',
     image: paysikaDesignDocs,
   },
   {
     title: 'Product and marketing requirements',
-    description: 'Requirements archives connecting dashboard needs, branding, email, KYC, fees, and mobile flows.',
+    description: 'I drafted the requirements connecting dashboard needs, branding, email, KYC, fees, and mobile flows.',
     image: paysikaDesignRequirements,
   },
   {
     title: 'Mobile flow and product assets',
-    description: 'Screens, onboarding references, transaction history, secure card flows, animations, and app assets.',
+    description: 'I designed the screens, onboarding references, transaction history, secure card flows, animations, and app assets.',
     image: paysikaProductAssets,
   },
   {
     title: 'Card mailer production assets',
-    description: 'Packaging, print, envelope, manufacturing, and presentation materials for physical card delivery.',
+    description: 'I produced the packaging, print, envelope, manufacturing, and presentation materials for physical card delivery.',
     image: paysikaMailerAssets,
   },
   {
     title: 'Usability testing archive',
-    description: 'Consent forms, scripts, observer guides, reports, and recordings used to structure user research.',
+    description: 'I conducted usability tests, creating the consent forms, scripts, observer guides, reports, and recordings.',
     image: paysikaResearchArchive,
   },
 ];
@@ -191,8 +191,7 @@ export default function ProjectDetail() {
                     <span className="paysika-story__eyebrow">Behind the process</span>
                     <h2>The work behind the screens</h2>
                     <p>
-                      These archives show the operating layer behind the shipped interface:
-                      documentation, research, branding, mobile flows, and physical card materials.
+                      Here is a look at the foundational systems I created behind the shipped interface, including documentation, research, branding, mobile flows, and physical card materials.
                     </p>
                   </div>
 
