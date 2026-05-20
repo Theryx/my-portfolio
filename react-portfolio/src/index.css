@@ -700,27 +700,30 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
     line-height: 1.6;
 }
 
-.paysika-partnership,
-.paysika-recognition {
+.paysika-recognition__header {
+    margin-bottom: var(--spacing-xl);
+    text-align: left;
+}
+
+.paysika-recognition__gallery {
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: var(--spacing-xl);
-    align-items: center;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
 }
 
-.paysika-partnership__image,
-.paysika-recognition img {
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: var(--radius-xl);
-}
-
-.paysika-partnership__image img,
-.paysika-recognition img {
-    display: block;
+.paysika-recognition__gallery img,
+.paysika-recognition__placeholder {
     width: 100%;
-    height: 360px;
+    aspect-ratio: 4 / 3;
     object-fit: cover;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(0, 211, 149, 0.16);
+    background-color: rgba(255, 255, 255, 0.03);
+    overflow: hidden;
+}
+
+.paysika-recognition__placeholder {
+    display: block;
 }
 
 .paysika-process__header {
@@ -769,11 +772,8 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
     background: linear-gradient(135deg, rgba(0, 211, 149, 0.08), rgba(0, 180, 216, 0.06));
     border: 1px solid rgba(0, 211, 149, 0.16);
     border-radius: var(--radius-xl);
-}
-
-.paysika-recognition img {
-    height: 420px;
-    object-position: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .project-detail__result {
@@ -1748,8 +1748,7 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
 
     .paysika-story,
     .paysika-process,
-    .paysika-recognition,
-    .paysika-partnership {
+    .paysika-recognition {
         width: 100%;
         max-width: 100%;
         margin-left: 0;
@@ -1757,15 +1756,18 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
     }
 
     .paysika-story__stats,
-    .paysika-process__grid,
-    .paysika-partnership,
-    .paysika-recognition {
+    .paysika-process__grid {
         grid-template-columns: 1fr;
     }
 
-    .paysika-partnership__image img,
-    .paysika-recognition img {
-        height: 300px;
+    .paysika-recognition__gallery {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .paysika-recognition__gallery img,
+    .paysika-recognition__placeholder {
+        aspect-ratio: auto;
+        height: 180px;
     }
 
     .projects__grid {

@@ -215,8 +215,7 @@ export default function ProjectDetail() {
                 </section>
 
                 <section className="project-detail__section paysika-recognition">
-                  <div className="paysika-recognition__content">
-                    <span className="paysika-story__eyebrow">Recognition</span>
+                  <div className="paysika-recognition__header">
                     <h2>Work people could rely on</h2>
                     <p>
                       Product design at PaySika also meant being dependable inside the team:
@@ -224,13 +223,19 @@ export default function ProjectDetail() {
                       questions into usable decisions.
                     </p>
                   </div>
-                  <img
-                    src={paysikaRecognition}
-                    alt="Receiving recognition during the PaySika journey"
-                    loading="lazy"
-                    onClick={() => handleImageClick(paysikaRecognition, "Receiving recognition for outstanding teamwork and reliability during the PaySika journey")}
-                    style={{ cursor: 'pointer' }}
-                  />
+                  <div className="paysika-recognition__gallery">
+                    <img
+                      src={paysikaRecognition}
+                      alt="Receiving recognition during the PaySika journey"
+                      loading="lazy"
+                      onClick={() => handleImageClick(paysikaRecognition, "Receiving recognition for outstanding teamwork and reliability during the PaySika journey")}
+                      style={{ cursor: 'pointer' }}
+                    />
+                    {[1, 2, 3, 4, 5].map((idx) => (
+                      <div key={idx} className="paysika-recognition__placeholder">
+                      </div>
+                    ))}
+                  </div>
                 </section>
               </>
             )}
