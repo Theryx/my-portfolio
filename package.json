@@ -1,0 +1,16 @@
+{
+  "name": "my-portfolio-root",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
+    "bcryptjs": "^3.0.3",
+    "cookie": "^1.1.1",
+    "jsonwebtoken": "^9.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.12.2",
+    "@vercel/node": "^5.8.1",
+    "typescript": "~6.0.2"
+  }
+}
