@@ -606,11 +606,7 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
 .project-detail__section {
     margin-bottom: var(--spacing-2xl);
 }
-/* Subtle separation line between responsibility sections */
-.project-detail__section:not(:last-child) {
-    border-bottom: 1px solid #e0e0e0; /* light divider */
-    padding-bottom: var(--spacing-xl);
-}
+
 
 
 .project-detail__section h2 {
