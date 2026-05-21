@@ -1,7 +1,5 @@
 import { PageTransition } from '../components/PageTransition';
 import { useProfile } from '../context/ProfileContext';
-import teamDiscussion from '../assets/img/Me discussion with my collegue.jfif';
-import teamAward from '../assets/img/Team spirit award_2025.jfif';
 import userResearch from '../assets/img/Conducting a user research.jfif';
 import myProfile from '../assets/img/My profile.jfif';
 import givingLecture from '../assets/img/theryx giving a lecture to a comunity of open source.png';
@@ -50,17 +48,7 @@ export default function About() {
               {profile?.tagline || 'I bridge the gap between design and development. I believe in clean design, simple language, and practical problem-solving.'}
             </p>
             
-            <div className="about__galerie-section">
-              <h3 className="about__galerie-title">Galerie</h3>
-              <div className="about__galerie-grid">
-                <img src={teamDiscussion} alt="Discussion with colleague" onClick={() => handleImageClick(teamDiscussion, "Brainstorming and collaborative session with my colleague on product flows.")} loading="lazy" style={{ cursor: 'pointer' }} />
-                <img src={teamAward} alt="Team Spirit Award 2025" onClick={() => handleImageClick(teamAward, "Receiving the Team Spirit Award in 2025 for collaboration and leadership.")} loading="lazy" style={{ cursor: 'pointer' }} />
-                <img src={userResearch} alt="Conducting User Research" onClick={() => handleImageClick(userResearch, "Active user research session gathering deep insights for fintech features.")} loading="lazy" style={{ cursor: 'pointer' }} />
-                <img src={givingLecture} alt="Giving a lecture" onClick={() => handleImageClick(givingLecture, "Sharing knowledge on product design and open source with the community.")} loading="lazy" style={{ cursor: 'pointer' }} />
-                <img src={jobsikaProcess} alt="JobSika Building Process" onClick={() => handleImageClick(jobsikaProcess, "Operational workflow and building process documented for JobSika.")} loading="lazy" style={{ cursor: 'pointer' }} />
-                <img src={codedApp} alt="Custom Application Code" onClick={() => handleImageClick(codedApp, "A snapshot of the clean UI and architecture of an app I coded from scratch.")} loading="lazy" style={{ cursor: 'pointer' }} />
-              </div>
-            </div>
+
           </motion.div>
         </div>
       </section>

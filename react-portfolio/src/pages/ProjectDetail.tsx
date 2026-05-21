@@ -4,6 +4,8 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { PageTransition } from '../components/PageTransition';
 import { ArrowLeft, Calendar, MapPin, ExternalLink, Award, FileText, Users } from 'lucide-react';
+import teamDiscussion from '../assets/img/Me discussion with my collegue.jfif';
+import teamAward from '../assets/img/Team spirit award_2025.jfif';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getProjectById, type Project } from '../lib/api';
 import { projectImageMap } from '../data/projects';
@@ -216,14 +218,26 @@ export default function ProjectDetail() {
 
                 <section className="project-detail__section paysika-recognition">
                   <div className="paysika-recognition__header">
-                    <h2>Work people could rely on</h2>
+                    <h2>The Guy people can rely on. Team player? For suuur !</h2>
                     <p>
-                      Product design at PaySika also meant being dependable inside the team:
-                      clarifying flows, helping teammates move, and turning messy product
-                      questions into usable decisions.
+                      Product design at PaySika also meant being dependable inside the team: clarifying flows, helping teammates move, and getting my hands dirty on some stuff that was not my domain of expertise...but hey! that's the startup spirit, turning messy product questions into usable decisions.
                     </p>
                   </div>
                   <div className="paysika-recognition__gallery">
+                    <img
+                      src={teamDiscussion}
+                      alt="Brainstorming session with colleague on product flows"
+                      loading="lazy"
+                      onClick={() => handleImageClick(teamDiscussion, "Brainstorming and collaborative session with my colleague on product flows.")}
+                      style={{ cursor: 'pointer' }}
+                    />
+                    <img
+                      src={teamAward}
+                      alt="Team Spirit Award 2025"
+                      loading="lazy"
+                      onClick={() => handleImageClick(teamAward, "Receiving the Team Spirit Award in 2025 for collaboration and leadership.")}
+                      style={{ cursor: 'pointer' }}
+                    />
                     <img
                       src={paysikaRecognition}
                       alt="Receiving recognition during the PaySika journey"
@@ -231,10 +245,6 @@ export default function ProjectDetail() {
                       onClick={() => handleImageClick(paysikaRecognition, "Receiving recognition for outstanding teamwork and reliability during the PaySika journey")}
                       style={{ cursor: 'pointer' }}
                     />
-                    {[1, 2, 3, 4, 5].map((idx) => (
-                      <div key={idx} className="paysika-recognition__placeholder">
-                      </div>
-                    ))}
                   </div>
                 </section>
               </>
