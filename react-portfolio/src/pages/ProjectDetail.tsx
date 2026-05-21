@@ -16,6 +16,8 @@ import paysikaProductAssets from '../assets/img/paysika/paysika-product-assets.p
 import paysikaMailerAssets from '../assets/img/paysika/paysika-mailer-assets.png';
 import paysikaResearchArchive from '../assets/img/paysika/paysika-research-archive.png';
 import paysikaRecognition from '../assets/img/paysika/paysika-recognition.png';
+import paysikaProcessDocs1 from '../assets/img/paysika/paysika-process-docs1.png';
+import paysikaProcessDocs2 from '../assets/img/paysika/paysika-process-docs2.png';
 import paysikaMockup from '../assets/img/paysika_mockup.png';
 
 const paysikaProcessArtifacts = [
@@ -254,7 +256,40 @@ export default function ProjectDetail() {
 
             {project.content && (
               <section className="project-detail__section project-detail__full-content">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.content}</ReactMarkdown>
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    h3: ({ children, ...props }) => {
+                      const text = typeof children === 'string' ? children : Array.isArray(children) ? children.join('') : '';
+                      const isOpsSection = text.includes('Engineered Operational Processes');
+                      return (
+                        <>
+                          <h3 {...props}>{children}</h3>
+                          {isOpsSection && isPaySika && (
+                            <div className="paysika-ops-images">
+                              <img
+                                src={paysikaProcessDocs2}
+                                alt="Design team process files in SharePoint"
+                                loading="lazy"
+                                onClick={() => handleImageClick(paysikaProcessDocs2, 'Design team process files — Release & deployment, process.pptx, Design team process.docx and Copywriting process documented in SharePoint.')}
+                                style={{ cursor: 'pointer' }}
+                              />
+                              <img
+                                src={paysikaProcessDocs1}
+                                alt="Design team process PPTX and DOCX in Teams"
+                                loading="lazy"
+                                onClick={() => handleImageClick(paysikaProcessDocs1, 'Design team process.pptx created by Theryx Lanvin NDOUKEN — shared in the team channel alongside the process.docx and active team conversation.')}
+                                style={{ cursor: 'pointer' }}
+                              />
+                            </div>
+                          )}
+                        </>
+                      );
+                    },
+                  }}
+                >
+                  {project.content}
+                </ReactMarkdown>
               </section>
             )}
 

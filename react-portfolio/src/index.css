@@ -738,6 +738,26 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
     gap: var(--spacing-lg);
 }
 
+.paysika-ops-images {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+    margin: var(--spacing-lg) 0 var(--spacing-xl);
+}
+
+.paysika-ops-images img {
+    width: 100%;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    object-fit: cover;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.paysika-ops-images img:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px -8px rgba(0, 211, 149, 0.2);
+}
+
 .paysika-process__item {
     overflow: hidden;
 }
