@@ -3,85 +3,67 @@ import { render, screen, waitFor, cleanup } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { ProfileProvider, useProfile } from '../context/ProfileContext';
 
-vi.mock('../lib/supabase', () => ({
-  supabase: {
-    from: vi.fn(() => ({
-      select: vi.fn(() => ({
-        eq: vi.fn(() => {
-          const profileResult = {
-            data: {
-              id: 'default',
-              name: 'Default',
-              is_active: true,
-              bio: 'Test Bio',
-              tagline: 'Test Tagline',
-              hero_title: 'Design Engineer',
-              hero_subtitle: 'Building products',
-              philosophy_title: 'Philosophy',
-              philosophy_text: 'Philosophy text',
-              badges: ['Available'],
-              social_links: {}
-            },
-            error: null
-          };
-          const projectsResult = {
-            data: [
-              {
-                id: 'paysika',
-                profile_id: 'default',
-                tag: 'Fintech',
-                title: 'PaySika',
-                tagline: 'Mobile finance',
-                image: '',
-                description: 'Description',
-                impact: 'Impact',
-                site: 'https://example.com',
-                role: 'Designer',
-                period: '2024',
-                location: 'Cameroon',
-                responsibilities: ['Design'],
-                challenge: 'Challenge',
-                challenge_text: 'Challenge text',
-                solution: 'Solution',
-                solution_text: 'Solution text',
-                result: 'Result',
-                result_text: 'Result text',
-                is_hidden: false,
-                sort_order: 1
-              }
-            ],
-            error: null
-          };
-          return {
-            single: vi.fn(() => Promise.resolve(profileResult)),
-            limit: vi.fn(() => ({ single: vi.fn(() => Promise.resolve(profileResult)) })),
-            order: vi.fn(() => Promise.resolve(projectsResult)),
-            eq: vi.fn(() => ({ order: vi.fn(() => Promise.resolve(projectsResult)) })),
-          };
-        }),
-        order: vi.fn(() => Promise.resolve({ 
-          data: [
-            {
-              id: 'test-post',
-              profile_id: 'default',
-              title: 'Test Post',
-              excerpt: 'Excerpt',
-              content: '<p>Content</p>',
-              date: '2024-01-01',
-              author: 'Theryx',
-              read_time: '5 min',
-              tags: ['Test'],
-              image: '',
-              is_hidden: false,
-              sort_order: 1
-            }
-          ], 
-          error: null 
-        }))
-      }))
-    }))
-  }
-}));
+vi.mock('../lib/api', () => {
+  const mockProfile = {
+    id: 'default',
+    name: 'Default',
+    is_active: true,
+    bio: 'Test Bio',
+    tagline: 'Test Tagline',
+    hero_title: 'Design Engineer',
+    hero_subtitle: 'Building products',
+    philosophy_title: 'Philosophy',
+    philosophy_text: 'Philosophy text',
+    badges: ['Available'],
+    social_links: {}
+  };
+
+  const mockProject = {
+    id: 'paysika',
+    profile_id: 'default',
+    tag: 'Fintech',
+    title: 'PaySika',
+    tagline: 'Mobile finance',
+    image: '',
+    description: 'Description',
+    impact: 'Impact',
+    site: 'https://example.com',
+    role: 'Designer',
+    period: '2024',
+    location: 'Cameroon',
+    responsibilities: ['Design'],
+    challenge: 'Challenge',
+    challenge_text: 'Challenge text',
+    solution: 'Solution',
+    solution_text: 'Solution text',
+    result: 'Result',
+    result_text: 'Result text',
+    is_hidden: false,
+    sort_order: 1
+  };
+
+  const mockBlogPost = {
+    id: 'test-post',
+    profile_id: 'default',
+    title: 'Test Post',
+    excerpt: 'Excerpt',
+    content: '<p>Content</p>',
+    date: '2024-01-01',
+    author: 'Theryx',
+    read_time: '5 min',
+    tags: ['Test'],
+    image: '',
+    is_hidden: false,
+    sort_order: 1
+  };
+
+  return {
+    getActiveProfile: vi.fn(() => Promise.resolve(mockProfile)),
+    getProfileById: vi.fn(() => Promise.resolve(mockProfile)),
+    getProjectsByProfile: vi.fn(() => Promise.resolve([mockProject])),
+    getBlogPostsByProfile: vi.fn(() => Promise.resolve([mockBlogPost])),
+  };
+});
 
 describe('ProfileContext', () => {
   afterEach(() => {

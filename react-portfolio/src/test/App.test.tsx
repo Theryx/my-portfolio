@@ -1,95 +1,77 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { ProfileProvider } from '../context/ProfileContext';
 import Home from '../pages/Home';
 import Projects from '../pages/Projects';
 import Blog from '../pages/Blog';
 import NotFound from '../pages/NotFound';
 
-vi.mock('../lib/supabase', () => ({
-  supabase: {
-    from: vi.fn(() => ({
-      select: vi.fn(() => ({
-        eq: vi.fn(() => {
-          const profileResult = {
-            data: {
-              id: 'default',
-              name: 'Default',
-              is_active: true,
-              bio: 'Test Bio',
-              tagline: 'Test Tagline',
-              hero_title: 'Design Engineer',
-              hero_subtitle: 'Building products',
-              philosophy_title: 'Philosophy',
-              philosophy_text: 'Philosophy text',
-              badges: ['Available'],
-              social_links: {}
-            },
-            error: null
-          };
-          const projectsResult = {
-            data: [
-              {
-                id: 'paysika',
-                profile_id: 'default',
-                tag: 'Fintech',
-                title: 'PaySika',
-                tagline: 'Mobile finance',
-                image: '',
-                description: 'Description',
-                impact: 'Impact',
-                site: 'https://example.com',
-                role: 'Designer',
-                period: '2024',
-                location: 'Cameroon',
-                responsibilities: ['Design'],
-                challenge: 'Challenge',
-                challenge_text: 'Challenge text',
-                solution: 'Solution',
-                solution_text: 'Solution text',
-                result: 'Result',
-                result_text: 'Result text',
-                is_hidden: false,
-                sort_order: 1
-              }
-            ],
-            error: null
-          };
-          return {
-            single: vi.fn(() => Promise.resolve(profileResult)),
-            limit: vi.fn(() => ({ single: vi.fn(() => Promise.resolve(profileResult)) })),
-            order: vi.fn(() => Promise.resolve(projectsResult)),
-            eq: vi.fn(() => ({ order: vi.fn(() => Promise.resolve(projectsResult)) })),
-          };
-        }),
-        order: vi.fn(() => Promise.resolve({ 
-          data: [
-            {
-              id: 'test-post',
-              profile_id: 'default',
-              title: 'Test Blog Post',
-              excerpt: 'Excerpt',
-              content: '<p>Content</p>',
-              date: '2024-01-01',
-              author: 'Theryx',
-              read_time: '5 min',
-              tags: ['Test'],
-              image: '',
-              is_hidden: false,
-              sort_order: 1
-            }
-          ], 
-          error: null 
-        }))
-      }))
-    }))
-  }
-}));
+vi.mock('../lib/api', () => {
+  const mockProfile = {
+    id: 'default',
+    name: 'Default',
+    is_active: true,
+    bio: 'Test Bio',
+    tagline: 'Test Tagline',
+    hero_title: 'Design Engineer',
+    hero_subtitle: 'Building products',
+    philosophy_title: 'Philosophy',
+    philosophy_text: 'Philosophy text',
+    badges: ['Available'],
+    social_links: {}
+  };
 
-function renderWithTestRouter() {
+  const mockProject = {
+    id: 'paysika',
+    profile_id: 'default',
+    tag: 'Fintech',
+    title: 'PaySika',
+    tagline: 'Mobile finance',
+    image: '',
+    description: 'Description',
+    impact: 'Impact',
+    site: 'https://example.com',
+    role: 'Designer',
+    period: '2024',
+    location: 'Cameroon',
+    responsibilities: ['Design'],
+    challenge: 'Challenge',
+    challenge_text: 'Challenge text',
+    solution: 'Solution',
+    solution_text: 'Solution text',
+    result: 'Result',
+    result_text: 'Result text',
+    is_hidden: false,
+    sort_order: 1
+  };
+
+  const mockBlogPost = {
+    id: 'test-post',
+    profile_id: 'default',
+    title: 'Test Blog Post',
+    excerpt: 'Excerpt',
+    content: '<p>Content</p>',
+    date: '2024-01-01',
+    author: 'Theryx',
+    read_time: '5 min',
+    tags: ['Test'],
+    image: '',
+    is_hidden: false,
+    sort_order: 1
+  };
+
+  return {
+    getActiveProfile: vi.fn(() => Promise.resolve(mockProfile)),
+    getProfileById: vi.fn(() => Promise.resolve(mockProfile)),
+    getProjectsByProfile: vi.fn(() => Promise.resolve([mockProject])),
+    getBlogPostsByProfile: vi.fn(() => Promise.resolve([mockBlogPost])),
+  };
+});
+
+function renderWithTestRouter(initialEntries = ['/']) {
   return render(
-    <BrowserRouter>
+    <MemoryRouter initialEntries={initialEntries}>
       <ProfileProvider>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -98,7 +80,7 @@ function renderWithTestRouter() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </ProfileProvider>
-    </BrowserRouter>
+    </MemoryRouter>
   );
 }
 
@@ -122,7 +104,7 @@ describe('Home Page', () => {
 
 describe('Projects Page', () => {
   it('renders projects heading', async () => {
-    renderWithTestRouter();
+    renderWithTestRouter(['/projects']);
     
     await waitFor(() => {
       expect(screen.getByText(/Selected Work/i)).toBeInTheDocument();
@@ -130,7 +112,7 @@ describe('Projects Page', () => {
   });
 
   it('renders project cards', async () => {
-    renderWithTestRouter();
+    renderWithTestRouter(['/projects']);
     
     await waitFor(() => {
       expect(screen.getByText(/PaySika/i)).toBeInTheDocument();
@@ -140,7 +122,7 @@ describe('Projects Page', () => {
 
 describe('Blog Page', () => {
   it('renders blog heading', async () => {
-    renderWithTestRouter();
+    renderWithTestRouter(['/blog']);
     
     await waitFor(() => {
       expect(screen.getByText(/Blog & Insights/i)).toBeInTheDocument();
@@ -148,7 +130,7 @@ describe('Blog Page', () => {
   });
 
   it('renders blog posts', async () => {
-    renderWithTestRouter();
+    renderWithTestRouter(['/blog']);
     
     await waitFor(() => {
       expect(screen.getByText(/Test Blog Post/i)).toBeInTheDocument();
@@ -158,7 +140,7 @@ describe('Blog Page', () => {
 
 describe('NotFound Page', () => {
   it('renders 404 message', async () => {
-    renderWithTestRouter();
+    renderWithTestRouter(['/some-random-route']);
     
     await waitFor(() => {
       expect(screen.getByText(/404/i)).toBeInTheDocument();
