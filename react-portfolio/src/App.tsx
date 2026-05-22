@@ -6,6 +6,7 @@ import { usePageTitle } from './hooks/usePageTitle';
 import { LoadingScreen } from './components/ui/LoadingScreen';
 import { ProfileProvider } from './context/ProfileContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { ClickRipple } from './components/ClickRipple';
 
 
 // Route-level code splitting
@@ -57,14 +58,17 @@ function AnimatedRoutes() {
 
 function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <ProfileProvider>
-        <Layout>
-          <AnimatedRoutes />
-        </Layout>
-      </ProfileProvider>
-    </Router>
+    <>
+      <ClickRipple />
+      <Router>
+        <ScrollToTop />
+        <ProfileProvider>
+          <Layout>
+            <AnimatedRoutes />
+          </Layout>
+        </ProfileProvider>
+      </Router>
+    </>
   );
 }
 
