@@ -47,16 +47,72 @@ export const blogPosts: BlogPost[] = [
     title: 'Why I Switched from Illustrator to Affinity Designer',
     excerpt: 'Exploring the reasons behind moving my design workflow from Adobe Illustrator to Affinity Designer.',
     content: `
-      <p>Adobe Illustrator has been the industry standard for vector design for decades. However, the rise of powerful alternatives like Affinity Designer has changed the landscape for many professionals.</p>
-      
-      <h3>The Performance Factor</h3>
-      <p>One of the most immediate benefits of Affinity Designer is its speed. The software is built for modern hardware, offering smooth zooming and panning even with complex documents.</p>
-      
-      <h3>One-Time Purchase vs Subscription</h3>
-      <p>The pricing model of Affinity is a major draw. Moving away from the Creative Cloud subscription model allows for better long-term budgeting without losing professional-grade features.</p>
-      
-      <h3>The Persona Workflow</h3>
-      <p>The ability to switch between vector and pixel workspaces (Personas) seamlessly within the same app is a game-changer for digital illustrators.</p>
+Hi! 😊 If you are reading this article, chances are you already know about Adobe Illustrator. But have you heard about **Affinity Designer**?
+
+I completely switched from Adobe Illustrator to Affinity Designer and in this article, I will give you 3 reasons why I love Affinity Designer.
+
+### Context
+
+The first Adobe software I started using was Adobe Premiere Pro. It’s later on that I discovered Adobe Photoshop.
+
+3 years ago when I started taking design as a career I could not imagine my life without Photoshop. I was designing nearly everything (flyers, business card, brochures, book covers, icons, photo retouching etc) with Photoshop. Later on, I decided to learn Adobe Illustrator for vector design, especially logo design and illustration.
+
+It took me quite some time to learn the basics of Illustrator cause it was quite different from Photoshop. What I loved and still love about Illustrator is that it gives you the ability to scale up your design without losing the quality.
+
+Some months ago I decided to stop using Adobe Creative Cloud products:
+*   I switched from **Adobe XD** to **Figma**
+*   From **Adobe Premiere Pro** to **DaVinci Resolve**
+*   From **Illustrator** to **Affinity Designer**
+*   From **Photoshop** to **Affinity Photo**
+*   From **InDesign** to **Affinity Publisher**
+
+### Why did I switch to Affinity Designer?
+
+Here are the 3 reasons I love Affinity Designer and why I switched.
+
+#### 1. Pricing (I would’ve spent a lot of money)
+
+> “I discovered it will cost me a lot of money”
+
+Since I wanted to take my design career seriously, I decided I will pay for each software I was using. I discovered it will cost me a lot of money if I had to pay for Illustrator.
+
+If I had to pay for Illustrator and use it for one year, it will cost me **USD 239.88 (approx. XAF 130,267)** and the app does not belong to me.
+
+On the other hand, Affinity Designer costs **USD 49.99 (approx. XAF 27,200)** for the Mac and Windows app. There is no subscription—you own the app for life, and all minor updates are free.
+
+Did I mention Affinity Designer has an iPad and Windows version, and a free trial version for 30 days? Illustrator did not have an iPad version until recently and their trial version is just 7 days.
+
+**Let’s do some math here:**
+
+*   **Illustrator (after 1 year):** $239 (XAF 130,267)
+*   **Affinity Designer (after 1 year):** $50 (XAF 27,200)
+*   **You save:** **$189 (XAF 102,298)**
+
+*   **Illustrator (after 2 years):** $478 (XAF 258,534)
+*   **Affinity Designer (after 2 years):** $50 (and you own it)
+*   **You save:** **$428 (XAF 231,234)**
+
+And even if you buy both the iPad and Windows versions, you still save a lot of money.
+
+#### 2. User Experience
+
+> “Pricing made me choose, simplicity made me stay”
+
+The first thing I noticed was how simple and intuitive the interface is. I must admit Illustrator frustrated me with its complex and cluttered environment. It took me just one day to get fully started and comfortable on Affinity Designer. 
+
+Affinity Designer has way fewer nested and complicated options which are often unnecessary for everyday work, making it perfect for freelancers and digital creators. Going back to Illustrator now would be very difficult.
+
+#### 3. Performance
+
+The desktop application of Affinity Designer is extremely lightweight (around 750 MB). It is built from the ground up for modern hardware, making the entire experience incredibly smooth. In fact, you can zoom up to **1,000,000%** with absolutely zero lag!
+
+### Conclusion & Recommendation
+
+It is important to note that if you intend to work inside traditional creative agencies, I highly recommend you still learn Illustrator. A lot of companies out there can't imagine life without Adobe products. 
+
+But on the other hand, if you are a freelancer wanting to save money while using a powerful, fast, and intuitive app, then definitely give a try to **Affinity Designer**.
+
+*Hit me up on Twitter if you have any questions on Affinity Designer!*
     `,
     date: 'August 15, 2022',
     author: 'Ndouken Theryx',

@@ -1,4 +1,5 @@
 import { projects as staticProjects } from '../data/projects';
+import { blogPosts as staticBlogPosts } from '../data/blog';
 
 export interface Profile {
   id: string;
@@ -249,12 +250,75 @@ export async function deleteProject(id: string): Promise<void> {
 
 // --- Blog Posts ---
 
+function matchStaticPost(dbId: string) {
+  return staticBlogPosts.find(sp => {
+    if (dbId === sp.id) return true;
+    if (dbId.startsWith('affinity') && sp.id.includes('affinity')) return true;
+    if (dbId.startsWith('oss') && sp.id.includes('open-source')) return true;
+    if (dbId.startsWith('fintech_future') && sp.id.includes('fintech')) return true;
+    if (dbId.startsWith('accessibility') && sp.id.includes('accessibility')) return true;
+    return false;
+  });
+}
+
 export async function getBlogPostsByProfile(profileId: string): Promise<BlogPost[]> {
-  return apiFetch<BlogPost[]>(`/api/blog?profile_id=${profileId}`);
+  let dbPosts: BlogPost[] = [];
+  try {
+    dbPosts = await apiFetch<BlogPost[]>(`/api/blog?profile_id=${profileId}`);
+  } catch (err) {
+    console.warn('API fetch blog posts failed, using static fallback:', err);
+    dbPosts = staticBlogPosts.map(p => ({
+      id: p.id,
+      profile_id: profileId,
+      title: p.title,
+      excerpt: p.excerpt,
+      content: p.content,
+      date: p.date,
+      author: p.author,
+      read_time: p.readTime,
+      tags: p.tags,
+      image: p.image,
+      is_hidden: false,
+      sort_order: 0
+    }));
+  }
+
+  return dbPosts.map(p => {
+    const matchedStatic = matchStaticPost(p.id);
+    if (matchedStatic && matchedStatic.content) {
+      return { ...p, content: matchedStatic.content };
+    }
+    return p;
+  });
 }
 
 export async function getAllBlogPosts(): Promise<BlogPost[]> {
-  return apiFetch<BlogPost[]>('/api/blog');
+  try {
+    const dbPosts = await apiFetch<BlogPost[]>('/api/blog');
+    return dbPosts.map(p => {
+      const matchedStatic = matchStaticPost(p.id);
+      if (matchedStatic && matchedStatic.content) {
+        return { ...p, content: matchedStatic.content };
+      }
+      return p;
+    });
+  } catch (err) {
+    console.warn('getAllBlogPosts API failed, using static fallback');
+    return staticBlogPosts.map(p => ({
+      id: p.id,
+      profile_id: 'default',
+      title: p.title,
+      excerpt: p.excerpt,
+      content: p.content,
+      date: p.date,
+      author: p.author,
+      read_time: p.readTime,
+      tags: p.tags,
+      image: p.image,
+      is_hidden: false,
+      sort_order: 0
+    }));
+  }
 }
 
 export async function getBlogPostById(id: string): Promise<BlogPost | null> {
