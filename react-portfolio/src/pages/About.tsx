@@ -213,7 +213,6 @@ export default function About() {
               { title: 'Design & UX', desc: 'Figma, User Research, Usability Testing.', image: userResearch, alt: 'User Research' },
               { title: 'Design Ops & AI', desc: 'Wireframing, User Flow Mapping, Claude/GPT Integration for UX Copy and Edge-case testing.', image: jobsikaProcess, alt: 'Design Ops Workflow' },
               { title: 'Technical & Data', desc: 'Angular, React, HTML/CSS, Mixpanel (Retention/Funnel Analysis).', image: codedApp, alt: 'Technical Coding App' },
-              { title: 'Business', desc: 'Cross-functional Collaboration (Agile/Scrum), Tech Entrepreneurship, Team Leadership.' },
             ].map((skill) => (
               <motion.div className="skill-card" key={skill.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
                 {'image' in skill && skill.image && (
