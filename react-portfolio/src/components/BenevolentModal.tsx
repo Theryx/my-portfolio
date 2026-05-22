@@ -4,6 +4,7 @@ interface Venture {
   title: string;
   role: string;
   desc: string;
+  logo?: string;
 }
 
 interface BenevolentModalProps {
@@ -34,6 +35,11 @@ export const BenevolentModal: React.FC<BenevolentModalProps> = ({ isOpen, onClos
           &times;
         </button>
         <div className="modal-body">
+          {venture.logo && (
+            <div style={{ marginBottom: '16px' }}>
+              <img src={venture.logo} alt={`${venture.title} logo`} style={{ width: '48px', height: '48px', objectFit: 'contain', borderRadius: '8px' }} />
+            </div>
+          )}
           <h2 className="modal-title" style={{ marginBottom: '8px' }}>{venture.title}</h2>
           <span style={{ display: 'block', color: 'var(--color-accent)', fontWeight: 600, marginBottom: '24px' }}>
             {venture.role}
