@@ -6,7 +6,8 @@ import givingLecture from '../assets/img/theryx giving a lecture to a comunity o
 import jobsikaProcess from '../assets/img/Screenshot of Jobsika sowing our building process.jfif';
 import codedApp from '../assets/img/an app I coded myself.PNG';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { BenevolentModal } from '../components/BenevolentModal';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -21,6 +22,23 @@ export default function About() {
   const { profile } = useProfile();
   const [selectedImage, setSelectedImage] = useState<{ src: string; caption: string } | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [selectedVenture, setSelectedVenture] = useState<{ title: string; role: string; desc: string } | null>(null);
+  
+  // Custom cursor state for interactive cards
+  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+  const [cursorLabel, setCursorLabel] = useState('');
+  const [isHovering, setIsHovering] = useState(false);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setCursorPos({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
 
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
@@ -47,6 +65,14 @@ export default function About() {
 
   return (
     <PageTransition>
+      {isHovering && (
+        <div 
+          className="custom-cursor-label" 
+          style={{ left: `${cursorPos.x}px`, top: `${cursorPos.y}px` }}
+        >
+          {cursorLabel}
+        </div>
+      )}
       <section className="about">
         <div className="container">
           <motion.div className="about__inner" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp}>
@@ -132,16 +158,40 @@ export default function About() {
 
       <section className="ventures">
         <div className="container">
-          <h2 className="section__title">Current Ventures</h2>
+          <h2 className="section__title">Benevolent Work</h2>
           <div className="ventures__grid">
             {[
               { title: 'GEFONA Digital Foundation', role: 'Communication & Finance', desc: 'Leading communication and finance for a foundation supporting policy research on the digital economy and cybersecurity in Africa.' },
               { title: 'osscameroon', role: 'Project Maintainer & Contributor', desc: 'Part of the founding team for JobSika. Involved in maintaining the platform and contributing to various open-source initiatives within the community.' },
             ].map((v) => (
-              <motion.div className="venture-card" key={v.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
-                <h3 className="venture-card__title">{v.title}</h3>
-                <span className="venture-card__role">{v.role}</span>
-                <p className="venture-card__desc">{v.desc}</p>
+              <motion.div 
+                className="venture-card" 
+                key={v.title} 
+                initial="hidden" 
+                whileInView="visible" 
+                viewport={{ once: true }} 
+                variants={fadeUp}
+                onClick={() => setSelectedVenture(v)}
+                onMouseEnter={() => {
+                  setIsHovering(true);
+                  setCursorLabel('click to expand');
+                }}
+                onMouseLeave={() => {
+                  setIsHovering(false);
+                  setCursorLabel('');
+                }}
+                style={{ cursor: 'none' }}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setSelectedVenture(v);
+                  }
+                }}
+              >
+                <h3 className="venture-card__title" style={{ marginBottom: '4px' }}>{v.title}</h3>
+                <span className="venture-card__role" style={{ color: 'var(--color-text-muted)' }}>{v.role}</span>
               </motion.div>
             ))}
           </div>
@@ -240,6 +290,7 @@ export default function About() {
           </motion.div>
         )}
       </AnimatePresence>
+      <BenevolentModal isOpen={!!selectedVenture} onClose={() => setSelectedVenture(null)} venture={selectedVenture} />
     </PageTransition>
   );
 }
