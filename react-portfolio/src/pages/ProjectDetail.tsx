@@ -8,7 +8,7 @@ import teamDiscussion from '../assets/img/Me discussion with my collegue.jfif';
 import teamAward from '../assets/img/Team spirit award_2025.jfif';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getProjectById, type Project } from '../lib/api';
-import { projectImageMap } from '../data/projects';
+import { projectImageMap, shomiMarkdownImageMap } from '../data/projects';
 
 import paysikaDesignDocs from '../assets/img/paysika/paysika-design-docs.png';
 import paysikaDesignRequirements from '../assets/img/paysika/paysika-design-requirements.png';
@@ -284,6 +284,44 @@ export default function ProjectDetail() {
                           )}
                           <h3 {...props}>{children}</h3>
                         </>
+                      );
+                    },
+                    img: ({ src, alt, ...props }) => {
+                      const decodedSrc = decodeURIComponent(src || '');
+                      const resolvedSrc = shomiMarkdownImageMap[decodedSrc] || src;
+                      return (
+                        <div className="markdown-image-wrapper" style={{ margin: 'var(--spacing-lg) 0', textAlign: 'center' }}>
+                          <img
+                            src={resolvedSrc}
+                            alt={alt}
+                            loading="lazy"
+                            onClick={() => handleImageClick(resolvedSrc || '', alt || '')}
+                            style={{ 
+                              cursor: 'pointer', 
+                              borderRadius: '16px', 
+                              boxShadow: 'var(--shadow-md)', 
+                              maxWidth: '100%', 
+                              height: 'auto',
+                              transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+                            }}
+                            className="markdown-zoom-image"
+                            {...props}
+                          />
+                          {alt && (
+                            <span 
+                              className="markdown-image-caption" 
+                              style={{ 
+                                display: 'block', 
+                                fontSize: '0.875rem', 
+                                color: 'var(--color-text-muted)', 
+                                marginTop: '8px', 
+                                fontStyle: 'italic' 
+                              }}
+                            >
+                              {alt}
+                            </span>
+                          )}
+                        </div>
                       );
                     },
                   }}

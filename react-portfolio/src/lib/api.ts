@@ -1,3 +1,5 @@
+import { projects as staticProjects } from '../data/projects';
+
 export interface Profile {
   id: string;
   name: string;
@@ -125,11 +127,84 @@ export async function updateProfile(id: string, data: Partial<Profile>): Promise
 // --- Projects ---
 
 export async function getProjectsByProfile(profileId: string): Promise<Project[]> {
-  return apiFetch<Project[]>(`/api/projects?profile_id=${profileId}`);
+  let dbProjects: Project[] = [];
+  try {
+    dbProjects = await apiFetch<Project[]>(`/api/projects?profile_id=${profileId}`);
+  } catch (err) {
+    console.warn('API fetch projects failed, using static fallback:', err);
+    dbProjects = staticProjects.map(p => ({
+      id: p.id,
+      profile_id: profileId,
+      tag: p.tag,
+      title: p.title,
+      tagline: p.tagline,
+      image: p.image,
+      description: p.description,
+      impact: p.impact,
+      site: p.site,
+      role: p.role,
+      period: p.period,
+      location: p.location,
+      responsibilities: p.responsibilities,
+      challenge: p.challenge,
+      challenge_text: p.challengeText,
+      solution: p.solution,
+      solution_text: p.solutionText,
+      result: p.result,
+      result_text: p.resultText,
+      is_hidden: false,
+      sort_order: 0,
+      content: p.content || ''
+    }));
+  }
+
+  // Populate content from static fallback if empty or null in database
+  return dbProjects.map(p => {
+    const matchedStatic = staticProjects.find(sp => sp.id === p.id || `${sp.id}_default` === p.id);
+    if (matchedStatic && !p.content && matchedStatic.content) {
+      return { ...p, content: matchedStatic.content };
+    }
+    return p;
+  });
 }
 
 export async function getAllProjects(): Promise<Project[]> {
-  return apiFetch<Project[]>('/api/projects');
+  try {
+    const dbProjects = await apiFetch<Project[]>('/api/projects');
+    return dbProjects.map(p => {
+      const matchedStatic = staticProjects.find(sp => sp.id === p.id || `${sp.id}_default` === p.id);
+      if (matchedStatic && !p.content && matchedStatic.content) {
+        return { ...p, content: matchedStatic.content };
+      }
+      return p;
+    });
+  } catch (err) {
+    console.warn('getAllProjects API failed, using static fallback');
+    return staticProjects.map(p => ({
+      id: p.id,
+      profile_id: 'default',
+      tag: p.tag,
+      title: p.title,
+      tagline: p.tagline,
+      image: p.image,
+      description: p.description,
+      impact: p.impact,
+      site: p.site,
+      role: p.role,
+      period: p.period,
+      location: p.location,
+      responsibilities: p.responsibilities,
+      challenge: p.challenge,
+      challenge_text: p.challengeText,
+      solution: p.solution,
+      solution_text: p.solutionText,
+      result: p.result,
+      result_text: p.resultText,
+      is_hidden: false,
+      sort_order: 0,
+      content: p.content || ''
+    }));
+  }
 }
 
 export async function getProjectById(id: string): Promise<Project | null> {
