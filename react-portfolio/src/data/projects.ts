@@ -108,8 +108,6 @@ Status: Building
 
 PREXCEL started as a weekend school that helps secondary school students to succeed in their exams. PREXCEL was founded by a group of young dynamic Engineers. Over the years, PREXCEL evolved to not just teaching weekend-classes to organising orientation conferences, home classes, selling books and pamphlets and preparing students to competitive exams.
 
-![Brand history photoshoot and brainstorming sessions](Untitled%201.png)
-
 ## The Problem
 
 With the outbreak of the 2019 pandemic (COVID-19), activities started slowing down.
@@ -117,8 +115,6 @@ With the outbreak of the 2019 pandemic (COVID-19), activities started slowing do
 - No more weekend/preparatory classes due to lockdowns
 - No more conferences due to social distances
 - General staff engagement slowing down due to lack of physical meetings
-
-![Brainstorming and collaborative session with my colleague on product flows](Untitled%202.png)
 
 ### Problem statement: How can PREXCEL redefine itself and "go digital" while maintaining their vision and values?
 
@@ -187,13 +183,9 @@ We had to check what other competitors do and find inspiration. So we took time 
 
 Surprisingly we didn't find any app that provide our unique selling point as a service which we called **exam night**.
 
-![Screenshot of Jobsika showing our building process](Untitled%208.png)
-
 ### Wireframes and mockups
 
 With the user journey and insights in place, I moved into Figma to create high-fidelity user interface mockups and interactive prototypes.
-
-![UI Mockups Compilation](Untitled%209.png)
 
 ### Usability testing
 
@@ -202,10 +194,8 @@ We decided to perform some usability tests on some pages with 5 users, and 3 of 
 1. One user was confused where to change the language of the app.
 2. All users did not quite understand the payment page.
 
-![Usability Testing Session](Untitled%2010.png) Through feedback and observation:
+Through feedback and observation:
 1. 3/5 users told us they were more likely to open the corrections than to open the papers.
-
-![Usability Testing Results Analysis](Untitled%2011.png)
 
 ### The tools
 
@@ -220,9 +210,7 @@ Since I was working remotely with the graphic designer, developers, and product 
 
 ## Recognition & Funding
 
-The founder of the app received a seed funding of **$5,000** from the **Tony Elumelu Foundation** to accelerate the development of the MVP.
-
-![Tony Elumelu Foundation Funding Award](Screenshot_20211116-234446.jpg) `
+The founder of the app received a seed funding of **$5,000** from the **Tony Elumelu Foundation** to accelerate the development of the MVP. `
   },
   {
     id: 'citetsap',
