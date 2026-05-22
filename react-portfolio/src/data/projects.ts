@@ -343,7 +343,6 @@ Before starting the design, we had to define what success actually means for the
 3. **Topping up airtime** and processing digital utility bills.
 4. **Receiving money** and handling deposit transaction notifications and confirmations.
 
-![CrowdRemit Core Functionalities & Ecosystem Success](crowdremit_success.svg)
 ![CrowdRemit Receiving Money & Notification Flow](crowdremit_receiving_money.png)
 
 ---
@@ -352,7 +351,6 @@ Before starting the design, we had to define what success actually means for the
 
 We worked on low-fidelity wireframes first before going to high-fidelity designs because it helped us concentrate on the skeleton and the flow of the app without bothering about the colors, copy, and other low-level details that could distract us.
 
-![Mobile Wallet & Transfer Wireframe Blueprint](crowdremit_wireframes.svg)
 ![CrowdRemit Mobile Wireframe Screens](crowdremit_wireframe_screens.png)
 
 Right before starting the design of the mockup screens, I had to make a difficult decision.
