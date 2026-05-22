@@ -209,9 +209,19 @@ export async function getAllProjects(): Promise<Project[]> {
 
 export async function getProjectById(id: string): Promise<Project | null> {
   try {
-    const activeProfile = await getActiveProfile();
-    if (!activeProfile) return null;
-    const profileProjects = await getProjectsByProfile(activeProfile.id);
+    let resolvedProfile = null;
+    if (typeof window !== 'undefined') {
+      const searchParams = new URLSearchParams(window.location.search);
+      const profileIdParam = searchParams.get('profile');
+      if (profileIdParam) {
+        resolvedProfile = await getProfileById(profileIdParam);
+      }
+    }
+    if (!resolvedProfile) {
+      resolvedProfile = await getActiveProfile();
+    }
+    if (!resolvedProfile) return null;
+    const profileProjects = await getProjectsByProfile(resolvedProfile.id);
     return profileProjects.find((p) => p.id === id) ?? null;
   } catch (err) {
     console.error('getProjectById error:', err);
@@ -249,8 +259,20 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
 
 export async function getBlogPostById(id: string): Promise<BlogPost | null> {
   try {
-    const all = await getAllBlogPosts();
-    return all.find((p) => p.id === id) ?? null;
+    let resolvedProfile = null;
+    if (typeof window !== 'undefined') {
+      const searchParams = new URLSearchParams(window.location.search);
+      const profileIdParam = searchParams.get('profile');
+      if (profileIdParam) {
+        resolvedProfile = await getProfileById(profileIdParam);
+      }
+    }
+    if (!resolvedProfile) {
+      resolvedProfile = await getActiveProfile();
+    }
+    if (!resolvedProfile) return null;
+    const profilePosts = await getBlogPostsByProfile(resolvedProfile.id);
+    return profilePosts.find((p) => p.id === id) ?? null;
   } catch {
     return null;
   }
