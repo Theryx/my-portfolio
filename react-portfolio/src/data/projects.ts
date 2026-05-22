@@ -108,7 +108,7 @@ Status: Building
 
 PREXCEL started as a weekend school that helps secondary school students to succeed in their exams. PREXCEL was founded by a group of young dynamic Engineers. Over the years, PREXCEL evolved to not just teaching weekend-classes to organising orientation conferences, home classes, selling books and pamphlets and preparing students to competitive exams.
 
-![Brand history photoshoot and brainstorming sessions](Untitled 1.png)
+![Brand history photoshoot and brainstorming sessions](Untitled%201.png)
 
 ## The Problem
 
@@ -118,7 +118,7 @@ With the outbreak of the 2019 pandemic (COVID-19), activities started slowing do
 - No more conferences due to social distances
 - General staff engagement slowing down due to lack of physical meetings
 
-![Brainstorming and collaborative session with my colleague on product flows](Untitled 2.png)
+![Brainstorming and collaborative session with my colleague on product flows](Untitled%202.png)
 
 ### Problem statement: How can PREXCEL redefine itself and "go digital" while maintaining their vision and values?
 
@@ -151,21 +151,21 @@ To validate our assumptions and understand our target users better, we conducted
 #### 1. Smartphone Access at Home
 A critical question was whether students are allowed to use smartphones at home, since many parents restrict phone usage to focus on schoolwork.
 
-![Survey - Smartphone Access at Home](Untitled 5.png)
+![Survey - Smartphone Access at Home](Untitled%205.png)
 
 The survey showed that a significant portion of students have restricted or no smartphone access at home, meaning the platform must be highly optimized for quick sessions or offline-first study materials.
 
 #### 2. Pamphlet Reading Preferences
 We asked students how they prefer to read pamphlets and study guides:
 
-![Survey - Reading Preferences](Untitled 4.png)
+![Survey - Reading Preferences](Untitled%204.png)
 
 A majority of students still prefer physical pamphlets or interactive digital booklets over plain PDFs, prompting us to design a rich, interactive booklet viewer.
 
 #### 3. Budget and Purchasing Power
 We researched how much students or their parents are willing to spend on preparatory exam prep materials:
 
-![Survey - Spending Power](Untitled 3.png)
+![Survey - Spending Power](Untitled%203.png)
 
 This helped us design affordable pricing tiers and micro-payment models suited to the local market.
 
@@ -173,13 +173,13 @@ This helped us design affordable pricing tiers and micro-payment models suited t
 
 Based on the survey insights and follow-up interviews, we defined two personas: a student persona and a mentor persona.
 
-![Student Persona - Kenfack Donald](Untitled 6.png)
+![Student Persona - Kenfack Donald](Untitled%206.png)
 
 ### User journey and flows
 
 We mapped out the complete user journey to ensure students could seamlessly register, access pamphlets, and engage in exam nights.
 
-![User Journey Map](Untitled 7.png)
+![User Journey Map](Untitled%207.png)
 
 ### Competitive analysis
 
@@ -187,13 +187,13 @@ We had to check what other competitors do and find inspiration. So we took time 
 
 Surprisingly we didn't find any app that provide our unique selling point as a service which we called **exam night**.
 
-![Screenshot of Jobsika showing our building process](Untitled 8.png)
+![Screenshot of Jobsika showing our building process](Untitled%208.png)
 
 ### Wireframes and mockups
 
 With the user journey and insights in place, I moved into Figma to create high-fidelity user interface mockups and interactive prototypes.
 
-![UI Mockups Compilation](Untitled 9.png)
+![UI Mockups Compilation](Untitled%209.png)
 
 ### Usability testing
 
@@ -202,10 +202,10 @@ We decided to perform some usability tests on some pages with 5 users, and 3 of 
 1. One user was confused where to change the language of the app.
 2. All users did not quite understand the payment page.
 
-![Usability Testing Session](Untitled 10.png) Through feedback and observation:
+![Usability Testing Session](Untitled%2010.png) Through feedback and observation:
 1. 3/5 users told us they were more likely to open the corrections than to open the papers.
 
-![Usability Testing Results Analysis](Untitled 11.png)
+![Usability Testing Results Analysis](Untitled%2011.png)
 
 ### The tools
 
