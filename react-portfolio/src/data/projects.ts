@@ -357,12 +357,13 @@ Right before starting the design of the mockup screens, I had to make a difficul
 
 ### *"A color contrast made us rebrand the whole logo"*
 
+![CrowdRemit Network Error Page Color Contrast Comparison](crowdremit_error_page_contrast.png)
+
 Accessibility evaluation revealed that the old brand primary color reduced the readability of text on buttons. It failed WCAG contrast guidelines, making it difficult for visually impaired users. I took the bold decision to rebrand it, selecting a high-contrast orange theme that successfully passes WCAG AA contrast standards.
 
 ![CrowdRemit Brand Guidelines & Visual Identity](crowdremit_brand_guidelines.png)
 
 ![WCAG AA Accessibility Contrast Ratio Analysis](crowdremit_rebranding.svg)
-![CrowdRemit Network Error Page Color Contrast Comparison](crowdremit_error_page_contrast.png)
 
 I worked closely with the developers to create the interfaces. We used **Jira** to track the progress and sync the dev team with the design team (not an easy task, if you ask me!).
 
