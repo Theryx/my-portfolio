@@ -92,7 +92,13 @@ export default function ProjectDetail() {
   }
 
   const isPaySika = project.id === 'paysika';
+  const isCrowdRemit = project.id.startsWith('crowdremit');
   const imageSrc = isPaySika ? paysikaMockup : projectImageMap[project.image];
+  const heroCaption = isPaySika 
+    ? 'PaySika mobile interface phone mockup' 
+    : isCrowdRemit 
+      ? 'CrowdRemit high-fidelity multi-platform mockup' 
+      : project.title;
 
   return (
     <PageTransition>
@@ -134,12 +140,12 @@ export default function ProjectDetail() {
 
           <div 
             className="project-detail__hero" 
-            onClick={() => handleImageClick(imageSrc, isPaySika ? 'PaySika mobile interface phone mockup' : project.title)}
+            onClick={() => handleImageClick(imageSrc, heroCaption)}
             style={{ cursor: 'pointer' }}
           >
             <img
               src={imageSrc}
-              alt={isPaySika ? 'PaySika mobile interface phone mockup' : project.title}
+              alt={heroCaption}
               loading="eager"
               onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
             />
@@ -157,6 +163,36 @@ export default function ProjectDetail() {
                 <p key={i} style={{ margin: 0 }}><strong>{r.trim()}</strong></p>
               ))}
             </section>
+
+            {isCrowdRemit && (
+              <section className="project-detail__section paysika-story">
+                <div className="paysika-story__intro">
+                  <span className="paysika-story__eyebrow">Fintech case study</span>
+                  <h2>Ecosystem Deliverables &amp; Design Architecture</h2>
+                  <p>
+                    CrowdRemit was a full-scale digital experience. I designed a multi-currency ecosystem across four platforms: iOS App, Android App, Web Dashboard, and a public landing page, unified by a custom design system.
+                  </p>
+                </div>
+
+                <div className="paysika-story__stats">
+                  <div className="paysika-story__stat">
+                    <Users size={22} />
+                    <strong>User-Centric Design</strong>
+                    <span>Insisted on user interviews, journey maps, and personas to guide the UX structure before drawing wireframes.</span>
+                  </div>
+                  <div className="paysika-story__stat">
+                    <FileText size={22} />
+                    <strong>Accessible Rebranding</strong>
+                    <span>Led a bold accessibility rebranding, replacing a low-contrast primary color to satisfy WCAG AA requirements.</span>
+                  </div>
+                  <div className="paysika-story__stat">
+                    <Award size={22} />
+                    <strong>Cross-Platform Scope</strong>
+                    <span>Created and handed over consistent assets for mobile, responsive web dashboard, and marketing landing pages.</span>
+                  </div>
+                </div>
+              </section>
+            )}
 
             {isPaySika && (
               <>
@@ -289,13 +325,27 @@ export default function ProjectDetail() {
                     img: ({ src, alt, ...props }) => {
                       const decodedSrc = decodeURIComponent(src || '');
                       const resolvedSrc = shomiMarkdownImageMap[decodedSrc] || src;
+                      const isSideBySide = alt && alt.includes('[side-by-side]');
+                      const cleanAlt = alt ? alt.replace('[side-by-side]', '').trim() : '';
                       return (
-                        <div className="markdown-image-wrapper" style={{ margin: 'var(--spacing-lg) 0', textAlign: 'center' }}>
+                        <div 
+                          className="markdown-image-wrapper" 
+                          style={{ 
+                            margin: 'var(--spacing-lg) 0', 
+                            textAlign: 'center',
+                            display: isSideBySide ? 'inline-block' : 'block',
+                            width: isSideBySide ? 'calc(50% - 16px)' : '100%',
+                            minWidth: isSideBySide ? '280px' : 'none',
+                            boxSizing: 'border-box',
+                            padding: isSideBySide ? '0 8px' : '0',
+                            verticalAlign: 'top'
+                          }}
+                        >
                           <img
                             src={resolvedSrc}
-                            alt={alt}
+                            alt={cleanAlt}
                             loading="lazy"
-                            onClick={() => handleImageClick(resolvedSrc || '', alt || '')}
+                            onClick={() => handleImageClick(resolvedSrc || '', cleanAlt || '')}
                             style={{ 
                               cursor: 'pointer', 
                               borderRadius: '16px', 
@@ -307,7 +357,7 @@ export default function ProjectDetail() {
                             className="markdown-zoom-image"
                             {...props}
                           />
-                          {alt && (
+                          {cleanAlt && (
                             <span 
                               className="markdown-image-caption" 
                               style={{ 
@@ -318,10 +368,57 @@ export default function ProjectDetail() {
                                 fontStyle: 'italic' 
                               }}
                             >
-                              {alt}
+                              {cleanAlt}
                             </span>
                           )}
                         </div>
+                      );
+                    },
+                    a: ({ href, children, ...props }) => {
+                      const isFigma = href && (href.includes('figma.com/file/') || href.includes('figma.com/proto/') || href.includes('figma.com/design/'));
+                      if (isFigma) {
+                        const embedUrl = `https://www.figma.com/embed?embed_host=share&url=${encodeURIComponent(href)}`;
+                        return (
+                          <div className="figma-embed-container" style={{ margin: 'var(--spacing-xl) 0', width: '100%' }}>
+                            <iframe
+                              title="Figma Prototype"
+                              width="100%"
+                              height="500"
+                              src={embedUrl}
+                              allowFullScreen
+                              style={{
+                                border: '1px solid rgba(255, 255, 255, 0.1)',
+                                borderRadius: '16px',
+                                backgroundColor: '#1e1e1e',
+                                boxShadow: 'var(--shadow-lg)'
+                              }}
+                            />
+                            <div style={{ textAlign: 'center', marginTop: '12px' }}>
+                              <a 
+                                href={href} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="project-detail__meta-item project-detail__meta-link" 
+                                style={{ 
+                                  display: 'inline-flex', 
+                                  alignItems: 'center', 
+                                  gap: '6px',
+                                  fontSize: '0.875rem',
+                                  color: 'var(--color-primary)',
+                                  textDecoration: 'none'
+                                }}
+                              >
+                                <span>Open Prototype in Figma</span>
+                                <ExternalLink size={14} />
+                              </a>
+                            </div>
+                          </div>
+                        );
+                      }
+                      return (
+                        <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
+                          {children}
+                        </a>
                       );
                     },
                   }}

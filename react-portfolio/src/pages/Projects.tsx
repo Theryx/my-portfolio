@@ -93,7 +93,10 @@ export default function Projects() {
             <img src={teamDiscussion} alt="Team discussion" className="collaboration__image" loading="lazy" />
             <div className="collaboration__text">
               <p>
-                I believe the best products come from diverse teams working together. At PaySika, I managed "#TheBestTeam" - a two-person design team that delivered exceptional results. I've collaborated with cross-functional teams including engineers, product managers, and stakeholders to deliver impactful fintech solutions.
+                I believe the best products are never the work of a single individual. Designing these projects has always been a collective team effort, and I am grateful to have collaborated closely with brilliant engineers, product managers, and stakeholders.
+              </p>
+              <p>
+                The truth is, some of the best design solutions come from others having better ideas than I do—which is why I view feedback as a true blessing and never take it for granted. It is our willingness to listen, co-create, and critique together that makes the final products successful.
               </p>
             </div>
           </div>

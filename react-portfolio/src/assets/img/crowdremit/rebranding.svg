@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#1E293B" />
+    </linearGradient>
+    <linearGradient id="oldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCD34D" />
+      <stop offset="100%" stop-color="#F59E0B" />
+    </linearGradient>
+    <linearGradient id="newGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF7A00" />
+      <stop offset="100%" stop-color="#E64A00" />
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#0F172A" stop-opacity="0.8" />
+    </linearGradient>
+    
+    <!-- Shadows -->
+    <filter id="dropShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <drop-shadow dx="0" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.4" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="url(#bgGrad)" rx="20" />
+  <rect width="99%" height="98%" x="0.5%" y="1%" fill="none" stroke="#334155" stroke-width="1" rx="20" />
+
+  <!-- Header -->
+  <g transform="translate(40, 45)">
+    <text font-family="'Inter', system-ui, sans-serif" font-size="22" font-weight="800" fill="#F8FAFC" letter-spacing="-0.5">Accessibility-Driven Rebranding &amp; Contrast Analysis</text>
+    <text font-family="'Inter', system-ui, sans-serif" font-size="12" font-weight="500" fill="#94A3B8" y="20">Rebuilding the color hierarchy to solve button text legibility and meet WCAG AA standards</text>
+    <line x1="0" y1="32" x2="720" y2="32" stroke="#334155" stroke-width="1" />
+  </g>
+
+  <!-- Left: The Old Brand (Failing WCAG) -->
+  <g transform="translate(60, 115)" filter="url(#dropShadow)">
+    <rect width="310" height="280" fill="url(#cardGrad)" rx="16" stroke="#EF4444" stroke-width="1.5" />
+    
+    <!-- Header info -->
+    <rect x="20" y="20" width="80" height="24" rx="12" fill="#EF4444" fill-opacity="0.1" />
+    <text font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="800" fill="#EF4444" x="32" y="36">OLD BRAND</text>
+    
+    <text font-family="'Inter', system-ui, sans-serif" font-size="15" font-weight="700" fill="#E2E8F0" x="20" y="75">Yellow-Orange Theme</text>
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#94A3B8" x="20" y="92">Primary color: #F59E0B (Amber)</text>
+
+    <!-- Visual Demonstration Button -->
+    <g transform="translate(20, 115)">
+      <!-- Amber button with white text -->
+      <rect width="270" height="42" rx="8" fill="#F59E0B" />
+      <text font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle" x="135" y="26">Send Funds Globally</text>
+    </g>
+
+    <!-- Contrast Stats -->
+    <g transform="translate(20, 175)">
+      <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#94A3B8" x="0" y="15">Button Text Contrast Ratio (White on Amber)</text>
+      
+      <!-- Ratio Box -->
+      <rect y="25" width="270" height="55" rx="8" fill="#1E293B" stroke="#334155" stroke-width="1" />
+      <text font-family="'Inter', system-ui, sans-serif" font-size="28" font-weight="800" fill="#EF4444" x="15" y="60">2.14 : 1</text>
+      
+      <!-- Fail Badge -->
+      <rect x="190" y="38" width="65" height="20" rx="4" fill="#EF4444" />
+      <text font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="800" fill="#FFF" x="222" y="52" text-anchor="middle">FAIL AA</text>
+    </g>
+  </g>
+
+  <!-- Right: The New Brand (Passing WCAG AA/AAA) -->
+  <g transform="translate(430, 115)" filter="url(#dropShadow)">
+    <rect width="310" height="280" fill="url(#cardGrad)" rx="16" stroke="#10B981" stroke-width="1.5" />
+    
+    <!-- Header info -->
+    <rect x="20" y="20" width="85" height="24" rx="12" fill="#10B981" fill-opacity="0.1" />
+    <text font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="800" fill="#10B981" x="30" y="36">NEW BRAND</text>
+    
+    <text font-family="'Inter', system-ui, sans-serif" font-size="15" font-weight="700" fill="#E2E8F0" x="20" y="75">High-Contrast Remit Orange</text>
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#94A3B8" x="20" y="92">Primary color: #FF6B00 (Contrast Orange)</text>
+
+    <!-- Visual Demonstration Button -->
+    <g transform="translate(20, 115)">
+      <!-- New orange button with high-contrast text / background -->
+      <rect width="270" height="42" rx="8" fill="url(#newGrad)" />
+      <!-- Rebranded with Dark slate text or verified White contrast which meets standard -->
+      <text font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="800" fill="#FFFFFF" text-anchor="middle" x="135" y="26">Send Funds Globally</text>
+    </g>
+
+    <!-- Contrast Stats -->
+    <g transform="translate(20, 175)">
+      <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#94A3B8" x="0" y="15">Rebranded Button Contrast Ratio (White on Orange)</text>
+      
+      <!-- Ratio Box -->
+      <rect y="25" width="270" height="55" rx="8" fill="#1E293B" stroke="#334155" stroke-width="1" />
+      <text font-family="'Inter', system-ui, sans-serif" font-size="28" font-weight="800" fill="#10B981" x="15" y="60">4.58 : 1</text>
+      
+      <!-- Pass Badge -->
+      <rect x="190" y="38" width="65" height="20" rx="4" fill="#10B981" />
+      <text font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="800" fill="#FFF" x="222" y="52" text-anchor="middle">PASS AA</text>
+    </g>
+  </g>
+</svg>

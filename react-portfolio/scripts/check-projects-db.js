@@ -17,12 +17,17 @@ const sql = neon(databaseUrl);
 
 try {
   const rows = await sql`
-    SELECT id, title, image, substring(content, 1, 150) as content_start, length(content) as content_length 
-    FROM projects 
-    WHERE id LIKE '%shomi%' OR id LIKE '%default%'
+    SELECT id, title, profile_id 
+    FROM projects
   `;
-  console.log('Database rows matching shomi/default:');
-  console.log(JSON.stringify(rows, null, 2));
+  const profiles = await sql`
+    SELECT id, name, is_active 
+    FROM profiles
+  `;
+  console.log('All database projects:');
+  console.log(rows);
+  console.log('All database profiles:');
+  console.log(profiles);
 } catch (err) {
   console.error('Error fetching from database:', err);
 }

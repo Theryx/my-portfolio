@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#1E293B" />
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF8A00" />
+      <stop offset="100%" stop-color="#FF5C00" />
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#0F172A" stop-opacity="0.8" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#818CF8" />
+    </linearGradient>
+    
+    <!-- Shadows -->
+    <filter id="dropShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <drop-shadow dx="0" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.4" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="url(#bgGrad)" rx="20" />
+  <rect width="99%" height="98%" x="0.5%" y="1%" fill="none" stroke="#334155" stroke-width="1" rx="20" />
+
+  <!-- Header -->
+  <g transform="translate(40, 45)">
+    <text font-family="'Inter', system-ui, sans-serif" font-size="22" font-weight="800" fill="#F8FAFC" letter-spacing="-0.5">CrowdRemit User Research &amp; Synthesis</text>
+    <text font-family="'Inter', system-ui, sans-serif" font-size="12" font-weight="500" fill="#94A3B8" y="20">Aligning business objectives with real-world sender behaviors</text>
+    <line x1="0" y1="32" x2="720" y2="32" stroke="#334155" stroke-width="1" />
+  </g>
+
+  <!-- Left Column: User Persona Makeda -->
+  <g transform="translate(40, 110)" filter="url(#dropShadow)">
+    <rect width="250" height="300" fill="url(#cardGrad)" rx="16" stroke="#475569" stroke-width="1" />
+    
+    <!-- Profile Pic & Details -->
+    <circle cx="60" cy="60" r="30" fill="#FF5C00" opacity="0.2" />
+    <circle cx="60" cy="60" r="24" fill="url(#orangeGrad)" />
+    <!-- SVG Avatar Representation -->
+    <path d="M60 48c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8zm-12 24c0-6.6 5.4-12 12-12s12 5.4 12 12v2h-24v-2z" fill="#FFF" />
+    
+    <text font-family="'Inter', system-ui, sans-serif" font-size="16" font-weight="700" fill="#F8FAFC" x="110" y="55">Makeda K.</text>
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="600" fill="#FF8A00" x="110" y="70">Cross-Border Business</text>
+    
+    <!-- Bio Details -->
+    <rect x="20" y="110" width="210" height="1" fill="#334155" />
+    
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#94A3B8" x="20" y="130">PAIN POINTS</text>
+    
+    <circle cx="26" cy="152" r="3" fill="#EF4444" />
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#CBD5E1" x="36" y="156">Exorbitant wire transfer fees</text>
+    
+    <circle cx="26" cy="176" r="3" fill="#EF4444" />
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#CBD5E1" x="36" y="180">Takes 3-5 days to clear funds</text>
+    
+    <circle cx="26" cy="200" r="3" fill="#EF4444" />
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#CBD5E1" x="36" y="204">Confusing multi-account interfaces</text>
+    
+    <rect x="20" y="225" width="210" height="1" fill="#334155" />
+    
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#94A3B8" x="20" y="245">CORE NEED</text>
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#E2E8F0" x="20" y="265" font-style="italic">"I need to manage multiple currency wallets</text>
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#E2E8F0" x="20" y="280" font-style="italic">and transfer funds home instantly."</text>
+  </g>
+
+  <!-- Right Column: User Journey Map -->
+  <g transform="translate(315, 110)">
+    <text font-family="'Inter', system-ui, sans-serif" font-size="14" font-weight="700" fill="#F8FAFC">Transaction Journey Optimization</text>
+    
+    <!-- Timeline Line -->
+    <line x1="30" y1="120" x2="410" y2="120" stroke="#334155" stroke-dasharray="4 4" stroke-width="2" />
+    <line x1="30" y1="120" x2="260" y2="120" stroke="url(#orangeGrad)" stroke-width="2" />
+
+    <!-- Step 1 -->
+    <g transform="translate(30, 0)">
+      <circle cx="0" cy="120" r="14" fill="#1E293B" stroke="url(#orangeGrad)" stroke-width="3" />
+      <text font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#FFF" text-anchor="middle" y="124">1</text>
+      <text font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#F8FAFC" text-anchor="middle" y="152">Fund Account</text>
+      <text font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#94A3B8" text-anchor="middle" y="166">Select country &amp; top-up</text>
+      <text font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#94A3B8" text-anchor="middle" y="176">with mobile money</text>
+    </g>
+
+    <!-- Step 2 -->
+    <g transform="translate(160, 0)">
+      <circle cx="0" cy="120" r="14" fill="#1E293B" stroke="url(#orangeGrad)" stroke-width="3" />
+      <text font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#FFF" text-anchor="middle" y="124">2</text>
+      <text font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#F8FAFC" text-anchor="middle" y="152">Exchange</text>
+      <text font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#94A3B8" text-anchor="middle" y="166">Convert instantly</text>
+      <text font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#94A3B8" text-anchor="middle" y="176">with guaranteed low rate</text>
+    </g>
+
+    <!-- Step 3 -->
+    <g transform="translate(290, 0)">
+      <circle cx="0" cy="120" r="14" fill="#1E293B" stroke="#334155" stroke-width="3" />
+      <text font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#94A3B8" text-anchor="middle" y="124">3</text>
+      <text font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#CBD5E1" text-anchor="middle" y="152">Transfer</text>
+      <text font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#64748B" text-anchor="middle" y="166">Select recipient bank</text>
+      <text font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#64748B" text-anchor="middle" y="176">or mobile wallet</text>
+    </g>
+
+    <!-- Step 4 -->
+    <g transform="translate(410, 0)">
+      <circle cx="0" cy="120" r="14" fill="#1E293B" stroke="#334155" stroke-width="3" />
+      <text font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#94A3B8" text-anchor="middle" y="124">4</text>
+      <text font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#CBD5E1" text-anchor="middle" y="152">Delivered</text>
+      <text font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#64748B" text-anchor="middle" y="166">Completed within</text>
+      <text font-family="'Inter', system-ui, sans-serif" font-size="9" fill="#64748B" text-anchor="middle" y="176">10 seconds</text>
+    </g>
+
+    <!-- Key Questions Addressed -->
+    <g transform="translate(0, 210)">
+      <rect width="440" height="90" fill="#1E293B" fill-opacity="0.5" rx="8" stroke="#334155" />
+      <text font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#38BDF8" x="15" y="25">EXPLORED TECHNOLOGIES &amp; FAMILIARITY</text>
+      <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#E2E8F0" x="15" y="45">We studied local mobile payment operators and standard banking flows to model</text>
+      <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#E2E8F0" x="15" y="60">a dual-currency checkout experience. Combining familiarity with powerful multi-wallet</text>
+      <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#E2E8F0" x="15" y="75">mechanics unlocked a highly satisfying, zero-confusion transaction experience.</text>
+    </g>
+  </g>
+</svg>

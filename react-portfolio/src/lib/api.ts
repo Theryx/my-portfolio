@@ -160,7 +160,7 @@ export async function getProjectsByProfile(profileId: string): Promise<Project[]
 
   // Always use static content when available — content is managed in code, not the DB
   return dbProjects.map(p => {
-    const matchedStatic = staticProjects.find(sp => sp.id === p.id || `${sp.id}_default` === p.id);
+    const matchedStatic = staticProjects.find(sp => sp.id === p.id || p.id.startsWith(sp.id));
     if (matchedStatic && matchedStatic.content) {
       return { ...p, content: matchedStatic.content };
     }
@@ -172,7 +172,7 @@ export async function getAllProjects(): Promise<Project[]> {
   try {
     const dbProjects = await apiFetch<Project[]>('/api/projects');
     return dbProjects.map(p => {
-      const matchedStatic = staticProjects.find(sp => sp.id === p.id || `${sp.id}_default` === p.id);
+      const matchedStatic = staticProjects.find(sp => sp.id === p.id || p.id.startsWith(sp.id));
       if (matchedStatic && matchedStatic.content) {
         return { ...p, content: matchedStatic.content };
       }

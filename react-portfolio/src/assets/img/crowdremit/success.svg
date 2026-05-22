@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#1E293B" />
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF8A00" />
+      <stop offset="100%" stop-color="#FF5C00" />
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#0F172A" stop-opacity="0.8" />
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    
+    <!-- Shadows -->
+    <filter id="dropShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <drop-shadow dx="0" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.4" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="url(#bgGrad)" rx="20" />
+  <rect width="99%" height="98%" x="0.5%" y="1%" fill="none" stroke="#334155" stroke-width="1" rx="20" />
+
+  <!-- Header -->
+  <g transform="translate(40, 45)">
+    <text font-family="'Inter', system-ui, sans-serif" font-size="22" font-weight="800" fill="#F8FAFC" letter-spacing="-0.5">Core Functionality &amp; Value Propositions</text>
+    <text font-family="'Inter', system-ui, sans-serif" font-size="12" font-weight="500" fill="#94A3B8" y="20">What success looks like across the user and developer ecosystem</text>
+    <line x1="0" y1="32" x2="720" y2="32" stroke="#334155" stroke-width="1" />
+  </g>
+
+  <!-- Card 1: P2P & B2B Money Transfer -->
+  <g transform="translate(40, 115)" filter="url(#dropShadow)">
+    <rect width="220" height="280" fill="url(#cardGrad)" rx="16" stroke="#475569" stroke-width="1" />
+    
+    <!-- Icon or Graph -->
+    <rect x="20" y="20" width="40" height="40" rx="8" fill="url(#orangeGrad)" />
+    <!-- Double Horizontal Arrow -->
+    <path d="M28 35h12m0 0l-3-3m3 3l-3 3M36 45H24m0 0l3-3m-3 3l3 3" fill="none" stroke="#FFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    
+    <text font-family="'Inter', system-ui, sans-serif" font-size="15" font-weight="700" fill="#F8FAFC" x="20" y="85">Instant Transfers</text>
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#94A3B8" x="20" y="105">Cross-Border P2P &amp; B2B</text>
+    
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#CBD5E1" x="20" y="140">Send money globally within</text>
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#CBD5E1" x="20" y="156">seconds. Zero heavy fees.</text>
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#CBD5E1" x="20" y="172">Supports direct banks and</text>
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#CBD5E1" x="20" y="188">local Mobile Money. </text>
+
+    <rect x="20" y="225" width="180" height="35" rx="8" fill="#1E293B" stroke="#334155" stroke-width="1" />
+    <text font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#38BDF8" x="30" y="246">SPEED: &lt; 10 SECONDS</text>
+  </g>
+
+  <!-- Card 2: Hold & Save Vault (Interest) -->
+  <g transform="translate(290, 115)" filter="url(#dropShadow)">
+    <rect width="220" height="280" fill="url(#cardGrad)" rx="16" stroke="#475569" stroke-width="1" />
+    
+    <!-- Icon or Graph -->
+    <rect x="20" y="20" width="40" height="40" rx="8" fill="url(#greenGrad)" />
+    <!-- Vault/Safe Icon Representation -->
+    <path d="M28 32c0-2 2-4 4-4s4 2 4 4v8c0 2-2 4-4 4s-4-2-4-4zm8 0h4m-12 8h4m4-4h4" fill="none" stroke="#FFF" stroke-width="2" stroke-linecap="round" />
+    
+    <text font-family="'Inter', system-ui, sans-serif" font-size="15" font-weight="700" fill="#F8FAFC" x="20" y="85">High-Yield Savings</text>
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#94A3B8" x="20" y="105">Hold and Earn Vault</text>
+    
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#CBD5E1" x="20" y="140">Store funds securely in multi-</text>
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#CBD5E1" x="20" y="156">currency accounts that earn</text>
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#CBD5E1" x="20" y="172">interest over time. Fully</text>
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#CBD5E1" x="20" y="188">hedged against inflation.</text>
+
+    <rect x="20" y="225" width="180" height="35" rx="8" fill="#1E293B" stroke="#334155" stroke-width="1" />
+    <text font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#10B981" x="30" y="246">YIELD: UP TO 8.5% APY</text>
+  </g>
+
+  <!-- Card 3: Airtime Top-Up & Utility -->
+  <g transform="translate(540, 115)" filter="url(#dropShadow)">
+    <rect width="220" height="280" fill="url(#cardGrad)" rx="16" stroke="#475569" stroke-width="1" />
+    
+    <!-- Icon or Graph -->
+    <rect x="20" y="20" width="40" height="40" rx="8" fill="#38BDF8" />
+    <!-- Mobile Phone Icon Representation -->
+    <path d="M28 26h8a2 2 0 012 2v24a2 2 0 01-2 2h-8a2 2 0 01-2-2V28a2 2 0 012-2zm4 24h0" fill="none" stroke="#FFF" stroke-width="2" stroke-linecap="round" />
+    
+    <text font-family="'Inter', system-ui, sans-serif" font-size="15" font-weight="700" fill="#F8FAFC" x="20" y="85">Airtime &amp; Bills</text>
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#94A3B8" x="20" y="105">Instant Digital Utility</text>
+    
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#CBD5E1" x="20" y="140">Instantly buy airtime for</text>
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#CBD5E1" x="20" y="156">friends, pay electricity, internet</text>
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#CBD5E1" x="20" y="172">subscriptions and local</text>
+    <text font-family="'Inter', system-ui, sans-serif" font-size="11" fill="#CBD5E1" x="20" y="188">merchant invoices.</text>
+
+    <rect x="20" y="225" width="180" height="35" rx="8" fill="#1E293B" stroke="#334155" stroke-width="1" />
+    <text font-family="'Inter', system-ui, sans-serif" font-size="10" font-weight="700" fill="#F43F5E" x="30" y="246">COVERAGE: 120+ COUNTRIES</text>
+  </g>
+</svg>

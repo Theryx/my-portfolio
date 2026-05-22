@@ -18,7 +18,11 @@
       "Bash(node *)",
       "Bash(npm root *)",
       "Bash(NODE_PATH=\"C:\\\\Users\\\\Administrateur\\\\AppData\\\\Roaming\\\\npm\\\\node_modules\" node *)",
-      "WebFetch(domain:ndoukentheryx.com)"
+      "WebFetch(domain:ndoukentheryx.com)",
+      "Bash(git rm *)",
+      "Bash(npx vercel *)",
+      "WebFetch(domain:react-portfolio-ey7bu2bym-theryxs-projects.vercel.app)",
+      "Bash(npx vite *)"
     ]
   }
 }
