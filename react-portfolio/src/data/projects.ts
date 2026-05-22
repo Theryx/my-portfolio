@@ -307,7 +307,6 @@ import shomiPersonaDonald from '../assets/img/shomi/untitled_6.png';
 import shomiUserJourney from '../assets/img/shomi/untitled_7.png';
 import shomiCompetitorProcess from '../assets/img/Screenshot of Jobsika sowing our building process.jfif';
 import shomiMockupCompilation from '../assets/img/an app I coded myself.PNG';
-import shomiUsabilityUI from '../assets/img/Screenshot of the UI of Jobsika.PNG';
 import shomiFundingAward from '../assets/img/Team spirit award_2025.jfif';
 
 export const projectImageMap: Record<string, string> = {
@@ -331,7 +330,6 @@ export const shomiMarkdownImageMap: Record<string, string> = {
   'Untitled 7.png': shomiUserJourney,
   'Untitled 8.png': shomiCompetitorProcess,
   'Untitled 9.png': shomiMockupCompilation,
-  'Untitled 10.png': shomiUsabilityUI,
   'Untitled 11.png': shomiColleague,
   'Screenshot_20211116-234446.jpg': shomiFundingAward
 };
