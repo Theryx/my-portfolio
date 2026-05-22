@@ -283,6 +283,121 @@ The founder of the app received a seed funding of **$5,000** from the **Tony Elu
     solutionText: 'Delivered high-quality UI designs across fintech, e-commerce, and community platforms.',
     result: 'The Result',
     resultText: 'Multiple successful client launches with improved user engagement.'
+  },
+  {
+    id: 'crowdremit',
+    tag: 'Fintech Innovation',
+    title: 'CrowdRemit',
+    tagline: 'Digital peer-to-peer and business-to-business money transfer system.',
+    image: 'crowdremit_mockup.png',
+    description: 'Worked as UX Researcher on the entire digital experience for CrowdRemit, a fintech platform enabling cheap, fast, and easy cross-border money transfers. Designed the mobile app, web app, landing page, and design system.',
+    impact: 'Designed a fintech experience targeting free cross-border transfers and multi-currency accounts.',
+    site: '',
+    role: 'UX Researcher & Product Designer',
+    period: 'Jan 2021 - Jan 2021',
+    location: 'Nigeria',
+    responsibilities: [
+      'Conducted user research and competitive analysis',
+      'Designed mobile app, web app, and landing page',
+      'Created and maintained the design system',
+      'Led rebranding due to accessibility color contrast issues'
+    ],
+    challenge: 'The Challenge',
+    challengeText: 'Designing a familiar yet differentiated fintech experience across all platforms. Creating a design system for consistency, and solving the complex UX of multi-currency, multi-account money transfers.',
+    solution: 'The Solution',
+    solutionText: 'Started with user research, journey maps, and personas. Moved to low-fidelity wireframes before high-fidelity mockups. Iterated constantly with the team and developers using Jira. Performed A/B tests and regular critiques. Rebranded the logo for better accessibility.',
+    result: 'The Result',
+    resultText: 'Delivered a complete design system, mobile app (iOS & Android), web app, and web dashboard. The process emphasized testing and iteration, leading to a user-centric final product.',
+    content: `# Fintech App: CrowdRemit
+
+Created: January 17, 2021 2:17 AM
+Tags: Affinity Designer, Figma, Jira
+Role: UX Research
+Context: Designing a fin-tech platform (the whole digital experience)
+Company: CrowdRemit
+Status: Not Live
+
+> Send, earn and save money
+
+## Product overview
+
+Crowd Remit is a digital peer-to-peer and business to business money transfer system and service. Its mission is to make money transfer across the globe as cheap, fast and easy as possible. Its vision is to be the leader in domestically completed cross-border transfers, and to make this service the dominant player in international transfers.
+
+My goal was to work with the team to create a mobile app, web app, landing page for users.
+
+## The Challenge:
+
+**So much going on:** The challenge here was to design an experience which look familiar but yet highlights all the advantages of using the app. This was my second time of working on a fin-tech project but it was my first time of working on such a big one across all platform.
+
+**A design system:** The I also had to come up with a design system which will help developers work on consistent component
+
+**Multiple account:** The fact that the app permits you to have multiple accounts was a very challenging experience to design. A user could for example have two accounts both representing different countries which in terms have different currencies. Someone could choose to send money from country X with M currency to a country Y who will receive in N currency.
+
+### "How do we design the best experience in this kind of situation"
+
+## We started from the basics
+
+### We asked the users
+
+One of the first thing we did was to research on the fin-tech space and the similar apps already available. Even though the founder and stake holder already had an idea of what they wanted, but we had to insist to research before designing anything. We started gathering existing data on the fin-tech systems that exist and how the user actually performs payment and how they send and receive money in real life.
+
+After gathering primary research data and also discussing with some few people on how the actually perform transactions in real, we came up with a **user journey map, user persona and user stories.**
+
+The questions we were trying to answer where:
+
+1. What are the primary user scenarios that we want to craft the experience
+2. How does the user actually perform financial transactions without the app.
+3. What pain do they go through and how could the app reducer the pain point.
+4. Empathizing better with the users
+5. Exploring trending and existing technologies so that we could provide a familiar but yet customize solution that stands out.
+
+## Shall we design please!
+
+### What does success look like?
+
+Before starting the design we had to define what success actually mean for the whole experience. We sat down with the developers and stake holders to determine the key functionality which will determine the success of the app.
+
+1. Sending and receiving money to friends and family
+2. Holding money so it could generate interest
+3. Toping up air time
+4. etc
+
+## Design proper
+
+We worked on low fidelity wireframe first before  going to high fidelity design because it helped us Concentrate on the skeleton and the flow of the app without bothering about the colors, copy and other low level details that could distract us.
+
+Right before starting the design of the mockup screens, I had to take difficult decision.
+
+### "A color contrast made us re-brand the whole logo*"
+
+Accessibility reduced the readability of text on buttons which was the Primary color of the old brand so I had to rebrand it
+
+I worked closely with the developers to create the interfaces. We used **Jira** to track ****the progress and sync the dev team with the design team(Not an easy task if you ask me).
+
+Infinite iterations
+
+### Infinite iterations
+
+After the wireframing stage(which we had to stop regardless. We now worked on the high-fidelity mockups. We had meetings where we critic and even argue on some design decisions. In a nutshell, we **designed-tested-iterate**. We also moved back and forth between wireframes and hi-fi mockups.
+
+We also perform regular A/Bb tests to validate design decisions. 
+
+Developers also started implementing the design before I was done with them.
+
+Below are some screens 
+
+At the end of my process I handed over the deliverables
+
+- Mobile app design(for iOS and android)
+- Design system
+- Website
+- A web dashboard
+
+### What I learned
+
+- Projects will not always run as planned on the roadmap.
+- Work closely with the developers to understand their language.
+- Testing the mockups made us understand the flow clearly`
   }
 ];
 
@@ -316,7 +431,8 @@ export const projectImageMap: Record<string, string> = {
   'Shomi app_all in one solution for graduate students.jfif': shomiImage,
   'an app I coded myself.PNG': citetsapImage,
   'gefona website.PNG': gefonaImage,
-  'Matanga agancy website.PNG': matangaImage
+  'Matanga agancy website.PNG': matangaImage,
+  'crowdremit_mockup.png': paysikaMockup
 };
 
 export const shomiMarkdownImageMap: Record<string, string> = {

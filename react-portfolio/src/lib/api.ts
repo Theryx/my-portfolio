@@ -158,10 +158,10 @@ export async function getProjectsByProfile(profileId: string): Promise<Project[]
     }));
   }
 
-  // Populate content from static fallback if empty or null in database
+  // Always use static content when available — content is managed in code, not the DB
   return dbProjects.map(p => {
     const matchedStatic = staticProjects.find(sp => sp.id === p.id || `${sp.id}_default` === p.id);
-    if (matchedStatic && !p.content && matchedStatic.content) {
+    if (matchedStatic && matchedStatic.content) {
       return { ...p, content: matchedStatic.content };
     }
     return p;
@@ -173,7 +173,7 @@ export async function getAllProjects(): Promise<Project[]> {
     const dbProjects = await apiFetch<Project[]>('/api/projects');
     return dbProjects.map(p => {
       const matchedStatic = staticProjects.find(sp => sp.id === p.id || `${sp.id}_default` === p.id);
-      if (matchedStatic && !p.content && matchedStatic.content) {
+      if (matchedStatic && matchedStatic.content) {
         return { ...p, content: matchedStatic.content };
       }
       return p;
