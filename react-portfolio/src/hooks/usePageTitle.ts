@@ -6,7 +6,6 @@ const TITLES: Record<string, string> = {
   '/about': 'About — Ndouken Theryx',
   '/projects': 'Projects — Ndouken Theryx',
   '/blog': 'Blog — Ndouken Theryx',
-  '/contact': 'Contact — Ndouken Theryx',
 };
 
 export function usePageTitle() {

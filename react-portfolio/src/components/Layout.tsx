@@ -11,10 +11,9 @@ interface LayoutProps {
 
 const NAV_LINKS = [
   { to: '/', label: 'Home' },
-  { to: '/about', label: 'About' },
+  { to: '/about', label: 'About me' },
   { to: '/projects', label: 'Projects' },
   { to: '/blog', label: 'Blog' },
-  { to: '/contact', label: 'Contact' },
 ];
 
 export default function Layout({ children }: LayoutProps) {

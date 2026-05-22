@@ -20,6 +20,26 @@ const fadeUp = {
 export default function About() {
   const { profile } = useProfile();
   const [selectedImage, setSelectedImage] = useState<{ src: string; caption: string } | null>(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const toggleFaq = (index: number) => {
+    setOpenFaq(openFaq === index ? null : index);
+  };
+
+  const faqs = [
+    {
+      question: 'What is your design process?',
+      answer: 'Direct and data-driven. I focus on the core problem, wireframe solutions, test, and deliver high-fidelity designs ready for engineering.',
+    },
+    {
+      question: 'What technologies do you use?',
+      answer: "I design in Figma and Adobe Creative Suite, and I'm currently learning front-end development with Angular and React. I also use Mixpanel for analytics.",
+    },
+    {
+      question: 'Are you open to speaking engagements?',
+      answer: 'Absolutely. I love public speaking, networking, and sharing insights on fintech, design, and tech ecosystems in Africa.',
+    },
+  ];
 
   const handleImageClick = (src: string, caption: string) => {
     setSelectedImage({ src, caption });
@@ -33,10 +53,21 @@ export default function About() {
             <div className="about__profile">
               <img src={myProfile} alt="Ndouken Theryx" className="about__profile-image" loading="lazy" />
             </div>
-            <h2 className="section__title" style={{ textAlign: 'left' }}>About Me</h2>
+            <h2 className="section__title" style={{ textAlign: 'left' }}>About me</h2>
             <p className="about__text">
               {profile?.bio || 'I am a Product Designer specializing in fintech UI/UX, mobile applications, and minimalist aesthetics. I have been building and leading the design team at PaySika since December 2021, while also focusing on tech entrepreneurship and building real-world applications.'}
             </p>
+
+            <div style={{ display: 'flex', gap: 'var(--spacing-xl)', margin: 'var(--spacing-md) 0' }}>
+              <div>
+                <strong style={{ color: 'var(--color-text-muted)', display: 'block', fontSize: '14px', marginBottom: '4px' }}>Location</strong>
+                <span>Douala, Cameroon</span>
+              </div>
+              <div>
+                <strong style={{ color: 'var(--color-text-muted)', display: 'block', fontSize: '14px', marginBottom: '4px' }}>Languages</strong>
+                <span>English & French</span>
+              </div>
+            </div>
 
             <div className="about__fun-fact-top">
               <p className="about__fun-fact-text">
@@ -156,6 +187,32 @@ export default function About() {
           </div>
 
 
+        </div>
+      </section>
+
+      <section className="faq">
+        <div className="container">
+          <h2 className="section__title">Frequently Asked Questions</h2>
+          <div className="faq__list">
+            {faqs.map((faq, index) => (
+              <div className="faq__item" key={index}>
+                <button
+                  className="faq__question"
+                  onClick={() => toggleFaq(index)}
+                  aria-expanded={openFaq === index}
+                  aria-controls={`faq-answer-${index}`}
+                >
+                  <span>{faq.question}</span>
+                  <span aria-hidden="true">▼</span>
+                </button>
+                {openFaq === index && (
+                  <div className="faq__answer" id={`faq-answer-${index}`} role="region">
+                    <p>{faq.answer}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
       <AnimatePresence>

@@ -207,31 +207,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="philosophy">
-        <div className="container">
-          <div className="philosophy__inner">
-            <div 
-              className="interactive-text"
-              onClick={openModal}
-              onMouseEnter={() => {
-                setIsHovering(true);
-                setCursorLabel('click to expand');
-              }}
-              onMouseLeave={() => {
-                setIsHovering(false);
-                setCursorLabel('');
-              }}
-            >
-              <h2 className="philosophy__title">
-                {profile.philosophy_title || 'I design experiences that bridge technology and human needs.'}
-              </h2>
-              <p className="philosophy__text">
-                {profile.philosophy_text || 'As a Design Engineer, I bridge the gap between design and development.'}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <JourneyModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </PageTransition>
