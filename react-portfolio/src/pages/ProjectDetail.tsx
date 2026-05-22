@@ -261,12 +261,11 @@ export default function ProjectDetail() {
                   components={{
                     h3: ({ children, ...props }) => {
                       const text = typeof children === 'string' ? children : Array.isArray(children) ? children.join('') : '';
-                      const isOpsSection = text.includes('Engineered Operational Processes');
+                      const isNextSection = text.includes('Designed End-to-End Mobile App');
                       return (
                         <>
-                          <h3 {...props}>{children}</h3>
-                          {isOpsSection && isPaySika && (
-                            <div className="paysika-ops-images">
+                          {isNextSection && isPaySika && (
+                            <div className="paysika-ops-images" style={{ marginBottom: 'var(--spacing-2xl)' }}>
                               <img
                                 src={paysikaProcessDocs2}
                                 alt="Design team process files in SharePoint"
@@ -283,6 +282,7 @@ export default function ProjectDetail() {
                               />
                             </div>
                           )}
+                          <h3 {...props}>{children}</h3>
                         </>
                       );
                     },
