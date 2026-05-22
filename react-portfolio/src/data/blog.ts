@@ -118,7 +118,7 @@ But on the other hand, if you are a freelancer wanting to save money while using
     author: 'Ndouken Theryx',
     readTime: '5 min read',
     tags: ['Design Tools', 'Affinity Designer', 'Workflow'],
-    image: 'Editor and designer for Report on Cameroon Cybersecurity.jfif'
+    image: 'illustrator_vs_affinity.png'
   },
   {
     id: 'future-of-fintech-africa',
@@ -170,13 +170,13 @@ But on the other hand, if you are a freelancer wanting to save money while using
 import paysikaImage from '../assets/img/PaySika website.PNG';
 import jobsikaImage from '../assets/img/Screenshot of the UI of Jobsika.PNG';
 import ossImage from '../assets/img/theryx giving a lecture to a comunity of open source.png';
-import affinityImage from '../assets/img/Editor and designer for Report on Cameroon Cybersecurity.jfif';
+import affinityImage from '../assets/img/illustrator_vs_affinity.png';
 
 export const blogImageMap: Record<string, string> = {
   'PaySika website.PNG': paysikaImage,
   'Screenshot of the UI of Jobsika.PNG': jobsikaImage,
   'theryx giving a lecture to a comunity of open source.png': ossImage,
-  'Editor and designer for Report on Cameroon Cybersecurity.jfif': affinityImage,
+  'illustrator_vs_affinity.png': affinityImage,
 };
 
 export const blogTags = ['All', 'Fintech', 'Africa', 'Product Design', 'UX Design', 'Accessibility', 'Emerging Markets', 'Open Source', 'Design Tools'];
