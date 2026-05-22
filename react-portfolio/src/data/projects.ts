@@ -286,15 +286,6 @@ Although the app was eventually shut down after a year due to retention and cont
     resultText: 'Delivered a complete design system, mobile app (iOS & Android), web app, and web dashboard. The process emphasized testing and iteration, leading to a user-centric final product.',
     content: `# Fintech App: CrowdRemit
 
-Created: January 17, 2021 2:17 AM
-Tags: Affinity Designer, Figma, Jira
-Role: UX Research & Product Designer
-Context: Designing a fintech platform (the whole digital experience)
-Company: CrowdRemit
-Status: Case Study
-
-> Send, earn and save money
-
 ![CrowdRemit Unified Design System](crowdremit_design_system.png)
 
 ## Product overview
