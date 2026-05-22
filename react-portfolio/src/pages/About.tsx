@@ -47,11 +47,7 @@ export default function About() {
   const faqs = [
     {
       question: 'What is your design process?',
-      answer: 'Direct and data-driven. I focus on the core problem, wireframe solutions, test, and deliver high-fidelity designs ready for engineering.',
-    },
-    {
-      question: 'What technologies do you use?',
-      answer: "I design in Figma and Adobe Creative Suite, and I'm currently learning front-end development with Angular and React. I also use Mixpanel for analytics.",
+      answer: "Honestly I'm not sure I have a design process. Ok I would say it depends. Sometimes rough, sometimes straight to the point. The truth is that books say one thing but reality says otherwise.",
     },
     {
       question: 'Are you open to speaking engagements?',
