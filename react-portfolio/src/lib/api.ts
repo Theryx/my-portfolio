@@ -285,8 +285,18 @@ export async function getBlogPostsByProfile(profileId: string): Promise<BlogPost
 
   return dbPosts.map(p => {
     const matchedStatic = matchStaticPost(p.id);
-    if (matchedStatic && matchedStatic.content) {
-      return { ...p, content: matchedStatic.content };
+    if (matchedStatic) {
+      return {
+        ...p,
+        title: matchedStatic.title,
+        excerpt: matchedStatic.excerpt,
+        content: matchedStatic.content,
+        date: matchedStatic.date,
+        author: matchedStatic.author,
+        read_time: matchedStatic.readTime,
+        tags: matchedStatic.tags,
+        image: matchedStatic.image
+      };
     }
     return p;
   });
@@ -297,8 +307,18 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
     const dbPosts = await apiFetch<BlogPost[]>('/api/blog');
     return dbPosts.map(p => {
       const matchedStatic = matchStaticPost(p.id);
-      if (matchedStatic && matchedStatic.content) {
-        return { ...p, content: matchedStatic.content };
+      if (matchedStatic) {
+        return {
+          ...p,
+          title: matchedStatic.title,
+          excerpt: matchedStatic.excerpt,
+          content: matchedStatic.content,
+          date: matchedStatic.date,
+          author: matchedStatic.author,
+          read_time: matchedStatic.readTime,
+          tags: matchedStatic.tags,
+          image: matchedStatic.image
+        };
       }
       return p;
     });
