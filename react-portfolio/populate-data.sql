@@ -59,9 +59,9 @@ VALUES
   'As a part-time UI/UX design consultant for Matanga Agency, I designed high-converting web applications, mobile interfaces, and digital dashboards for international and Cameroonian clients. I specialized in wireframing, interactive prototyping, and visual brand identity.',
   'Delivered user-centric designs for multiple client products.', 'https://matangaagency.com/fr/', 'Senior UI/UX Consultant (Part-time)', 'Dec 2022 - Feb 2024', 'Cameroon',
   ARRAY['Consulted with international and local stakeholders to turn complex product requirements into intuitive Figma mockups', 'Designed scalable component-driven UI kits and typography guides to ensure consistent styling across client deliverables', 'Conducted interactive design handoffs with engineering teams, ensuring visual fidelity and responsive layouts'],
-  'The Challenge', 'Matanga\'s diverse client portfolio required highly tailored digital transformations—ranging from early-stage fintech MVPs to established e-commerce systems—demanding rapid, pixel-perfect design execution without existing brand guidelines.',
+  'The Challenge', 'Matanga''s diverse client portfolio required highly tailored digital transformations—ranging from early-stage fintech MVPs to established e-commerce systems—demanding rapid, pixel-perfect design execution without existing brand guidelines.',
   'The Solution', 'I acted as a plug-and-play design leader, auditing client briefs, defining visual design languages from scratch, and shipping responsive web and mobile interfaces. I leveraged Component Libraries in Figma to enable rapid iterations and maintain a unified design system.',
-  'The Result', 'Delivered 6+ successful client product launches across Central Africa and Europe. Established repeatable design handoff standards that reduced development friction by 30% and significantly elevated the agency\'s creative reputation.', 6
+  'The Result', 'Delivered 6+ successful client product launches across Central Africa and Europe. Established repeatable design handoff standards that reduced development friction by 30% and significantly elevated the agency''s creative reputation.', 6
 );
 
 -- PROJECTS FOR 'fintech' PROFILE
@@ -81,9 +81,9 @@ VALUES
   'As a part-time UI/UX design consultant for Matanga Agency, I designed high-converting web applications, mobile interfaces, and digital dashboards for international and Cameroonian clients. I specialized in wireframing, interactive prototyping, and visual brand identity.',
   'Delivered user-centric designs for multiple client products.', 'https://matangaagency.com/fr/', 'Senior UI/UX Consultant (Part-time)', 'Dec 2022 - Feb 2024', 'Cameroon',
   ARRAY['Consulted with international and local stakeholders to turn complex product requirements into intuitive Figma mockups', 'Designed scalable component-driven UI kits and typography guides to ensure consistent styling across client deliverables', 'Conducted interactive design handoffs with engineering teams, ensuring visual fidelity and responsive layouts'],
-  'The Challenge', 'Matanga\'s diverse client portfolio required highly tailored digital transformations—ranging from early-stage fintech MVPs to established e-commerce systems—demanding rapid, pixel-perfect design execution without existing brand guidelines.',
+  'The Challenge', 'Matanga''s diverse client portfolio required highly tailored digital transformations—ranging from early-stage fintech MVPs to established e-commerce systems—demanding rapid, pixel-perfect design execution without existing brand guidelines.',
   'The Solution', 'I acted as a plug-and-play design leader, auditing client briefs, defining visual design languages from scratch, and shipping responsive web and mobile interfaces. I leveraged Component Libraries in Figma to enable rapid iterations and maintain a unified design system.',
-  'The Result', 'Delivered 6+ successful client product launches across Central Africa and Europe. Established repeatable design handoff standards that reduced development friction by 30% and significantly elevated the agency\'s creative reputation.', 2
+  'The Result', 'Delivered 6+ successful client product launches across Central Africa and Europe. Established repeatable design handoff standards that reduced development friction by 30% and significantly elevated the agency''s creative reputation.', 2
 );
 
 -- PROJECTS FOR 'design-engineer' PROFILE

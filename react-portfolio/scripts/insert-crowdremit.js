@@ -26,7 +26,7 @@ try {
     impact: 'Designed a fintech experience targeting free cross-border transfers and multi-currency accounts.',
     site: '',
     role: 'UX Researcher & Product Designer',
-    period: 'Jan 2021 - Jan 2021',
+    period: 'Jan 2021 - June 2021',
     location: 'Nigeria',
     responsibilities: [
       'Conducted user research and competitive analysis',
