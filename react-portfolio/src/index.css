@@ -67,13 +67,136 @@
 }
 
 [data-theme="light"] {
-    --color-bg: #ffffff;
-    --color-bg-alt: #f5f5f5;
+    --color-bg: #f9f9f7;
+    --color-bg-alt: #f0f0ed;
     --color-bg-card: #ffffff;
-    --color-text: #0a0a0a;
+    --color-text: #111111;
     --color-text-inverse: #ffffff;
-    --color-text-muted: #636366;
-    --color-text-subtle: #8e8e93;
+    --color-text-muted: #555555;
+    --color-text-subtle: #888888;
+    --gradient-dark: linear-gradient(180deg, #f0f0ed 0%, #f9f9f7 100%);
+}
+
+/* Light mode component overrides */
+[data-theme="light"] .hero__badge {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .btn--secondary {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.15);
+    color: var(--color-text);
+}
+[data-theme="light"] .btn--secondary:hover {
+    background: rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="light"] nav,
+[data-theme="light"] .nav {
+    background: rgba(249, 249, 247, 0.92);
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .nav__link {
+    color: var(--color-text-muted);
+}
+[data-theme="light"] .nav__link:hover,
+[data-theme="light"] .nav__link.active {
+    color: var(--color-text);
+}
+
+[data-theme="light"] .project-card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+[data-theme="light"] .project-card:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    border-color: rgba(0, 0, 0, 0.14);
+}
+
+[data-theme="light"] .bento-card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .skill-card,
+[data-theme="light"] .venture-card,
+[data-theme="light"] .experience__item,
+[data-theme="light"] .faq__item,
+[data-theme="light"] .blog-card,
+[data-theme="light"] .paysika-process__item,
+[data-theme="light"] .paysika-story__stat {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .project-detail__section {
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .faq__question {
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+    color: var(--color-text);
+}
+
+[data-theme="light"] .project-card__tag,
+[data-theme="light"] .project-detail__tag {
+    background: rgba(0, 0, 0, 0.06);
+    color: var(--color-text-muted);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .section__title {
+    color: var(--color-text);
+}
+
+[data-theme="light"] footer,
+[data-theme="light"] .footer {
+    background: #f0f0ed;
+    border-top-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .theme-toggle {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.12);
+    color: var(--color-text);
+}
+
+[data-theme="light"] input,
+[data-theme="light"] textarea,
+[data-theme="light"] select {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.15);
+    color: var(--color-text);
+}
+[data-theme="light"] input:focus,
+[data-theme="light"] textarea:focus {
+    border-color: var(--color-accent);
+}
+
+[data-theme="light"] .paysika-story {
+    background: #f0f0ed;
+    border-color: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .paysika-recognition__gallery img,
+[data-theme="light"] .paysika-process__item img {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .project-detail__meta-item {
+    color: var(--color-text-muted);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .blog-card__tag {
+    background: rgba(0, 0, 0, 0.06);
+    color: var(--color-text-muted);
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
