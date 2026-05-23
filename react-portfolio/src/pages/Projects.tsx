@@ -48,21 +48,9 @@ export default function Projects() {
                         <p className="project-card__tagline">{project.tagline}</p>
                         
                         {isFeatured && (
-                          <>
-                            <p className="project-card__desc">
-                              {project.description}
-                            </p>
-                            <div className="project-card__achievements">
-                                <div className="achievement-item">
-                                    <h4>🚀 +40% Retention</h4>
-                                    <p>Mixpanel-driven onboarding and KYC funnel redesigns.</p>
-                                </div>
-                                <div className="achievement-item">
-                                    <h4>📉 -60% Support Tickets</h4>
-                                    <p>Streamlined self-service and Visa card transaction flows.</p>
-                                </div>
-                            </div>
-                          </>
+                          <p className="project-card__desc">
+                            {project.description}
+                          </p>
                         )}
 
                         <div className="project-card__image">

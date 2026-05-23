@@ -10,7 +10,7 @@ TRUNCATE blog_posts CASCADE;
 INSERT INTO projects (id, profile_id, tag, title, tagline, image, description, impact, site, role, period, location, responsibilities, challenge, challenge_text, solution, solution_text, result, result_text, sort_order)
 VALUES 
 (
-  'paysika_default', 'default', 'Fintech Innovation', 'PaySika', 'Driving 40% user retention and 60% support ticket reduction.', 'PaySika website.PNG', 
+  'paysika_default', 'default', 'Fintech Innovation', 'PaySika', 'Driving 40% user retention and 60% support ticket reduction.', 'paysika_mockup.png', 
   'As Lead Product Designer and Founding Team Member, I managed a two-person design team and scaled PaySika’s mobile and web applications to serve thousands of active users across Central Africa. I engineered cross-functional workflows, led visual rebranding, and leveraged Mixpanel data to optimize transactional funnels.',
   'Scaled fintech operations serving thousands of users across Africa.', 'https://www.paysika.co', 'Lead Product Designer', 'Dec 2021 - Aug 2026', 'Douala, Cameroon',
   ARRAY['Recruited, scaled, and managed the creative design team, establishing high-performance assets handoff pipelines', 'Redesigned core mobile application interfaces (Onboarding, KYC, and Visa activation flows), minimizing drop-offs', 'Conducted usability testing sessions and leveraged Mixpanel tracking to drive evidence-backed retention updates', 'Led the end-to-end industrial and print design of PaySika’s physical debit card experience and unboxing'],
@@ -68,7 +68,7 @@ VALUES
 INSERT INTO projects (id, profile_id, tag, title, tagline, image, description, impact, site, role, period, location, responsibilities, challenge, challenge_text, solution, solution_text, result, result_text, sort_order)
 VALUES 
 (
-  'paysika_fintech', 'fintech', 'Fintech Innovation', 'PaySika', 'Driving 40% user retention and 60% support ticket reduction.', 'PaySika website.PNG', 
+  'paysika_fintech', 'fintech', 'Fintech Innovation', 'PaySika', 'Driving 40% user retention and 60% support ticket reduction.', 'paysika_mockup.png', 
   'As Lead Product Designer and Founding Team Member, I managed a two-person design team and scaled PaySika’s mobile and web applications to serve thousands of active users across Central Africa. I engineered cross-functional workflows, led visual rebranding, and leveraged Mixpanel data to optimize transactional funnels.',
   'Scaled fintech operations serving thousands of users across Africa.', 'https://www.paysika.co', 'Lead Product Designer', 'Dec 2021 - Aug 2026', 'Douala, Cameroon',
   ARRAY['Recruited, scaled, and managed the creative design team, establishing high-performance assets handoff pipelines', 'Redesigned core mobile application interfaces (Onboarding, KYC, and Visa activation flows), minimizing drop-offs', 'Conducted usability testing sessions and leveraged Mixpanel tracking to drive evidence-backed retention updates', 'Led the end-to-end industrial and print design of PaySika’s physical debit card experience and unboxing'],

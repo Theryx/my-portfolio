@@ -26,7 +26,7 @@ export const projects: Project[] = [
     tag: 'Fintech Innovation',
     title: 'PaySika',
     tagline: 'Driving 40% user retention and 60% support ticket reduction.',
-    image: 'PaySika website.PNG',
+    image: 'paysika_mockup.png',
     description: 'As Lead Product Designer and Founding Team Member, I managed a two-person design team and scaled PaySika’s mobile and web applications to serve thousands of active users across Central Africa. I engineered cross-functional workflows, led visual rebranding, and leveraged Mixpanel data to optimize transactional funnels.',
     impact: 'Scaled fintech operations serving thousands of users across Africa.',
     site: 'https://www.paysika.co',
@@ -49,7 +49,6 @@ export const projects: Project[] = [
 
 ### 👥 Recruited and Scaled the Creative Design Team
 As the Founding Designer, I was tasked with not only shaping the product but also building the structural foundation of the design department. I recruited a talented Motion Designer and Graphic Designer, fostering a collaborative and agile culture (#TheBestTeam). Together, we established the core brand guidelines and maintained a unified design system that aligned all creatives.
-![Team scaling placeholder](/assets/paysika_team.jpg)
 
 ### ⚙️ Engineered Operational Processes
 To ensure production velocity and cross-functional alignment, I instituted rigorous operational processes:
@@ -59,18 +58,15 @@ To ensure production velocity and cross-functional alignment, I instituted rigor
 
 ### 📱 Designed End-to-End Mobile App
 I architected the core user journeys from the ground up, focusing on a frictionless and intuitive experience. This included the complete **Onboarding flow**, a seamless **KYC verification pipeline**, and the digital **Card management experience**—all strictly designed to operate efficiently even in fluctuating network environments.
-![Mobile app screens placeholder](/assets/app_screens.png)
 
 ### 💳 Led Physical Debit Card Experience & Packaging
 Extending the digital brand into the physical world, I directed the physical debit card design and its accompanying unboxing experience. The goal was to make the PaySika card feel like a premium, banking-grade asset while maintaining our vibrant fintech aesthetic.
-![Physical card packaging placeholder](/assets/physical_card.png)
 
 ### 🤖 Spearheaded AI Adoption
 To optimize our daily workflow, I established protocols for integrating AI (Claude) into the design lifecycle. We used AI for rapid UX copywriting (generating bilingual French/English microcopy), simulating user edge cases, and stress-testing our design flows before entering the prototyping phase.
 
 ### 📊 Mixpanel Data Analysis 
 Design intuition was consistently backed by data. I utilized Mixpanel to perform deep-dive funnel analyses and track user retention over time. By identifying drop-off points (such as friction within the initial photo-upload step), I initiated targeted redesigns that demonstrably improved conversion rates.
-![Mixpanel dashboard placeholder](/assets/mixpanel_data.png)
 
 ---
 
