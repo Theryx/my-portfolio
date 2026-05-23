@@ -139,7 +139,7 @@ export default function About() {
             {[
               { date: 'Dec 2021 - Aug 2026', title: 'Product Designer', company: 'PaySika', desc: 'Managed a two-person design team, optimized payment flows, and utilized Mixpanel to track user patterns and behavior in the app. Awarded the Team Spirit Award twice.' },
               { date: 'Nov 2020 - Nov 2021', title: 'Freelance Designer', company: 'Freelance', desc: 'Provided design services for various clients. Designed reports on Cameroon Cybersecurity and Central/West Africa cybersecurity state.' },
-              { date: 'Dec 2022 - Feb 2024', title: 'Senior UI/UX Consultant (Part-time)', company: 'Matanga Agency', desc: 'Designed high-converting web and mobile dashboards for Central African and European clients, establishing scalable components in Figma.' },
+              { date: 'Dec 2022 - Dec 2023', title: 'Senior UI/UX Consultant (Part-time)', company: 'Matanga Agency', desc: 'Designed high-converting web and mobile dashboards for Central African and European clients, establishing scalable components in Figma.' },
             ].map((item) => (
               <motion.div className="experience__item" key={item.company} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
                 <span className="experience__date">{item.date}</span>

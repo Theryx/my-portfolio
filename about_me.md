@@ -13,7 +13,7 @@ I am a Product Designer specializing in fintech UI/UX, mobile applications, and 
 * **PaySika (Dec 2021 - Present)**
   * **Product Designer:** Managed a two-person design team (#TheBestTeam), optimized payment flows, and utilized Mixpanel to track user patterns and behavior in the app. Awarded the Team Spirit Award twice.
   * **Founding Designer:** Shaped the initial product experience and brand identity from the ground up.
-* **Matanga Agency (Dec 2022 - Feb 2024)**
+* **Matanga Agency (Dec 2022 - Dec 2023)**
   * **UI Designer (Part-time):** Designed local and international digital products using Figma.
 ## Research & Speaking
 * **OSS Cameroon (2022):** Invited speaker presenting "State of the Design Ecosystem in Cameroon" research. Focused on industry trends and advocating for designer involvement in open source.

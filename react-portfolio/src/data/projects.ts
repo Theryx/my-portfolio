@@ -111,7 +111,7 @@ By acting as a bridge between design, tech, and business, I helped establish a c
     impact: 'Secured $5,000 seed funding from the Tony Elumelu Foundation.',
     site: '',
     role: 'UI/UX Designer',
-    period: '2021',
+    period: 'Dec 2019 - Dec 2020',
     location: 'Cameroon',
     responsibilities: [
       'Designed the entire web and mobile platform layout and user flows',
@@ -277,7 +277,7 @@ Although the app was eventually shut down after a year due to retention and cont
     impact: 'Delivered user-centric designs for multiple client products.',
     site: 'https://matangaagency.com/fr/',
     role: 'Senior UI/UX Consultant (Part-time)',
-    period: 'Dec 2022 - Feb 2024',
+    period: 'Dec 2022 - Dec 2023',
     location: 'Cameroon',
     responsibilities: [
       'Consulted with international and local stakeholders to turn complex product requirements into intuitive Figma mockups',

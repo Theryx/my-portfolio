@@ -85,7 +85,6 @@ export default function Home() {
   }
 
   const profileName = profile.name === 'Default' || !profile.name ? 'Ndouken Theryx' : profile.name;
-  const profileBio = profile.hero_title || profile.bio || 'Design Engineer & Tech Entrepreneur';
 
   return (
     <PageTransition>
@@ -138,7 +137,7 @@ export default function Home() {
                     ))}
                   </div>
                   <p className="bento-card__text">
-                    I'm <strong>{profileName}</strong>, currently working as a <strong>{profileBio}</strong>.
+                    I am <strong>{profileName}</strong>, a passionate <strong>Design Engineer</strong> and <strong>Tech Entrepreneur</strong> who believes that the best digi...
                   </p>
                 </div>
               </div>

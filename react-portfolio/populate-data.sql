@@ -28,13 +28,13 @@ VALUES
   'The Result', 'Successfully launched jobsika.cm as a fully open-source job portal. Built a thriving community of developer contributors on GitHub, delivering a consistent, accessible experience designed specifically for Cameroon’s local context.', 2
 ),
 (
-  'shomi_default', 'default', 'EdTech Platform', 'shomi (Kody)', 'All-in-one platform for postgraduate students.', 'Shomi app_all in one solution for graduate students.jfif', 
-  'As Product Lead & Co-founder, I raised pre-seed funding and led the product vision for shomi - an all-in-one platform designed for postgraduate students.',
-  'Secured pre-seed funding for edTech innovation in Africa.', '', 'Product Lead & Co-founder', 'Jan 2022 - Present', 'Cameroon',
-  ARRAY['Led product vision and strategy', 'Raised pre-seed funding', 'Built MVP from concept to launch'],
-  'The Challenge', 'Postgraduate students in Africa lacked a unified platform to manage their academic journey.',
-  'The Solution', 'Built shomi as an all-in-one platform covering admissions, course management, networking, and job placement.',
-  'The Result', 'Secured pre-seed funding and launched MVP for pilot testing.', 3
+  'shomi_default', 'default', 'EdTech Platform', 'shomi (Kody)', 'All-in-one educational platform built for secondary school students.', 'shomi-cover.png', 
+  'Designed the Shomi educational app for our startup company, Kody, after raising a $5,000 seed funding from the Tony Elumelu Foundation. Collaborated as the UI/UX Designer alongside my friend who served as the Tech Engineer.',
+  'Secured $5,000 seed funding from the Tony Elumelu Foundation.', '', 'UI/UX Designer', 'Dec 2019 - Dec 2020', 'Cameroon',
+  ARRAY['Designed the entire web and mobile platform layout and user flows', 'Conducted comprehensive user research, surveys, and usability tests', 'Collaborated directly with the Tech Engineer to transition designs into a functional product', 'Crafted the brand identity and visual design language'],
+  'The Challenge', 'Our startup Kody needed to build Shomi—a highly engaging educational platform for secondary school students in Cameroon, taking into account limited smartphone access at home and complex local payment integration.',
+  'The Solution', 'As the UI/UX designer on our lean two-person team at Kody, I designed Shomi as a mobile-first experience with a clean layout, offline-first study materials, and interactive booklet features, collaborating closely with the Tech Engineer.',
+  'The Result', 'Successfully designed the Shomi MVP and validated the layout through usability tests. While we raised $5,000 from the Tony Elumelu Foundation and launched, we unfortunately shut down the app after one year due to a lack of student engagement, retention, and content strategy.', 3
 ),
 (
   'citetsap_default', 'default', 'Real Estate', 'CITE Tsap', 'Custom real estate management app.', 'an app I coded myself.PNG', 
@@ -57,7 +57,7 @@ VALUES
 (
   'matanga_default', 'default', 'Agency', 'Matanga Agency', 'Premium digital experiences for local and international clients.', 'Matanga agancy website.PNG', 
   'As a part-time UI/UX design consultant for Matanga Agency, I designed high-converting web applications, mobile interfaces, and digital dashboards for international and Cameroonian clients. I specialized in wireframing, interactive prototyping, and visual brand identity.',
-  'Delivered user-centric designs for multiple client products.', 'https://matangaagency.com/fr/', 'Senior UI/UX Consultant (Part-time)', 'Dec 2022 - Feb 2024', 'Cameroon',
+  'Delivered user-centric designs for multiple client products.', 'https://matangaagency.com/fr/', 'Senior UI/UX Consultant (Part-time)', 'Dec 2022 - Dec 2023', 'Cameroon',
   ARRAY['Consulted with international and local stakeholders to turn complex product requirements into intuitive Figma mockups', 'Designed scalable component-driven UI kits and typography guides to ensure consistent styling across client deliverables', 'Conducted interactive design handoffs with engineering teams, ensuring visual fidelity and responsive layouts'],
   'The Challenge', 'Matanga''s diverse client portfolio required highly tailored digital transformations—ranging from early-stage fintech MVPs to established e-commerce systems—demanding rapid, pixel-perfect design execution without existing brand guidelines.',
   'The Solution', 'I acted as a plug-and-play design leader, auditing client briefs, defining visual design languages from scratch, and shipping responsive web and mobile interfaces. I leveraged Component Libraries in Figma to enable rapid iterations and maintain a unified design system.',
@@ -79,7 +79,7 @@ VALUES
 (
   'matanga_fintech', 'fintech', 'Agency', 'Matanga Agency', 'Premium digital experiences for local and international clients.', 'Matanga agancy website.PNG', 
   'As a part-time UI/UX design consultant for Matanga Agency, I designed high-converting web applications, mobile interfaces, and digital dashboards for international and Cameroonian clients. I specialized in wireframing, interactive prototyping, and visual brand identity.',
-  'Delivered user-centric designs for multiple client products.', 'https://matangaagency.com/fr/', 'Senior UI/UX Consultant (Part-time)', 'Dec 2022 - Feb 2024', 'Cameroon',
+  'Delivered user-centric designs for multiple client products.', 'https://matangaagency.com/fr/', 'Senior UI/UX Consultant (Part-time)', 'Dec 2022 - Dec 2023', 'Cameroon',
   ARRAY['Consulted with international and local stakeholders to turn complex product requirements into intuitive Figma mockups', 'Designed scalable component-driven UI kits and typography guides to ensure consistent styling across client deliverables', 'Conducted interactive design handoffs with engineering teams, ensuring visual fidelity and responsive layouts'],
   'The Challenge', 'Matanga''s diverse client portfolio required highly tailored digital transformations—ranging from early-stage fintech MVPs to established e-commerce systems—demanding rapid, pixel-perfect design execution without existing brand guidelines.',
   'The Solution', 'I acted as a plug-and-play design leader, auditing client briefs, defining visual design languages from scratch, and shipping responsive web and mobile interfaces. I leveraged Component Libraries in Figma to enable rapid iterations and maintain a unified design system.',
