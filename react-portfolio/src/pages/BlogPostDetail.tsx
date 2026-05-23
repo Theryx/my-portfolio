@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { PageTransition } from '../components/PageTransition';
 import { ArrowLeft, Calendar, Clock, User } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { getBlogPostById, type BlogPost } from '../lib/api';
 import { blogImageMap } from '../data/blog';
 
@@ -11,6 +12,11 @@ export default function BlogPostDetail() {
   const { id } = useParams();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState<{ src: string; caption: string } | null>(null);
+
+  const handleImageClick = (src: string, caption: string) => {
+    setSelectedImage({ src, caption });
+  };
 
   useEffect(() => {
     async function fetchPost() {
@@ -80,7 +86,11 @@ export default function BlogPostDetail() {
             </div>
           </header>
 
-          <div className="blog-detail__hero">
+          <div 
+            className="blog-detail__hero"
+            onClick={() => handleImageClick(imageSrc, post.title)}
+            style={{ cursor: 'pointer' }}
+          >
             <img
               src={imageSrc}
               alt={post.title}
@@ -90,7 +100,60 @@ export default function BlogPostDetail() {
           </div>
 
           <div className="blog-detail__body">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                img: ({ src, alt, ...props }) => {
+                  const decodedSrc = decodeURIComponent(src || '');
+                  const resolvedSrc = blogImageMap[decodedSrc] || src;
+                  return (
+                    <div 
+                      className="markdown-image-wrapper" 
+                      style={{ 
+                        margin: 'var(--spacing-lg) 0', 
+                        textAlign: 'center',
+                        display: 'block',
+                        width: '100%',
+                        boxSizing: 'border-box'
+                      }}
+                    >
+                      <img
+                        src={resolvedSrc}
+                        alt={alt}
+                        loading="lazy"
+                        onClick={() => handleImageClick(resolvedSrc || '', alt || '')}
+                        style={{ 
+                          cursor: 'pointer', 
+                          borderRadius: '16px', 
+                          boxShadow: 'var(--shadow-md)', 
+                          maxWidth: '100%', 
+                          height: 'auto',
+                          transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+                        }}
+                        className="markdown-zoom-image"
+                        {...props}
+                      />
+                      {alt && (
+                        <span 
+                          className="markdown-image-caption" 
+                          style={{ 
+                            display: 'block', 
+                            fontSize: '0.875rem', 
+                            color: 'var(--color-text-muted)', 
+                            marginTop: '8px', 
+                            fontStyle: 'italic' 
+                          }}
+                        >
+                          {alt}
+                        </span>
+                      )}
+                    </div>
+                  );
+                }
+              }}
+            >
+              {post.content}
+            </ReactMarkdown>
           </div>
 
           <footer className="blog-detail__footer">
@@ -103,6 +166,31 @@ export default function BlogPostDetail() {
           </footer>
         </div>
       </article>
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div 
+            className="image-lightbox"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedImage(null)}
+          >
+            <motion.div 
+              className="image-lightbox__content"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button className="image-lightbox__close" onClick={() => setSelectedImage(null)}>&times;</button>
+              <img src={selectedImage.src} alt={selectedImage.caption} />
+              <div className="image-lightbox__caption">
+                <p>{selectedImage.caption}</p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </PageTransition>
   );
 }

@@ -50,16 +50,22 @@ Find a project that matches your interests or area of expertise. Contributing to
 
 In addition to the OSS Cameroon’s organization page on GitHub, people can also find projects to contribute to by going to the [osscameroon.com](http://osscameroon.com) projects page.
 
+![OSS Cameroon organization page on GitHub](oss_projects_github.png)
+
 ### **Step 2:** Read the documentation
 Open a project and document yourself about it. You’ll usually find the project description in the repository’s \`README.md\` file.
+
+![JobSika repository on GitHub](jobsika_repo.png)
 
 ### **Step 3:** Check possible issues you could help with
 Go to the issue tab and see if there are any design-related issues you could help with. You can use advanced search in the GitHub search bar (e.g., \`is:issue is:open label:design\` or searching for "design").
 
+![JobSika issues list on GitHub](jobsika_issues.png)
+
 Once you find an existing issue that is open, open it and engage:
 *   Read the description of the issue and try to clearly understand the problem.
 *   Check the comment section and engage with existing members.
-*Propose your solution (it could be a screenshot or a link to your design mockup) in the comments.
+*   Propose your solution (it could be a screenshot or a link to your design mockup) in the comments.
 
 ### **Step 4:** Create an issue
 Sometimes the issue you work on might not be in the existing open or closed issues. This means the issue has not been reported yet. In that case, you can create a new issue by clicking on the **“New issue”** button.
@@ -70,6 +76,8 @@ Clearly describe the problem and propose a design solution, then go ahead and su
 If the issue you submit has to be implemented, then a developer will help you implement your design. The developer could be a maintainer on the project or a contributor like you. The developer will then create a pull request (PR) linking the issue you created. 
 
 Other maintainers will review the implementation and merge it. If you are a maintainer on the project, you could merge the implementation if you are okay with it, but if you are not a maintainer, you can engage in the comments and discuss the implementation details to ensure it aligns with your design.
+
+![JobSika Pull Request merge on GitHub](jobsika_pr.png)
 
 ---
 
@@ -240,12 +248,20 @@ import paysikaImage from '../assets/img/PaySika website.PNG';
 import jobsikaImage from '../assets/img/Screenshot of the UI of Jobsika.PNG';
 import ossImage from '../assets/img/theryx giving a lecture to a comunity of open source.png';
 import affinityImage from '../assets/img/illustrator_vs_affinity.png';
+import ossProjectsGithub from '../assets/img/oss_projects_github.png';
+import jobsikaRepo from '../assets/img/jobsika_repo.png';
+import jobsikaIssues from '../assets/img/jobsika_issues.png';
+import jobsikaPr from '../assets/img/jobsika_pr.png';
 
 export const blogImageMap: Record<string, string> = {
   'PaySika website.PNG': paysikaImage,
   'Screenshot of the UI of Jobsika.PNG': jobsikaImage,
   'theryx giving a lecture to a comunity of open source.png': ossImage,
   'illustrator_vs_affinity.png': affinityImage,
+  'oss_projects_github.png': ossProjectsGithub,
+  'jobsika_repo.png': jobsikaRepo,
+  'jobsika_issues.png': jobsikaIssues,
+  'jobsika_pr.png': jobsikaPr,
 };
 
 export const blogTags = ['All', 'Fintech', 'Africa', 'Product Design', 'UX Design', 'Accessibility', 'Emerging Markets', 'Open Source', 'Design Tools'];
