@@ -153,11 +153,19 @@ Here are the 3 reasons I love Affinity Designer and why I switched.
 
 Since I wanted to take my design career seriously, I decided I will pay for each software I was using. I discovered it will cost me a lot of money if I had to pay for Illustrator.
 
+![Design Career seriously - Illustrator Cost](illustrator_cost_medium.png)
+
 If I had to pay for Illustrator and use it for one year, it will cost me **USD 239.88 (approx. XAF 130,267)** and the app does not belong to me.
+
+![Adobe Illustrator Annual Pricing Plan Screenshot](illustrator_pricing_plan.png)
 
 On the other hand, Affinity Designer costs **USD 49.99 (approx. XAF 27,200)** for the Mac and Windows app. There is no subscription—you own the app for life, and all minor updates are free.
 
+![Affinity Designer App Store Screenshot](affinity_pricing_plan.png)
+
 Did I mention Affinity Designer has an iPad and Windows version, and a free trial version for 30 days? Illustrator did not have an iPad version until recently and their trial version is just 7 days.
+
+![Affinity Designer Cross-Platform Pricing and Purchase Options](affinity_platforms.png)
 
 **Let’s do some math here:**
 
@@ -182,6 +190,8 @@ Affinity Designer has way fewer nested and complicated options which are often u
 #### 3. Performance
 
 The desktop application of Affinity Designer is extremely lightweight (around 750 MB). It is built from the ground up for modern hardware, making the entire experience incredibly smooth. In fact, you can zoom up to **1,000,000%** with absolutely zero lag!
+
+![Affinity Designer High Zoom Workspace Performance](affinity_zoom_workspace.png)
 
 ### Conclusion & Recommendation
 
@@ -230,6 +240,11 @@ import ossProjectsGithub from '../assets/img/oss_projects_github.png';
 import jobsikaRepo from '../assets/img/jobsika_repo.png';
 import jobsikaIssues from '../assets/img/jobsika_issues.png';
 import jobsikaPr from '../assets/img/jobsika_pr.png';
+import illustratorCostMedium from '../assets/img/illustrator_cost_medium.png';
+import illustratorPricingPlan from '../assets/img/illustrator_pricing_plan.png';
+import affinityPricingPlan from '../assets/img/affinity_pricing_plan.png';
+import affinityPlatforms from '../assets/img/affinity_platforms.png';
+import affinityZoomWorkspace from '../assets/img/affinity_zoom_workspace.png';
 
 export const blogImageMap: Record<string, string> = {
   'PaySika website.PNG': paysikaImage,
@@ -240,6 +255,11 @@ export const blogImageMap: Record<string, string> = {
   'jobsika_repo.png': jobsikaRepo,
   'jobsika_issues.png': jobsikaIssues,
   'jobsika_pr.png': jobsikaPr,
+  'illustrator_cost_medium.png': illustratorCostMedium,
+  'illustrator_pricing_plan.png': illustratorPricingPlan,
+  'affinity_pricing_plan.png': affinityPricingPlan,
+  'affinity_platforms.png': affinityPlatforms,
+  'affinity_zoom_workspace.png': affinityZoomWorkspace,
 };
 
 export const blogTags = ['All', 'Fintech', 'Africa', 'Product Design', 'UX Design', 'Accessibility', 'Emerging Markets', 'Open Source', 'Design Tools'];
