@@ -3,7 +3,7 @@
 📍 Douala, Cameroon | 🗣️ English & French
 
 ## About Me
-I am a Product Designer specializing in fintech UI/UX, mobile applications, and minimalist aesthetics. After building and leading the design team at PaySika for over four years, I stepped down in January 2026 to focus on tech entrepreneurship and learning front-end development. I value clean design, simple language, and practical problem-solving.
+I am a Product Designer specializing in fintech UI/UX, mobile applications, and minimalist aesthetics. After building and leading the design team at PaySika since December 2021, I plan to step down in October 2026 to focus on tech entrepreneurship and continuing my front-end development journey. I value clean design, simple language, and practical problem-solving.
 
 ## Current Ventures & Focus
 * **GEFONA Digital Foundation:** Leading communication and finance for a foundation supporting policy research on the digital economy and cybersecurity in Africa.

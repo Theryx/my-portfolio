@@ -31,7 +31,7 @@ export const projects: Project[] = [
     impact: 'Scaled fintech operations serving thousands of users across Africa.',
     site: 'https://www.paysika.co',
     role: 'Lead Product Designer',
-    period: 'Dec 2021 - Jan 2026',
+    period: 'Nov 2021 - Oct 2026',
     location: 'Douala, Cameroon',
     responsibilities: [
       'Led a two-person design team',

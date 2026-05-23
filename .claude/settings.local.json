@@ -22,7 +22,10 @@
       "Bash(git rm *)",
       "Bash(npx vercel *)",
       "WebFetch(domain:react-portfolio-ey7bu2bym-theryxs-projects.vercel.app)",
-      "Bash(npx vite *)"
+      "Bash(npx vite *)",
+      "Bash(Get-ChildItem -Path \"D:\\\\My_Portfolio\" -Recurse -Force)",
+      "Bash(Select-Object FullName, PSIsContainer)",
+      "Bash(Format-Table -AutoSize)"
     ]
   }
 }
