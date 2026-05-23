@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { PageTransition } from '../components/PageTransition';
 import { useProfile } from '../context/ProfileContext';
 import { JourneyModal } from '../components/JourneyModal';
-import myProfile from '../assets/img/My profile black and white.png';
+import myProfile from '../assets/img/My profile.jfif';
 import { Maximize2, Copy, ExternalLink } from 'lucide-react';
 
 export default function Home() {

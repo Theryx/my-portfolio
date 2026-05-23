@@ -54,15 +54,14 @@ export default function Projects() {
                             </p>
                             <div className="project-card__achievements">
                                 <div className="achievement-item">
-                                    <h4>Team Leadership</h4>
-                                    <p>Recruited and scaled the creative team (#TheBestTeam).</p>
+                                    <h4>🚀 +40% Retention</h4>
+                                    <p>Mixpanel-driven onboarding and KYC funnel redesigns.</p>
                                 </div>
                                 <div className="achievement-item">
-                                    <h4>Process Engineering</h4>
-                                    <p>Built robust Design-Marketing & Design-Mobile workflows.</p>
+                                    <h4>📉 -60% Support Tickets</h4>
+                                    <p>Streamlined self-service and Visa card transaction flows.</p>
                                 </div>
                             </div>
-
                           </>
                         )}
 
