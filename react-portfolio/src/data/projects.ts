@@ -396,7 +396,8 @@ Accessibility evaluation revealed that the old brand primary color reduced the r
 
 I worked closely with the developers to create the interfaces. We used **Jira** to track the progress and sync the dev team with the design team (not an easy task, if you ask me!).
 
-### Infinite iterations 😭
+### Infinite iterations
+
 
 After the wireframing stage, we worked on the high-fidelity mockups. We had meetings where we would critique and even argue on some design decisions. In a nutshell, we **designed, tested, and iterated**. We also moved back and forth between wireframes and hi-fi mockups.
 

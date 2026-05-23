@@ -641,6 +641,70 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
     color: var(--color-accent);
 }
 
+/* Premium Case Study Markdown Content styling (Blog-like layouts & spacing) */
+.project-detail__full-content {
+    line-height: 1.8;
+    font-size: var(--font-size-lg);
+    color: var(--color-text-muted);
+}
+
+.project-detail__full-content p {
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-text-muted);
+    line-height: 1.8;
+}
+
+.project-detail__full-content h1,
+.project-detail__full-content h2,
+.project-detail__full-content h3,
+.project-detail__full-content h4,
+.project-detail__full-content h5,
+.project-detail__full-content h6 {
+    font-family: var(--font-family-display);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    margin-top: var(--spacing-2xl);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.3;
+}
+
+.project-detail__full-content h1 { font-size: var(--font-size-4xl); }
+.project-detail__full-content h2 { font-size: var(--font-size-3xl); }
+.project-detail__full-content h3 { font-size: var(--font-size-2xl); }
+.project-detail__full-content h4 { font-size: var(--font-size-xl); }
+.project-detail__full-content h5,
+.project-detail__full-content h6 { font-size: var(--font-size-lg); }
+
+/* Override list-style none and custom arrows for standard long-form content */
+.project-detail__full-content ul,
+.project-detail__full-content ol {
+    padding-left: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-text-muted);
+}
+
+.project-detail__full-content ul {
+    list-style: disc !important;
+}
+
+.project-detail__full-content ol {
+    list-style: decimal !important;
+}
+
+.project-detail__full-content li {
+    position: relative;
+    padding-left: 0 !important;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    list-style: inherit !important;
+}
+
+.project-detail__full-content li::before {
+    display: none !important; /* Hide the arrow bullet list prefix inside long-form content */
+}
+
 .paysika-story,
 .paysika-process,
 .paysika-recognition,
