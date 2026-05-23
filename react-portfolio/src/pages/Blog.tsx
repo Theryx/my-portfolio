@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PageTransition } from '../components/PageTransition';
 import { useProfile } from '../context/ProfileContext';
@@ -8,13 +7,6 @@ import { Calendar, Clock } from 'lucide-react';
 
 export default function Blog() {
   const { blogPosts, loading, error } = useProfile();
-  const [activeTag, setActiveTag] = useState('All');
-
-  const uniqueTags = ['All', ...new Set(blogPosts.flatMap(p => p.tags || []))];
-
-  const filteredPosts = activeTag === 'All'
-    ? blogPosts
-    : blogPosts.filter(p => (p.tags || []).includes(activeTag));
 
   return (
     <PageTransition>
@@ -31,28 +23,14 @@ export default function Blog() {
             </p>
           ) : (
             <>
-              <div className="blog__filters" role="group" aria-label="Filter posts by tag">
-                {uniqueTags.map(tag => (
-                  <button
-                    key={tag}
-                    className={`projects__filter-btn ${activeTag === tag ? 'projects__filter-btn--active' : ''}`}
-                    onClick={() => setActiveTag(tag)}
-                    type="button"
-                    aria-pressed={activeTag === tag}
-                  >
-                    {tag}
-                  </button>
-                ))}
-              </div>
-
-              {filteredPosts.length === 0 && (
+              {blogPosts.length === 0 && (
                 <p style={{ textAlign: 'center', padding: '60px 0', color: 'var(--color-text-muted)' }}>
-                  {activeTag === 'All' ? 'No posts published yet.' : `No posts tagged "${activeTag}".`}
+                  No posts published yet.
                 </p>
               )}
 
               <motion.div className="blog__grid" layout>
-                {filteredPosts.map((post) => (
+                {blogPosts.map((post) => (
                   <Link to={`/blog/${post.id}`} key={post.id} className="blog-card">
                     <div className="blog-card__image">
                       <img
