@@ -47,47 +47,35 @@ export const projects: Project[] = [
     resultText: 'Improved user retention by 40% and reduced customer support tickets by 60%. The design system we built scaled across web and mobile platforms.',
     content: `## Key Responsibilities & Impact
 
-### 👥 Recruited and Scaled the Creative Design Team
-As the Founding Designer, I was tasked with not only shaping the product but also building the structural foundation of the design department. I recruited a talented Motion Designer and Graphic Designer, fostering a collaborative and agile culture (#TheBestTeam). Together, we established the core brand guidelines and maintained a unified design system that aligned all creatives.
+### Recruited and Scaled the Creative Design Team
+I transitioned our design team from a solo operation to a cohesive creative unit. By hiring a dedicated motion designer and a graphic designer, I established high-performance asset pipelines. Together, we defined our first formal brand guidelines and maintained a unified design system that aligned our creative output across the entire product ecosystem and marketing channels.
 
-### ⚙️ Engineered Operational Processes
-To ensure production velocity and cross-functional alignment, I instituted rigorous operational processes:
-*   **Design-to-Marketing**: Streamlined how visual assets are requested and delivered, ensuring marketing always had on-brand, high-quality creatives for campaigns.
-*   **Design-to-Mobile**: Formalized the developer handoff. We mapped out clear state documentation on Figma to ensure pixel-perfect implementation of UI components.
-![Workflow diagram placeholder](/assets/process_diagram.png)
+### Engineered Operational Processes
+To synchronize product development and marketing cycles, I designed two core workflows:
+*   **Design-to-Marketing**: Streamlined the assets pipeline so our marketing team could independently fetch brand-approved materials without slowing down product sprints.
+*   **Design-to-Engineering**: Rebuilt our developer handoff in Figma. I documented edge cases, interaction states, and design system variables, reducing layout errors and developer back-and-forth during sprint implementation.
 
-### 📱 Designed End-to-End Mobile App
-I architected the core user journeys from the ground up, focusing on a frictionless and intuitive experience. This included the complete **Onboarding flow**, a seamless **KYC verification pipeline**, and the digital **Card management experience**—all strictly designed to operate efficiently even in fluctuating network environments.
+### Designed End-to-End Mobile App
+I architected the core user journeys from the ground up, focusing on a frictionless and intuitive experience. This included the complete onboarding flow, a seamless KYC verification pipeline, and the digital card management experience—all strictly designed to operate efficiently even in fluctuating network environments.
 
-### 💳 Led Physical Debit Card Experience & Packaging
-Extending the digital brand into the physical world, I directed the physical debit card design and its accompanying unboxing experience. The goal was to make the PaySika card feel like a premium, banking-grade asset while maintaining our vibrant fintech aesthetic.
+### Led Physical Debit Card Experience & Packaging
+I directed the physical debit card design and its accompanying custom unboxing packaging. I worked directly with the card manufacturer to select materials that made the card feel like a premium, banking-grade asset while maintaining our vibrant fintech brand identity.
 
-### 🤖 Spearheaded AI Adoption
-To optimize our daily workflow, I established protocols for integrating AI (Claude) into the design lifecycle. We used AI for rapid UX copywriting (generating bilingual French/English microcopy), simulating user edge cases, and stress-testing our design flows before entering the prototyping phase.
+### Spearheaded AI Integration
+I introduced LLMs to design faster. By leveraging Claude, we drafted and localized our English and French UI microcopy, pressure-tested user flows against potential edge cases, and quickly generated realistic mock data for our interactive Figma prototypes. This significantly accelerated our copywriting and discovery phases.
 
-### 📊 Mixpanel Data Analysis 
-Design intuition was consistently backed by data. I utilized Mixpanel to perform deep-dive funnel analyses and track user retention over time. By identifying drop-off points (such as friction within the initial photo-upload step), I initiated targeted redesigns that demonstrably improved conversion rates.
+### Mixpanel Data Analysis & Iteration
+I paired design intuition with product analytics, using Mixpanel to monitor user funnels. When the data showed a high drop-off during the KYC photo upload, I conducted usability testing to identify the friction. Redesigning this interface into a guided, real-time camera helper improved successful verification rates.
 
 ---
 
-### 🚀 Design Operations & AI Integration
-Scaling the team required establishing robust processes. I implemented a streamlined **Design-to-Development handoff workflow** on Figma, reducing implementation errors by 40%. 
+### Cross-Functional Collaboration & Product Culture
+In a fast-moving startup, design cannot exist in a vacuum. I worked daily across functional silos to keep our product momentum high:
+*   **Engineering**: Partnered closely with developers during early wireframing to assess technical feasibility and prevent design rework.
+*   **Marketing**: Collaborated on launch campaigns to make sure product screenshots and marketing visuals were fully aligned with our live UI.
+*   **Product Management**: Translated high-level product briefs into concrete user flows, scoping features iteratively to balance user value with engineering effort.
 
-Furthermore, I actively integrated AI into our daily operations. Leveraging **Claude**, I instituted workflows for:
-*   **UX Copywriting**: Generating bilingual (French/English) microcopy that maintains a consistent brand voice.
-*   **Edge Case Analysis**: Using AI to simulate edge cases and map out diverse user pathways before creating wireframes.
-*   **Rapid Prototyping**: Brainstorming product requirements based on PM briefs to immediately begin wireframing and prototyping.
-
-### 📊 Data-Driven Iterations (Mixpanel)
-Design intuition is crucial, but data validates it. I utilized **Mixpanel** extensively to track user retention and funnels. 
-*   **The Insights**: By analyzing onboarding data, I identified a significant drop-off point during the manual KYC verification step. 
-*   **The Action**: I initiated user surveys and deployed prototype tests to a beta group. We realized users found the photo upload confusing. 
-*   **The Overhaul**: I redesigned the KYC user flow, implementing a guided, real-time camera interface using our established design system.
-
-### 🤝 Stakeholder Collaboration
-Working in an Agile startup environment meant constant adaptation. I worked closely with **Developers** to ensure our UI components were feasibility-tested, partnered with **Marketing** to align our B2C communication, and collaborated with **Product Managers** to turn high-level briefs into fully functional features. 
-
-As the Founding Designer, I wasn't just pushing pixels; I was engineering a product culture.`
+By acting as a bridge between design, tech, and business, I helped establish a collaborative product culture where design was seen as a driver of business results, not just a final paint job.`
   },
   {
     id: 'jobsika',
