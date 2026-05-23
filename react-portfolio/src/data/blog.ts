@@ -198,28 +198,6 @@ But on the other hand, if you are a freelancer wanting to save money while using
     image: 'illustrator_vs_affinity.png'
   },
   {
-    id: 'future-of-fintech-africa',
-    title: 'The Future of Fintech in Africa: Beyond Payments',
-    excerpt: 'Exploring how fintech is evolving from simple payment solutions to comprehensive financial ecosystems in Africa.',
-    content: `
-      <p>Fintech in Africa has long been synonymous with mobile money and payments. However, we are entering a new era where financial technology is touching every aspect of daily life, from savings and insurance to credit and investment.</p>
-      
-      <h3>The Rise of Super-Apps</h3>
-      <p>We're seeing a trend towards "super-apps" that integrate multiple financial services into a single interface. This is driven by the need for convenience and the high cost of data, making it preferable for users to have one app that does it all.</p>
-      
-      <h3>Credit and Financial Inclusion</h3>
-      <p>One of the biggest hurdles in Africa is the lack of traditional credit scores. Fintech companies are now using alternative data—like mobile phone usage and payment history—to assess creditworthiness, opening doors for millions who were previously unbanked.</p>
-      
-      <h3>Conclusion</h3>
-      <p>The next decade of African fintech will be defined by how well these platforms can provide value beyond just moving money. It's about building trust and creating ecosystems that empower users to grow their wealth.</p>
-    `,
-    date: 'April 10, 2026',
-    author: 'Ndouken Theryx',
-    readTime: '5 min read',
-    tags: ['Fintech', 'Africa', 'Product Design'],
-    image: 'PaySika website.PNG'
-  },
-  {
     id: 'designing-for-accessibility',
     title: 'Designing for Accessibility in Emerging Markets',
     excerpt: 'How to create inclusive digital products for users with varying levels of digital literacy and device capabilities.',
