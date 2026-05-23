@@ -16,25 +16,94 @@ export const blogPosts: BlogPost[] = [
     title: 'How to Contribute to Open Source as a Designer',
     excerpt: 'A practical guide on how to contribute to open source projects without writing a single line of code.',
     content: `
-      <p>Hi, I’m Theryx. I’m a digital designer. In this blog, I will tell you practically how I contribute to Open source as a non-tech person. This blog could also be titled “How to contribute to Open Source without coding knowledge” or “how to contribute to open source as a UI designer”. I will try to write the blog as simple as possible because this is intended for non-tech people.</p>
+# How to Contribute to Open Source as a Designer: A case study of OSS Cameroon
 
-      <h3>What is Open Source?</h3>
-      <p>The term Open Source refers to intellectual property people can modify and share because it is made to be publicly accessible. Most open source projects are usually run by one or more people called maintainers.</p>
-      <p>An Open source project, product, or initiative is one that cherishes strong values like collaboration, participation, rapid prototyping, transparency, meritocracy, and community-oriented development.</p>
+## Overview
+Hi, I’m Theryx. I’m a digital designer. In this blog, I will tell you practically how I contribute to Open Source as a non-tech person. This blog could also be titled “How to contribute to Open Source without coding knowledge” or “how to contribute to open source as a UI designer”. I will try to write the blog as simple as possible because this is intended for non-tech people.
 
-      <h3>How Contribution is Done… Practically</h3>
-      <p>I have broken down the process into five simple steps:</p>
-      <ul>
-        <li><strong>Step 0: Ask how you could help?</strong> Join the community's Discord, Telegram, or ask on social media.</li>
-        <li><strong>Step 1: Find a project on GitHub</strong> Find a project that matches your interests or area of expertise.</li>
-        <li><strong>Step 2: Read the documentation</strong> Document yourself about the project, usually found in the README file.</li>
-        <li><strong>Step 3: Check possible issues</strong> Go to the issue tab and see if there are any design-related issues.</li>
-        <li><strong>Step 4: Create an issue</strong> If the problem hasn't been reported yet, raise a new issue yourself.</li>
-        <li><strong>Step 5: Review the implementation</strong> Work with developers to ensure your design is implemented correctly.</li>
-      </ul>
+### What is Open Source?
+Before we begin, let's define Open Source in case you don’t know what it is. Well… the term **Open Source** refers to intellectual property people can modify and share because it is made to be publicly accessible. Most open source projects are usually run by one or more people called maintainers.
 
-      <h3>Conclusion</h3>
-      <p>I hope this blog will motivate you to contribute to open source even if you don’t have coding knowledge. There are various ways you could contribute—from UI improvements to updating documentation and sharing the project with your friends.</p>
+An Open source project, product, or initiative is one that cherishes strong values like collaboration, participation, rapid prototyping, transparency, meritocracy, and community-oriented development.
+
+### What is OSS Cameroon?
+Most of what I will write in this blog is largely based on my experience contributing to **OSS Cameroon** projects. OSS Cameroon is short for *Open Source Society Cameroon*. It is a community of Cameroonians that have a passion to develop open source solutions to solve local problems. The community is maintained by a group of awesome (yeah, I’m one of them!) persons but owned and driven by everyone.
+
+OSS Cameroon also exists to promote the talent and know-how of Cameroonians by using technical and non-technical knowledge to bring solutions to problems found in our society.
+
+### What is a maintainer?
+At OSS Cameroon, I’m one of the maintainers of a project called **jobsika.cm**, but what is an open source maintainer? We can talk about what it means to maintain an open source project another day in another blog, but I just want to touch on it so that you don’t feel confused.
+
+> “Maintainers are the conductors of an open source project orchestra,” — *Steven J. Vaughan-Nichols*. “If a bug hasn't been fixed by a developer, they'll fix it. If the code hasn't been reviewed, they'll review it. And, with large projects like Linux, there are often hundreds of code patches, which need to be maintained a week.”
+
+---
+
+## How contribution is done… practically
+
+I have broken down the process into five simple steps:
+
+### **Step 0:** Ask how you could help?
+If you have no idea how to contribute and you want someone to help you get started, you could ask in the comment section of an issue, join the community's Discord server, Telegram, or even ask on social media and mention **@osscameroon**. There is always someone happy to help.
+
+### **Step 1:** Find a project on the OSS Cameroon GitHub page
+Find a project that matches your interests or area of expertise. Contributing to projects can be “hard” sometimes, so you want to make sure you select a project in which you are really interested. Don’t worry about the programming languages attached to each project!
+
+In addition to the OSS Cameroon’s organization page on GitHub, people can also find projects to contribute to by going to the [osscameroon.com](http://osscameroon.com) projects page.
+
+### **Step 2:** Read the documentation
+Open a project and document yourself about it. You’ll usually find the project description in the repository’s \`README.md\` file.
+
+### **Step 3:** Check possible issues you could help with
+Go to the issue tab and see if there are any design-related issues you could help with. You can use advanced search in the GitHub search bar (e.g., \`is:issue is:open label:design\` or searching for "design").
+
+Once you find an existing issue that is open, open it and engage:
+*   Read the description of the issue and try to clearly understand the problem.
+*   Check the comment section and engage with existing members.
+*Propose your solution (it could be a screenshot or a link to your design mockup) in the comments.
+
+### **Step 4:** Create an issue
+Sometimes the issue you work on might not be in the existing open or closed issues. This means the issue has not been reported yet. In that case, you can create a new issue by clicking on the **“New issue”** button.
+
+Clearly describe the problem and propose a design solution, then go ahead and submit it.
+
+### **Step 5:** Review the implementation of your solution
+If the issue you submit has to be implemented, then a developer will help you implement your design. The developer could be a maintainer on the project or a contributor like you. The developer will then create a pull request (PR) linking the issue you created. 
+
+Other maintainers will review the implementation and merge it. If you are a maintainer on the project, you could merge the implementation if you are okay with it, but if you are not a maintainer, you can engage in the comments and discuss the implementation details to ensure it aligns with your design.
+
+---
+
+## Congratulations!
+Aaaaaand… that's it! You have just completed your contribution to an open source project. 🥳
+
+Before concluding this section, I must say that contributing to an open source project is not exactly the same for every project. Every project defines its own contribution rules and processes. As a general rule, you should always read the documentation of each project to know how to submit your contribution.
+
+Also, some projects may limit the extent to which you can contribute. Lastly, your contribution could take some time to be implemented, reviewed, or merged. Sometimes maintainers may consider your contribution as less important and not give it immediate attention. It is important to know that, but that should not kill your energy—go for it!
+
+---
+
+## Conclusion
+I hope this blog will motivate you to contribute to open source even if you don’t have coding knowledge. There are various ways you could contribute to open source projects, and this is how we do it at OSS Cameroon.
+
+Other ways you can contribute are:
+*   Submit a bug fix.
+*   Submit a user interface design improvement.
+*   Update documentation.
+*   Answer questions (either on GitHub or in the community).
+*   Review code.
+*   Talk about the project to your friends or share it on social media.
+
+This could be applied to a lot of non-tech roles like graphic design, illustration, writing, marketing, product design, research, organizing, community management, and more.
+
+---
+
+## Definitions
+
+*   **GitHub**: Simply put, GitHub is a website that helps developers store and manage their code, as well as track and control changes. To contribute to open source projects, you need to create a GitHub account.
+*   **Readme file**: The Readme file (\`README.md\`) is often the first file that contributors read. It is a text file that contains important information for contributors about the project.
+*   **Pull request (PR)**: A pull request is a technical term used in software development that means a contributor (usually a developer) has applied changes to the code and is ready to merge them into the main project repository.
+*   **Reviewing a pull request**: Once a pull request is submitted by a developer, their code is checked, tested, and reviewed before merging.
+*   **Merging code**: Merging code means integrating changes that come from a pull request into the main code of the project.
     `,
     date: 'September 24, 2022',
     author: 'Ndouken Theryx',
