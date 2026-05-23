@@ -2,7 +2,6 @@ import type { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import linkedInPdf from '../assets/img/Ndouken_Theryx_CV.pdf';
 import myProfile from '../assets/img/My profile.jfif';
 
 interface LayoutProps {
@@ -111,8 +110,9 @@ export default function Layout({ children }: LayoutProps) {
               &copy; {new Date().getFullYear()} Ndouken Theryx. All rights reserved.
             </p>
             <a
-              href={linkedInPdf}
-              download="Ndouken_Theryx_CV.pdf"
+              href="https://drive.google.com/open?id=1OzU-HPN-l2s9Le4iSFd44F6PK4Z0W6bp&usp=drive_fs"
+              target="_blank"
+              rel="noopener noreferrer"
               className="footer__download"
               aria-label="Download CV / Resume (PDF)"
             >
@@ -121,7 +121,7 @@ export default function Layout({ children }: LayoutProps) {
                 <polyline points="7 10 12 15 17 10" />
                 <line x1="12" y1="15" x2="12" y2="3" />
               </svg>
-              Download CV
+              View CV
             </a>
           </div>
         </div>
