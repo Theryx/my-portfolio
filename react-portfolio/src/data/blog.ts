@@ -206,28 +206,6 @@ But on the other hand, if you are a freelancer wanting to save money while using
     readTime: '5 min read',
     tags: ['Design Tools', 'Affinity Designer', 'Workflow'],
     image: 'illustrator_vs_affinity.png'
-  },
-  {
-    id: 'designing-for-accessibility',
-    title: 'Designing for Accessibility in Emerging Markets',
-    excerpt: 'How to create inclusive digital products for users with varying levels of digital literacy and device capabilities.',
-    content: `
-      <p>Accessibility in emerging markets isn't just about disability; it's about accessibility to technology itself. Users often have low-end devices, limited data, and varying levels of digital literacy.</p>
-      
-      <h3>Optimizing for Low-End Devices</h3>
-      <p>Designers must consider the technical constraints of the hardware. This means optimizing image sizes, reducing complex animations, and ensuring that the app remains functional even on older versions of Android.</p>
-      
-      <h3>Visual Hierarchy and Clarity</h3>
-      <p>Clear visual cues are essential. For users who may not be familiar with standard UI patterns, we need to use explicit icons, clear labels, and intuitive navigation flows.</p>
-      
-      <h3>Localization and Culture</h3>
-      <p>Localization goes beyond translation. It's about understanding cultural nuances and how they affect user interaction with digital products.</p>
-    `,
-    date: 'March 25, 2026',
-    author: 'Ndouken Theryx',
-    readTime: '4 min read',
-    tags: ['UX Design', 'Accessibility', 'Emerging Markets'],
-    image: 'Screenshot of the UI of Jobsika.PNG'
   }
 ];
 

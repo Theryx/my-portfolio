@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import linkedInPdf from '../assets/img/Linked in Profile.pdf';
+import linkedInPdf from '../assets/img/Ndouken_Theryx_CV.pdf';
 import myProfile from '../assets/img/My profile.jfif';
 
 interface LayoutProps {
@@ -112,7 +112,7 @@ export default function Layout({ children }: LayoutProps) {
             </p>
             <a
               href={linkedInPdf}
-              download="Ndouken_ThERYX_LinkedIn_Profile.pdf"
+              download="Ndouken_Theryx_CV.pdf"
               className="footer__download"
               aria-label="Download CV / Resume (PDF)"
             >

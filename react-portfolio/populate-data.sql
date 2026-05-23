@@ -118,34 +118,6 @@ VALUES
   'Exploring the reasons behind moving my design workflow from Adobe Illustrator to Affinity Designer.',
   '<p>Adobe Illustrator has been the industry standard for vector design for decades...</p>',
   'August 15, 2022', 'Ndouken Theryx', '5 min read', ARRAY['Design Tools', 'Affinity Designer', 'Workflow'], 'Editor and designer for Report on Cameroon Cybersecurity.jfif', 2
-),
-(
-  'fintech_future_default', 'default', 'The Future of Fintech in Africa: Beyond Payments', 
-  'Exploring how fintech is evolving from simple payment solutions to comprehensive financial ecosystems in Africa.',
-  '<p>Fintech in Africa has long been synonymous with mobile money and payments...</p>',
-  'April 10, 2026', 'Ndouken Theryx', '5 min read', ARRAY['Fintech', 'Africa', 'Product Design'], 'PaySika website.PNG', 3
-),
-(
-  'accessibility_default', 'default', 'Designing for Accessibility in Emerging Markets', 
-  'How to create inclusive digital products for users with varying levels of digital literacy and device capabilities.',
-  '<p>Accessibility in emerging markets isn''t just about disability; it''s about accessibility to technology itself...</p>',
-  'March 25, 2026', 'Ndouken Theryx', '4 min read', ARRAY['UX Design', 'Accessibility', 'Emerging Markets'], 'Screenshot of the UI of Jobsika.PNG', 4
-);
-
--- BLOG POSTS FOR 'fintech' PROFILE
-INSERT INTO blog_posts (id, profile_id, title, excerpt, content, date, author, read_time, tags, image, sort_order)
-VALUES 
-(
-  'fintech_future_fintech', 'fintech', 'The Future of Fintech in Africa: Beyond Payments', 
-  'Exploring how fintech is evolving from simple payment solutions to comprehensive financial ecosystems in Africa.',
-  '<p>Fintech in Africa has long been synonymous with mobile money and payments...</p>',
-  'April 10, 2026', 'Ndouken Theryx', '5 min read', ARRAY['Fintech', 'Africa', 'Product Design'], 'PaySika website.PNG', 1
-),
-(
-  'accessibility_fintech', 'fintech', 'Designing for Accessibility in Emerging Markets', 
-  'How to create inclusive digital products for users with varying levels of digital literacy and device capabilities.',
-  '<p>Accessibility in emerging markets isn''t just about disability; it''s about accessibility to technology itself...</p>',
-  'March 25, 2026', 'Ndouken Theryx', '4 min read', ARRAY['UX Design', 'Accessibility', 'Emerging Markets'], 'Screenshot of the UI of Jobsika.PNG', 2
 );
 
 -- BLOG POSTS FOR 'design-engineer' PROFILE
@@ -156,10 +128,4 @@ VALUES
   'A practical guide on how to contribute to open source projects without writing a single line of code.',
   '<p>Hi, I’m Theryx. I’m a digital designer. In this blog, I will tell you practically how I contribute to Open source as a non-tech person...</p>',
   'September 24, 2022', 'Ndouken Theryx', '6 min read', ARRAY['Open Source', 'Design', 'Community'], 'theryx giving a lecture to a comunity of open source.png', 1
-),
-(
-  'accessibility_de', 'design-engineer', 'Designing for Accessibility in Emerging Markets', 
-  'How to create inclusive digital products for users with varying levels of digital literacy and device capabilities.',
-  '<p>Accessibility in emerging markets isn''t just about disability; it''s about accessibility to technology itself...</p>',
-  'March 25, 2026', 'Ndouken Theryx', '4 min read', ARRAY['UX Design', 'Accessibility', 'Emerging Markets'], 'Screenshot of the UI of Jobsika.PNG', 2
 );
