@@ -162,8 +162,28 @@ export async function getProjectsByProfile(profileId: string): Promise<Project[]
   // Always use static content when available — content is managed in code, not the DB
   return dbProjects.map(p => {
     const matchedStatic = staticProjects.find(sp => sp.id === p.id || p.id.startsWith(sp.id));
-    if (matchedStatic && matchedStatic.content) {
-      return { ...p, content: matchedStatic.content };
+    if (matchedStatic) {
+      return {
+        ...p,
+        tag: matchedStatic.tag,
+        title: matchedStatic.title,
+        tagline: matchedStatic.tagline,
+        image: matchedStatic.image,
+        description: matchedStatic.description,
+        impact: matchedStatic.impact,
+        site: matchedStatic.site,
+        role: matchedStatic.role,
+        period: matchedStatic.period,
+        location: matchedStatic.location,
+        responsibilities: matchedStatic.responsibilities,
+        challenge: matchedStatic.challenge,
+        challenge_text: matchedStatic.challengeText,
+        solution: matchedStatic.solution,
+        solution_text: matchedStatic.solutionText,
+        result: matchedStatic.result,
+        result_text: matchedStatic.resultText,
+        content: matchedStatic.content || ''
+      };
     }
     return p;
   });
@@ -174,8 +194,28 @@ export async function getAllProjects(): Promise<Project[]> {
     const dbProjects = await apiFetch<Project[]>('/api/projects');
     return dbProjects.map(p => {
       const matchedStatic = staticProjects.find(sp => sp.id === p.id || p.id.startsWith(sp.id));
-      if (matchedStatic && matchedStatic.content) {
-        return { ...p, content: matchedStatic.content };
+      if (matchedStatic) {
+        return {
+          ...p,
+          tag: matchedStatic.tag,
+          title: matchedStatic.title,
+          tagline: matchedStatic.tagline,
+          image: matchedStatic.image,
+          description: matchedStatic.description,
+          impact: matchedStatic.impact,
+          site: matchedStatic.site,
+          role: matchedStatic.role,
+          period: matchedStatic.period,
+          location: matchedStatic.location,
+          responsibilities: matchedStatic.responsibilities,
+          challenge: matchedStatic.challenge,
+          challenge_text: matchedStatic.challengeText,
+          solution: matchedStatic.solution,
+          solution_text: matchedStatic.solutionText,
+          result: matchedStatic.result,
+          result_text: matchedStatic.resultText,
+          content: matchedStatic.content || ''
+        };
       }
       return p;
     });

@@ -91,7 +91,7 @@ export default function ProjectDetail() {
     );
   }
 
-  const isPaySika = project.id === 'paysika';
+  const isPaySika = project.id === 'paysika' || project.id.startsWith('paysika_');
   const isCrowdRemit = project.id.startsWith('crowdremit');
   const imageSrc = isPaySika ? paysikaMockup : projectImageMap[project.image];
   const heroCaption = isPaySika 
@@ -163,6 +163,40 @@ export default function ProjectDetail() {
                 <p key={i} style={{ margin: 0 }}><strong>{r.trim()}</strong></p>
               ))}
             </section>
+
+            {project.responsibilities && project.responsibilities.length > 0 && (
+              <section className="project-detail__section">
+                <h2>Key Responsibilities</h2>
+                <ul className="project-detail__responsibilities">
+                  {project.responsibilities.map((r, i) => (
+                    <li key={i}>{r}</li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {project.challenge_text && (
+              <section className="project-detail__section">
+                <h2>{project.challenge || 'The Challenge'}</h2>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.challenge_text}</ReactMarkdown>
+              </section>
+            )}
+
+            {project.solution_text && (
+              <section className="project-detail__section">
+                <h2>{project.solution || 'The Solution'}</h2>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.solution_text}</ReactMarkdown>
+              </section>
+            )}
+
+            {project.result_text && (
+              <section className="project-detail__section">
+                <div className="project-detail__result">
+                  <h2>{project.result || 'The Result'}</h2>
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.result_text}</ReactMarkdown>
+                </div>
+              </section>
+            )}
 
             {isCrowdRemit && (
               <section className="project-detail__section paysika-story">
