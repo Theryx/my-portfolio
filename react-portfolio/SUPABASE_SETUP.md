@@ -146,6 +146,21 @@ VALUES (
   ARRAY['Available for projects', 'AI-Powered']
 );
 
+-- Insert digital marketing profile
+INSERT INTO profiles (id, name, is_active, bio, tagline, hero_title, hero_subtitle, philosophy_title, philosophy_text, badges)
+VALUES (
+  'digital-marketing',
+  'Digital Marketing',
+  true,
+  'Digital Marketing Strategist',
+  'Helping brands grow with content, campaigns, and measurable acquisition.',
+  'Digital Marketing Strategist',
+  'I plan and execute digital campaigns that connect brand strategy, content, paid channels, analytics, and conversion-focused experiences for growing businesses.',
+  'Marketing should be clear, measurable, and useful.',
+  'I combine audience research, creative storytelling, performance tracking, and product thinking to build campaigns that do more than get attention. They help people understand, trust, and act.',
+  ARRAY['Available for marketing projects', 'Content & Growth']
+);
+
 -- Row Level Security (RLS) - Let anyone read, only admin write
 ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE projects ENABLE ROW LEVEL SECURITY;

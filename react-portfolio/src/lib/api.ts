@@ -55,6 +55,22 @@ export interface BlogPost {
   sort_order: number;
 }
 
+const fallbackProfiles: Record<string, Profile> = {
+  'digital-marketing': {
+    id: 'digital-marketing',
+    name: 'Digital Marketing',
+    is_active: true,
+    bio: 'Digital Marketing Strategist',
+    tagline: 'Helping brands grow with content, campaigns, and measurable acquisition.',
+    hero_title: 'Digital Marketing Strategist',
+    hero_subtitle: 'I plan and execute digital campaigns that connect brand strategy, content, paid channels, analytics, and conversion-focused experiences for growing businesses.',
+    philosophy_title: 'Marketing should be clear, measurable, and useful.',
+    philosophy_text: 'I combine audience research, creative storytelling, performance tracking, and product thinking to build campaigns that do more than get attention. They help people understand, trust, and act.',
+    badges: ['Available for marketing projects', 'Content & Growth'],
+    social_links: {},
+  },
+};
+
 async function apiFetch<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(path, {
     ...options,
@@ -108,7 +124,7 @@ export async function getProfileById(id: string): Promise<Profile | null> {
   try {
     return await apiFetch<Profile>(`/api/profiles/${id}`);
   } catch (err) {
-    if (err instanceof Error && err.message === 'Not found') return null;
+    if (err instanceof Error && err.message === 'Not found') return fallbackProfiles[id] ?? null;
     throw err;
   }
 }

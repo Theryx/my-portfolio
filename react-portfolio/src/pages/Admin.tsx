@@ -311,6 +311,24 @@ export default function Admin() {
                 <div className="admin__section" role="tabpanel" id="tabpanel-profiles" aria-labelledby="tab-profiles">
                   <div className="admin__header">
                     <h3>Portfolio Profiles</h3>
+                    <button
+                      className="btn btn--primary"
+                      onClick={() => setEditingItem({
+                        id: 'digital-marketing',
+                        name: 'Digital Marketing',
+                        is_active: true,
+                        bio: 'Digital Marketing Strategist',
+                        tagline: 'Helping brands grow with content, campaigns, and measurable acquisition.',
+                        hero_title: 'Digital Marketing Strategist',
+                        hero_subtitle: 'I plan and execute digital campaigns that connect brand strategy, content, paid channels, analytics, and conversion-focused experiences for growing businesses.',
+                        philosophy_title: 'Marketing should be clear, measurable, and useful.',
+                        philosophy_text: 'I combine audience research, creative storytelling, performance tracking, and product thinking to build campaigns that do more than get attention. They help people understand, trust, and act.',
+                        badges: ['Available for marketing projects', 'Content & Growth'],
+                        social_links: {},
+                      } as Profile)}
+                    >
+                      + New Profile
+                    </button>
                   </div>
                   <div className="admin__list">
                     {profiles.map((profile) => (

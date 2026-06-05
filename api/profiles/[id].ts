@@ -14,29 +14,38 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     if (req.method === 'PUT' || req.method === 'POST') {
-    try { requireAuth(req); } catch { return res.status(401).json({ error: 'Unauthorized' }); }
-    const body = req.body;
-    const now = new Date().toISOString();
-    const rows = await sql`
-      UPDATE profiles SET
-        name = ${body.name},
-        is_active = ${body.is_active},
-        bio = ${body.bio},
-        tagline = ${body.tagline},
-        hero_title = ${body.hero_title},
-        hero_subtitle = ${body.hero_subtitle},
-        philosophy_title = ${body.philosophy_title},
-        philosophy_text = ${body.philosophy_text},
-        badges = ${body.badges},
-        social_links = ${JSON.stringify(body.social_links)},
-        updated_at = ${now}
-      WHERE id = ${id}
-      RETURNING *
-    `;
-    return res.status(200).json(rows[0]);
-  }
+      try { requireAuth(req); } catch { return res.status(401).json({ error: 'Unauthorized' }); }
+      const body = req.body;
+      const profileId = body.id || id;
+      const now = new Date().toISOString();
+      const rows = await sql`
+        INSERT INTO profiles (
+          id, name, is_active, bio, tagline, hero_title, hero_subtitle,
+          philosophy_title, philosophy_text, badges, social_links, created_at, updated_at
+        ) VALUES (
+          ${profileId}, ${body.name}, ${body.is_active ?? true}, ${body.bio},
+          ${body.tagline}, ${body.hero_title}, ${body.hero_subtitle},
+          ${body.philosophy_title}, ${body.philosophy_text}, ${body.badges ?? []},
+          ${JSON.stringify(body.social_links ?? {})}, ${now}, ${now}
+        )
+        ON CONFLICT (id) DO UPDATE SET
+          name = EXCLUDED.name,
+          is_active = EXCLUDED.is_active,
+          bio = EXCLUDED.bio,
+          tagline = EXCLUDED.tagline,
+          hero_title = EXCLUDED.hero_title,
+          hero_subtitle = EXCLUDED.hero_subtitle,
+          philosophy_title = EXCLUDED.philosophy_title,
+          philosophy_text = EXCLUDED.philosophy_text,
+          badges = EXCLUDED.badges,
+          social_links = EXCLUDED.social_links,
+          updated_at = ${now}
+        RETURNING *
+      `;
+      return res.status(200).json(rows[0]);
+    }
 
-  return res.status(405).end();
+    return res.status(405).end();
   } catch (err) {
     console.error(`GET/PUT /api/profiles/${req.query.id} error:`, err);
     return res.status(500).json({ error: err instanceof Error ? err.message : 'Database error' });
