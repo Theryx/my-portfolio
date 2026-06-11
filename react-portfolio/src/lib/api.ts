@@ -56,6 +56,19 @@ export interface BlogPost {
 }
 
 const fallbackProfiles: Record<string, Profile> = {
+  default: {
+    id: 'default',
+    name: 'Default',
+    is_active: true,
+    bio: 'Product Designer',
+    tagline: 'I design and build user-centric digital products.',
+    hero_title: 'Product Designer',
+    hero_subtitle: 'I design financial experiences people trust with their money. Led design at PaySika, built tech communities, and bridge the gap between design & code. Based in Cameroon.',
+    philosophy_title: 'I design experiences that bridge technology and human needs.',
+    philosophy_text: 'As a Design Engineer, I bridge the gap between design and development. With 4+ years leading design at PaySika and now building my own ventures, I combine UX/UI expertise with hands-on coding to create products that are both beautiful and functional.',
+    badges: ['Open to Product Design & Design Engineering roles'],
+    social_links: {},
+  },
   'digital-marketing': {
     id: 'digital-marketing',
     name: 'Digital Marketing',
@@ -82,7 +95,12 @@ async function apiFetch<T>(path: string, options?: RequestInit): Promise<T> {
     throw new Error((body as { error?: string }).error ?? `HTTP ${res.status}`);
   }
   if (res.status === 204) return undefined as T;
-  return res.json() as Promise<T>;
+  // A non-JSON 200 means there's no API behind this route (e.g. `vite
+  // preview` serving the SPA shell) — treat it as unreachable so callers
+  // fall back to static content.
+  return res.json().catch(() => {
+    throw new Error('API unavailable');
+  }) as Promise<T>;
 }
 
 // --- Auth ---
@@ -117,14 +135,24 @@ export async function getSession(): Promise<boolean> {
 // --- Profiles ---
 
 export async function getAllProfiles(): Promise<Profile[]> {
-  return apiFetch<Profile[]>('/api/profiles');
+  try {
+    return await apiFetch<Profile[]>('/api/profiles');
+  } catch (err) {
+    console.warn('API fetch profiles failed, using static fallback:', err);
+    return Object.values(fallbackProfiles);
+  }
 }
 
 export async function getProfileById(id: string): Promise<Profile | null> {
   try {
     return await apiFetch<Profile>(`/api/profiles/${id}`);
   } catch (err) {
-    if (err instanceof Error && err.message === 'Not found') return fallbackProfiles[id] ?? null;
+    const fallback = fallbackProfiles[id] ?? null;
+    if (err instanceof Error && err.message === 'Not found') return fallback;
+    if (fallback) {
+      console.warn(`API fetch profile "${id}" failed, using static fallback:`, err);
+      return fallback;
+    }
     throw err;
   }
 }
