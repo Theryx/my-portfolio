@@ -1,8 +1,18 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { getDb } from '../_lib/db.js';
 import { requireAuth, verifyAuth } from '../_lib/auth.js';
+import { validateBlogBody } from '../_lib/validate.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  try {
+    return await handleRequest(req, res);
+  } catch (err) {
+    console.error(`${req.method} /api/blog error:`, err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+async function handleRequest(req: VercelRequest, res: VercelResponse) {
   const sql = getDb();
 
   if (req.method === 'GET') {
@@ -30,7 +40,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (req.method === 'POST') {
     try { requireAuth(req); } catch { return res.status(401).json({ error: 'Unauthorized' }); }
-    const b = req.body;
+    const b = req.body ?? {};
+    const validationError = validateBlogBody(b);
+    if (validationError) return res.status(400).json({ error: validationError });
     const now = new Date().toISOString();
     const rows = await sql`
       INSERT INTO blog_posts (

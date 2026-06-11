@@ -1,10 +1,20 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { getDb } from '../_lib/db.js';
 import { requireAuth } from '../_lib/auth.js';
+import { validateProjectBody } from '../_lib/validate.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try { requireAuth(req); } catch { return res.status(401).json({ error: 'Unauthorized' }); }
 
+  try {
+    return await handleRequest(req, res);
+  } catch (err) {
+    console.error(`${req.method} /api/projects/${req.query.id} error:`, err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+async function handleRequest(req: VercelRequest, res: VercelResponse) {
   const sql = getDb();
   const { id } = req.query as { id: string };
 
@@ -24,7 +34,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   if (req.method === 'PUT') {
-    const b = req.body;
+    const b = req.body ?? {};
+    const validationError = validateProjectBody(b, { requireId: false });
+    if (validationError) return res.status(400).json({ error: validationError });
     const now = new Date().toISOString();
     const rows = await sql`
       UPDATE projects SET

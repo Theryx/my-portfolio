@@ -8,6 +8,6 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
     return res.status(200).json(profiles);
   } catch (err) {
     console.error('GET /api/profiles error:', err);
-    return res.status(500).json({ error: err instanceof Error ? err.message : 'Database error' });
+    return res.status(500).json({ error: 'Internal server error' });
   }
 }

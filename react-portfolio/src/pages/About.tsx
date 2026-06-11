@@ -8,6 +8,7 @@ import codedApp from '../assets/img/an app I coded myself.PNG';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { BenevolentModal } from '../components/BenevolentModal';
+import { lightboxTrigger } from '../lib/a11y';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -116,7 +117,7 @@ export default function About() {
                 alt="Theryx presenting research at OSS Cameroon" 
                 className="speaking__image" 
                 loading="lazy" 
-                onClick={() => handleImageClick(givingLecture, "Presenting research on the Cameroon Design Ecosystem at the 2022 OSS Cameroon meetup.")}
+                {...lightboxTrigger(() => handleImageClick(givingLecture, "Presenting research on the Cameroon Design Ecosystem at the 2022 OSS Cameroon meetup."), 'Enlarge speaking photo')}
                 style={{ cursor: 'pointer' }}
               />
               <div className="speaking__text">
@@ -212,7 +213,7 @@ export default function About() {
             ].map((skill) => (
               <motion.div className="skill-card" key={skill.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
                 {'image' in skill && skill.image && (
-                  <div className="skill-card__image" onClick={() => handleImageClick(skill.image as string, skill.alt || skill.title)} style={{ cursor: 'pointer' }}>
+                  <div className="skill-card__image" {...lightboxTrigger(() => handleImageClick(skill.image as string, skill.alt || skill.title), `Enlarge: ${skill.title}`)} style={{ cursor: 'pointer' }}>
                     <img src={skill.image} alt={skill.alt || ''} loading="lazy" />
                   </div>
                 )}

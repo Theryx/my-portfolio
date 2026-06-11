@@ -12,13 +12,11 @@ export function usePageTitle() {
   const location = useLocation();
 
   useEffect(() => {
-    // Check if it's a project or blog detail page
-    if (location.pathname.startsWith('/projects/') && location.pathname !== '/projects') {
-      document.title = 'Project Detail — Ndouken Theryx';
-    } else if (location.pathname.startsWith('/blog/') && location.pathname !== '/blog') {
-      document.title = 'Blog Post — Ndouken Theryx';
-    } else {
-      document.title = TITLES[location.pathname] || 'Ndouken Theryx — Design Engineer & Tech Entrepreneur';
-    }
+    // Detail pages set their own title (and OG tags) via usePageMeta.
+    const isDetailPage =
+      (location.pathname.startsWith('/projects/') && location.pathname !== '/projects') ||
+      (location.pathname.startsWith('/blog/') && location.pathname !== '/blog');
+    if (isDetailPage) return;
+    document.title = TITLES[location.pathname] || 'Ndouken Theryx — Design Engineer & Tech Entrepreneur';
   }, [location.pathname]);
 }

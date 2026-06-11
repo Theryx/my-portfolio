@@ -3,6 +3,9 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import myProfile from '../assets/img/My profile.jfif';
+import { useProfile } from '../context/ProfileContext';
+
+const DEFAULT_RESUME_URL = 'https://drive.google.com/open?id=1OzU-HPN-l2s9Le4iSFd44F6PK4Z0W6bp&usp=drive_fs';
 
 interface LayoutProps {
   children: ReactNode;
@@ -23,6 +26,8 @@ export default function Layout({ children }: LayoutProps) {
     return !window.matchMedia('(prefers-color-scheme: light)').matches;
   });
   const location = useLocation();
+  const { profile } = useProfile();
+  const resumeUrl = profile?.social_links?.resume || DEFAULT_RESUME_URL;
 
   const closeMenu = () => setIsMobileMenuOpen(false);
 
@@ -110,7 +115,7 @@ export default function Layout({ children }: LayoutProps) {
               &copy; {new Date().getFullYear()} Ndouken Theryx. All rights reserved.
             </p>
             <a
-              href="https://drive.google.com/open?id=1OzU-HPN-l2s9Le4iSFd44F6PK4Z0W6bp&usp=drive_fs"
+              href={resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="footer__download"

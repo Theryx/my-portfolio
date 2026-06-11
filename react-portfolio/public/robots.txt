@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+
+Sitemap: https://react-portfolio-pi-topaz.vercel.app/sitemap.xml

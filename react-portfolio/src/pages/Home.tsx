@@ -26,9 +26,12 @@ export default function Home() {
 
   const openModal = () => setIsModalOpen(true);
 
+  const contactEmail = profile?.social_links?.email || 'ndouken@gmail.com';
+  const linkedinUrl = profile?.social_links?.linkedin || 'https://www.linkedin.com/in/ndoukentheryx';
+
   const handleCopyEmail = (e: React.MouseEvent | React.KeyboardEvent) => {
     e.stopPropagation();
-    navigator.clipboard.writeText('ndouken@gmail.com');
+    navigator.clipboard.writeText(contactEmail);
     setCopied(true);
     setCursorLabel('copied!');
     setTimeout(() => {
@@ -39,7 +42,7 @@ export default function Home() {
 
   const handleLinkedInClick = (e: React.MouseEvent | React.KeyboardEvent) => {
     e.stopPropagation();
-    window.open('https://www.linkedin.com/in/ndoukentheryx', '_blank', 'noopener,noreferrer');
+    window.open(linkedinUrl, '_blank', 'noopener,noreferrer');
   };
 
   const handleKeyDown = (action: (e: React.KeyboardEvent) => void) => (e: React.KeyboardEvent) => {
@@ -157,7 +160,7 @@ export default function Home() {
                 setCursorLabel('');
               }}
               role="button"
-              aria-label="Copy my email address ndouken@gmail.com"
+              aria-label={`Copy my email address ${contactEmail}`}
               tabIndex={0}
             >
               <div className="bento-card__icon bento-card__icon--top-right">

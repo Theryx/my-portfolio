@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { getDb } from '../_lib/db.js';
 import { requireAuth } from '../_lib/auth.js';
+import { validateProfileBody, isId } from '../_lib/validate.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
@@ -15,8 +16,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (req.method === 'PUT' || req.method === 'POST') {
       try { requireAuth(req); } catch { return res.status(401).json({ error: 'Unauthorized' }); }
-      const body = req.body;
+      const body = req.body ?? {};
+      const validationError = validateProfileBody(body);
+      if (validationError) return res.status(400).json({ error: validationError });
       const profileId = body.id || id;
+      if (!isId(profileId)) return res.status(400).json({ error: 'Invalid id' });
       const now = new Date().toISOString();
       const rows = await sql`
         INSERT INTO profiles (
@@ -45,9 +49,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(200).json(rows[0]);
     }
 
+    if (req.method === 'DELETE') {
+      try { requireAuth(req); } catch { return res.status(401).json({ error: 'Unauthorized' }); }
+      await sql`DELETE FROM blog_posts WHERE profile_id = ${id}`;
+      await sql`DELETE FROM projects WHERE profile_id = ${id}`;
+      await sql`DELETE FROM profiles WHERE id = ${id}`;
+      return res.status(204).end();
+    }
+
     return res.status(405).end();
   } catch (err) {
     console.error(`GET/PUT /api/profiles/${req.query.id} error:`, err);
-    return res.status(500).json({ error: err instanceof Error ? err.message : 'Database error' });
+    return res.status(500).json({ error: 'Internal server error' });
   }
 }

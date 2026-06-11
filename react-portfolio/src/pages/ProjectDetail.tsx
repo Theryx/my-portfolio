@@ -9,6 +9,8 @@ import teamAward from '../assets/img/Team spirit award_2025.jfif';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getProjectById, type Project } from '../lib/api';
 import { projectImageMap, shomiMarkdownImageMap } from '../data/projects';
+import { usePageMeta } from '../hooks/usePageMeta';
+import { lightboxTrigger } from '../lib/a11y';
 
 import paysikaDesignDocs from '../assets/img/paysika/paysika-design-docs.png';
 import paysikaDesignRequirements from '../assets/img/paysika/paysika-design-requirements.png';
@@ -53,6 +55,13 @@ export default function ProjectDetail() {
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<{ src: string; caption: string } | null>(null);
+
+  usePageMeta({
+    title: project?.title,
+    description: project?.tagline || project?.description,
+    image: project?.image,
+    type: 'article',
+  });
 
   const handleImageClick = (src: string, caption: string) => {
     setSelectedImage({ src, caption });
@@ -139,8 +148,8 @@ export default function ProjectDetail() {
           </header>
 
           <div 
-            className="project-detail__hero" 
-            onClick={() => handleImageClick(imageSrc, heroCaption)}
+            className="project-detail__hero"
+            {...lightboxTrigger(() => handleImageClick(imageSrc, heroCaption), 'Enlarge project image')}
             style={{ cursor: 'pointer' }}
           >
             <img
@@ -276,7 +285,7 @@ export default function ProjectDetail() {
                           src={artifact.image} 
                           alt={artifact.title} 
                           loading="lazy" 
-                          onClick={() => handleImageClick(artifact.image, `${artifact.title} - ${artifact.description}`)}
+                          {...lightboxTrigger(() => handleImageClick(artifact.image, `${artifact.title} - ${artifact.description}`), `Enlarge: ${artifact.title}`)}
                           style={{ cursor: 'pointer' }}
                         />
                         <div>
@@ -300,21 +309,21 @@ export default function ProjectDetail() {
                       src={teamDiscussion}
                       alt="Brainstorming session with colleague on product flows"
                       loading="lazy"
-                      onClick={() => handleImageClick(teamDiscussion, "Brainstorming and collaborative session with my colleague on product flows.")}
+                      {...lightboxTrigger(() => handleImageClick(teamDiscussion, "Brainstorming and collaborative session with my colleague on product flows."), 'Enlarge team discussion photo')}
                       style={{ cursor: 'pointer' }}
                     />
                     <img
                       src={teamAward}
                       alt="Team Spirit Award 2025"
                       loading="lazy"
-                      onClick={() => handleImageClick(teamAward, "Receiving the Team Spirit Award in 2025 for collaboration and leadership.")}
+                      {...lightboxTrigger(() => handleImageClick(teamAward, "Receiving the Team Spirit Award in 2025 for collaboration and leadership."), 'Enlarge award photo')}
                       style={{ cursor: 'pointer' }}
                     />
                     <img
                       src={paysikaRecognition}
                       alt="Receiving recognition during the PaySika journey"
                       loading="lazy"
-                      onClick={() => handleImageClick(paysikaRecognition, "Receiving recognition for outstanding teamwork and reliability during the PaySika journey")}
+                      {...lightboxTrigger(() => handleImageClick(paysikaRecognition, "Receiving recognition for outstanding teamwork and reliability during the PaySika journey"), 'Enlarge recognition photo')}
                       style={{ cursor: 'pointer' }}
                     />
                   </div>
@@ -379,7 +388,7 @@ export default function ProjectDetail() {
                             src={resolvedSrc}
                             alt={cleanAlt}
                             loading="lazy"
-                            onClick={() => handleImageClick(resolvedSrc || '', cleanAlt || '')}
+                            {...lightboxTrigger(() => handleImageClick(resolvedSrc || '', cleanAlt || ''), `Enlarge: ${cleanAlt || 'image'}`)}
                             style={{ 
                               cursor: 'pointer', 
                               borderRadius: '16px', 

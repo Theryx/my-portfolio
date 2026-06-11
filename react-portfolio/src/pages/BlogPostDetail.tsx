@@ -7,12 +7,21 @@ import { ArrowLeft, Calendar, Clock, User } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getBlogPostById, type BlogPost } from '../lib/api';
 import { blogImageMap } from '../data/blog';
+import { usePageMeta } from '../hooks/usePageMeta';
+import { lightboxTrigger } from '../lib/a11y';
 
 export default function BlogPostDetail() {
   const { id } = useParams();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<{ src: string; caption: string } | null>(null);
+
+  usePageMeta({
+    title: post?.title,
+    description: post?.excerpt,
+    image: post?.image,
+    type: 'article',
+  });
 
   const handleImageClick = (src: string, caption: string) => {
     setSelectedImage({ src, caption });
@@ -88,7 +97,7 @@ export default function BlogPostDetail() {
 
           <div 
             className="blog-detail__hero"
-            onClick={() => handleImageClick(imageSrc, post.title)}
+            {...lightboxTrigger(() => handleImageClick(imageSrc, post.title), 'Enlarge cover image')}
             style={{ cursor: 'pointer' }}
           >
             <img
@@ -121,7 +130,7 @@ export default function BlogPostDetail() {
                         src={resolvedSrc}
                         alt={alt}
                         loading="lazy"
-                        onClick={() => handleImageClick(resolvedSrc || '', alt || '')}
+                        {...lightboxTrigger(() => handleImageClick(resolvedSrc || '', alt || ''), `Enlarge: ${alt || 'image'}`)}
                         style={{ 
                           cursor: 'pointer', 
                           borderRadius: '16px', 

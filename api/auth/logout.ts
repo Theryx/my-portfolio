@@ -6,7 +6,7 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
     'Set-Cookie',
     serialize('admin_token', '', {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: true,
       sameSite: 'strict',
       maxAge: 0,
       path: '/',

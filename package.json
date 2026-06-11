@@ -9,6 +9,7 @@
     "jsonwebtoken": "^9.0.3"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.12.2",
     "@vercel/node": "^5.8.1",
     "typescript": "~6.0.2"

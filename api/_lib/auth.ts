@@ -15,7 +15,7 @@ export function verifyAuth(req: IncomingMessage): boolean {
     const cookies = parse(cookieHeader);
     const token = cookies['admin_token'];
     if (!token) return false;
-    jwt.verify(token, getJwtSecret());
+    jwt.verify(token, getJwtSecret(), { algorithms: ['HS256'] });
     return true;
   } catch {
     return false;
