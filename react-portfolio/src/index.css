@@ -3539,3 +3539,296 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
         transition: none;
     }
 }
+
+/* ─── Inner-page bento language ──────────────────────────────────────────── */
+
+/* Sticker eyebrow above section titles */
+.section-sticker {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    margin-bottom: 14px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    background: var(--color-bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    transform: rotate(-2deg);
+    transform-origin: left center;
+    transition: transform var(--transition-base);
+}
+
+.section-sticker:hover {
+    transform: rotate(0deg) scale(1.04);
+}
+
+.section-sticker--accent {
+    color: var(--color-bg);
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+[data-theme="light"] .section-sticker {
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .section-sticker--accent {
+    color: #0a0a0a;
+}
+
+/* Page hero header (Projects / Blog) */
+.page-hero {
+    margin-bottom: var(--spacing-xl);
+}
+
+.page-hero__title {
+    text-align: left;
+    margin-bottom: 8px;
+}
+
+.page-hero__sub {
+    color: var(--color-text-muted);
+    font-size: 17px;
+    max-width: 560px;
+    line-height: 1.6;
+}
+
+/* Project cards: giant index + impact chip */
+.project-card {
+    position: relative;
+}
+
+.project-card__index {
+    position: absolute;
+    top: 10px;
+    right: 18px;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 800;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--color-text-subtle);
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity var(--transition-base), -webkit-text-stroke-color var(--transition-base);
+}
+
+.project-card:hover .project-card__index {
+    opacity: 0.9;
+    -webkit-text-stroke-color: var(--color-accent);
+}
+
+.project-card__impact {
+    display: inline-block;
+    align-self: flex-start;
+    margin-top: 12px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-accent);
+    background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+    border-radius: 999px;
+}
+
+/* Featured spans move to the motion wrappers */
+.project-card-wrap--featured,
+.blog-card-wrap--featured {
+    grid-column: 1 / -1;
+}
+
+.project-card-wrap--featured .project-card,
+.blog-card-wrap--featured .blog-card {
+    height: 100%;
+}
+
+.projects__grid > div > .project-card,
+.blog__grid > div > .blog-card {
+    height: 100%;
+}
+
+/* Featured (latest) blog post: horizontal editorial card */
+.blog-card--featured {
+    position: relative;
+}
+
+.blog-card__latest {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 2;
+    padding: 5px 12px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #0a0a0a;
+    background: var(--color-accent);
+    border-radius: 999px;
+    transform: rotate(-3deg);
+}
+
+@media (min-width: 768px) {
+    .blog-card--featured {
+        flex-direction: row;
+    }
+
+    .blog-card--featured .blog-card__image {
+        flex: 1.2;
+        min-height: 300px;
+        height: auto;
+    }
+
+    .blog-card--featured .blog-card__image img {
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .blog-card--featured .blog-card__content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .blog-card--featured .blog-card__title {
+        font-size: 28px;
+    }
+}
+
+/* About: bento intro mosaic */
+.about-bento {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.about-bento__main {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: center;
+    padding: var(--spacing-xl);
+    cursor: default;
+}
+
+.about-bento__photo {
+    width: 132px;
+    height: 132px;
+    border-radius: var(--radius-xl);
+    object-fit: cover;
+    border: 3px solid var(--color-accent);
+    flex-shrink: 0;
+    transform: rotate(-3deg);
+    transition: transform var(--transition-base);
+}
+
+.about-bento__main:hover .about-bento__photo {
+    transform: rotate(0deg) scale(1.03);
+}
+
+.about-bento__tagline {
+    margin-top: 10px;
+    color: var(--color-text-muted);
+}
+
+.about-bento__philosophy {
+    grid-column: 1 / -1;
+    padding: var(--spacing-xl);
+    cursor: default;
+}
+
+.about-bento__quote-icon {
+    color: var(--color-accent);
+    margin-bottom: 8px;
+}
+
+.about-bento__philosophy-title {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.about-bento__philosophy-text {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    max-width: 720px;
+}
+
+@media (max-width: 768px) {
+    .about-bento {
+        grid-template-columns: 1fr;
+    }
+
+    .about-bento__main {
+        flex-direction: column;
+        text-align: left;
+        align-items: flex-start;
+    }
+}
+
+/* Experience: numbered cards */
+.experience__item {
+    position: relative;
+    overflow: hidden;
+    transition: transform var(--transition-base), border-color var(--transition-base);
+}
+
+.experience__item:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-accent);
+}
+
+.experience__index {
+    position: absolute;
+    top: -6px;
+    right: 10px;
+    font-size: 64px;
+    font-weight: 800;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--color-text-subtle);
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+/* Tools: pill cloud */
+.tool-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+}
+
+.tool-pill {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    background: var(--color-bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    transition: transform var(--transition-base), border-color var(--transition-base);
+}
+
+.tool-pill:hover {
+    transform: rotate(-2deg) scale(1.05);
+    border-color: var(--color-accent);
+}
+
+[data-theme="light"] .tool-pill {
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .section-sticker,
+    .about-bento__photo,
+    .tool-pill,
+    .experience__item {
+        transition: none;
+        transform: none;
+    }
+}
