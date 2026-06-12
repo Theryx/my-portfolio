@@ -1,5 +1,6 @@
 import { projects as staticProjects, type Project as StaticProject } from '../data/projects';
 import { blogPosts as staticBlogPosts, type BlogPost as StaticBlogPost } from '../data/blog';
+import { profilePresets } from '../data/profileCopy';
 
 export interface Profile {
   id: string;
@@ -55,34 +56,13 @@ export interface BlogPost {
   sort_order: number;
 }
 
-const fallbackProfiles: Record<string, Profile> = {
-  default: {
-    id: 'default',
-    name: 'Default',
-    is_active: true,
-    bio: 'Product Designer',
-    tagline: 'I design and build user-centric digital products.',
-    hero_title: 'Product Designer',
-    hero_subtitle: 'I design financial experiences people trust with their money. Led design at PaySika, built tech communities, and bridge the gap between design & code. Based in Cameroon.',
-    philosophy_title: 'I design experiences that bridge technology and human needs.',
-    philosophy_text: 'As a Design Engineer, I bridge the gap between design and development. With 4+ years leading design at PaySika and now building my own ventures, I combine UX/UI expertise with hands-on coding to create products that are both beautiful and functional.',
-    badges: ['Open to Product Design & Design Engineering roles'],
-    social_links: {},
+export const fallbackProfiles: Record<string, Profile> = Object.entries(profilePresets).reduce(
+  (acc, [id, preset]) => {
+    acc[id] = { ...preset } as Profile;
+    return acc;
   },
-  'digital-marketing': {
-    id: 'digital-marketing',
-    name: 'Digital Marketing',
-    is_active: true,
-    bio: 'Digital Marketing Strategist',
-    tagline: 'Helping brands grow with content, campaigns, and measurable acquisition.',
-    hero_title: 'Digital Marketing Strategist',
-    hero_subtitle: 'I plan and execute digital campaigns that connect brand strategy, content, paid channels, analytics, and conversion-focused experiences for growing businesses.',
-    philosophy_title: 'Marketing should be clear, measurable, and useful.',
-    philosophy_text: 'I combine audience research, creative storytelling, performance tracking, and product thinking to build campaigns that do more than get attention. They help people understand, trust, and act.',
-    badges: ['Available for marketing projects', 'Content & Growth'],
-    social_links: {},
-  },
-};
+  {} as Record<string, Profile>
+);
 
 async function apiFetch<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(path, {

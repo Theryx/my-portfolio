@@ -87,7 +87,7 @@ export function ProfileForm({ profile, onSave, onCancel, saving }: {
           label="Social links"
           value={form.social_links}
           onChange={(v) => set('social_links', v)}
-          hint="Special keys the site uses directly: email (copy-email card), linkedin (LinkedIn card), resume (View CV links), now (the 'Now building' tile on the home page)."
+          hint="Special keys the site uses directly: email (copy-email card), linkedin (LinkedIn card), resume (View CV links), now (the 'Now building' tile on the home page), projects_intro (Projects page hero subtitle), blog_intro (Blog page hero subtitle), metric_label (Home page years-of-experience metric label)."
         />
       </fieldset>
 

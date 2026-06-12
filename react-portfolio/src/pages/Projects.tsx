@@ -8,7 +8,7 @@ import { Sparkles } from 'lucide-react';
 import { gridVariants, tileVariants } from '../lib/motion';
 
 export default function Projects() {
-  const { projects, loading, error } = useProfile();
+  const { profile, projects, loading, error } = useProfile();
   const visible = projects.filter((p) => !p.is_hidden);
 
   return (
@@ -22,7 +22,7 @@ export default function Projects() {
             </span>
             <h2 className="section__title page-hero__title">Selected Work</h2>
             <p className="page-hero__sub">
-              Fintech apps, open-source platforms, and ed-tech experiments — each one shipped with a team I'm proud of.
+              {profile?.social_links?.projects_intro || "Fintech apps, open-source platforms, and ed-tech experiments — each one shipped with a team I'm proud of."}
             </p>
           </div>
 

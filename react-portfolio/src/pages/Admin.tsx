@@ -3,7 +3,7 @@ import './admin/cms.css';
 import {
   LayoutDashboard, Users, FolderKanban, Newspaper, Settings, LogOut, RefreshCw,
   ExternalLink, Search, Eye, EyeOff, Pencil, Trash2, Copy, ArrowUp, ArrowDown,
-  ArrowLeft, DatabaseZap, CheckCircle2, AlertTriangle,
+  ArrowLeft, DatabaseZap, CheckCircle2, AlertTriangle, Sparkles
 } from 'lucide-react';
 import {
   login, logout, getSession,
@@ -14,6 +14,7 @@ import {
 } from '../lib/api';
 import { ProfileForm, ProjectForm, BlogForm, SecurityForm } from './admin/forms';
 import { PasswordInput } from './admin/fields';
+import { profilePresets, projectPresets } from '../data/profileCopy';
 
 const MAX_ATTEMPTS = 5;
 const LOCKOUT_MS = 15 * 60 * 1000;
@@ -55,6 +56,7 @@ export default function Admin() {
   const [deleteTarget, setDeleteTarget] = useState<DeleteTarget | null>(null);
   const [search, setSearch] = useState('');
   const [profileFilter, setProfileFilter] = useState<string>('all');
+  const [presetTarget, setPresetTarget] = useState<string | null>(null);
   const lastFocusRef = useRef<HTMLElement | null>(null);
 
   const addToast = useCallback((message: string, type: 'success' | 'error') => {
@@ -213,6 +215,37 @@ export default function Admin() {
     }
   };
 
+  const handleApplyPreset = async (profileId: string) => {
+    setSaving(true);
+    try {
+      const preset = profilePresets[profileId];
+      if (!preset) throw new Error('Preset not found');
+      
+      const existingProfile = profiles.find(p => p.id === profileId);
+      const isActive = existingProfile ? existingProfile.is_active : false;
+      
+      await updateProfile(profileId, { ...preset, is_active: isActive });
+      
+      if (profileId === 'project-manager') {
+        const pmProjects = projectPresets;
+        for (const proj of pmProjects) {
+          const exists = projects.some(p => p.id === proj.id);
+          if (!exists) {
+            await upsertProject(proj as Project);
+          }
+        }
+      }
+      
+      addToast('Suggested copy applied successfully', 'success');
+      await fetchAll();
+    } catch (err) {
+      addToast(err instanceof Error ? err.message : 'Failed to apply preset', 'error');
+    } finally {
+      setSaving(false);
+      setPresetTarget(null);
+    }
+  };
+
   const requestDelete = (target: DeleteTarget, e: React.MouseEvent) => {
     lastFocusRef.current = e.currentTarget as HTMLElement;
     setDeleteTarget(target);
@@ -224,6 +257,28 @@ export default function Admin() {
       item: { ...project, id: '', is_hidden: true },
     });
   };
+
+  const profilesWithPresets = useMemo(() => {
+    const combined = [...profiles];
+    Object.keys(profilePresets).forEach((presetId) => {
+      if (!profiles.some((p) => p.id === presetId)) {
+        combined.push({
+          id: presetId,
+          name: profilePresets[presetId].name,
+          is_active: false,
+          bio: '',
+          tagline: '',
+          hero_title: '',
+          hero_subtitle: '',
+          philosophy_title: '',
+          philosophy_text: '',
+          badges: [],
+          social_links: {},
+        } as Profile);
+      }
+    });
+    return combined;
+  }, [profiles]);
 
   /* ── Derived lists ── */
 
@@ -345,34 +400,54 @@ export default function Admin() {
                 </button>
               </div>
               <ul className="cms-list">
-                {profiles.map((profile) => (
-                  <li key={profile.id} className="cms-item">
-                    <div className="cms-item__body">
-                      <div className="cms-item__title">
-                        {profile.name || '(unnamed)'}
-                        {profile.is_active && <span className="cms-badge cms-badge--live">Active</span>}
+                {profilesWithPresets.map((profile) => {
+                  const existsInDb = profiles.some((p) => p.id === profile.id);
+                  return (
+                    <li key={profile.id} className="cms-item">
+                      <div className="cms-item__body">
+                        <div className="cms-item__title">
+                          {profile.name || '(unnamed)'}
+                          {profile.is_active && <span className="cms-badge cms-badge--live">Active</span>}
+                          {!existsInDb && <span className="cms-badge cms-badge--muted">Preset Available</span>}
+                        </div>
+                        <div className="cms-item__meta">
+                          <code>{profile.id}</code> · {profile.hero_title || (existsInDb ? 'No hero title' : 'Not created yet (click Sparkles to apply preset)')}
+                        </div>
                       </div>
-                      <div className="cms-item__meta">
-                        <code>{profile.id}</code> · {profile.hero_title || 'No hero title'}
+                      <div className="cms-item__actions">
+                        {existsInDb && (
+                          <a className="cms-icon-btn" href={`/?profile=${profile.id}`} target="_blank" rel="noopener noreferrer" aria-label={`Preview ${profile.name}`} title="Preview">
+                            <ExternalLink size={15} />
+                          </a>
+                        )}
+                        {profilePresets[profile.id] && (
+                          <button
+                            className="cms-icon-btn"
+                            onClick={() => setPresetTarget(profile.id)}
+                            aria-label={`Apply suggested copy for ${profile.name}`}
+                            title="Apply suggested copy"
+                          >
+                            <Sparkles size={15} style={{ color: 'var(--color-accent)' }} />
+                          </button>
+                        )}
+                        {existsInDb && (
+                          <button className="cms-icon-btn" onClick={() => setEditing({ kind: 'profile', item: profile })} aria-label={`Edit ${profile.name}`} title="Edit">
+                            <Pencil size={15} />
+                          </button>
+                        )}
+                        {existsInDb && (
+                          <button
+                            className="cms-icon-btn cms-icon-btn--danger"
+                            onClick={(e) => requestDelete({ kind: 'profile', id: profile.id, label: `profile "${profile.name}" and ALL of its projects and posts` }, e)}
+                            aria-label={`Delete ${profile.name}`} title="Delete"
+                          >
+                            <Trash2 size={15} />
+                          </button>
+                        )}
                       </div>
-                    </div>
-                    <div className="cms-item__actions">
-                      <a className="cms-icon-btn" href={`/?profile=${profile.id}`} target="_blank" rel="noopener noreferrer" aria-label={`Preview ${profile.name}`} title="Preview">
-                        <ExternalLink size={15} />
-                      </a>
-                      <button className="cms-icon-btn" onClick={() => setEditing({ kind: 'profile', item: profile })} aria-label={`Edit ${profile.name}`} title="Edit">
-                        <Pencil size={15} />
-                      </button>
-                      <button
-                        className="cms-icon-btn cms-icon-btn--danger"
-                        onClick={(e) => requestDelete({ kind: 'profile', id: profile.id, label: `profile "${profile.name}" and ALL of its projects and posts` }, e)}
-                        aria-label={`Delete ${profile.name}`} title="Delete"
-                      >
-                        <Trash2 size={15} />
-                      </button>
-                    </div>
-                  </li>
-                ))}
+                    </li>
+                  );
+                })}
               </ul>
             </section>
           ) : section === 'projects' ? (
@@ -489,6 +564,16 @@ export default function Admin() {
           label={deleteTarget.label}
           onConfirm={confirmDelete}
           onCancel={() => { setDeleteTarget(null); lastFocusRef.current?.focus(); }}
+        />
+      )}
+
+      {presetTarget && (
+        <ConfirmDialog
+          title="Apply suggested copy?"
+          desc={`Overwrites this profile's copy fields with the suggested professional copy — projects/posts untouched.`}
+          actionLabel={saving ? "Applying..." : "Apply"}
+          onConfirm={() => handleApplyPreset(presetTarget)}
+          onCancel={() => setPresetTarget(null)}
         />
       )}
 
@@ -709,6 +794,50 @@ function DeleteDialog({ label, onConfirm, onCancel }: {
         <div className="cms-form__actions">
           <button ref={cancelRef} className="cms-btn" onClick={onCancel}>Cancel</button>
           <button className="cms-btn cms-btn--danger" onClick={onConfirm}>Delete</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Confirm dialog (focus-managed) ────────────────────────────────────── */
+
+function ConfirmDialog({ title, desc, actionLabel, onConfirm, onCancel, confirmType = 'primary' }: {
+  title: string;
+  desc: string;
+  actionLabel: string;
+  onConfirm: () => void;
+  onCancel: () => void;
+  confirmType?: 'primary' | 'danger';
+}) {
+  const confirmRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    confirmRef.current?.focus();
+  }, []);
+
+  return (
+    <div
+      className="cms-overlay"
+      role="alertdialog"
+      aria-modal="true"
+      aria-labelledby="cms-confirm-title"
+      aria-describedby="cms-confirm-desc"
+      onKeyDown={(e) => e.key === 'Escape' && onCancel()}
+      onClick={(e) => e.target === e.currentTarget && onCancel()}
+    >
+      <div className="cms-dialog">
+        <h2 id="cms-confirm-title">{title}</h2>
+        <p id="cms-confirm-desc">{desc}</p>
+        <div className="cms-form__actions">
+          <button className="cms-btn" onClick={onCancel}>Cancel</button>
+          <button
+            ref={confirmRef}
+            className={`cms-btn ${confirmType === 'danger' ? 'cms-btn--danger' : 'cms-btn--primary'}`}
+            onClick={onConfirm}
+          >
+            {actionLabel}
+          </button>
         </div>
       </div>
     </div>

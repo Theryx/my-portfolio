@@ -7,7 +7,7 @@ import { Calendar, Clock, PenLine } from 'lucide-react';
 import { gridVariants, tileVariants } from '../lib/motion';
 
 export default function Blog() {
-  const { blogPosts, loading, error } = useProfile();
+  const { profile, blogPosts, loading, error } = useProfile();
 
   return (
     <PageTransition>
@@ -19,7 +19,7 @@ export default function Blog() {
               Notes from the field
             </span>
             <h2 className="section__title page-hero__title">Blog & Insights</h2>
-            <p className="page-hero__sub">Thoughts on design, technology, and the future of fintech in Africa.</p>
+            <p className="page-hero__sub">{profile?.social_links?.blog_intro || 'Thoughts on design, technology, and the future of fintech in Africa.'}</p>
           </div>
 
           {loading ? (
