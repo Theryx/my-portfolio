@@ -28,6 +28,9 @@ export default function Layout({ children }: LayoutProps) {
   const location = useLocation();
   const { profile } = useProfile();
   const resumeUrl = profile?.social_links?.resume || DEFAULT_RESUME_URL;
+  const contactEmail = profile?.social_links?.email || 'ndouken@gmail.com';
+  const linkedinUrl = profile?.social_links?.linkedin || 'https://www.linkedin.com/in/ndoukentheryx';
+  const [emailCopied, setEmailCopied] = useState(false);
 
   const closeMenu = () => setIsMobileMenuOpen(false);
 
@@ -108,29 +111,54 @@ export default function Layout({ children }: LayoutProps) {
         {children}
       </main>
 
-      <footer className="footer">
+      <footer className="footer footer--bento">
         <div className="container">
-          <div className="footer__content">
+          <div className="footer__cta">
+            <h2 className="footer__cta-title">
+              Let's build something <em>people trust</em>.
+            </h2>
+            <div className="footer__cta-actions">
+              <button
+                type="button"
+                className="btn btn--primary"
+                onClick={() => {
+                  navigator.clipboard.writeText(contactEmail);
+                  setEmailCopied(true);
+                  setTimeout(() => setEmailCopied(false), 2000);
+                }}
+              >
+                {emailCopied ? 'Email copied ✓' : 'Copy my email'}
+              </button>
+              <a
+                href={linkedinUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn--secondary"
+              >
+                LinkedIn
+              </a>
+              <a
+                href={resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn--secondary"
+                aria-label="Download CV / Resume (PDF)"
+              >
+                View CV
+              </a>
+            </div>
+          </div>
+          <div className="footer__meta">
             <p className="footer__text">
               &copy; {new Date().getFullYear()} Ndouken Theryx. All rights reserved.
             </p>
-            <a
-              href={resumeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="footer__download"
-              aria-label="Download CV / Resume (PDF)"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" y1="15" x2="12" y2="3" />
-              </svg>
-              View CV
-            </a>
+            <p className="footer__text">
+              Designed & built in Douala 🇨🇲
+            </p>
           </div>
         </div>
       </footer>
+      <div className="grain-overlay" aria-hidden="true" />
     </div>
   );
 }

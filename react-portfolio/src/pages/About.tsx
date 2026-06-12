@@ -122,10 +122,10 @@ export default function About() {
               />
               <div className="speaking__text">
                 <p>
-                  In 2022, I was invited by the **OSS Cameroon** community to present the findings of my research on the **State of the Design Ecosystem in Cameroon**. 
+                  In 2022, I was invited by the <strong>OSS Cameroon</strong> community to present the findings of my research on the <strong>State of the Design Ecosystem in Cameroon</strong>.
                 </p>
                 <p>
-                  The objective of the talk was to provide data-driven insights into our local industry while passionately encouraging more designers to bridge the gap between design and development by contributing to **Open Source** projects.
+                  The objective of the talk was to provide data-driven insights into our local industry while passionately encouraging more designers to bridge the gap between design and development by contributing to <strong>Open Source</strong> projects.
                 </p>
               </div>
             </div>

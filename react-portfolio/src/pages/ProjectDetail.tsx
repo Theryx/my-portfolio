@@ -11,6 +11,7 @@ import { getProjectById, type Project } from '../lib/api';
 import { projectImageMap, shomiMarkdownImageMap } from '../data/projects';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { lightboxTrigger } from '../lib/a11y';
+import { ReadingProgress } from '../components/ReadingProgress';
 
 import paysikaDesignDocs from '../assets/img/paysika/paysika-design-docs.png';
 import paysikaDesignRequirements from '../assets/img/paysika/paysika-design-requirements.png';
@@ -111,6 +112,7 @@ export default function ProjectDetail() {
 
   return (
     <PageTransition>
+      <ReadingProgress />
       <article className="project-detail">
         <div className="container">
           <Link to="/projects" className="project-detail__back">

@@ -9,6 +9,7 @@ import { getBlogPostById, type BlogPost } from '../lib/api';
 import { blogImageMap } from '../data/blog';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { lightboxTrigger } from '../lib/a11y';
+import { ReadingProgress } from '../components/ReadingProgress';
 
 export default function BlogPostDetail() {
   const { id } = useParams();
@@ -64,6 +65,7 @@ export default function BlogPostDetail() {
 
   return (
     <PageTransition>
+      <ReadingProgress />
       <article className="blog-detail">
         <div className="container">
           <Link to="/blog" className="blog-detail__back">
