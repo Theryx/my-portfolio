@@ -9,15 +9,19 @@ afterEach(() => {
 
 // jsdom has no IntersectionObserver; report everything as immediately
 // in-view so framer-motion's whileInView animations resolve in tests.
-class MockIntersectionObserver implements IntersectionObserver {
+class MockIntersectionObserver {
   readonly root = null;
   readonly rootMargin = '';
+  readonly scrollMargin = '';
   readonly thresholds: ReadonlyArray<number> = [];
-  constructor(private callback: IntersectionObserverCallback) {}
+  private callback: IntersectionObserverCallback;
+  constructor(callback: IntersectionObserverCallback) {
+    this.callback = callback;
+  }
   observe(target: Element) {
     this.callback(
       [{ isIntersecting: true, target } as IntersectionObserverEntry],
-      this
+      this as unknown as IntersectionObserver
     );
   }
   unobserve() {}
