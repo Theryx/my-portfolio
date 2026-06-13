@@ -3096,6 +3096,11 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
     color: var(--color-text);
     opacity: 0.8;
     margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .bento-card__text strong {
