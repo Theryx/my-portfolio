@@ -11,6 +11,43 @@ import { MapPin, Languages, Fish, Quote } from 'lucide-react';
 import { BenevolentModal } from '../components/BenevolentModal';
 import { lightboxTrigger } from '../lib/a11y';
 import { gridVariants, tileVariants } from '../lib/motion';
+import { profilePresets } from '../data/profileCopy';
+
+const DEFAULT_EXPERIENCE = [
+  { date: 'Dec 2021 - Present', title: 'Product Designer', company: 'PaySika', desc: 'Managed a two-person design team, optimized payment flows, and utilized Mixpanel to track user patterns and behavior in the app. Awarded the Team Spirit Award twice.' },
+  { date: 'Nov 2020 - Nov 2021', title: 'Freelance Designer', company: 'Freelance', desc: 'Provided design services for various clients. Designed reports on Cameroon Cybersecurity and Central/West Africa cybersecurity state.' },
+  { date: 'Dec 2022 - Dec 2023', title: 'Senior UI/UX Consultant (Part-time)', company: 'Matanga Agency', desc: 'Designed high-converting web and mobile dashboards for Central African and European clients, establishing scalable components in Figma.' },
+];
+
+interface SkillRow { title: string; desc: string; image?: string; alt?: string }
+
+const buildDefaultSkills = (): SkillRow[] => [
+  { title: 'Design & UX', desc: 'Figma, User Research, Usability Testing.', image: userResearch, alt: 'User Research' },
+  { title: 'Design Ops & AI', desc: 'Wireframing, User Flow Mapping, Claude/GPT Integration for UX Copy and Edge-case testing.', image: jobsikaProcess, alt: 'Design Ops Workflow' },
+  { title: 'Technical & Data', desc: 'Angular, React, HTML/CSS, Mixpanel (Retention/Funnel Analysis).', image: codedApp, alt: 'Technical Coding App' },
+];
+
+const DEFAULT_TOOLS = ['Logitech MX Master 3s', 'Logitech G413 TKL', 'Desktop', 'Webcam', 'Starlink', 'HP 27-inch monitor screen'];
+
+const DEFAULT_FAQS = [
+  { question: 'What is your design process?', answer: "Honestly I'm not sure I have a design process. Ok I would say it depends. Sometimes rough, sometimes straight to the point. The truth is that books say one thing but reality says otherwise." },
+  { question: 'Are you open to speaking engagements?', answer: 'Absolutely. I love public speaking, networking, and sharing insights on fintech, design, and tech ecosystems in Africa.' },
+];
+
+const DEFAULT_SPEAKING_INTRO_PARAS = [
+  'In 2022, I was invited by the **OSS Cameroon** community to present the findings of my research on the **State of the Design Ecosystem in Cameroon**.',
+  'The objective of the talk was to provide data-driven insights into our local industry while passionately encouraging more designers to bridge the gap between design and development by contributing to **Open Source** projects.',
+];
+
+// Lightweight inline-bold renderer for **bold** segments in the speaking intro.
+function renderBold(text: string) {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((part, i) =>
+    part.startsWith('**') && part.endsWith('**')
+      ? <strong key={i}>{part.slice(2, -2)}</strong>
+      : <span key={i}>{part}</span>
+  );
+}
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -47,16 +84,15 @@ export default function About() {
     setOpenFaq(openFaq === index ? null : index);
   };
 
-  const faqs = [
-    {
-      question: 'What is your design process?',
-      answer: "Honestly I'm not sure I have a design process. Ok I would say it depends. Sometimes rough, sometimes straight to the point. The truth is that books say one thing but reality says otherwise.",
-    },
-    {
-      question: 'Are you open to speaking engagements?',
-      answer: 'Absolutely. I love public speaking, networking, and sharing insights on fintech, design, and tech ecosystems in Africa.',
-    },
-  ];
+  // Per-profile About sections, with the default arrays as fallback.
+  const preset = profile ? profilePresets[profile.id]?.about : undefined;
+  const experience = preset?.experience ?? DEFAULT_EXPERIENCE;
+  const skills: SkillRow[] = preset?.skills ?? buildDefaultSkills();
+  const tools = preset?.tools ?? DEFAULT_TOOLS;
+  const faqs = preset?.faqs ?? DEFAULT_FAQS;
+  const speakingParas = preset?.speakingIntro
+    ? [preset.speakingIntro]
+    : DEFAULT_SPEAKING_INTRO_PARAS;
 
   const handleImageClick = (src: string, caption: string) => {
     setSelectedImage({ src, caption });
@@ -148,12 +184,9 @@ export default function About() {
                 style={{ cursor: 'pointer' }}
               />
               <div className="speaking__text">
-                <p>
-                  In 2022, I was invited by the <strong>OSS Cameroon</strong> community to present the findings of my research on the <strong>State of the Design Ecosystem in Cameroon</strong>.
-                </p>
-                <p>
-                  The objective of the talk was to provide data-driven insights into our local industry while passionately encouraging more designers to bridge the gap between design and development by contributing to <strong>Open Source</strong> projects.
-                </p>
+                {speakingParas.map((para, i) => (
+                  <p key={i}>{renderBold(para)}</p>
+                ))}
               </div>
             </div>
           </motion.div>
@@ -171,11 +204,7 @@ export default function About() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.1 }}
           >
-            {[
-              { date: 'Dec 2021 - Present', title: 'Product Designer', company: 'PaySika', desc: 'Managed a two-person design team, optimized payment flows, and utilized Mixpanel to track user patterns and behavior in the app. Awarded the Team Spirit Award twice.' },
-              { date: 'Nov 2020 - Nov 2021', title: 'Freelance Designer', company: 'Freelance', desc: 'Provided design services for various clients. Designed reports on Cameroon Cybersecurity and Central/West Africa cybersecurity state.' },
-              { date: 'Dec 2022 - Dec 2023', title: 'Senior UI/UX Consultant (Part-time)', company: 'Matanga Agency', desc: 'Designed high-converting web and mobile dashboards for Central African and European clients, establishing scalable components in Figma.' },
-            ].map((item, index) => (
+            {experience.map((item, index) => (
               <motion.div className="experience__item" key={item.company} variants={tileVariants}>
                 <span className="experience__index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
                 <span className="experience__date">{item.date}</span>
@@ -243,11 +272,7 @@ export default function About() {
           <span className="section-sticker">What I bring</span>
           <h2 className="section__title">Skills & Toolkit</h2>
           <div className="skills__grid">
-            {[
-              { title: 'Design & UX', desc: 'Figma, User Research, Usability Testing.', image: userResearch, alt: 'User Research' },
-              { title: 'Design Ops & AI', desc: 'Wireframing, User Flow Mapping, Claude/GPT Integration for UX Copy and Edge-case testing.', image: jobsikaProcess, alt: 'Design Ops Workflow' },
-              { title: 'Technical & Data', desc: 'Angular, React, HTML/CSS, Mixpanel (Retention/Funnel Analysis).', image: codedApp, alt: 'Technical Coding App' },
-            ].map((skill) => (
+            {skills.map((skill) => (
               <motion.div className="skill-card" key={skill.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
                 {'image' in skill && skill.image && (
                   <div className="skill-card__image" {...lightboxTrigger(() => handleImageClick(skill.image as string, skill.alt || skill.title), `Enlarge: ${skill.title}`)} style={{ cursor: 'pointer' }}>
@@ -267,7 +292,7 @@ export default function About() {
           <div className="about__interests">
             <h3 className="about__interests-title">Tools I use to work</h3>
             <ul className="about__interests-list tool-pills">
-              {['Logitech MX Master 3s', 'Logitech G413 TKL', 'Desktop', 'Webcam', 'Starlink', 'HP 27-inch monitor screen'].map((tool) => (
+              {tools.map((tool) => (
                 <li key={tool} className="tool-pill">{tool}</li>
               ))}
             </ul>

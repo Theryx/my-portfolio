@@ -14,7 +14,7 @@ import {
 } from '../lib/api';
 import { ProfileForm, ProjectForm, BlogForm, SecurityForm } from './admin/forms';
 import { PasswordInput } from './admin/fields';
-import { profilePresets, projectPresets } from '../data/profileCopy';
+import { profilePresets } from '../data/profileCopy';
 
 const MAX_ATTEMPTS = 5;
 const LOCKOUT_MS = 15 * 60 * 1000;
@@ -220,23 +220,42 @@ export default function Admin() {
     try {
       const preset = profilePresets[profileId];
       if (!preset) throw new Error('Preset not found');
-      
+
+      // Preserve the existing active flag so applying a preset never
+      // unintentionally publishes a draft profile to visitors.
       const existingProfile = profiles.find(p => p.id === profileId);
       const isActive = existingProfile ? existingProfile.is_active : false;
-      
-      await updateProfile(profileId, { ...preset, is_active: isActive });
-      
-      if (profileId === 'project-manager') {
-        const pmProjects = projectPresets;
-        for (const proj of pmProjects) {
-          const exists = projects.some(p => p.id === proj.id);
-          if (!exists) {
-            await upsertProject(proj as Project);
-          }
+
+      // 1) Profile fields (hero / philosophy / bio / badges) + social_links.
+      await updateProfile(profileId, {
+        ...preset.profile,
+        is_active: isActive,
+        social_links: preset.social_links,
+      });
+
+      // 2) Per-profile project case studies. Only insert if the id is new —
+      //    we never overwrite an existing project the user may have edited.
+      let createdProjects = 0;
+      for (const seed of preset.projects) {
+        if (!projects.some((p) => p.id === seed.id)) {
+          await upsertProject({ ...seed, profile_id: profileId } as Project);
+          createdProjects++;
         }
       }
-      
-      addToast('Suggested copy applied successfully', 'success');
+
+      // 3) Per-profile blog posts — same id-skip rule.
+      let createdPosts = 0;
+      for (const seed of preset.blogPosts) {
+        if (!blogPosts.some((p) => p.id === seed.id)) {
+          await upsertBlogPost({ ...seed, profile_id: profileId } as BlogPost);
+          createdPosts++;
+        }
+      }
+
+      const parts = ['Profile updated'];
+      if (createdProjects > 0) parts.push(`${createdProjects} project${createdProjects === 1 ? '' : 's'} created`);
+      if (createdPosts > 0) parts.push(`${createdPosts} post${createdPosts === 1 ? '' : 's'} created`);
+      addToast(parts.join(' · '), 'success');
       await fetchAll();
     } catch (err) {
       addToast(err instanceof Error ? err.message : 'Failed to apply preset', 'error');
@@ -264,7 +283,7 @@ export default function Admin() {
       if (!profiles.some((p) => p.id === presetId)) {
         combined.push({
           id: presetId,
-          name: profilePresets[presetId].name,
+          name: profilePresets[presetId].profile.name,
           is_active: false,
           bio: '',
           tagline: '',
@@ -569,9 +588,9 @@ export default function Admin() {
 
       {presetTarget && (
         <ConfirmDialog
-          title="Apply suggested copy?"
-          desc={`Overwrites this profile's copy fields with the suggested professional copy — projects/posts untouched.`}
-          actionLabel={saving ? "Applying..." : "Apply"}
+          title="Apply suggested content?"
+          desc="Overwrites this profile's hero, bio, and philosophy text with the suggested professional copy, and creates any missing projects and blog posts for this profile. Existing projects or posts with the same id are left alone."
+          actionLabel={saving ? 'Applying…' : 'Apply'}
           onConfirm={() => handleApplyPreset(presetTarget)}
           onCancel={() => setPresetTarget(null)}
         />

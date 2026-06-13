@@ -158,7 +158,9 @@ export default function Home() {
     );
   }
 
-  const profileName = profile.name === 'Default' || !profile.name ? 'Ndouken Theryx' : profile.name;
+  // The person's name is always Ndouken Theryx — `profile.name` is a persona
+  // label ("Fintech Focus", "Project Manager", etc.) and would read wrong here.
+  const profileName = 'Ndouken Theryx';
 
   return (
     <PageTransition>

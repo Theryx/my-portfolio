@@ -58,11 +58,37 @@ export interface BlogPost {
 
 export const fallbackProfiles: Record<string, Profile> = Object.entries(profilePresets).reduce(
   (acc, [id, preset]) => {
-    acc[id] = { ...preset } as Profile;
+    acc[id] = {
+      id,
+      ...preset.profile,
+      social_links: preset.social_links,
+    };
     return acc;
   },
   {} as Record<string, Profile>
 );
+
+// The default profile is curated by the owner — its content lives in the
+// database. We still want it available as an offline fallback so the site
+// renders without an API. Keep this in sync with the CMS as the owner edits.
+if (!fallbackProfiles.default) {
+  fallbackProfiles.default = {
+    id: 'default',
+    name: 'Default',
+    is_active: true,
+    bio: 'Product Designer',
+    tagline: 'I design and build user-centric digital products.',
+    hero_title: 'Product Designer',
+    hero_subtitle:
+      'I design financial experiences people trust with their money. Led design at PaySika, built tech communities, and bridge the gap between design & code. Based in Cameroon.',
+    philosophy_title: 'I design experiences that bridge technology and human needs.',
+    philosophy_text:
+      'As a Design Engineer, I bridge the gap between design and development. With 4+ years leading design at PaySika and now building my own ventures, I combine UX/UI expertise with hands-on coding to create products that are both beautiful and functional.',
+    badges: ['Open to Product Design & Design Engineering roles'],
+    social_links: {},
+  };
+  fallbackProfiles.default.is_active = true;
+}
 
 async function apiFetch<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(path, {
