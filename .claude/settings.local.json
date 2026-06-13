@@ -25,7 +25,23 @@
       "Bash(npx vite *)",
       "Bash(Get-ChildItem -Path \"D:\\\\My_Portfolio\" -Recurse -Force)",
       "Bash(Select-Object FullName, PSIsContainer)",
-      "Bash(Format-Table -AutoSize)"
+      "Bash(Format-Table -AutoSize)",
+      "Bash(Get-ChildItem -Path \"D:/Personal/Portfolio/api\" -Recurse)",
+      "Bash(Select-Object FullName)",
+      "Bash(git ls-tree *)",
+      "Bash(awk '{print $4}')",
+      "Bash(xargs -I {} du -h {})",
+      "Bash(grep -E \"\\\\.\\(exe|dll|so|sh|key|pem|p12|pfx|sql\\)$\")",
+      "Bash(grep \"\\\\.sql$\")",
+      "Bash(grep -C 2 \"sql\\\\`\" \"D:/Personal/Portfolio/api/blog/index.ts\")",
+      "Bash(npm list *)",
+      "Bash(Get-ChildItem -Force -Filter \".env*\" -Recurse -Depth 2)",
+      "Bash(vercel --version)",
+      "Bash(find . -maxdepth 3 -name \".env*\" -not -path \"*/node_modules/*\")",
+      "Bash(ls react-portfolio/scripts scratch)",
+      "Bash(head -30 scratch/test-db.js)",
+      "Bash(curl -s \"https://react-portfolio-pi-topaz.vercel.app/api/profiles\")",
+      "Bash(curl -s \"https://react-portfolio-pi-topaz.vercel.app/api/projects\" -o /tmp/prod-projects.json -w \"%{http_code}\")"
     ]
   }
 }
