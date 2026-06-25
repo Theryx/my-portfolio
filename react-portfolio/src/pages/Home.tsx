@@ -6,7 +6,7 @@ import { useProfile } from '../context/ProfileContext';
 import { JourneyModal } from '../components/JourneyModal';
 import myProfile from '../assets/img/My profile.jfif';
 import { projectImageMap } from '../data/projects';
-import { Maximize2, Copy, ExternalLink, MapPin, Clock3, Hammer, FileDown, Newspaper, ArrowUpRight, Fish } from 'lucide-react';
+import { Maximize2, Copy, ExternalLink, Hammer, FileDown, Newspaper, ArrowUpRight, Fish } from 'lucide-react';
 import { useCountUp } from '../hooks/useCountUp';
 
 const DEFAULT_RESUME_URL = 'https://drive.google.com/open?id=1OzU-HPN-l2s9Le4iSFd44F6PK4Z0W6bp&usp=drive_fs';
@@ -25,24 +25,6 @@ const tileVariants = {
     transition: { type: 'spring' as const, stiffness: 260, damping: 24 },
   },
 };
-
-/** Live clock for Douala (WAT, UTC+1) — isolated so the ticking only re-renders this tile. */
-function DoualaClock() {
-  const [now, setNow] = useState(() => new Date());
-  useEffect(() => {
-    const id = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(id);
-  }, []);
-  const time = now.toLocaleTimeString('en-GB', {
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    timeZone: 'Africa/Douala',
-  });
-  return (
-    <span className="bento-card__mini-value" aria-label={`Local time in Douala: ${time}`}>{time}</span>
-  );
-}
 
 export default function Home() {
   const { profile, projects, blogPosts, loading, error } = useProfile();
@@ -225,23 +207,6 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-            </motion.div>
-
-            {/* Local time */}
-            <motion.div variants={tileVariants} {...playful} className="bento-card bento-card--mini bento-card--time" {...hoverable('my timezone — WAT')}>
-              <Clock3 size={18} className="bento-card__mini-icon" aria-hidden="true" />
-              <DoualaClock />
-              <span className="bento-card__mini-label">Douala · WAT</span>
-            </motion.div>
-
-            {/* Location */}
-            <motion.div variants={tileVariants} {...playful} className="bento-card bento-card--mini bento-card--location" {...hoverable('born & based here')}>
-              <span className="bento-card__pin" aria-hidden="true">
-                <MapPin size={18} />
-                <span className="bento-card__pin-pulse" />
-              </span>
-              <span className="bento-card__mini-value">Douala 🇨🇲</span>
-              <span className="bento-card__mini-label">Cameroon, GMT+1</span>
             </motion.div>
 
             {/* Email copy */}
