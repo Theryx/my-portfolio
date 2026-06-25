@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import { PageTransition } from '../components/PageTransition';
 import { ArrowLeft, Calendar, Clock, User } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -113,6 +114,7 @@ export default function BlogPostDetail() {
           <div className="blog-detail__body">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeRaw]}
               components={{
                 img: ({ src, alt, ...props }) => {
                   const decodedSrc = decodeURIComponent(src || '');

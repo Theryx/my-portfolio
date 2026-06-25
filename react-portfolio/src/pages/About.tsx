@@ -84,6 +84,18 @@ export default function About() {
     setOpenFaq(openFaq === index ? null : index);
   };
 
+  // Custom cursor label on hover — mirrors the home page bento cards.
+  const hoverable = (label: string) => ({
+    onMouseEnter: () => {
+      setIsHovering(true);
+      setCursorLabel(label);
+    },
+    onMouseLeave: () => {
+      setIsHovering(false);
+      setCursorLabel('');
+    },
+  });
+
   // Per-profile About sections, with the default arrays as fallback.
   const preset = profile ? profilePresets[profile.id]?.about : undefined;
   const experience = preset?.experience ?? DEFAULT_EXPERIENCE;
@@ -121,7 +133,7 @@ export default function About() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.1 }}
           >
-            <motion.div className="bento-card about-bento__main" variants={tileVariants}>
+            <motion.div className="bento-card about-bento__main" variants={tileVariants} {...hoverable('a little about me')}>
               <img src={myProfile} alt="Ndouken Theryx" className="about-bento__photo" loading="lazy" />
               <div>
                 <p className="about__text">
@@ -133,7 +145,7 @@ export default function About() {
               </div>
             </motion.div>
 
-            <motion.div className="bento-card bento-card--mini" variants={tileVariants}>
+            <motion.div className="bento-card bento-card--mini" variants={tileVariants} {...hoverable('born & based here')}>
               <span className="bento-card__mini-icon bento-card__pin">
                 <MapPin size={20} aria-hidden="true" />
                 <span className="bento-card__pin-pulse" aria-hidden="true" />
@@ -142,7 +154,7 @@ export default function About() {
               <span className="bento-card__mini-label">Cameroon 🇨🇲</span>
             </motion.div>
 
-            <motion.div className="bento-card bento-card--mini" variants={tileVariants}>
+            <motion.div className="bento-card bento-card--mini" variants={tileVariants} {...hoverable('oui & yes 🙂')}>
               <span className="bento-card__mini-icon">
                 <Languages size={20} aria-hidden="true" />
               </span>
@@ -150,7 +162,7 @@ export default function About() {
               <span className="bento-card__mini-label">Bilingual, fully fluent</span>
             </motion.div>
 
-            <motion.div className="bento-card bento-card--mini bento-card--fish" variants={tileVariants}>
+            <motion.div className="bento-card bento-card--mini bento-card--fish" variants={tileVariants} {...hoverable('fun fact 🐟')}>
               <span className="bento-card__mini-icon bento-card__fish">
                 <Fish size={20} aria-hidden="true" />
               </span>
@@ -159,7 +171,7 @@ export default function About() {
             </motion.div>
 
             {profile?.philosophy_text && (
-              <motion.div className="bento-card about-bento__philosophy" variants={tileVariants}>
+              <motion.div className="bento-card about-bento__philosophy" variants={tileVariants} {...hoverable('how I think')}>
                 <Quote size={18} aria-hidden="true" className="about-bento__quote-icon" />
                 <h3 className="about-bento__philosophy-title">{profile.philosophy_title}</h3>
                 <p className="about-bento__philosophy-text">{profile.philosophy_text}</p>
