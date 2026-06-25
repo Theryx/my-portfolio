@@ -584,7 +584,7 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
     .project-card--featured .project-card__image {
         flex: 1;
         height: auto;
-        min-height: 400px;
+        min-height: 300px;
         margin: 0;
         border-radius: 0;
     }

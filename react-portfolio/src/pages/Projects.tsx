@@ -79,9 +79,6 @@ export default function Projects() {
                             />
                           </div>
 
-                          {project.impact && (
-                            <span className="project-card__impact">{project.impact}</span>
-                          )}
                           <span className="project-card__cta">View Case Study <span className="project-card__cta-arrow">→</span></span>
                         </div>
                       </Link>

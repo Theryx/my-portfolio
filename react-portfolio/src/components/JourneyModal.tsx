@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
+import type { Profile } from '../lib/api';
 
 interface JourneyModalProps {
   isOpen: boolean;
   onClose: () => void;
+  profile: Profile | null;
 }
 
-export const JourneyModal: React.FC<JourneyModalProps> = ({ isOpen, onClose }) => {
+export const JourneyModal: React.FC<JourneyModalProps> = ({ isOpen, onClose, profile }) => {
   // Prevent scrolling on body when modal is open
   useEffect(() => {
     if (isOpen) {
@@ -30,16 +32,21 @@ export const JourneyModal: React.FC<JourneyModalProps> = ({ isOpen, onClose }) =
           <h2 className="modal-title">Heyyy 👋</h2>
 
           <div className="journey-content">
+            {/* Lead paragraph — the full version of the text truncated on the intro card. */}
             <p>
-              I'm Ndouken Theryx — a Product Designer &amp; Tech Entrepreneur based in Cameroon.
-              For the past 4 years I led design at PaySika, shaping end-to-end digital products
-              where UX/UI design and frontend engineering meet.
+              {profile?.hero_title ? (
+                <>
+                  I am <strong>Ndouken Theryx</strong> — <strong>{profile.hero_title}</strong>. {profile.hero_subtitle}
+                </>
+              ) : (
+                <>
+                  I am <strong>Ndouken Theryx</strong>, a passionate <strong>Design Engineer</strong> and{' '}
+                  <strong>Tech Entrepreneur</strong> who believes that the best digital products are born where
+                  thoughtful design meets solid engineering.
+                </>
+              )}
             </p>
-            <p>
-              Alongside that I've co-founded tech ventures, and I'm now shipping my next one with
-              AI-assisted design and code. I care about products that feel seamless, trustworthy,
-              and genuinely useful.
-            </p>
+            {profile?.philosophy_text && <p>{profile.philosophy_text}</p>}
           </div>
         </div>
       </div>

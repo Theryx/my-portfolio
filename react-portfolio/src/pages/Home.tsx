@@ -188,11 +188,6 @@ export default function Home() {
                 <div className="bento-card__intro-content">
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                     <span className="bento-card__greeting">Heyyy 👋</span>
-                    {profile.badges && profile.badges.map((badge, idx) => (
-                      <span key={idx} className="hero__badge" style={{ margin: 0, padding: '4px 10px', fontSize: '11px' }}>
-                        {badge}
-                      </span>
-                    ))}
                   </div>
                   <p className="bento-card__text">
                     {profile.hero_title ? (
@@ -331,7 +326,7 @@ export default function Home() {
         </div>
       </section>
 
-      <JourneyModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <JourneyModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} profile={profile} />
     </PageTransition>
   );
 }
