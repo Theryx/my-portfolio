@@ -267,6 +267,28 @@ export function ProjectForm({ project, profiles, onSave, onCancel, saving }: {
 
 /* ─── Blog form ─────────────────────────────────────────────────────────── */
 
+// Build a URL-safe slug from a title: lowercase, accents stripped, non-alphanumerics
+// collapsed to single hyphens, no leading/trailing hyphens.
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+// Estimate reading time at ~200 words/min, after stripping HTML tags and common
+// Markdown punctuation so the word count reflects prose, not syntax.
+function estimateReadTime(content: string): string {
+  const text = content
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/[#*_>`~[\]()!-]+/g, ' ');
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  const minutes = Math.max(1, Math.ceil(words / 200));
+  return `${minutes} min read`;
+}
+
 export function BlogForm({ post, profiles, onSave, onCancel, saving }: {
   post: BlogPost | null;
   profiles: Profile[];
@@ -289,17 +311,31 @@ export function BlogForm({ post, profiles, onSave, onCancel, saving }: {
     sort_order: post?.sort_order ?? 0,
   });
   const isNew = !post?.id;
+  // Once the user hand-edits the slug, stop auto-deriving it from the title.
+  const [slugEdited, setSlugEdited] = useState(false);
   const set = (k: string, v: unknown) => setForm((f) => ({ ...f, [k]: v }));
 
+  // Read time is always derived from the current content.
+  const readTime = estimateReadTime(form.content);
+
   return (
-    <form className="cms-form" onSubmit={(e) => { e.preventDefault(); onSave(form); }}>
+    <form className="cms-form" onSubmit={(e) => { e.preventDefault(); onSave({ ...form, read_time: readTime }); }}>
       <fieldset className="cms-form__section">
         <legend>Basics</legend>
         <div className="cms-form__grid">
           <div className="cms-field">
             <label htmlFor="bp-id">Post ID (slug)</label>
-            <input id="bp-id" value={form.id} onChange={(e) => set('id', e.target.value)} placeholder="e.g. my-blog-post" required disabled={!isNew} />
-            {!isNew && <p className="cms-field__hint">The ID can't change once created — it's part of the post URL.</p>}
+            <input
+              id="bp-id"
+              value={form.id}
+              onChange={(e) => { set('id', slugify(e.target.value)); setSlugEdited(true); }}
+              placeholder="e.g. my-blog-post"
+              required
+              disabled={!isNew}
+            />
+            {isNew
+              ? <p className="cms-field__hint">Auto-generated from the title — edit to customize.</p>
+              : <p className="cms-field__hint">The ID can't change once created — it's part of the post URL.</p>}
           </div>
           <div className="cms-field">
             <label htmlFor="bp-profile">Profile</label>
@@ -310,7 +346,16 @@ export function BlogForm({ post, profiles, onSave, onCancel, saving }: {
         </div>
         <div className="cms-field">
           <label htmlFor="bp-title">Title</label>
-          <input id="bp-title" value={form.title} onChange={(e) => set('title', e.target.value)} required />
+          <input
+            id="bp-title"
+            value={form.title}
+            onChange={(e) => {
+              const title = e.target.value;
+              set('title', title);
+              if (isNew && !slugEdited) set('id', slugify(title));
+            }}
+            required
+          />
         </div>
         <div className="cms-field">
           <label htmlFor="bp-excerpt">Excerpt</label>
@@ -338,7 +383,8 @@ export function BlogForm({ post, profiles, onSave, onCancel, saving }: {
           </div>
           <div className="cms-field">
             <label htmlFor="bp-read">Read time</label>
-            <input id="bp-read" value={form.read_time} onChange={(e) => set('read_time', e.target.value)} placeholder="e.g. 5 min read" />
+            <input id="bp-read" value={readTime} readOnly placeholder="e.g. 5 min read" />
+            <p className="cms-field__hint">Auto-calculated from the content (~200 words per minute).</p>
           </div>
         </div>
         <div className="cms-form__grid">
