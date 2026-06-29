@@ -234,14 +234,14 @@ export default function About() {
           <span className="section-sticker">Giving back</span>
           <h2 className="section__title">Benevolent Work</h2>
           <div className="ventures__grid">
-            {[
+            {([
               { title: 'GEFONA Digital Foundation', role: 'Communication & Finance', desc: 'Leading communication and finance for a foundation supporting policy research on the digital economy and cybersecurity in Africa.' },
               { title: 'osscameroon', role: 'Project Maintainer & Contributor', desc: 'Part of the founding team for JobSika. Involved in maintaining the platform and contributing to various open-source initiatives within the community.' },
               { title: 'geo-Advantage Labs', role: 'Superviseur front-end', desc: "This Project was aimed at bringing up a dashboard for the Corona virus crisis in Cameroon. I was in charge of bringing up the web and mobile interface and coordinate the frontEnd development of the web and mobile app making sure it's responsive." },
               { title: 'Dikalo, Inc', role: 'Visual Designer', desc: "Interface designs, graphic designs, illustrations, pitch deck, motion design" },
               { title: "O'LOKO", role: 'Designer', desc: "Oloko is the biggest attraction park for children in the country. I help with visual designs and make sure design is consistent" },
               { title: 'USFE international', role: 'Social Media Manager', desc: "I handle the organisation social media" },
-            ].map((v) => (
+            ] as { title: string; role: string; desc: string; logo?: string }[]).map((v) => (
               <motion.div
                 className="venture-card"
                 key={v.title}

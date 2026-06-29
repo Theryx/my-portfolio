@@ -6,10 +6,8 @@ import { useProfile } from '../context/ProfileContext';
 import { JourneyModal } from '../components/JourneyModal';
 import myProfile from '../assets/img/My profile.jfif';
 import { projectImageMap } from '../data/projects';
-import { Maximize2, Copy, ExternalLink, Hammer, FileDown, Newspaper, ArrowUpRight, Fish } from 'lucide-react';
+import { Maximize2, Copy, ExternalLink, Hammer, Newspaper, ArrowUpRight } from 'lucide-react';
 import { useCountUp } from '../hooks/useCountUp';
-
-const DEFAULT_RESUME_URL = 'https://drive.google.com/open?id=1OzU-HPN-l2s9Le4iSFd44F6PK4Z0W6bp&usp=drive_fs';
 
 const gridVariants = {
   hidden: {},
@@ -57,7 +55,6 @@ export default function Home() {
 
   const contactEmail = profile?.social_links?.email || 'ndouken@gmail.com';
   const linkedinUrl = profile?.social_links?.linkedin || 'https://www.linkedin.com/in/ndoukentheryx';
-  const resumeUrl = profile?.social_links?.resume || DEFAULT_RESUME_URL;
   const nowStatus = profile?.social_links?.now || 'Shipping my next venture with AI-assisted design & code';
 
   const handleCopyEmail = (e: React.MouseEvent | React.KeyboardEvent) => {
@@ -308,20 +305,6 @@ export default function Home() {
               </motion.div>
             )}
 
-            {/* Fun fact */}
-            <motion.div variants={tileVariants} {...playful} className="bento-card bento-card--mini bento-card--fish" {...hoverable('fun fact')}>
-              <Fish size={26} className="bento-card__fish" aria-hidden="true" />
-              <span className="bento-card__now-text">Powered by direct opinions, simple language & a good plate of fish</span>
-            </motion.div>
-
-            {/* CV */}
-            <motion.div variants={tileVariants} {...playful} className="bento-card bento-card--mini bento-card--cv" {...hoverable('grab the PDF')}>
-              <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="bento-card__cv-link" aria-label="View CV / Resume (PDF)">
-                <FileDown size={22} aria-hidden="true" />
-                <span className="bento-card__mini-value">View CV</span>
-                <span className="bento-card__mini-label">PDF résumé</span>
-              </a>
-            </motion.div>
           </motion.div>
         </div>
       </section>
