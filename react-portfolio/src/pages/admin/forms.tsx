@@ -17,6 +17,8 @@ export function HomeForm({ profile, onSave, onCancel, saving }: {
 }) {
   const [heroTitle, setHeroTitle] = useState(profile.hero_title || '');
   const [heroSubtitle, setHeroSubtitle] = useState(profile.hero_subtitle || '');
+  const [philosophyTitle, setPhilosophyTitle] = useState(profile.philosophy_title || '');
+  const [philosophyText, setPhilosophyText] = useState(profile.philosophy_text || '');
   const [now, setNow] = useState(profile.social_links?.now || '');
   const [metricLabel, setMetricLabel] = useState(profile.social_links?.metric_label || '');
 
@@ -26,6 +28,8 @@ export function HomeForm({ profile, onSave, onCancel, saving }: {
       ...profile,
       hero_title: heroTitle,
       hero_subtitle: heroSubtitle,
+      philosophy_title: philosophyTitle,
+      philosophy_text: philosophyText,
       social_links: { ...profile.social_links, now, metric_label: metricLabel },
     });
   };
@@ -42,6 +46,19 @@ export function HomeForm({ profile, onSave, onCancel, saving }: {
         <div className="cms-field">
           <label htmlFor="hf-hero-subtitle">Hero subtitle</label>
           <textarea id="hf-hero-subtitle" value={heroSubtitle} onChange={(e) => setHeroSubtitle(e.target.value)} rows={3} placeholder="The sentence under your name in the intro card." />
+        </div>
+      </fieldset>
+
+      <fieldset className="cms-form__section">
+        <legend>Intro expander (“click to expand” card)</legend>
+        <p className="cms-field__hint">Shown when a visitor expands your intro card on the home page. This is the same “Philosophy” text that appears on the About page — editing it here updates both.</p>
+        <div className="cms-field">
+          <label htmlFor="hf-philo-title">Philosophy title</label>
+          <input id="hf-philo-title" value={philosophyTitle} onChange={(e) => setPhilosophyTitle(e.target.value)} />
+        </div>
+        <div className="cms-field">
+          <label htmlFor="hf-philo-text">Philosophy text</label>
+          <textarea id="hf-philo-text" value={philosophyText} onChange={(e) => setPhilosophyText(e.target.value)} rows={4} />
         </div>
       </fieldset>
 
@@ -134,6 +151,7 @@ export function AboutForm({ profile, onSave, onCancel, saving }: {
 
       <fieldset className="cms-form__section">
         <legend>Philosophy</legend>
+        <p className="cms-field__hint">Also appears in the home page’s expandable intro card. Editing it here or on the Home page updates both.</p>
         <div className="cms-field">
           <label htmlFor="af-philo-title">Philosophy title</label>
           <input id="af-philo-title" value={philosophyTitle} onChange={(e) => setPhilosophyTitle(e.target.value)} />
