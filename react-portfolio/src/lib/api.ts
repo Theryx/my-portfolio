@@ -76,15 +76,15 @@ if (!fallbackProfiles.default) {
     id: 'default',
     name: 'Default',
     is_active: true,
-    bio: 'Product Designer',
+    bio: 'Product designer & builder',
     tagline: 'I design and build user-centric digital products.',
-    hero_title: 'Product Designer',
+    hero_title: 'Product Designer & Builder',
     hero_subtitle:
-      'I design financial experiences people trust with their money. Led design at PaySika, built tech communities, and bridge the gap between design & code. Based in Cameroon.',
+      'I design and ship digital products end to end — UX, interface, and code. Led design at PaySika, co-founded ventures, and build in the open. Based in Cameroon.',
     philosophy_title: 'I design experiences that bridge technology and human needs.',
     philosophy_text:
-      'As a Design Engineer, I bridge the gap between design and development. With 4+ years leading design at PaySika and now building my own ventures, I combine UX/UI expertise with hands-on coding to create products that are both beautiful and functional.',
-    badges: ['Open to Product Design & Design Engineering roles'],
+      'I work across design and engineering to turn ideas into products people trust. Four years leading design at PaySika, plus co-founding ventures and shipping code, taught me that the strongest products come from one person owning the whole loop — research, interface, and implementation.',
+    badges: ['Design · Engineering · Product'],
     social_links: {},
   };
   fallbackProfiles.default.is_active = true;

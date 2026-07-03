@@ -193,7 +193,7 @@ export default function Home() {
                       </>
                     ) : (
                       <>
-                        I am <strong>Ndouken Theryx</strong>, a passionate <strong>Design Engineer</strong> and <strong>Tech Entrepreneur</strong> who believes that the best digi...
+                        I am <strong>Ndouken Theryx</strong>, a <strong>Product Designer &amp; Builder</strong> who designs and ships digital products end to end.
                       </>
                     )}
                   </p>
@@ -282,7 +282,7 @@ export default function Home() {
             {/* Years leading design */}
             <motion.div variants={tileVariants} {...playful} className="bento-card bento-card--mini" {...hoverable('since Dec 2021 at PaySika')}>
               <span className="bento-card__metric-number" ref={yearsRef}>{yearsValue}+</span>
-              <span className="bento-card__mini-label">{profile.social_links?.metric_label || 'years leading fintech design'}</span>
+              <span className="bento-card__mini-label">{profile.social_links?.metric_label || 'years designing & building products'}</span>
             </motion.div>
 
             {/* Now building */}

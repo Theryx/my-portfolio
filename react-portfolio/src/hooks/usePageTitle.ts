@@ -17,6 +17,6 @@ export function usePageTitle() {
       (location.pathname.startsWith('/projects/') && location.pathname !== '/projects') ||
       (location.pathname.startsWith('/blog/') && location.pathname !== '/blog');
     if (isDetailPage) return;
-    document.title = TITLES[location.pathname] || 'Ndouken Theryx — Design Engineer & Tech Entrepreneur';
+    document.title = TITLES[location.pathname] || 'Ndouken Theryx — Product Designer & Builder';
   }, [location.pathname]);
 }

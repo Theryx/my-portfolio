@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
 const SITE_URL = 'https://react-portfolio-pi-topaz.vercel.app';
-const DEFAULT_TITLE = 'Ndouken Theryx — Design Engineer & Tech Entrepreneur';
+const DEFAULT_TITLE = 'Ndouken Theryx — Product Designer & Builder';
 const DEFAULT_DESCRIPTION =
-  'I design and build user-centric digital products. Combining expert UX/UI design with front-end development to create beautiful, functional experiences.';
+  'I design and ship digital products end to end — UX, interface, and code. Based in Douala, Cameroon.';
 const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
 
 function setMeta(selector: string, attr: 'content' | 'href', value: string) {

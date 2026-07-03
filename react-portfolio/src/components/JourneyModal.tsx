@@ -40,9 +40,8 @@ export const JourneyModal: React.FC<JourneyModalProps> = ({ isOpen, onClose, pro
                 </>
               ) : (
                 <>
-                  I am <strong>Ndouken Theryx</strong>, a passionate <strong>Design Engineer</strong> and{' '}
-                  <strong>Tech Entrepreneur</strong> who believes that the best digital products are born where
-                  thoughtful design meets solid engineering.
+                  I am <strong>Ndouken Theryx</strong>, a <strong>Product Designer &amp; Builder</strong> who
+                  designs and ships digital products end to end — where thoughtful design meets solid engineering.
                 </>
               )}
             </p>

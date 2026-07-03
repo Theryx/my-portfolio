@@ -30,7 +30,7 @@ const buildDefaultSkills = (): SkillRow[] => [
 const DEFAULT_TOOLS = ['Logitech MX Master 3s', 'Logitech G413 TKL', 'Desktop', 'Webcam', 'Starlink', 'HP 27-inch monitor screen'];
 
 const DEFAULT_FAQS = [
-  { question: 'What is your design process?', answer: "Honestly I'm not sure I have a design process. Ok I would say it depends. Sometimes rough, sometimes straight to the point. The truth is that books say one thing but reality says otherwise." },
+  { question: 'How do you approach building a product?', answer: "Honestly I'm not sure I have a fixed process. Ok I would say it depends. Sometimes rough, sometimes straight to the point — from research and interface through to the code. The truth is that books say one thing but reality says otherwise." },
   { question: 'Are you open to speaking engagements?', answer: 'Absolutely. I love public speaking, networking, and sharing insights on fintech, design, and tech ecosystems in Africa.' },
 ];
 
@@ -137,7 +137,7 @@ export default function About() {
               <img src={myProfile} alt="Ndouken Theryx" className="about-bento__photo" loading="lazy" />
               <div>
                 <p className="about__text">
-                  {profile?.bio || 'I am a Product Designer specializing in fintech UI/UX, mobile applications, and minimalist aesthetics. I have been building and leading the design team at PaySika since December 2021, while also focusing on tech entrepreneurship and building real-world applications.'}
+                  {profile?.bio || 'I am a product designer who also builds — I work across UX, interface, and front-end code to ship digital products end to end. I have been building and leading the design team at PaySika since December 2021, alongside co-founding ventures and shipping real-world applications.'}
                 </p>
                 <p className="about__text about-bento__tagline">
                   {profile?.tagline || 'I bridge the gap between design and development. I believe in clean design, simple language, and practical problem-solving.'}
