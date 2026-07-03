@@ -15,18 +15,6 @@
 
 import type { Profile, Project, BlogPost } from '../lib/api';
 
-export interface AboutExperience {
-  date: string;
-  title: string;
-  company: string;
-  desc: string;
-}
-
-export interface AboutSkill {
-  title: string;
-  desc: string;
-}
-
 export interface AboutFaq {
   question: string;
   answer: string;
@@ -34,9 +22,6 @@ export interface AboutFaq {
 
 export interface AboutContent {
   speakingIntro?: string;
-  experience: AboutExperience[];
-  skills: AboutSkill[];
-  tools: string[];
   faqs: AboutFaq[];
 }
 
@@ -299,44 +284,6 @@ If I were building this again I'd add export-to-CSV from the start. Users asked 
   about: {
     speakingIntro:
       'I speak about fintech design, mobile money UX, and what scales (and what doesn\'t) across the African market.',
-    experience: [
-      {
-        date: 'Dec 2021 - Present',
-        title: 'Lead Product Designer',
-        company: 'PaySika',
-        desc:
-          'Founding-team designer for a Visa-partner mobile bank serving thousands of users in Central Africa. Built and led a two-person design team. Owned KYC, onboarding, transaction history, and the physical card from artwork to unboxing. Drove a 40% lift in retention and 60% reduction in support tickets.',
-      },
-      {
-        date: 'Jan 2021 - Jun 2021',
-        title: 'UX Researcher & Product Designer',
-        company: 'CrowdRemit',
-        desc:
-          'Designed a cross-border P2P transfer product across iOS, Android, web, and dashboard. Built the design system. Led a primary-colour rebrand after WCAG contrast testing.',
-      },
-      {
-        date: 'Dec 2022 - Dec 2023',
-        title: 'Senior UI/UX Consultant (Part-time)',
-        company: 'Matanga Agency',
-        desc:
-          'Shipped fintech-leaning client work — MVPs, dashboards, and component libraries — for clients across Central Africa and Europe.',
-      },
-    ],
-    skills: [
-      {
-        title: 'Fintech UX',
-        desc: 'KYC and onboarding flows · Transaction lists & receipts · Multi-currency wallets · Mobile money corridors.',
-      },
-      {
-        title: 'Research & data',
-        desc: 'Mixpanel funnel analysis, moderated usability testing, journey mapping for senders & recipients.',
-      },
-      {
-        title: 'Systems & handoff',
-        desc: 'Design tokens, component libraries, engineering handoff via Jira, WCAG-AA contrast discipline.',
-      },
-    ],
-    tools: ['Figma', 'Mixpanel', 'Notion', 'Jira', 'Claude', 'Logitech MX Master 3s', 'Starlink', 'HP 27-inch monitor'],
     faqs: [
       {
         question: 'What fintech surfaces have you shipped?',
@@ -581,44 +528,6 @@ I render the component in Storybook (or a sandbox route) and put it next to the 
   about: {
     speakingIntro:
       'I write and speak about the design-engineering workflow — Figma to React, AI in the loop, and what hands-on shipping teaches about both crafts.',
-    experience: [
-      {
-        date: 'Dec 2021 - Present',
-        title: 'Lead Product Designer & Design Engineer',
-        company: 'PaySika',
-        desc:
-          'Built and maintained the design system as semantic tokens in Figma, mirrored as CSS variables in code. Worked closely with engineering on implementation; reviewed PRs for visual fidelity. Used Claude as a daily working partner for component scaffolding and microcopy.',
-      },
-      {
-        date: '2026',
-        title: 'Designer & Engineer',
-        company: 'Personal portfolio (this site)',
-        desc:
-          'Designed and shipped a multi-persona portfolio with a custom Studio CMS on Vercel serverless + Neon Postgres. End-to-end Figma → React → deployed, with strict TypeScript, ESLint, and 12 passing tests.',
-      },
-      {
-        date: 'Jan 2021 - Jun 2021',
-        title: 'UX Researcher & Product Designer',
-        company: 'CrowdRemit',
-        desc:
-          'Designed the cross-platform product and built the token-based design system that engineering implemented. Ran weekly review rhythms during implementation.',
-      },
-    ],
-    skills: [
-      {
-        title: 'Design',
-        desc: 'Figma component libraries, semantic design tokens, motion design, accessibility (WCAG AA).',
-      },
-      {
-        title: 'Code',
-        desc: 'React, TypeScript, CSS variables, framer-motion, Vite. Comfortable in Vercel serverless functions and Postgres.',
-      },
-      {
-        title: 'AI in the loop',
-        desc: 'Claude as a daily working partner for scaffolding, copy variants, and adversarial code review. Prompt patterns that survive production.',
-      },
-    ],
-    tools: ['Figma', 'VS Code', 'Claude', 'GitHub', 'Vercel', 'Neon Postgres', 'Logitech MX Master 3s', 'Starlink'],
     faqs: [
       {
         question: 'Are you a designer or an engineer?',
@@ -857,44 +766,6 @@ Don’t hire a "social media person" before you have a system. Without a system,
   about: {
     speakingIntro:
       'I write and speak about marketing for African audiences — what scales, what doesn\'t, and how to spend small budgets like they\'re large ones.',
-    experience: [
-      {
-        date: 'Dec 2021 - Present',
-        title: 'Brand & Growth (in-house)',
-        company: 'PaySika',
-        desc:
-          'Owned the brand-to-marketing pipeline, paid acquisition creative, and Mixpanel funnel attribution for a Visa-partner mobile bank in Central Africa. Localised every campaign across English and French audiences.',
-      },
-      {
-        date: 'Dec 2022 - Dec 2023',
-        title: 'Senior Consultant (Part-time)',
-        company: 'Matanga Agency',
-        desc:
-          'Ran growth retainers for 6+ clients — brand audits, paid-channel strategy, content plans, and measurement. Several clients renewed for second engagements.',
-      },
-      {
-        date: '2022 - 2024',
-        title: 'Co-maintainer & Community Marketing',
-        company: 'OSS Cameroon / JobSika',
-        desc:
-          'Treated community building as a marketing problem. Visual identity, social presence, event storytelling, contributor onboarding — grew a Cameroonian designer-developer open-source community from the ground.',
-      },
-    ],
-    skills: [
-      {
-        title: 'Strategy & positioning',
-        desc: 'Audience research, brand audits, positioning frameworks, channel-mix recommendations for small budgets.',
-      },
-      {
-        title: 'Paid + content channels',
-        desc: 'Meta and Google paid acquisition (English + French localised), content engines, influencer & community marketing, WhatsApp Business.',
-      },
-      {
-        title: 'Analytics & attribution',
-        desc: 'Mixpanel funnels, GA4, UTM discipline, activation-rate (not CPI) as the headline metric.',
-      },
-    ],
-    tools: ['Meta Ads Manager', 'Google Ads', 'Mixpanel', 'GA4', 'Notion', 'Figma', 'Canva', 'WhatsApp Business'],
     faqs: [
       {
         question: 'What budgets do you typically work with?',
@@ -1166,44 +1037,6 @@ The content moat question — *can we keep this product fed sustainably at our t
   about: {
     speakingIntro:
       'I write and speak about cross-functional delivery, scope discipline, and what shipping at a small African fintech taught me about PM work.',
-    experience: [
-      {
-        date: 'Dec 2021 - Present',
-        title: 'Lead Product Designer · Team Lead',
-        company: 'PaySika',
-        desc:
-          'Founding-team designer for a Visa-partner mobile bank. Recruited and led a two-person team. Coordinated design, engineering, and marketing through major redesigns (KYC, transactions, physical card). Drove a 40% lift in retention and 60% reduction in support tickets.',
-      },
-      {
-        date: 'Dec 2019 - Dec 2020',
-        title: 'Co-founder · Product Lead',
-        company: 'Kody (Shomi)',
-        desc:
-          'Co-founded an ed-tech startup, raised $5,000 from the Tony Elumelu Foundation, shipped a live MVP with a two-person team, ran it for twelve months, sunset it with a written post-mortem when retention told us the model wasn\'t sustainable.',
-      },
-      {
-        date: '2022 - 2024',
-        title: 'Co-maintainer & Design Lead',
-        company: 'OSS Cameroon / JobSika',
-        desc:
-          'Open-source community management: contributor onboarding, async-by-default coordination, GitHub triage, public roadmap. Built a contributor playbook still in use.',
-      },
-    ],
-    skills: [
-      {
-        title: 'Scoping & delivery',
-        desc: 'Written contracts before kickoff, scope discipline under pressure, mid-sprint triage, post-mortems as a habit.',
-      },
-      {
-        title: 'Cross-functional coordination',
-        desc: 'Design ↔ engineering handoffs, design ↔ marketing pipelines, partner-bank and regulator communication, async-by-default rituals.',
-      },
-      {
-        title: 'Stakeholder communication',
-        desc: 'One weekly update that reads correctly to three audiences (team, leadership, external partner). Honest roadmap, public when possible.',
-      },
-    ],
-    tools: ['Notion', 'Linear', 'Jira', 'Figma', 'Slack', 'GitHub', 'Google Docs', 'Mixpanel'],
     faqs: [
       {
         question: 'Are you a PM, a designer, or both?',
