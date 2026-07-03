@@ -1,143 +1,273 @@
 import { useState } from 'react';
 import { MarkdownEditor } from '../../components/MarkdownEditor';
 import { changePassword, type Profile, type Project, type BlogPost } from '../../lib/api';
-import { PasswordInput, ImageField, ArrayEditor, KVEditor, FaqEditor } from './fields';
+import { PasswordInput, ImageField, ArrayEditor, FaqEditor } from './fields';
 
-/* ─── Profile form ──────────────────────────────────────────────────────── */
+// The page forms below each edit a slice of a profile but SAVE THE WHOLE object
+// (the API upserts every column, so a partial body would blank the rest). They
+// spread the loaded profile and override only their fields, merging social_links.
 
-export function ProfileForm({ profile, onSave, onCancel, saving }: {
-  profile: Profile | null;
+/* ─── Home page form ────────────────────────────────────────────────────── */
+
+export function HomeForm({ profile, onSave, onCancel, saving }: {
+  profile: Profile;
   onSave: (p: Partial<Profile>) => void;
   onCancel: () => void;
   saving: boolean;
 }) {
-  const [form, setForm] = useState({
-    id: profile?.id || '',
-    name: profile?.name || '',
-    is_active: profile?.is_active ?? true,
-    bio: profile?.bio || '',
-    tagline: profile?.tagline || '',
-    hero_title: profile?.hero_title || '',
-    hero_subtitle: profile?.hero_subtitle || '',
-    philosophy_title: profile?.philosophy_title || '',
-    philosophy_text: profile?.philosophy_text || '',
-    badges: profile?.badges || [],
-    social_links: profile?.social_links || {},
-    about_content: profile?.about_content || {},
-  });
-  const isNew = !profile?.id;
-  const set = (k: string, v: unknown) => setForm((f) => ({ ...f, [k]: v }));
-  const about = form.about_content;
-  const setAbout = (k: string, v: unknown) =>
-    setForm((f) => ({ ...f, about_content: { ...f.about_content, [k]: v } }));
+  const [heroTitle, setHeroTitle] = useState(profile.hero_title || '');
+  const [heroSubtitle, setHeroSubtitle] = useState(profile.hero_subtitle || '');
+  const [now, setNow] = useState(profile.social_links?.now || '');
+  const [metricLabel, setMetricLabel] = useState(profile.social_links?.metric_label || '');
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSave({
+      ...profile,
+      hero_title: heroTitle,
+      hero_subtitle: heroSubtitle,
+      social_links: { ...profile.social_links, now, metric_label: metricLabel },
+    });
+  };
 
   return (
-    <form className="cms-form" onSubmit={(e) => { e.preventDefault(); onSave(form); }}>
+    <form className="cms-form" onSubmit={submit}>
       <fieldset className="cms-form__section">
-        <legend>Identity</legend>
-        <div className="cms-form__grid">
-          <div className="cms-field">
-            <label htmlFor="pf-id">Profile ID (slug)</label>
-            <input id="pf-id" value={form.id} onChange={(e) => set('id', e.target.value)} placeholder="e.g. fintech, design-engineer" required disabled={!isNew} />
-            {!isNew && <p className="cms-field__hint">The ID can't change once created — it's part of shared URLs.</p>}
-          </div>
-          <div className="cms-field">
-            <label htmlFor="pf-name">Display name</label>
-            <input id="pf-name" value={form.name} onChange={(e) => set('name', e.target.value)} required />
-          </div>
-        </div>
-        <label className="cms-check">
-          <input type="checkbox" checked={form.is_active} onChange={(e) => set('is_active', e.target.checked)} />
-          Active — visitors landing on the site without a <code>?profile=</code> link see the first active profile
-        </label>
-      </fieldset>
-
-      <fieldset className="cms-form__section">
-        <legend>Hero (home page)</legend>
+        <legend>Hero</legend>
         <div className="cms-field">
-          <label htmlFor="pf-hero-title">Hero title</label>
-          <input id="pf-hero-title" value={form.hero_title} onChange={(e) => set('hero_title', e.target.value)} />
+          <label htmlFor="hf-hero-title">Hero title</label>
+          <input id="hf-hero-title" value={heroTitle} onChange={(e) => setHeroTitle(e.target.value)} placeholder="e.g. Product Designer & Builder" />
+          <p className="cms-field__hint">The role shown after your name in the intro card.</p>
         </div>
         <div className="cms-field">
-          <label htmlFor="pf-hero-subtitle">Hero subtitle</label>
-          <textarea id="pf-hero-subtitle" value={form.hero_subtitle} onChange={(e) => set('hero_subtitle', e.target.value)} rows={3} />
-        </div>
-        <div className="cms-field">
-          <label htmlFor="pf-tagline">Tagline</label>
-          <textarea id="pf-tagline" value={form.tagline} onChange={(e) => set('tagline', e.target.value)} rows={2} />
-        </div>
-        <ArrayEditor label="Badges" values={form.badges} onChange={(v) => set('badges', v)} placeholder="e.g. Open to Product Design roles" />
-      </fieldset>
-
-      <fieldset className="cms-form__section">
-        <legend>About</legend>
-        <div className="cms-field">
-          <label htmlFor="pf-bio">Bio</label>
-          <textarea id="pf-bio" value={form.bio} onChange={(e) => set('bio', e.target.value)} rows={4} />
-        </div>
-        <div className="cms-field">
-          <label htmlFor="pf-philo-title">Philosophy title</label>
-          <input id="pf-philo-title" value={form.philosophy_title} onChange={(e) => set('philosophy_title', e.target.value)} />
-        </div>
-        <div className="cms-field">
-          <label htmlFor="pf-philo-text">Philosophy text</label>
-          <textarea id="pf-philo-text" value={form.philosophy_text} onChange={(e) => set('philosophy_text', e.target.value)} rows={4} />
+          <label htmlFor="hf-hero-subtitle">Hero subtitle</label>
+          <textarea id="hf-hero-subtitle" value={heroSubtitle} onChange={(e) => setHeroSubtitle(e.target.value)} rows={3} placeholder="The sentence under your name in the intro card." />
         </div>
       </fieldset>
 
       <fieldset className="cms-form__section">
-        <legend>About page content</legend>
-        <p className="cms-field__hint">Shown on the About page. Leave a field blank to use the site default.</p>
+        <legend>Bento tiles</legend>
+        <div className="cms-field">
+          <label htmlFor="hf-now">“Now” status</label>
+          <input id="hf-now" value={now} onChange={(e) => setNow(e.target.value)} placeholder="e.g. Shipping my next venture with AI-assisted design & code" />
+          <p className="cms-field__hint">Shown in the “Now” tile on the home page.</p>
+        </div>
+        <div className="cms-field">
+          <label htmlFor="hf-metric">Years-metric label</label>
+          <input id="hf-metric" value={metricLabel} onChange={(e) => setMetricLabel(e.target.value)} placeholder="e.g. years designing & building products" />
+          <p className="cms-field__hint">Caption under the auto-counted years number.</p>
+        </div>
+      </fieldset>
+
+      <div className="cms-form__actions">
+        <button type="submit" disabled={saving} className="cms-btn cms-btn--primary">{saving ? 'Saving…' : 'Save home page'}</button>
+        <button type="button" onClick={onCancel} className="cms-btn">Cancel</button>
+      </div>
+    </form>
+  );
+}
+
+/* ─── About page form ───────────────────────────────────────────────────── */
+
+export function AboutForm({ profile, onSave, onCancel, saving }: {
+  profile: Profile;
+  onSave: (p: Partial<Profile>) => void;
+  onCancel: () => void;
+  saving: boolean;
+}) {
+  const [bio, setBio] = useState(profile.bio || '');
+  const [tagline, setTagline] = useState(profile.tagline || '');
+  const [philosophyTitle, setPhilosophyTitle] = useState(profile.philosophy_title || '');
+  const [philosophyText, setPhilosophyText] = useState(profile.philosophy_text || '');
+  const [about, setAboutState] = useState(profile.about_content || {});
+  const setAbout = (k: string, v: unknown) => setAboutState((a) => ({ ...a, [k]: v }));
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSave({
+      ...profile,
+      bio,
+      tagline,
+      philosophy_title: philosophyTitle,
+      philosophy_text: philosophyText,
+      about_content: about,
+    });
+  };
+
+  return (
+    <form className="cms-form" onSubmit={submit}>
+      <fieldset className="cms-form__section">
+        <legend>Intro</legend>
+        <div className="cms-field">
+          <label htmlFor="af-bio">Bio</label>
+          <textarea id="af-bio" value={bio} onChange={(e) => setBio(e.target.value)} rows={4} />
+        </div>
+        <div className="cms-field">
+          <label htmlFor="af-tagline">Tagline</label>
+          <textarea id="af-tagline" value={tagline} onChange={(e) => setTagline(e.target.value)} rows={2} />
+        </div>
         <div className="cms-form__grid">
           <div className="cms-field">
-            <label htmlFor="pf-location">Location</label>
-            <input id="pf-location" value={about.location ?? ''} onChange={(e) => setAbout('location', e.target.value)} placeholder="e.g. Douala" />
+            <label htmlFor="af-location">Location</label>
+            <input id="af-location" value={about.location ?? ''} onChange={(e) => setAbout('location', e.target.value)} placeholder="e.g. Douala" />
           </div>
           <div className="cms-field">
-            <label htmlFor="pf-location-label">Location caption</label>
-            <input id="pf-location-label" value={about.location_label ?? ''} onChange={(e) => setAbout('location_label', e.target.value)} placeholder="e.g. Cameroon 🇨🇲" />
+            <label htmlFor="af-location-label">Location caption</label>
+            <input id="af-location-label" value={about.location_label ?? ''} onChange={(e) => setAbout('location_label', e.target.value)} placeholder="e.g. Cameroon 🇨🇲" />
           </div>
         </div>
         <div className="cms-form__grid">
           <div className="cms-field">
-            <label htmlFor="pf-languages">Languages</label>
-            <input id="pf-languages" value={about.languages ?? ''} onChange={(e) => setAbout('languages', e.target.value)} placeholder="e.g. EN & FR" />
+            <label htmlFor="af-languages">Languages</label>
+            <input id="af-languages" value={about.languages ?? ''} onChange={(e) => setAbout('languages', e.target.value)} placeholder="e.g. EN & FR" />
           </div>
           <div className="cms-field">
-            <label htmlFor="pf-languages-label">Languages caption</label>
-            <input id="pf-languages-label" value={about.languages_label ?? ''} onChange={(e) => setAbout('languages_label', e.target.value)} placeholder="e.g. Bilingual, fully fluent" />
+            <label htmlFor="af-languages-label">Languages caption</label>
+            <input id="af-languages-label" value={about.languages_label ?? ''} onChange={(e) => setAbout('languages_label', e.target.value)} placeholder="e.g. Bilingual, fully fluent" />
           </div>
         </div>
         <div className="cms-field">
-          <label htmlFor="pf-funfact">Fun fact</label>
-          <textarea id="pf-funfact" value={about.fun_fact ?? ''} onChange={(e) => setAbout('fun_fact', e.target.value)} rows={2} />
+          <label htmlFor="af-funfact">Fun fact</label>
+          <textarea id="af-funfact" value={about.fun_fact ?? ''} onChange={(e) => setAbout('fun_fact', e.target.value)} rows={2} />
+        </div>
+      </fieldset>
+
+      <fieldset className="cms-form__section">
+        <legend>Philosophy</legend>
+        <div className="cms-field">
+          <label htmlFor="af-philo-title">Philosophy title</label>
+          <input id="af-philo-title" value={philosophyTitle} onChange={(e) => setPhilosophyTitle(e.target.value)} />
         </div>
         <div className="cms-field">
-          <label htmlFor="pf-speaking-intro">Research &amp; speaking intro</label>
-          <textarea id="pf-speaking-intro" value={about.speaking_intro ?? ''} onChange={(e) => setAbout('speaking_intro', e.target.value)} rows={4} placeholder="Wrap **text** in double asterisks for bold. Use a blank line to separate paragraphs." />
+          <label htmlFor="af-philo-text">Philosophy text</label>
+          <textarea id="af-philo-text" value={philosophyText} onChange={(e) => setPhilosophyText(e.target.value)} rows={4} />
+        </div>
+      </fieldset>
+
+      <fieldset className="cms-form__section">
+        <legend>Research &amp; speaking</legend>
+        <div className="cms-field">
+          <label htmlFor="af-speaking-intro">Intro</label>
+          <textarea id="af-speaking-intro" value={about.speaking_intro ?? ''} onChange={(e) => setAbout('speaking_intro', e.target.value)} rows={4} placeholder="Wrap **text** in double asterisks for bold. Use a blank line to separate paragraphs." />
         </div>
         <ImageField
-          label="Research & speaking image"
+          label="Speaking image"
           value={about.speaking_image ?? ''}
           onChange={(v) => setAbout('speaking_image', v)}
           hint="A Cloudinary URL, or the filename of a bundled image."
         />
+      </fieldset>
+
+      <fieldset className="cms-form__section">
+        <legend>FAQs</legend>
         <FaqEditor
-          label="FAQs"
+          label="Frequently asked questions"
           value={about.faqs ?? []}
           onChange={(v) => setAbout('faqs', v)}
           hint="Question-and-answer pairs shown in the FAQ accordion."
         />
       </fieldset>
 
+      <div className="cms-form__actions">
+        <button type="submit" disabled={saving} className="cms-btn cms-btn--primary">{saving ? 'Saving…' : 'Save about page'}</button>
+        <button type="button" onClick={onCancel} className="cms-btn">Cancel</button>
+      </div>
+    </form>
+  );
+}
+
+/* ─── Profile meta form (identity, links, page intros) ──────────────────── */
+
+export function ProfileMetaForm({ profile, onSave, onCancel, saving }: {
+  profile: Profile | null;
+  onSave: (p: Partial<Profile>) => void;
+  onCancel: () => void;
+  saving: boolean;
+}) {
+  const [id, setId] = useState(profile?.id || '');
+  const [name, setName] = useState(profile?.name || '');
+  const [isActive, setIsActive] = useState(profile?.is_active ?? true);
+  const [badges, setBadges] = useState<string[]>(profile?.badges || []);
+  const links = profile?.social_links ?? {};
+  const [email, setEmail] = useState(links.email || '');
+  const [linkedin, setLinkedin] = useState(links.linkedin || '');
+  const [resume, setResume] = useState(links.resume || '');
+  const [projectsIntro, setProjectsIntro] = useState(links.projects_intro || '');
+  const [blogIntro, setBlogIntro] = useState(links.blog_intro || '');
+  const isNew = !profile?.id;
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSave({
+      ...(profile ?? {}),
+      id,
+      name,
+      is_active: isActive,
+      badges,
+      social_links: {
+        ...(profile?.social_links ?? {}),
+        email,
+        linkedin,
+        resume,
+        projects_intro: projectsIntro,
+        blog_intro: blogIntro,
+      },
+    });
+  };
+
+  return (
+    <form className="cms-form" onSubmit={submit}>
       <fieldset className="cms-form__section">
-        <legend>Contact & links</legend>
-        <KVEditor
-          label="Social links"
-          value={form.social_links}
-          onChange={(v) => set('social_links', v)}
-          hint="Special keys the site uses directly: email (copy-email card), linkedin (LinkedIn card), resume (View CV links), now (the 'Now building' tile on the home page), projects_intro (Projects page hero subtitle), blog_intro (Blog page hero subtitle), metric_label (Home page years-of-experience metric label)."
-        />
+        <legend>Identity</legend>
+        <div className="cms-form__grid">
+          <div className="cms-field">
+            <label htmlFor="pm-id">Profile ID (slug)</label>
+            <input id="pm-id" value={id} onChange={(e) => setId(e.target.value)} placeholder="e.g. fintech, design-engineer" required disabled={!isNew} />
+            {!isNew && <p className="cms-field__hint">The ID can't change once created — it's part of shared URLs.</p>}
+          </div>
+          <div className="cms-field">
+            <label htmlFor="pm-name">Display name</label>
+            <input id="pm-name" value={name} onChange={(e) => setName(e.target.value)} required />
+          </div>
+        </div>
+        <label className="cms-check">
+          <input type="checkbox" checked={isActive} onChange={(e) => setIsActive(e.target.checked)} />
+          Active — visitors landing on the site without a <code>?profile=</code> link see the first active profile
+        </label>
+      </fieldset>
+
+      <fieldset className="cms-form__section">
+        <legend>Contact links</legend>
+        <div className="cms-field">
+          <label htmlFor="pm-email">Email</label>
+          <input id="pm-email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@example.com" />
+        </div>
+        <div className="cms-field">
+          <label htmlFor="pm-linkedin">LinkedIn URL</label>
+          <input id="pm-linkedin" value={linkedin} onChange={(e) => setLinkedin(e.target.value)} placeholder="https://www.linkedin.com/in/…" />
+        </div>
+        <div className="cms-field">
+          <label htmlFor="pm-resume">Résumé / CV URL</label>
+          <input id="pm-resume" value={resume} onChange={(e) => setResume(e.target.value)} placeholder="https://…" />
+        </div>
+      </fieldset>
+
+      <fieldset className="cms-form__section">
+        <legend>Page intros</legend>
+        <div className="cms-field">
+          <label htmlFor="pm-projects-intro">Projects page subtitle</label>
+          <textarea id="pm-projects-intro" value={projectsIntro} onChange={(e) => setProjectsIntro(e.target.value)} rows={2} />
+        </div>
+        <div className="cms-field">
+          <label htmlFor="pm-blog-intro">Blog page subtitle</label>
+          <textarea id="pm-blog-intro" value={blogIntro} onChange={(e) => setBlogIntro(e.target.value)} rows={2} />
+        </div>
+      </fieldset>
+
+      <fieldset className="cms-form__section">
+        <legend>Badges</legend>
+        <ArrayEditor label="Badges" values={badges} onChange={setBadges} placeholder="e.g. Open to Product Design roles" />
+        <p className="cms-field__hint">Not currently shown on the public site.</p>
       </fieldset>
 
       <div className="cms-form__actions">

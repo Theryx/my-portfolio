@@ -3,7 +3,7 @@ import './admin/cms.css';
 import {
   LayoutDashboard, Users, FolderKanban, Newspaper, Settings, LogOut, RefreshCw,
   ExternalLink, Search, Eye, EyeOff, Pencil, Trash2, Copy, ArrowUp, ArrowDown,
-  ArrowLeft, DatabaseZap, CheckCircle2, AlertTriangle, Sparkles
+  ArrowLeft, DatabaseZap, CheckCircle2, AlertTriangle, Sparkles, Home, UserRound
 } from 'lucide-react';
 import {
   login, logout, getSession,
@@ -12,14 +12,14 @@ import {
   upsertBlogPost, updateBlogPost, deleteBlogPost, syncContentToDatabase,
   type Profile, type Project, type BlogPost, type SyncResult,
 } from '../lib/api';
-import { ProfileForm, ProjectForm, BlogForm, SecurityForm } from './admin/forms';
+import { HomeForm, AboutForm, ProfileMetaForm, ProjectForm, BlogForm, SecurityForm } from './admin/forms';
 import { PasswordInput } from './admin/fields';
 import { profilePresets } from '../data/profileCopy';
 
 const MAX_ATTEMPTS = 5;
 const LOCKOUT_MS = 15 * 60 * 1000;
 
-type Section = 'dashboard' | 'profiles' | 'projects' | 'blog' | 'settings';
+type Section = 'dashboard' | 'home' | 'about' | 'profiles' | 'projects' | 'blog' | 'settings';
 type Editing =
   | { kind: 'profile'; item: Profile | null }
   | { kind: 'project'; item: Project | null }
@@ -36,9 +36,11 @@ let toastIdCounter = 0;
 
 const NAV: { id: Section; label: string; icon: typeof LayoutDashboard }[] = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { id: 'profiles', label: 'Profiles', icon: Users },
+  { id: 'home', label: 'Home page', icon: Home },
+  { id: 'about', label: 'About page', icon: UserRound },
   { id: 'projects', label: 'Projects', icon: FolderKanban },
   { id: 'blog', label: 'Blog', icon: Newspaper },
+  { id: 'profiles', label: 'Profiles', icon: Users },
   { id: 'settings', label: 'Settings', icon: Settings },
 ];
 
@@ -57,6 +59,10 @@ export default function Admin() {
   const [search, setSearch] = useState('');
   const [profileFilter, setProfileFilter] = useState<string>('all');
   const [presetTarget, setPresetTarget] = useState<string | null>(null);
+  // Which profile the page-oriented Home/About editors are editing.
+  const [editProfileId, setEditProfileId] = useState<string>('');
+  // Bumped to remount (reset) the Home/About form on Cancel.
+  const [formNonce, setFormNonce] = useState(0);
   const lastFocusRef = useRef<HTMLElement | null>(null);
 
   const addToast = useCallback((message: string, type: 'success' | 'error') => {
@@ -304,6 +310,11 @@ export default function Admin() {
     return combined;
   }, [profiles]);
 
+  // The profile currently targeted by the Home/About page editors.
+  const activeProfileId = profiles.find((p) => p.is_active)?.id;
+  const selectedProfileId = editProfileId || activeProfileId || profilesWithPresets[0]?.id || '';
+  const selectedProfile = profilesWithPresets.find((p) => p.id === selectedProfileId) ?? null;
+
   /* ── Derived lists ── */
 
   const visibleProjects = useMemo(() => {
@@ -394,7 +405,7 @@ export default function Admin() {
           ) : editing ? (
             <div className="cms-editor">
               {editing.kind === 'profile' && (
-                <ProfileForm profile={editing.item} onSave={saveProfile} onCancel={() => setEditing(null)} saving={saving} />
+                <ProfileMetaForm profile={editing.item} onSave={saveProfile} onCancel={() => setEditing(null)} saving={saving} />
               )}
               {editing.kind === 'project' && (
                 <ProjectForm project={editing.item} profiles={profiles} onSave={saveProject} onCancel={() => setEditing(null)} saving={saving} />
@@ -412,6 +423,48 @@ export default function Admin() {
               onSynced={fetchAll}
               addToast={addToast}
             />
+          ) : section === 'home' || section === 'about' ? (
+            <section aria-label={section === 'home' ? 'Home page' : 'About page'}>
+              <div className="cms-list-header">
+                <div className="cms-list-header__filters">
+                  <label htmlFor="scope-profile" style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>Profile</label>
+                  <select
+                    id="scope-profile"
+                    value={selectedProfileId}
+                    onChange={(e) => { setEditProfileId(e.target.value); setFormNonce((n) => n + 1); }}
+                    aria-label="Profile to edit"
+                  >
+                    {profilesWithPresets.map((p) => (
+                      <option key={p.id} value={p.id}>{p.name}{p.is_active ? ' (Active)' : ''}</option>
+                    ))}
+                  </select>
+                </div>
+                <p className="cms-list-header__hint" style={{ margin: 0 }}>
+                  Editing the <strong>{section === 'home' ? 'Home' : 'About'}</strong> page for this profile — saves to that profile only.
+                </p>
+              </div>
+              {selectedProfile ? (
+                section === 'home' ? (
+                  <HomeForm
+                    key={`home-${selectedProfileId}-${formNonce}`}
+                    profile={selectedProfile}
+                    onSave={saveProfile}
+                    onCancel={() => setFormNonce((n) => n + 1)}
+                    saving={saving}
+                  />
+                ) : (
+                  <AboutForm
+                    key={`about-${selectedProfileId}-${formNonce}`}
+                    profile={selectedProfile}
+                    onSave={saveProfile}
+                    onCancel={() => setFormNonce((n) => n + 1)}
+                    saving={saving}
+                  />
+                )
+              ) : (
+                <div className="cms-empty">No profile available. Create one in the Profiles section.</div>
+              )}
+            </section>
           ) : section === 'profiles' ? (
             <section aria-label="Profiles">
               <div className="cms-list-header">
