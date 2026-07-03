@@ -1,33 +1,13 @@
 import { PageTransition } from '../components/PageTransition';
 import { useProfile } from '../context/ProfileContext';
-import userResearch from '../assets/img/Conducting a user research.jfif';
 import myProfile from '../assets/img/My profile.jfif';
 import givingLecture from '../assets/img/theryx giving a lecture to a comunity of open source.png';
-import jobsikaProcess from '../assets/img/Screenshot of Jobsika sowing our building process.jfif';
-import codedApp from '../assets/img/an app I coded myself.PNG';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { MapPin, Languages, Fish, Quote } from 'lucide-react';
-import { BenevolentModal } from '../components/BenevolentModal';
 import { lightboxTrigger } from '../lib/a11y';
 import { gridVariants, tileVariants } from '../lib/motion';
 import { profilePresets } from '../data/profileCopy';
-
-const DEFAULT_EXPERIENCE = [
-  { date: 'Dec 2021 - Present', title: 'Product Designer', company: 'PaySika', desc: 'Managed a two-person design team, optimized payment flows, and utilized Mixpanel to track user patterns and behavior in the app. Awarded the Team Spirit Award twice.' },
-  { date: 'Nov 2020 - Nov 2021', title: 'Freelance Designer', company: 'Freelance', desc: 'Provided design services for various clients. Designed reports on Cameroon Cybersecurity and Central/West Africa cybersecurity state.' },
-  { date: 'Dec 2022 - Dec 2023', title: 'Senior UI/UX Consultant (Part-time)', company: 'Matanga Agency', desc: 'Designed high-converting web and mobile dashboards for Central African and European clients, establishing scalable components in Figma.' },
-];
-
-interface SkillRow { title: string; desc: string; image?: string; alt?: string }
-
-const buildDefaultSkills = (): SkillRow[] => [
-  { title: 'Design & UX', desc: 'Figma, User Research, Usability Testing.', image: userResearch, alt: 'User Research' },
-  { title: 'Design Ops & AI', desc: 'Wireframing, User Flow Mapping, Claude/GPT Integration for UX Copy and Edge-case testing.', image: jobsikaProcess, alt: 'Design Ops Workflow' },
-  { title: 'Technical & Data', desc: 'Angular, React, HTML/CSS, Mixpanel (Retention/Funnel Analysis).', image: codedApp, alt: 'Technical Coding App' },
-];
-
-const DEFAULT_TOOLS = ['Logitech MX Master 3s', 'Logitech G413 TKL', 'Desktop', 'Webcam', 'Starlink', 'HP 27-inch monitor screen'];
 
 const DEFAULT_FAQS = [
   { question: 'How do you approach building a product?', answer: "Honestly I'm not sure I have a fixed process. Ok I would say it depends. Sometimes rough, sometimes straight to the point — from research and interface through to the code. The truth is that books say one thing but reality says otherwise." },
@@ -62,7 +42,6 @@ export default function About() {
   const { profile } = useProfile();
   const [selectedImage, setSelectedImage] = useState<{ src: string; caption: string } | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [selectedVenture, setSelectedVenture] = useState<{ title: string; role: string; desc: string } | null>(null);
 
   // Custom cursor state for interactive cards
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
@@ -98,9 +77,6 @@ export default function About() {
 
   // Per-profile About sections, with the default arrays as fallback.
   const preset = profile ? profilePresets[profile.id]?.about : undefined;
-  const experience = preset?.experience ?? DEFAULT_EXPERIENCE;
-  const skills: SkillRow[] = preset?.skills ?? buildDefaultSkills();
-  const tools = preset?.tools ?? DEFAULT_TOOLS;
   const faqs = preset?.faqs ?? DEFAULT_FAQS;
   const speakingParas = preset?.speakingIntro
     ? [preset.speakingIntro]
@@ -205,113 +181,6 @@ export default function About() {
         </div>
       </section>
 
-      <section className="experience">
-        <div className="container">
-          <span className="section-sticker">The journey so far</span>
-          <h2 className="section__title">Professional Experience</h2>
-          <motion.div
-            className="experience__grid"
-            variants={gridVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
-          >
-            {experience.map((item, index) => (
-              <motion.div className="experience__item" key={item.company} variants={tileVariants}>
-                <span className="experience__index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-                <span className="experience__date">{item.date}</span>
-                <h3 className="experience__title">{item.title}</h3>
-                <span className="experience__company">{item.company}</span>
-                <p className="experience__desc">{item.desc}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      <section className="ventures">
-        <div className="container">
-          <span className="section-sticker">Giving back</span>
-          <h2 className="section__title">Benevolent Work</h2>
-          <div className="ventures__grid">
-            {([
-              { title: 'GEFONA Digital Foundation', role: 'Communication & Finance', desc: 'Leading communication and finance for a foundation supporting policy research on the digital economy and cybersecurity in Africa.' },
-              { title: 'osscameroon', role: 'Project Maintainer & Contributor', desc: 'Part of the founding team for JobSika. Involved in maintaining the platform and contributing to various open-source initiatives within the community.' },
-              { title: 'geo-Advantage Labs', role: 'Superviseur front-end', desc: "This Project was aimed at bringing up a dashboard for the Corona virus crisis in Cameroon. I was in charge of bringing up the web and mobile interface and coordinate the frontEnd development of the web and mobile app making sure it's responsive." },
-              { title: 'Dikalo, Inc', role: 'Visual Designer', desc: "Interface designs, graphic designs, illustrations, pitch deck, motion design" },
-              { title: "O'LOKO", role: 'Designer', desc: "Oloko is the biggest attraction park for children in the country. I help with visual designs and make sure design is consistent" },
-              { title: 'USFE international', role: 'Social Media Manager', desc: "I handle the organisation social media" },
-            ] as { title: string; role: string; desc: string; logo?: string }[]).map((v) => (
-              <motion.div
-                className="venture-card"
-                key={v.title}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-                onClick={() => setSelectedVenture(v)}
-                onMouseEnter={() => {
-                  setIsHovering(true);
-                  setCursorLabel('click to expand');
-                }}
-                onMouseLeave={() => {
-                  setIsHovering(false);
-                  setCursorLabel('');
-                }}
-                style={{ cursor: 'none' }}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    setSelectedVenture(v);
-                  }
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
-                  {v.logo && <img src={v.logo} alt={v.title} style={{ width: '32px', height: '32px', borderRadius: '6px', objectFit: 'contain' }} />}
-                  <h3 className="venture-card__title" style={{ margin: 0 }}>{v.title}</h3>
-                </div>
-                <span className="venture-card__role" style={{ color: 'var(--color-text-muted)' }}>{v.role}</span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="skills">
-        <div className="container">
-          <span className="section-sticker">What I bring</span>
-          <h2 className="section__title">Skills & Toolkit</h2>
-          <div className="skills__grid">
-            {skills.map((skill) => (
-              <motion.div className="skill-card" key={skill.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
-                {'image' in skill && skill.image && (
-                  <div className="skill-card__image" {...lightboxTrigger(() => handleImageClick(skill.image as string, skill.alt || skill.title), `Enlarge: ${skill.title}`)} style={{ cursor: 'pointer' }}>
-                    <img src={skill.image} alt={skill.alt || ''} loading="lazy" />
-                  </div>
-                )}
-                <h3 className="skill-card__title">{skill.title}</h3>
-                <p className="skill-card__desc">{skill.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="interests">
-        <div className="container">
-          <div className="about__interests">
-            <h3 className="about__interests-title">Tools I use to work</h3>
-            <ul className="about__interests-list tool-pills">
-              {tools.map((tool) => (
-                <li key={tool} className="tool-pill">{tool}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
       <section className="faq">
         <div className="container">
           <span className="section-sticker">You asked</span>
@@ -363,7 +232,6 @@ export default function About() {
           </motion.div>
         )}
       </AnimatePresence>
-      <BenevolentModal isOpen={!!selectedVenture} onClose={() => setSelectedVenture(null)} venture={selectedVenture} />
     </PageTransition>
   );
 }
