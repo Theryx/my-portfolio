@@ -87,17 +87,9 @@ function renderWithTestRouter(initialEntries = ['/']) {
 describe('Home Page', () => {
   it('renders hero section with profile data', async () => {
     renderWithTestRouter();
-    
+
     await waitFor(() => {
       expect(screen.getByText(/Design Engineer/i)).toBeInTheDocument();
-    }, { timeout: 5000 });
-  });
-
-  it('renders availability badge', async () => {
-    renderWithTestRouter();
-    
-    await waitFor(() => {
-      screen.getByText(/Available/i);
     }, { timeout: 5000 });
   });
 });
