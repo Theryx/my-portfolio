@@ -75,12 +75,25 @@ export default function About() {
     },
   });
 
-  // Per-profile About sections, with the default arrays as fallback.
+  // Per-profile About content. Prefer the CMS-edited about_content, then the
+  // bundled preset, then the hardcoded site defaults.
   const preset = profile ? profilePresets[profile.id]?.about : undefined;
-  const faqs = preset?.faqs ?? DEFAULT_FAQS;
-  const speakingParas = preset?.speakingIntro
-    ? [preset.speakingIntro]
-    : DEFAULT_SPEAKING_INTRO_PARAS;
+  const about = profile?.about_content ?? {};
+  const faqs = about.faqs?.length ? about.faqs : (preset?.faqs ?? DEFAULT_FAQS);
+  const speakingParas = about.speaking_intro
+    ? about.speaking_intro.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean)
+    : preset?.speakingIntro
+      ? [preset.speakingIntro]
+      : DEFAULT_SPEAKING_INTRO_PARAS;
+  const speakingImage =
+    about.speaking_image && /^(https?:\/\/|\/)/.test(about.speaking_image)
+      ? about.speaking_image
+      : givingLecture;
+  const location = about.location || 'Douala';
+  const locationLabel = about.location_label || 'Cameroon 🇨🇲';
+  const languages = about.languages || 'EN & FR';
+  const languagesLabel = about.languages_label || 'Bilingual, fully fluent';
+  const funFact = about.fun_fact || 'I value direct opinions, simple language, and a good plate of fish.';
 
   const handleImageClick = (src: string, caption: string) => {
     setSelectedImage({ src, caption });
@@ -126,16 +139,16 @@ export default function About() {
                 <MapPin size={20} aria-hidden="true" />
                 <span className="bento-card__pin-pulse" aria-hidden="true" />
               </span>
-              <span className="bento-card__mini-value">Douala</span>
-              <span className="bento-card__mini-label">Cameroon 🇨🇲</span>
+              <span className="bento-card__mini-value">{location}</span>
+              <span className="bento-card__mini-label">{locationLabel}</span>
             </motion.div>
 
             <motion.div className="bento-card bento-card--mini" variants={tileVariants} {...hoverable('oui & yes 🙂')}>
               <span className="bento-card__mini-icon">
                 <Languages size={20} aria-hidden="true" />
               </span>
-              <span className="bento-card__mini-value">EN & FR</span>
-              <span className="bento-card__mini-label">Bilingual, fully fluent</span>
+              <span className="bento-card__mini-value">{languages}</span>
+              <span className="bento-card__mini-label">{languagesLabel}</span>
             </motion.div>
 
             <motion.div className="bento-card bento-card--mini bento-card--fish" variants={tileVariants} {...hoverable('fun fact 🐟')}>
@@ -143,7 +156,7 @@ export default function About() {
                 <Fish size={20} aria-hidden="true" />
               </span>
               <span className="bento-card__mini-label">Fun fact</span>
-              <p className="bento-card__now-text">I value direct opinions, simple language, and a good plate of fish.</p>
+              <p className="bento-card__now-text">{funFact}</p>
             </motion.div>
 
             {profile?.philosophy_text && (
@@ -164,11 +177,11 @@ export default function About() {
             <h2 className="section__title">Research & Speaking</h2>
             <div className="speaking__content">
               <img
-                src={givingLecture}
-                alt="Theryx presenting research at OSS Cameroon"
+                src={speakingImage}
+                alt="Theryx presenting research"
                 className="speaking__image"
                 loading="lazy"
-                {...lightboxTrigger(() => handleImageClick(givingLecture, "Presenting research on the Cameroon Design Ecosystem at the 2022 OSS Cameroon meetup."), 'Enlarge speaking photo')}
+                {...lightboxTrigger(() => handleImageClick(speakingImage, 'Research & speaking'), 'Enlarge speaking photo')}
                 style={{ cursor: 'pointer' }}
               />
               <div className="speaking__text">

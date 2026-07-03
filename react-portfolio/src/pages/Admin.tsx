@@ -226,11 +226,15 @@ export default function Admin() {
       const existingProfile = profiles.find(p => p.id === profileId);
       const isActive = existingProfile ? existingProfile.is_active : false;
 
-      // 1) Profile fields (hero / philosophy / bio / badges) + social_links.
+      // 1) Profile fields (hero / philosophy / bio / badges) + social_links + about.
       await updateProfile(profileId, {
         ...preset.profile,
         is_active: isActive,
         social_links: preset.social_links,
+        about_content: {
+          speaking_intro: preset.about.speakingIntro,
+          faqs: preset.about.faqs,
+        },
       });
 
       // 2) Per-profile project case studies. Only insert if the id is new —
@@ -293,6 +297,7 @@ export default function Admin() {
           philosophy_text: '',
           badges: [],
           social_links: {},
+          about_content: {},
         } as Profile);
       }
     });

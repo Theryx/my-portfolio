@@ -29,7 +29,7 @@ export type ProjectSeed = Omit<Project, 'profile_id'>;
 export type BlogPostSeed = Omit<BlogPost, 'profile_id'>;
 
 export interface ProfilePreset {
-  profile: Omit<Profile, 'id'>;
+  profile: Omit<Profile, 'id' | 'about_content'>;
   social_links: Record<string, string>;
   projects: ProjectSeed[];
   blogPosts: BlogPostSeed[];
@@ -1084,5 +1084,9 @@ export function presetProfile(id: string): Profile | null {
     id,
     ...preset.profile,
     social_links: preset.social_links,
+    about_content: {
+      speaking_intro: preset.about.speakingIntro,
+      faqs: preset.about.faqs,
+    },
   };
 }

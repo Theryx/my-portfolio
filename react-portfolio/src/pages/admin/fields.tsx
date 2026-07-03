@@ -137,6 +137,64 @@ export function ArrayEditor({ label, values, onChange, placeholder }: {
   );
 }
 
+/* ─── FAQ editor (list of question / answer pairs) ──────────────────────── */
+
+export function FaqEditor({ label, value, onChange, hint }: {
+  label: string;
+  value: { question: string; answer: string }[];
+  onChange: (v: { question: string; answer: string }[]) => void;
+  hint?: string;
+}) {
+  const update = (i: number, key: 'question' | 'answer', val: string) =>
+    onChange(value.map((f, idx) => (idx === i ? { ...f, [key]: val } : f)));
+  const add = () => onChange([...value, { question: '', answer: '' }]);
+  const remove = (i: number) => onChange(value.filter((_, idx) => idx !== i));
+
+  return (
+    <div className="cms-field">
+      <label>{label}</label>
+      {hint && <p className="cms-field__hint">{hint}</p>}
+      {value.map((f, i) => (
+        <div
+          key={i}
+          style={{
+            border: '1px solid var(--cms-border, #33333a)',
+            borderRadius: '8px',
+            padding: '12px',
+            marginBottom: '10px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px',
+          }}
+        >
+          <input
+            value={f.question}
+            onChange={(e) => update(i, 'question', e.target.value)}
+            placeholder={`Question ${i + 1}`}
+          />
+          <textarea
+            value={f.answer}
+            onChange={(e) => update(i, 'answer', e.target.value)}
+            placeholder="Answer"
+            rows={3}
+          />
+          <button
+            type="button"
+            className="cms-btn cms-btn--ghost"
+            onClick={() => remove(i)}
+            style={{ alignSelf: 'flex-start' }}
+          >
+            <X size={14} /> Remove
+          </button>
+        </div>
+      ))}
+      <button type="button" className="cms-btn cms-btn--ghost" onClick={add}>
+        <Plus size={14} /> Add FAQ
+      </button>
+    </div>
+  );
+}
+
 /* ─── Key-value editor (social links etc.) ──────────────────────────────── */
 
 export function KVEditor({ label, value, onChange, hint }: {

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { MarkdownEditor } from '../../components/MarkdownEditor';
 import { changePassword, type Profile, type Project, type BlogPost } from '../../lib/api';
-import { PasswordInput, ImageField, ArrayEditor, KVEditor } from './fields';
+import { PasswordInput, ImageField, ArrayEditor, KVEditor, FaqEditor } from './fields';
 
 /* ─── Profile form ──────────────────────────────────────────────────────── */
 
@@ -23,9 +23,13 @@ export function ProfileForm({ profile, onSave, onCancel, saving }: {
     philosophy_text: profile?.philosophy_text || '',
     badges: profile?.badges || [],
     social_links: profile?.social_links || {},
+    about_content: profile?.about_content || {},
   });
   const isNew = !profile?.id;
   const set = (k: string, v: unknown) => setForm((f) => ({ ...f, [k]: v }));
+  const about = form.about_content;
+  const setAbout = (k: string, v: unknown) =>
+    setForm((f) => ({ ...f, about_content: { ...f.about_content, [k]: v } }));
 
   return (
     <form className="cms-form" onSubmit={(e) => { e.preventDefault(); onSave(form); }}>
@@ -79,6 +83,51 @@ export function ProfileForm({ profile, onSave, onCancel, saving }: {
           <label htmlFor="pf-philo-text">Philosophy text</label>
           <textarea id="pf-philo-text" value={form.philosophy_text} onChange={(e) => set('philosophy_text', e.target.value)} rows={4} />
         </div>
+      </fieldset>
+
+      <fieldset className="cms-form__section">
+        <legend>About page content</legend>
+        <p className="cms-field__hint">Shown on the About page. Leave a field blank to use the site default.</p>
+        <div className="cms-form__grid">
+          <div className="cms-field">
+            <label htmlFor="pf-location">Location</label>
+            <input id="pf-location" value={about.location ?? ''} onChange={(e) => setAbout('location', e.target.value)} placeholder="e.g. Douala" />
+          </div>
+          <div className="cms-field">
+            <label htmlFor="pf-location-label">Location caption</label>
+            <input id="pf-location-label" value={about.location_label ?? ''} onChange={(e) => setAbout('location_label', e.target.value)} placeholder="e.g. Cameroon 🇨🇲" />
+          </div>
+        </div>
+        <div className="cms-form__grid">
+          <div className="cms-field">
+            <label htmlFor="pf-languages">Languages</label>
+            <input id="pf-languages" value={about.languages ?? ''} onChange={(e) => setAbout('languages', e.target.value)} placeholder="e.g. EN & FR" />
+          </div>
+          <div className="cms-field">
+            <label htmlFor="pf-languages-label">Languages caption</label>
+            <input id="pf-languages-label" value={about.languages_label ?? ''} onChange={(e) => setAbout('languages_label', e.target.value)} placeholder="e.g. Bilingual, fully fluent" />
+          </div>
+        </div>
+        <div className="cms-field">
+          <label htmlFor="pf-funfact">Fun fact</label>
+          <textarea id="pf-funfact" value={about.fun_fact ?? ''} onChange={(e) => setAbout('fun_fact', e.target.value)} rows={2} />
+        </div>
+        <div className="cms-field">
+          <label htmlFor="pf-speaking-intro">Research &amp; speaking intro</label>
+          <textarea id="pf-speaking-intro" value={about.speaking_intro ?? ''} onChange={(e) => setAbout('speaking_intro', e.target.value)} rows={4} placeholder="Wrap **text** in double asterisks for bold. Use a blank line to separate paragraphs." />
+        </div>
+        <ImageField
+          label="Research & speaking image"
+          value={about.speaking_image ?? ''}
+          onChange={(v) => setAbout('speaking_image', v)}
+          hint="A Cloudinary URL, or the filename of a bundled image."
+        />
+        <FaqEditor
+          label="FAQs"
+          value={about.faqs ?? []}
+          onChange={(v) => setAbout('faqs', v)}
+          hint="Question-and-answer pairs shown in the FAQ accordion."
+        />
       </fieldset>
 
       <fieldset className="cms-form__section">

@@ -2,6 +2,24 @@ import { projects as staticProjects, type Project as StaticProject } from '../da
 import { blogPosts as staticBlogPosts, type BlogPost as StaticBlogPost } from '../data/blog';
 import { profilePresets } from '../data/profileCopy';
 
+export interface ProfileFaq {
+  question: string;
+  answer: string;
+}
+
+// Per-profile, CMS-editable content for the About page. Every field is optional;
+// the About page falls back to a bundled default when a field is empty.
+export interface AboutContent {
+  location?: string;
+  location_label?: string;
+  languages?: string;
+  languages_label?: string;
+  fun_fact?: string;
+  speaking_intro?: string;
+  speaking_image?: string;
+  faqs?: ProfileFaq[];
+}
+
 export interface Profile {
   id: string;
   name: string;
@@ -14,6 +32,7 @@ export interface Profile {
   philosophy_text: string;
   badges: string[];
   social_links: Record<string, string>;
+  about_content: AboutContent;
 }
 
 export interface Project {
@@ -62,6 +81,10 @@ export const fallbackProfiles: Record<string, Profile> = Object.entries(profileP
       id,
       ...preset.profile,
       social_links: preset.social_links,
+      about_content: {
+        speaking_intro: preset.about.speakingIntro,
+        faqs: preset.about.faqs,
+      },
     };
     return acc;
   },
@@ -86,6 +109,21 @@ if (!fallbackProfiles.default) {
       'I work across design and engineering to turn ideas into products people trust. Four years leading design at PaySika, plus co-founding ventures and shipping code, taught me that the strongest products come from one person owning the whole loop — research, interface, and implementation.',
     badges: ['Design · Engineering · Product'],
     social_links: {},
+    about_content: {
+      fun_fact: 'I value direct opinions, simple language, and a good plate of fish.',
+      faqs: [
+        {
+          question: 'How do you approach building a product?',
+          answer:
+            "Honestly I'm not sure I have a fixed process. Ok I would say it depends. Sometimes rough, sometimes straight to the point — from research and interface through to the code. The truth is that books say one thing but reality says otherwise.",
+        },
+        {
+          question: 'Are you open to speaking engagements?',
+          answer:
+            'Absolutely. I love public speaking, networking, and sharing insights on fintech, design, and tech ecosystems in Africa.',
+        },
+      ],
+    },
   };
   fallbackProfiles.default.is_active = true;
 }
