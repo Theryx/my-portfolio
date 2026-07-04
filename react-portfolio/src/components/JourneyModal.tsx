@@ -36,12 +36,12 @@ export const JourneyModal: React.FC<JourneyModalProps> = ({ isOpen, onClose, pro
             <p>
               {profile?.hero_title ? (
                 <>
-                  I am <strong>Ndouken Theryx</strong> — <strong>{profile.hero_title}</strong>. {profile.hero_subtitle}
+                  I am <strong>Ndouken Theryx</strong>, <strong>{profile.hero_title}</strong>. {profile.hero_subtitle}
                 </>
               ) : (
                 <>
                   I am <strong>Ndouken Theryx</strong>, a <strong>Product Designer &amp; Builder</strong> who
-                  designs and ships digital products end to end — where thoughtful design meets solid engineering.
+                  designs and ships digital products end to end, where thoughtful design meets solid engineering.
                 </>
               )}
             </p>

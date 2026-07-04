@@ -22,7 +22,7 @@ export default function Projects() {
             </span>
             <h2 className="section__title page-hero__title">Selected Work</h2>
             <p className="page-hero__sub">
-              {profile?.social_links?.projects_intro || "Fintech apps, open-source platforms, and ed-tech experiments — each one shipped with a team I'm proud of."}
+              {profile?.social_links?.projects_intro || "Fintech apps, open-source platforms, and ed-tech experiments, each one shipped with a team I'm proud of."}
             </p>
           </div>
 
@@ -102,7 +102,7 @@ export default function Projects() {
                 I believe the best products are never the work of a single individual. Designing these projects has always been a collective team effort, and I am grateful to have collaborated closely with brilliant engineers, product managers, and stakeholders.
               </p>
               <p>
-                The truth is, some of the best design solutions come from others having better ideas than I do—which is why I view feedback as a true blessing and never take it for granted. It is our willingness to listen, co-create, and critique together that makes the final products successful.
+                The truth is, some of the best design solutions come from others having better ideas than I do, which is why I view feedback as a true blessing and never take it for granted. It is our willingness to listen, co-create, and critique together that makes the final products successful.
               </p>
             </div>
           </div>

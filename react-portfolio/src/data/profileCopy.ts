@@ -65,14 +65,14 @@ const fintechPreset: ProfilePreset = {
       'Four years leading design at PaySika across onboarding, KYC, transactions, and physical cards. I specialise in simplifying complex financial flows for African mobile users.',
     philosophy_title: 'Trust is the core currency of financial design.',
     philosophy_text:
-      'Every financial product asks the user to bet their money on a screen. My job is to make that bet feel obvious — clear hierarchy, predictable interactions, honest copy, no surprises. I pair Mixpanel data with usability testing to find where trust breaks and rebuild from there.',
+      'Every financial product asks the user to bet their money on a screen. My job is to make that bet feel obvious: clear hierarchy, predictable interactions, honest copy, no surprises. I pair Mixpanel data with usability testing to find where trust breaks and rebuild from there.',
     badges: ['Open to fintech design roles', 'Payments · KYC · Mobile money'],
     social_links: {},
   },
   social_links: commonLinks({
     now: 'Researching mobile-money onboarding patterns across West & Central Africa',
     projects_intro:
-      'Payments, KYC, cards, and cross-border transfers for African fintech — shipped at scale, measured in retention.',
+      'Payments, KYC, cards, and cross-border transfers for African fintech, shipped at scale and measured in retention.',
     blog_intro: 'Notes on trust, compliance, and mobile money UX from the field in Cameroon.',
     metric_label: 'years leading fintech design',
   }),
@@ -92,7 +92,7 @@ const fintechPreset: ProfilePreset = {
       location: 'Douala, Cameroon',
       responsibilities: [
         'Recruited and managed a two-person design team and set up the asset-handoff pipeline to engineering',
-        'Redesigned onboarding, KYC photo capture, and Visa-activation flows — measured drop-off in Mixpanel and iterated',
+        'Redesigned onboarding, KYC photo capture, and Visa-activation flows; measured drop-off in Mixpanel and iterated',
         'Led the physical debit card industrial and print design, working directly with the card manufacturer',
         'Wrote and localised English / French UI microcopy using Claude as a copy partner',
       ],
@@ -110,7 +110,7 @@ const fintechPreset: ProfilePreset = {
       content: `## What I designed at PaySika
 
 ### Onboarding & KYC
-Before the redesign, KYC photo upload was a generic file picker that failed quietly on most Android browsers in Cameroon. I replaced it with a guided real-time camera helper that frames the document for the user, gives live feedback on glare and focus, and only accepts the photo once it passes a client-side check. Mixpanel confirmed the redesign: successful first-attempt KYC went up sharply and the related support tickets dropped by a measurable margin.
+Before the redesign, KYC photo upload was a generic file picker that failed quietly on most Android browsers in Cameroon. I replaced it with a guided real-time camera helper that frames the document for the user, gives live feedback on glare and focus, and only accepts the photo once it passes a client-side check. Mixpanel confirmed the redesign: successful first-attempt KYC went up sharply, and the related support tickets dropped by a measurable margin.
 
 ### Transaction history
 I rewrote the transaction history to behave the way people actually scan financial statements: grouped by day, currency-formatted with thousand separators, every line including a one-tap support shortcut. Failed transactions are visually distinct and surface the reason ("network timeout", "insufficient balance") instead of a generic error code.
@@ -128,7 +128,7 @@ I used Claude as a translation and copy partner for English / French UI microcop
       tagline: 'Cross-border peer-to-peer transfers across iOS, Android, web, and dashboard.',
       image: 'crowdremit_mockup.png',
       description:
-        'As UX Researcher and Product Designer, I designed the end-to-end CrowdRemit experience — mobile app, web app, marketing site, and admin dashboard — and built the design system used by the engineering team. I led a brand-level decision to rebrand the primary colour after WCAG contrast testing exposed a readability problem on buttons.',
+        'As UX Researcher and Product Designer, I designed the end-to-end CrowdRemit experience (mobile app, web app, marketing site, and admin dashboard) and built the design system used by the engineering team. I led a brand-level decision to rebrand the primary colour after WCAG contrast testing exposed a readability problem on buttons.',
       impact:
         'Shipped a complete cross-border transfer experience and a WCAG-AA-passing design system from scratch.',
       site: '',
@@ -154,7 +154,7 @@ I used Claude as a translation and copy partner for English / French UI microcop
       sort_order: 1,
       content: `## Cross-border UX research
 
-CrowdRemit's whole value proposition lives in one moment: a user sending money from Lagos to Douala needs to believe the money will arrive, in the right currency, without surprise fees. We ran moderated remote sessions with senders and recipients across three corridors. The biggest learning: people don't think in exchange rates, they think in *received amount*. We restructured the send flow around that — the receive amount is the primary input, the send amount is computed.
+CrowdRemit's whole value proposition lives in one moment: a user sending money from Lagos to Douala needs to believe the money will arrive, in the right currency, without surprise fees. We ran moderated remote sessions with senders and recipients across three corridors. The biggest learning: people don't think in exchange rates, they think in *received amount*. We restructured the send flow around that: the receive amount is the primary input, the send amount is computed.
 
 ## The colour-contrast rebrand
 
@@ -171,7 +171,7 @@ I built the system in Figma with semantic tokens (color/primary, color/surface/e
       tagline: 'Fintech MVPs and dashboards for international and Cameroonian clients.',
       image: 'Matanga agancy website.PNG',
       description:
-        'As Senior UI/UX Consultant (part-time), I delivered fintech-leaning client work for Matanga Agency — wireframes, interactive prototypes, scalable component libraries, and engineering handoff for clients ranging from early-stage MVPs to established e-commerce systems.',
+        'As Senior UI/UX Consultant (part-time), I delivered fintech-leaning client work for Matanga Agency: wireframes, interactive prototypes, scalable component libraries, and engineering handoff for clients ranging from early-stage MVPs to established e-commerce systems.',
       impact: 'Delivered 6+ client product launches across Central Africa and Europe.',
       site: 'https://matangaagency.com/fr/',
       role: 'Senior UI/UX Consultant (Part-time)',
@@ -201,7 +201,7 @@ I built the system in Figma with semantic tokens (color/primary, color/surface/e
       id: 'fintech_trust_first',
       title: 'Why African fintech UX has to start with trust',
       excerpt:
-        'A breakdown of why every fintech screen in Africa carries trust debt by default — and three concrete patterns that pay it down.',
+        'A breakdown of why every fintech screen in Africa carries trust debt by default, and three concrete patterns that pay it down.',
       date: 'April 12, 2026',
       author: 'Ndouken Theryx',
       read_time: '6 min read',
@@ -219,15 +219,15 @@ The first time a user opens an African fintech app, they're not evaluating your 
 
 If the first two screens don't answer those questions, the rest of your beautiful flow doesn't matter. They've already closed the app.
 
-I learned this at PaySika the slow way — by watching real onboarding sessions and reading Mixpanel funnels that didn't behave like Western fintech benchmarks suggested they should. Drop-off was concentrated at the moments where the product asked for trust without first giving any.
+I learned this at PaySika the slow way, by watching real onboarding sessions and reading Mixpanel funnels that didn't behave like Western fintech benchmarks suggested they should. Drop-off was concentrated at the moments where the product asked for trust without first giving any.
 
 ## Three patterns that pay down trust debt
 
 ### 1. State the cost on the same screen as the action
-Hiding fees behind a "Continue" button reads as a trap. Show the fee — even a zero fee — beside the amount input. If the fee is zero, *say* zero. Silence is interpreted as a hidden charge.
+Hiding fees behind a "Continue" button reads as a trap. Show the fee (even a zero fee) beside the amount input. If the fee is zero, *say* zero. Silence is interpreted as a hidden charge.
 
 ### 2. Tell users why you need the data
-"Upload a photo of your ID" is a demand. "We need this so your bank partner can verify your account — it's required by Cameroon's regulator" is a partnership. Same data, completely different completion rate.
+"Upload a photo of your ID" is a demand. "We need this so your bank partner can verify your account, it's required by Cameroon's regulator" is a partnership. Same data, completely different completion rate.
 
 ### 3. Confirmation screens are not optional
 On a transaction app, the success state is the product. A green checkmark and a transaction ID, with a one-tap "send this to support" affordance, does more for retention than any animation could.
@@ -236,11 +236,11 @@ On a transaction app, the success state is the product. A green checkmark and a 
 
 The single biggest funnel improvement I shipped at PaySika was a guided KYC camera. The old flow: a file-picker, an opaque "uploading…" screen, and an error message that just said "try again." The new flow: an in-app camera with a live overlay framing the ID, real-time glare and focus feedback, and a confirmation that the photo passed an on-device check before submission.
 
-Same regulatory requirement. Same data captured. Vastly different completion rate — and a sharp drop in the related support tickets, because the few users who *did* fail saw exactly why and how to fix it.
+Same regulatory requirement. Same data captured. Vastly different completion rate, and a sharp drop in the related support tickets, because the few users who *did* fail saw exactly why and how to fix it.
 
 ## What I'd tell a fintech designer starting today
 
-Read your Mixpanel funnel with the question "where did we ask for trust without earning it?" — not "where do users drop off?" The two questions point at the same screens, but the second one leads to UI tweaks and the first one leads to product changes.`,
+Read your Mixpanel funnel with the question "where did we ask for trust without earning it?", not "where do users drop off?" The two questions point at the same screens, but the second one leads to UI tweaks and the first one leads to product changes.`,
     },
     {
       id: 'fintech_transaction_history',
@@ -264,9 +264,9 @@ When designing the redesigned PaySika transaction list, I wrote a one-line brief
 
 That meant three things:
 
-1. **Group by day.** Banks have done this for a century for a reason — humans index transactions in time.
+1. **Group by day.** Banks have done this for a century for a reason: humans index transactions in time.
 2. **Format money the way people read it.** Currency symbol first, thousand separators, sign on the same baseline.
-3. **Failed transactions look different.** Not just a red badge — different background, different icon, different copy.
+3. **Failed transactions look different.** Not just a red badge: different background, different icon, different copy.
 
 ## What changed
 
@@ -278,7 +278,7 @@ The reason matters. "Transaction failed" with no explanation is the single bigge
 
 ## What I'd do differently
 
-If I were building this again I'd add export-to-CSV from the start. Users asked for it within two weeks of launch and we shipped it as a follow-up — but it should have been there day one for anyone in a country where paper bank statements are still the proof-of-funds standard.`,
+If I were building this again I'd add export-to-CSV from the start. Users asked for it within two weeks of launch and we shipped it as a follow-up, but it should have been there day one for anyone in a country where paper bank statements are still the proof-of-funds standard.`,
     },
   ],
   about: {
@@ -293,12 +293,12 @@ If I were building this again I'd add export-to-CSV from the start. Users asked 
       {
         question: 'How do you measure design impact?',
         answer:
-          'I instrument every meaningful flow in Mixpanel before launch — drop-off per step, time to success, error rates — and tie the redesign to a specific metric. At PaySika the KYC redesign was measured in successful-first-attempt rate and the support-ticket volume linked to it.',
+          'I instrument every meaningful flow in Mixpanel before launch (drop-off per step, time to success, error rates) and tie the redesign to a specific metric. At PaySika the KYC redesign was measured in successful-first-attempt rate and the support-ticket volume linked to it.',
       },
       {
         question: 'What about compliance and regulators?',
         answer:
-          "I treat compliance copy as design — required language gets the same care as any other UI string. At PaySika I worked closely with our partner bank to make sure regulator-required disclosures were both legally correct and human-readable.",
+          "I treat compliance copy as design: required language gets the same care as any other UI string. At PaySika I worked closely with our partner bank to make sure regulator-required disclosures were both legally correct and human-readable.",
       },
     ],
   },
@@ -310,14 +310,14 @@ const designEngineerPreset: ProfilePreset = {
   profile: {
     name: 'Design Engineer',
     is_active: false,
-    bio: 'Design Engineer who ships production interfaces — Figma to React, with AI as a working partner.',
+    bio: 'Design Engineer who ships production interfaces, from Figma to React, with AI as a working partner.',
     tagline: 'I design and build interfaces, end to end.',
     hero_title: 'Design Engineer',
     hero_subtitle:
       'I close the loop between Figma and production code. React, TypeScript, design tokens, and Claude as a daily working partner. Four years at PaySika shipping the artwork and the implementation.',
     philosophy_title: 'The best handoff is no handoff.',
     philosophy_text:
-      'When the person making the design decision also writes the component, there is no fidelity loss, no "looks different from the mock" ticket, no handoff document that goes stale the moment it ships. AI doesn\'t replace taste — it removes the boring middle so taste can show up everywhere.',
+      'When the person making the design decision also writes the component, there is no fidelity loss, no "looks different from the mock" ticket, no handoff document that goes stale the moment it ships. AI doesn\'t replace taste: it removes the boring middle so taste can show up everywhere.',
     badges: ['Available for design-engineering work', 'Figma · React · TypeScript · AI tooling'],
     social_links: {},
   },
@@ -376,7 +376,7 @@ For the React side, I use Claude as a pair-programmer for the boring parts of co
       id: 'portfolio_design-engineer',
       tag: 'Portfolio · CMS',
       title: 'This portfolio',
-      tagline: 'Vite + React + TypeScript + Neon + a custom Studio CMS — built end-to-end with Claude.',
+      tagline: 'Vite + React + TypeScript + Neon + a custom Studio CMS, built end-to-end with Claude.',
       image: 'shomi-cover.png',
       description:
         'The site you\'re reading. Built as a working demo of the design-engineer workflow: Figma intent, React implementation, Neon-backed CMS for content editing, and Claude as a working partner through the whole loop.',
@@ -430,7 +430,7 @@ For the React side, I use Claude as a pair-programmer for the boring parts of co
         'Semantic tokens in Figma, matching CSS variables in code, and a shared review rhythm during implementation.',
       result: 'The Result',
       result_text:
-        'Shipped a complete cross-platform product where the same component on iOS and web read as the same component — because they were built from the same tokens.',
+        'Shipped a complete cross-platform product where the same component on iOS and web read as the same component, because they were built from the same tokens.',
       is_hidden: false,
       sort_order: 2,
       content: '',
@@ -441,7 +441,7 @@ For the React side, I use Claude as a pair-programmer for the boring parts of co
       id: 'de_ai_pair',
       title: 'How I use Claude to ship features 3× faster (without losing my design taste)',
       excerpt:
-        'AI doesn\'t replace taste — it removes the boring middle. Here\'s the exact loop I run for design-engineering work with Claude as a partner.',
+        'AI doesn\'t replace taste: it removes the boring middle. Here\'s the exact loop I run for design-engineering work with Claude as a partner.',
       date: 'May 22, 2026',
       author: 'Ndouken Theryx',
       read_time: '7 min read',
@@ -451,13 +451,13 @@ For the React side, I use Claude as a pair-programmer for the boring parts of co
       sort_order: 0,
       content: `# How I use Claude to ship features 3× faster (without losing my design taste)
 
-Most "AI for designers" advice falls into two camps: *AI will replace you* (it won't, at least not yet) or *AI is a magic wand* (it isn't). The truth is more boring and more useful: AI removes the slow middle of a workflow, so the parts where taste actually matters — the decisions — get more of your attention, not less.
+Most "AI for designers" advice falls into two camps: *AI will replace you* (it won't, at least not yet) or *AI is a magic wand* (it isn't). The truth is more boring and more useful: AI removes the slow middle of a workflow, so the parts where taste actually matters, the decisions, get more of your attention, not less.
 
 Here is the exact loop I run for shipping a feature, end to end, with Claude in the loop.
 
 ## Step 1: Brief, with constraints
 
-I write the feature brief myself, in plain prose, including the constraints I already know: who it's for, what success looks like, what we will not do. Claude is not great at inventing constraints — it's excellent at applying constraints you state clearly.
+I write the feature brief myself, in plain prose, including the constraints I already know: who it's for, what success looks like, what we will not do. Claude is not great at inventing constraints, but it's excellent at applying constraints you state clearly.
 
 ## Step 2: Layout exploration in Figma
 
@@ -465,7 +465,7 @@ I sketch three or four layout candidates in Figma. Still my hand. AI sees nothin
 
 ## Step 3: Copy & microcopy draft with Claude
 
-Once a layout is chosen, I paste the wireframe screenshot into Claude with the brief and ask for three copy variants per UI string — tone variants, not synonym swaps. *Direct, warm, cautious* is a useful prompt frame. I pick or edit.
+Once a layout is chosen, I paste the wireframe screenshot into Claude with the brief and ask for three copy variants per UI string: tone variants, not synonym swaps. *Direct, warm, cautious* is a useful prompt frame. I pick or edit.
 
 ## Step 4: Component scaffolding
 
@@ -473,7 +473,7 @@ I describe the component I'll build in prose (props, states, accessibility) and 
 
 ## Step 5: Adversarial review
 
-Before I push, I paste the diff back into Claude with: *"You are reviewing this PR. Be skeptical. Find three things that will break in production."* This catches more issues than my own re-reading — fresh eyes, even synthetic ones.
+Before I push, I paste the diff back into Claude with: *"You are reviewing this PR. Be skeptical. Find three things that will break in production."* This catches more issues than my own re-reading: fresh eyes, even synthetic ones.
 
 ## What this gets you
 
@@ -499,7 +499,7 @@ A loop where Claude removes typing time, prop-table boilerplate, and the first-p
       sort_order: 1,
       content: `# Figma-to-React, today: my AI-assisted handoff workflow
 
-There is no single Figma-to-React tool that ships production code. There is, however, a chain of small steps that — strung together — gets you to a clean implementation faster than any "AI converts your design to code" claim.
+There is no single Figma-to-React tool that ships production code. There is, however, a chain of small steps that, strung together, gets you to a clean implementation faster than any "AI converts your design to code" claim.
 
 ## The chain
 
@@ -510,10 +510,10 @@ Both Figma and code read from the same semantic tokens (color/surface/elevated, 
 Before I open my editor I write the component as a paragraph: *"A button. Three variants: primary, secondary, ghost. Three sizes. Disabled state. Loading state with a spinner that respects prefers-reduced-motion."* That paragraph is the brief for Claude.
 
 ### 3. Scaffolding with Claude
-I paste the contract plus a snippet of an existing component from the same codebase ("match this style") and ask for the scaffold. The existing-component example is the crucial part — Claude matches conventions when it sees them.
+I paste the contract plus a snippet of an existing component from the same codebase ("match this style") and ask for the scaffold. The existing-component example is the crucial part: Claude matches conventions when it sees them.
 
 ### 4. Read every line
-The scaffold is a draft. I read every line. The places I rewrite are the places where I had a specific design choice that wouldn't show up from prose alone — focus ring colour, hover transition curve, the exact pixel offset that makes the button feel "right."
+The scaffold is a draft. I read every line. The places I rewrite are the places where I had a specific design choice that wouldn't show up from prose alone: focus ring colour, hover transition curve, the exact pixel offset that makes the button feel "right."
 
 ### 5. Visual regression
 I render the component in Storybook (or a sandbox route) and put it next to the Figma frame, side by side. Any pixel that's off comes from a token mismatch or a missing case. Five-minute fix.
@@ -527,12 +527,12 @@ I render the component in Storybook (or a sandbox route) and put it next to the 
   ],
   about: {
     speakingIntro:
-      'I write and speak about the design-engineering workflow — Figma to React, AI in the loop, and what hands-on shipping teaches about both crafts.',
+      'I write and speak about the design-engineering workflow: Figma to React, AI in the loop, and what hands-on shipping teaches about both crafts.',
     faqs: [
       {
         question: 'Are you a designer or an engineer?',
         answer:
-          "Both, on purpose. I design in Figma and I ship in React. The role I'm looking for treats that as a single craft — design engineer, hybrid IC, founding designer — not as two job descriptions stapled together.",
+          "Both, on purpose. I design in Figma and I ship in React. The role I'm looking for treats that as a single craft (design engineer, hybrid IC, founding designer), not as two job descriptions stapled together.",
       },
       {
         question: 'How do you keep design taste with AI in the loop?',
@@ -562,7 +562,7 @@ const digitalMarketingPreset: ProfilePreset = {
       'I plan and execute digital campaigns that connect brand strategy, content, paid channels, and analytics into a single funnel. Most of my work has been with African fintech and tech-community brands.',
     philosophy_title: 'Marketing should be clear, measurable, and useful.',
     philosophy_text:
-      'I combine audience research, creative storytelling, performance tracking, and product thinking to build campaigns that do more than get attention. They help people understand, trust, and act — and I can show you the number.',
+      'I combine audience research, creative storytelling, performance tracking, and product thinking to build campaigns that do more than get attention. They help people understand, trust, and act, and I can show you the number.',
     badges: ['Available for marketing projects', 'Strategy · Paid · Content · Analytics'],
     social_links: {},
   },
@@ -570,7 +570,7 @@ const digitalMarketingPreset: ProfilePreset = {
     now: 'Building a paid-acquisition playbook for African fintech audiences',
     projects_intro:
       'Growth playbooks, content engines, and community marketing for African fintech and open-source brands.',
-    blog_intro: 'Notes on running marketing for African audiences — what budgets, channels, and metrics actually do.',
+    blog_intro: 'Notes on running marketing for African audiences: what budgets, channels, and metrics actually do.',
     metric_label: 'years in brand & growth',
   }),
   projects: [
@@ -582,7 +582,7 @@ const digitalMarketingPreset: ProfilePreset = {
         'Funnel design, brand work, and paid acquisition for a Visa-partner mobile bank in Central Africa.',
       image: 'paysika_mockup.png',
       description:
-        "While leading design at PaySika, I owned the brand and marketing-asset pipeline — visual identity refresh, design-to-marketing handoff, paid campaign creative for Meta and Google, and the Mixpanel funnel work that told us which acquisition channels actually retained.",
+        "While leading design at PaySika, I owned the brand and marketing-asset pipeline: visual identity refresh, design-to-marketing handoff, paid campaign creative for Meta and Google, and the Mixpanel funnel work that told us which acquisition channels actually retained.",
       impact: 'Connected brand, paid acquisition, and product funnel into a single measurable system.',
       site: 'https://www.paysika.co',
       role: 'Brand & Growth (in-house)',
@@ -590,7 +590,7 @@ const digitalMarketingPreset: ProfilePreset = {
       location: 'Douala, Cameroon',
       responsibilities: [
         'Visual brand refresh and a unified asset pipeline between design and marketing',
-        'Paid-acquisition creative for Meta and Google — French and English variants',
+        'Paid-acquisition creative for Meta and Google, in French and English variants',
         'Mixpanel funnel work to tie acquisition source to in-app activation',
         'Influencer & community marketing for the Cameroonian fintech audience',
       ],
@@ -608,7 +608,7 @@ const digitalMarketingPreset: ProfilePreset = {
       content: `## What I owned at PaySika
 
 ### Brand-to-marketing pipeline
-Pre-redesign, marketing waited on design for every campaign asset. I built a brand-approved asset library — logos, lockups, type lockups, photo treatments — that marketing could pull from without a design ticket. Sprint velocity in both teams went up.
+Pre-redesign, marketing waited on design for every campaign asset. I built a brand-approved asset library (logos, lockups, type lockups, photo treatments) that marketing could pull from without a design ticket. Sprint velocity in both teams went up.
 
 ### Acquisition-to-activation attribution
 We tagged every signup with its acquisition source (utm_source captured at landing, persisted through the auth flow). Mixpanel reports then showed activation rate per channel, not just signup rate. We discovered some of our cheapest channels were also the lowest-quality and reallocated.
@@ -617,7 +617,7 @@ We tagged every signup with its acquisition source (utm_source captured at landi
 Every paid ad shipped in both English and French. We tested tone variants ("trust" vs "speed" vs "savings") and let CPA data pick, not personal preference.
 
 ### Creative for a Cameroonian audience
-Stock photography of suited-up traders is wrong for this market. We used local creators, local backgrounds, and local money — and the engagement gap vs international creative was significant.`,
+Stock photography of suited-up traders is wrong for this market. We used local creators, local backgrounds, and local money, and the engagement gap vs international creative was significant.`,
     },
     {
       id: 'matanga_digital-marketing',
@@ -626,7 +626,7 @@ Stock photography of suited-up traders is wrong for this market. We used local c
       tagline: 'Ongoing growth work for international and Cameroonian agency clients.',
       image: 'Matanga agancy website.PNG',
       description:
-        'As a part-time consultant at Matanga, I delivered ongoing growth retainers for fintech and e-commerce clients — visual brand refreshes, campaign creative, paid-channel strategy, and content plans tuned to small budgets.',
+        'As a part-time consultant at Matanga, I delivered ongoing growth retainers for fintech and e-commerce clients: visual brand refreshes, campaign creative, paid-channel strategy, and content plans tuned to small budgets.',
       impact: 'Delivered measurable growth work for 6+ agency clients across multiple verticals.',
       site: 'https://matangaagency.com/fr/',
       role: 'Senior Consultant (Part-time)',
@@ -659,7 +659,7 @@ Stock photography of suited-up traders is wrong for this market. We used local c
         'Marketing and community work for an open-source society and the JobSika platform.',
       image: 'Screenshot of the UI of Jobsika.PNG',
       description:
-        'As co-maintainer of OSS Cameroon and JobSika, I owned the community marketing work — visual identity, social presence, event design, and the storytelling that brought new contributors and job seekers into the platform.',
+        'As co-maintainer of OSS Cameroon and JobSika, I owned the community marketing work: visual identity, social presence, event design, and the storytelling that brought new contributors and job seekers into the platform.',
       impact: 'Grew a contributor and user community for a fully open-source jobs platform in Cameroon.',
       site: 'https://jobsika.cm/',
       role: 'Co-maintainer & Community Marketing',
@@ -699,15 +699,15 @@ Stock photography of suited-up traders is wrong for this market. We used local c
       sort_order: 0,
       content: `# What 6 months of paid acquisition taught me about Cameroonian audiences
 
-The default fintech marketing playbook — Meta lookalike audiences, Google search intent, "scale what works" — was written for markets PaySika doesn't operate in. Six months of running paid acquisition for a Central African fintech taught me three lessons that aren't in the standard advice.
+The default fintech marketing playbook (Meta lookalike audiences, Google search intent, "scale what works") was written for markets PaySika doesn't operate in. Six months of running paid acquisition for a Central African fintech taught me three lessons that aren't in the standard advice.
 
 ## 1. Cheap clicks are not a metric
 
-Cost-per-install in Cameroon can be remarkably low compared to Western benchmarks — but a quarter of the lowest-cost installs never opened the app a second time. We rebuilt the dashboard around cost-per-*activated*-user (signup + first verified transaction), not CPI. Spend looked higher per unit; quality went up sharply.
+Cost-per-install in Cameroon can be remarkably low compared to Western benchmarks, but a quarter of the lowest-cost installs never opened the app a second time. We rebuilt the dashboard around cost-per-*activated*-user (signup + first verified transaction), not CPI. Spend looked higher per unit; quality went up sharply.
 
 ## 2. French and English are not the same audience
 
-We initially ran bilingual creative in single campaigns. Once we split the creative entirely — separate campaigns, separate creators, separate copy — both halves performed better. The two audiences read fintech messaging through different frames; treating them as one was leaving money on the table.
+We initially ran bilingual creative in single campaigns. Once we split the creative entirely (separate campaigns, separate creators, separate copy), both halves performed better. The two audiences read fintech messaging through different frames; treating them as one was leaving money on the table.
 
 ## 3. Local creators outperform polished international content
 
@@ -760,22 +760,22 @@ For each content piece, two numbers: *reach in the target audience* (not total r
 
 ## What not to do
 
-Don’t hire a "social media person" before you have a system. Without a system, the role becomes "person who posts daily" — high cost, low signal.`,
+Don’t hire a "social media person" before you have a system. Without a system, the role becomes "person who posts daily": high cost, low signal.`,
     },
   ],
   about: {
     speakingIntro:
-      'I write and speak about marketing for African audiences — what scales, what doesn\'t, and how to spend small budgets like they\'re large ones.',
+      'I write and speak about marketing for African audiences: what scales, what doesn\'t, and how to spend small budgets like they\'re large ones.',
     faqs: [
       {
         question: 'What budgets do you typically work with?',
         answer:
-          "Mostly small to mid: $2k–$20k/month in paid spend. I'm comfortable scaling up, but my real differentiator is doing measurable work on tight budgets — the African fintech market doesn't pretend its budgets are Western.",
+          "Mostly small to mid: $2k-$20k/month in paid spend. I'm comfortable scaling up, but my real differentiator is doing measurable work on tight budgets: the African fintech market doesn't pretend its budgets are Western.",
       },
       {
         question: 'What channels do you start with?',
         answer:
-          'Always Meta for African mobile audiences, often Google for high-intent search, sometimes TikTok for younger demos. I avoid recommending a channel before I see who the audience actually is — channel-first advice is a red flag.',
+          'Always Meta for African mobile audiences, often Google for high-intent search, sometimes TikTok for younger demos. I avoid recommending a channel before I see who the audience actually is: channel-first advice is a red flag.',
       },
       {
         question: 'How do you handle attribution?',
@@ -800,15 +800,15 @@ const projectManagerPreset: ProfilePreset = {
       'I lead cross-functional teams through scoping, delivery, and the messy middle. Four years coordinating design, engineering, and marketing at PaySika; co-founder of Kody (Tony Elumelu Foundation-funded MVP); maintainer of an open-source community platform.',
     philosophy_title: 'Clarity is a deliverable.',
     philosophy_text:
-      "Most projects don't fail on talent or budget. They fail because the team disagrees about what \"done\" looks like and nobody writes it down. My job is to write it down — explicitly, early, and with the right level of detail — and to keep the team aligned through the parts where reality contradicts the plan.",
+      "Most projects don't fail on talent or budget. They fail because the team disagrees about what \"done\" looks like and nobody writes it down. My job is to write it down, explicitly, early, and with the right level of detail, and to keep the team aligned through the parts where reality contradicts the plan.",
     badges: ['Open to PM & delivery roles', 'Product · Cross-functional · Open source'],
     social_links: {},
   },
   social_links: commonLinks({
     now: 'Coordinating a multi-quarter PaySika roadmap across design, eng, and marketing',
     projects_intro:
-      'Cross-functional product and delivery work — at PaySika, at Kody (where I co-founded an ed-tech MVP), and in the open-source community.',
-    blog_intro: 'Notes on shipping cross-functional work — scoping, async coordination, and what to cut when reality bites.',
+      'Cross-functional product and delivery work: at PaySika, at Kody (where I co-founded an ed-tech MVP), and in the open-source community.',
+    blog_intro: 'Notes on shipping cross-functional work: scoping, async coordination, and what to cut when reality bites.',
     metric_label: 'years leading product delivery',
   }),
   projects: [
@@ -817,25 +817,25 @@ const projectManagerPreset: ProfilePreset = {
       tag: 'Fintech · Cross-functional delivery',
       title: 'PaySika product & design delivery',
       tagline:
-        'Coordinated design, engineering, and marketing through a multi-product fintech roadmap — KYC, cards, transactions, dashboards.',
+        'Coordinated design, engineering, and marketing through a multi-product fintech roadmap: KYC, cards, transactions, dashboards.',
       image: 'paysika_mockup.png',
       description:
-        "As Lead Product Designer and a founding-team member, I owned cross-functional delivery for design at PaySika — managing a two-person design team, coordinating with engineering and marketing on sprint and release cycles, and acting as the bridge that kept the roadmap honest when reality contradicted the plan.",
+        "As Lead Product Designer and a founding-team member, I owned cross-functional delivery for design at PaySika: managing a two-person design team, coordinating with engineering and marketing on sprint and release cycles, and acting as the bridge that kept the roadmap honest when reality contradicted the plan.",
       impact: 'Shipped major redesigns (KYC, transactions, physical card) on cadence across a multi-product fintech.',
       site: 'https://www.paysika.co',
       role: 'Lead Product Designer · Team Lead',
       period: 'Dec 2021 - Present',
       location: 'Douala, Cameroon',
       responsibilities: [
-        'Recruited and managed a two-person design team — hiring, performance, growth',
+        'Recruited and managed a two-person design team: hiring, performance, growth',
         'Engineered the design-to-engineering handoff process (Figma, documentation, PR review rhythms)',
         'Engineered the design-to-marketing pipeline so marketing could fetch brand-approved assets without blocking design',
         'Drove KYC redesign delivery in three sprints with eng, design, and the partner bank',
-        'Translated product briefs into scoped, deliverable user flows — and protected the team from scope creep',
+        'Translated product briefs into scoped, deliverable user flows, and protected the team from scope creep',
       ],
       challenge: 'The Challenge',
       challenge_text:
-        'PaySika needed to ship multiple major product surfaces (KYC, transactions, cards) on cadence, with a small team, while keeping design quality high and engineering velocity steady. Cross-functional coordination — design, engineering, marketing, partner bank — was the bottleneck, not headcount.',
+        'PaySika needed to ship multiple major product surfaces (KYC, transactions, cards) on cadence, with a small team, while keeping design quality high and engineering velocity steady. Cross-functional coordination (design, engineering, marketing, partner bank) was the bottleneck, not headcount.',
       solution: 'The Solution',
       solution_text:
         'I built explicit hand-off rituals between teams, documented them once, and kept them. Design-to-engineering: scoped Figma files with edge cases written in, PR reviews catching visual drift. Design-to-marketing: brand-approved asset library that marketing pulled from. Sprint planning broke big bets into shippable slices with clear "done" criteria.',
@@ -847,13 +847,13 @@ const projectManagerPreset: ProfilePreset = {
       content: `## What I coordinated at PaySika
 
 ### Hiring & team management
-I recruited the team that turned PaySika design from a solo function into a small group. That meant writing role descriptions, screening, structured interviews, and — once people joined — running 1:1s, performance feedback, and growth conversations.
+I recruited the team that turned PaySika design from a solo function into a small group. That meant writing role descriptions, screening, structured interviews, and, once people joined, running 1:1s, performance feedback, and growth conversations.
 
 ### Design-to-engineering process
 Before the change, engineering rebuilt the same component three slightly different ways across surfaces. I rebuilt the handoff: scoped Figma files with edge cases written in, semantic design tokens shared between Figma and code, PR review where I (and the designer who owned the file) caught visual drift before merge. The "looks different from the mock" ticket category went away.
 
 ### Design-to-marketing process
-Marketing used to wait on design for every campaign asset. I built a brand-approved asset pipeline — locked files, asset library, versioning — that marketing could fetch from without a design ticket. Both teams' velocity went up.
+Marketing used to wait on design for every campaign asset. I built a brand-approved asset pipeline (locked files, asset library, versioning) that marketing could fetch from without a design ticket. Both teams' velocity went up.
 
 ### Sprint discipline
 I wrote scope before each sprint and held the line on it. Mid-sprint requests went to the next sprint by default. Mid-sprint *blocking* requests got triaged: cut something else, or extend the sprint, but not both silently.
@@ -864,7 +864,7 @@ At a fintech with a partner bank, regulator, and investors all asking for update
     {
       id: 'shomi_project-manager',
       tag: 'EdTech · Co-founding',
-      title: 'Kody / Shomi — co-founding an ed-tech MVP',
+      title: 'Kody / Shomi: co-founding an ed-tech MVP',
       tagline:
         'Took an ed-tech idea from Tony Elumelu Foundation funding ($5,000) to live MVP with a two-person team.',
       image: 'shomi-cover.png',
@@ -898,7 +898,7 @@ Co-founding compressed every PM lesson into one project: you cannot delegate sco
 
 ## The scope I held
 
-We had $5,000 and a year. The scope was: one product, one platform, one audience. We turned down two parallel ideas in the first month — both were good ideas but neither was *this* idea. Holding scope is the lonely part of PM work and the part that separates shipped from almost-shipped.
+We had $5,000 and a year. The scope was: one product, one platform, one audience. We turned down two parallel ideas in the first month; both were good ideas but neither was *this* idea. Holding scope is the lonely part of PM work and the part that separates shipped from almost-shipped.
 
 ## The post-mortem
 
@@ -907,7 +907,7 @@ When we sunset the product, I wrote a long-form post-mortem covering what we got
     {
       id: 'jobsika_project-manager',
       tag: 'Open source · Community delivery',
-      title: 'JobSika — open-source community management',
+      title: 'JobSika: open-source community management',
       tagline:
         'Co-maintainer of a fully open-source jobs platform built by the Cameroonian developer community.',
       image: 'Screenshot of the UI of Jobsika.PNG',
@@ -919,7 +919,7 @@ When we sunset the product, I wrote a long-form post-mortem covering what we got
       period: '2022 - 2024',
       location: 'Cameroon',
       responsibilities: [
-        'Triaged GitHub issues — labelling, prioritisation, assignment',
+        'Triaged GitHub issues: labelling, prioritisation, assignment',
         'Coordinated contributors across time zones with async-by-default communication',
         'Designed contributor onboarding (good-first-issue labelling, contribution guides, design issues alongside code issues)',
         'Kept the public roadmap honest and visible',
@@ -943,7 +943,7 @@ When we sunset the product, I wrote a long-form post-mortem covering what we got
       id: 'pm_kyc_three_sprints',
       title: "How we shipped PaySika's KYC redesign in 3 sprints",
       excerpt:
-        'KYC redesign at a regulated fintech is everyone\'s favourite project to delay. Here\'s how a small team shipped one in three sprints — and what almost broke it.',
+        'KYC redesign at a regulated fintech is everyone\'s favourite project to delay. Here\'s how a small team shipped one in three sprints, and what almost broke it.',
       date: 'May 14, 2026',
       author: 'Ndouken Theryx',
       read_time: '8 min read',
@@ -953,11 +953,11 @@ When we sunset the product, I wrote a long-form post-mortem covering what we got
       sort_order: 0,
       content: `# How we shipped PaySika's KYC redesign in 3 sprints
 
-KYC at a regulated fintech touches three teams (product, eng, compliance), one external partner (the bank), and an angry funnel chart. Every team has a reason to delay. We shipped a major KYC redesign in three two-week sprints. Here's how — and what I'd warn you about.
+KYC at a regulated fintech touches three teams (product, eng, compliance), one external partner (the bank), and an angry funnel chart. Every team has a reason to delay. We shipped a major KYC redesign in three two-week sprints. Here's how, and what I'd warn you about.
 
 ## Sprint 0 (one week): contract
 
-Before any design or code, we wrote a contract. Not a spec — a contract. One page. Three sections:
+Before any design or code, we wrote a contract. Not a spec: a contract. One page. Three sections:
 
 - **What we will ship.** A guided real-time camera helper for the ID photo step, plus the surrounding screens.
 - **What we will not ship.** Address verification redesign, document re-issue flow, support handoff redesign. All real problems, all next quarter.
@@ -967,7 +967,7 @@ Every team signed it. Partner bank too. The contract was the single most importa
 
 ## Sprint 1: skeleton
 
-End-to-end shippable skeleton — every screen wired, no fidelity, no copy polish. Goal: prove the technical path works on real Android devices in patchy network conditions. We caught two issues here that would have been catastrophic later (the camera permission flow doesn't behave the same on stock Android vs. one of the major OEMs).
+End-to-end shippable skeleton: every screen wired, no fidelity, no copy polish. Goal: prove the technical path works on real Android devices in patchy network conditions. We caught two issues here that would have been catastrophic later (the camera permission flow doesn't behave the same on stock Android vs. one of the major OEMs).
 
 ## Sprint 2: fidelity
 
@@ -1001,7 +1001,7 @@ The redesign drove the 40% retention lift and 60% support-ticket reduction PaySi
       sort_order: 1,
       content: `# Co-founding Kody: from $5,000 funding to a live MVP in 6 months
 
-In 2019, my friend and I won $5,000 from the Tony Elumelu Foundation for an ed-tech idea we called Shomi — interactive prep booklets for Cameroonian secondary-school students. Six months later we shipped a live MVP. A year later we sunset it. Both halves of that story taught me PM lessons I still use.
+In 2019, my friend and I won $5,000 from the Tony Elumelu Foundation for an ed-tech idea we called Shomi: interactive prep booklets for Cameroonian secondary-school students. Six months later we shipped a live MVP. A year later we sunset it. Both halves of that story taught me PM lessons I still use.
 
 ## What worked
 
@@ -1012,7 +1012,7 @@ One product, one platform, one audience. We had two other ideas we could have ru
 PREXCEL, a local exam-prep school, became our partner. They gave us direct access to the students we were designing for. Without that partnership we'd have built for an imagined audience.
 
 ### Usability testing before high-fidelity design
-We ran tests on Figma prototypes with five real students before any production work. They told us things we couldn't have inferred — the language toggle was unfindable; the payment page was confusing. Both fixable cheaply at that stage.
+We ran tests on Figma prototypes with five real students before any production work. They told us things we couldn't have inferred: the language toggle was unfindable; the payment page was confusing. Both fixable cheaply at that stage.
 
 ## What didn't work
 
@@ -1023,15 +1023,15 @@ Our retention model depended on a steady stream of fresh exam-prep content we co
 Early enthusiasm from students in the pilot wasn't predictive of broader adoption. The pilot students engaged because they liked us and the platform was new. Without ongoing content their engagement dropped.
 
 ### Underweighted the post-launch operational load
-Customer support, content updates, payment reconciliation — none of that fit a two-person team alongside continued development.
+Customer support, content updates, payment reconciliation: none of that fit a two-person team alongside continued development.
 
 ## The post-mortem
 
-When we sunset the product, I wrote a long-form post-mortem. It is one of the most useful artefacts from the project. Every PM project I run now starts by reading my own past post-mortems — the same patterns recur.
+When we sunset the product, I wrote a long-form post-mortem. It is one of the most useful artefacts from the project. Every PM project I run now starts by reading my own past post-mortems: the same patterns recur.
 
 ## What I'd tell my younger PM self
 
-The content moat question — *can we keep this product fed sustainably at our team size?* — needed to be answered in week one of design, not month six of operations. Scope discipline isn't just about feature creep. It's about whether the operational model survives contact with reality.`,
+The content moat question, *can we keep this product fed sustainably at our team size?*, needed to be answered in week one of design, not month six of operations. Scope discipline isn't just about feature creep. It's about whether the operational model survives contact with reality.`,
     },
   ],
   about: {
@@ -1041,12 +1041,12 @@ The content moat question — *can we keep this product fed sustainably at our t
       {
         question: 'Are you a PM, a designer, or both?',
         answer:
-          'My title at PaySika is Lead Product Designer but the role is closer to "design PM" — I own scope, hiring, delivery rhythm, and cross-functional handoffs alongside the design work itself. If you\'re hiring for a PM role where design fluency is a strength, I am that person.',
+          'My title at PaySika is Lead Product Designer but the role is closer to "design PM": I own scope, hiring, delivery rhythm, and cross-functional handoffs alongside the design work itself. If you\'re hiring for a PM role where design fluency is a strength, I am that person.',
       },
       {
         question: 'How do you handle scope creep?',
         answer:
-          "With a written contract before kickoff that names what we will and won't ship, signed by every team. Mid-sprint requests go to next sprint by default; blocking mid-sprint requests get triaged — we cut something or extend, but never both silently.",
+          "With a written contract before kickoff that names what we will and won't ship, signed by every team. Mid-sprint requests go to next sprint by default; blocking mid-sprint requests get triaged: we cut something or extend, but never both silently.",
       },
       {
         question: 'What\'s your async-vs-sync philosophy?',

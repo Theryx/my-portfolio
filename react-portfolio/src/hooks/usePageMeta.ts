@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
 const SITE_URL = 'https://react-portfolio-pi-topaz.vercel.app';
-const DEFAULT_TITLE = 'Ndouken Theryx — Product Designer & Builder';
+const DEFAULT_TITLE = 'Ndouken Theryx | Product Designer & Builder';
 const DEFAULT_DESCRIPTION =
-  'I design and ship digital products end to end — UX, interface, and code. Based in Douala, Cameroon.';
+  'I design and ship digital products end to end: UX, interface, and code. Based in Douala, Cameroon.';
 const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
 
 function setMeta(selector: string, attr: 'content' | 'href', value: string) {
@@ -25,7 +25,7 @@ export interface PageMeta {
  */
 export function usePageMeta({ title, description, image, type = 'website' }: PageMeta) {
   useEffect(() => {
-    const fullTitle = title ? `${title} — Ndouken Theryx` : DEFAULT_TITLE;
+    const fullTitle = title ? `${title} | Ndouken Theryx` : DEFAULT_TITLE;
     const desc = description?.slice(0, 200) || DEFAULT_DESCRIPTION;
     const img = image && /^https?:\/\//.test(image) ? image : DEFAULT_IMAGE;
     const url = `${SITE_URL}${window.location.pathname}`;

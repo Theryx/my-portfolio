@@ -352,14 +352,14 @@ export default function ProjectDetail() {
                                 src={paysikaProcessDocs2}
                                 alt="Design team process files in SharePoint"
                                 loading="lazy"
-                                onClick={() => handleImageClick(paysikaProcessDocs2, 'Design team process files — Release & deployment, process.pptx, Design team process.docx and Copywriting process documented in SharePoint.')}
+                                onClick={() => handleImageClick(paysikaProcessDocs2, 'Design team process files: Release & deployment, process.pptx, Design team process.docx and Copywriting process documented in SharePoint.')}
                                 style={{ cursor: 'pointer' }}
                               />
                               <img
                                 src={paysikaProcessDocs1}
                                 alt="Design team process PPTX and DOCX in Teams"
                                 loading="lazy"
-                                onClick={() => handleImageClick(paysikaProcessDocs1, 'Design team process.pptx created by Theryx Lanvin NDOUKEN — shared in the team channel alongside the process.docx and active team conversation.')}
+                                onClick={() => handleImageClick(paysikaProcessDocs1, 'Design team process.pptx created by Theryx Lanvin NDOUKEN, shared in the team channel alongside the process.docx and active team conversation.')}
                                 style={{ cursor: 'pointer' }}
                               />
                             </div>

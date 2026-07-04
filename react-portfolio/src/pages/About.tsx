@@ -10,7 +10,7 @@ import { gridVariants, tileVariants } from '../lib/motion';
 import { profilePresets } from '../data/profileCopy';
 
 const DEFAULT_FAQS = [
-  { question: 'How do you approach building a product?', answer: "Honestly I'm not sure I have a fixed process. Ok I would say it depends. Sometimes rough, sometimes straight to the point — from research and interface through to the code. The truth is that books say one thing but reality says otherwise." },
+  { question: 'How do you approach building a product?', answer: "Honestly I'm not sure I have a fixed process. Ok I would say it depends. Sometimes rough, sometimes straight to the point, from research and interface through to the code. The truth is that books say one thing but reality says otherwise." },
   { question: 'Are you open to speaking engagements?', answer: 'Absolutely. I love public speaking, networking, and sharing insights on fintech, design, and tech ecosystems in Africa.' },
 ];
 
@@ -126,7 +126,7 @@ export default function About() {
               <img src={myProfile} alt="Ndouken Theryx" className="about-bento__photo" loading="lazy" />
               <div>
                 <p className="about__text">
-                  {profile?.bio || 'I am a product designer who also builds — I work across UX, interface, and front-end code to ship digital products end to end. I have been building and leading the design team at PaySika since December 2021, alongside co-founding ventures and shipping real-world applications.'}
+                  {profile?.bio || 'I am a product designer who also builds: I work across UX, interface, and front-end code to ship digital products end to end. I have been building and leading the design team at PaySika since December 2021, alongside co-founding ventures and shipping real-world applications.'}
                 </p>
                 <p className="about__text about-bento__tagline">
                   {profile?.tagline || 'I bridge the gap between design and development. I believe in clean design, simple language, and practical problem-solving.'}

@@ -51,7 +51,7 @@ export function HomeForm({ profile, onSave, onCancel, saving }: {
 
       <fieldset className="cms-form__section">
         <legend>Intro expander (“click to expand” card)</legend>
-        <p className="cms-field__hint">Shown when a visitor expands your intro card on the home page. This is the same “Philosophy” text that appears on the About page — editing it here updates both.</p>
+        <p className="cms-field__hint">Shown when a visitor expands your intro card on the home page. This is the same “Philosophy” text that appears on the About page; editing it here updates both.</p>
         <div className="cms-field">
           <label htmlFor="hf-philo-title">Philosophy title</label>
           <input id="hf-philo-title" value={philosophyTitle} onChange={(e) => setPhilosophyTitle(e.target.value)} />
@@ -241,7 +241,7 @@ export function ProfileMetaForm({ profile, onSave, onCancel, saving }: {
           <div className="cms-field">
             <label htmlFor="pm-id">Profile ID (slug)</label>
             <input id="pm-id" value={id} onChange={(e) => setId(e.target.value)} placeholder="e.g. fintech, design-engineer" required disabled={!isNew} />
-            {!isNew && <p className="cms-field__hint">The ID can't change once created — it's part of shared URLs.</p>}
+            {!isNew && <p className="cms-field__hint">The ID can't change once created; it's part of shared URLs.</p>}
           </div>
           <div className="cms-field">
             <label htmlFor="pm-name">Display name</label>
@@ -250,7 +250,7 @@ export function ProfileMetaForm({ profile, onSave, onCancel, saving }: {
         </div>
         <label className="cms-check">
           <input type="checkbox" checked={isActive} onChange={(e) => setIsActive(e.target.checked)} />
-          Active — visitors landing on the site without a <code>?profile=</code> link see the first active profile
+          Active: visitors landing on the site without a <code>?profile=</code> link see the first active profile
         </label>
       </fieldset>
 
@@ -340,7 +340,7 @@ export function ProjectForm({ project, profiles, onSave, onCancel, saving }: {
           <div className="cms-field">
             <label htmlFor="pj-id">Project ID</label>
             <input id="pj-id" value={form.id} onChange={(e) => set('id', e.target.value)} placeholder="e.g. paysika_default" required disabled={!isNew} />
-            {!isNew && <p className="cms-field__hint">The ID can't change once created — it's part of the project URL.</p>}
+            {!isNew && <p className="cms-field__hint">The ID can't change once created; it's part of the project URL.</p>}
           </div>
           <div className="cms-field">
             <label htmlFor="pj-profile">Profile</label>
@@ -401,7 +401,7 @@ export function ProjectForm({ project, profiles, onSave, onCancel, saving }: {
       </fieldset>
 
       <fieldset className="cms-form__section">
-        <legend>Story — challenge, solution, result</legend>
+        <legend>Story: challenge, solution, result</legend>
         <MarkdownEditor label="Overview (short description)" value={form.description} onChange={(v) => set('description', v)} rows={3} />
         <div className="cms-form__grid">
           <div className="cms-field">
@@ -531,8 +531,8 @@ export function BlogForm({ post, profiles, onSave, onCancel, saving }: {
               disabled={!isNew}
             />
             {isNew
-              ? <p className="cms-field__hint">Auto-generated from the title — edit to customize.</p>
-              : <p className="cms-field__hint">The ID can't change once created — it's part of the post URL.</p>}
+              ? <p className="cms-field__hint">Auto-generated from the title; edit to customize.</p>
+              : <p className="cms-field__hint">The ID can't change once created; it's part of the post URL.</p>}
           </div>
           <div className="cms-field">
             <label htmlFor="bp-profile">Profile</label>

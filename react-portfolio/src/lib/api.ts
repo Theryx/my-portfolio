@@ -103,10 +103,10 @@ if (!fallbackProfiles.default) {
     tagline: 'I design and build user-centric digital products.',
     hero_title: 'Product Designer & Builder',
     hero_subtitle:
-      'I design and ship digital products end to end — UX, interface, and code. Led design at PaySika, co-founded ventures, and build in the open. Based in Cameroon.',
+      'I design and ship digital products end to end: UX, interface, and code. Led design at PaySika, co-founded ventures, and build in the open. Based in Cameroon.',
     philosophy_title: 'I design experiences that bridge technology and human needs.',
     philosophy_text:
-      'I work across design and engineering to turn ideas into products people trust. Four years leading design at PaySika, plus co-founding ventures and shipping code, taught me that the strongest products come from one person owning the whole loop — research, interface, and implementation.',
+      'I work across design and engineering to turn ideas into products people trust. Four years leading design at PaySika, plus co-founding ventures and shipping code, taught me that the strongest products come from one person owning the whole loop: research, interface, and implementation.',
     badges: ['Design · Engineering · Product'],
     social_links: {},
     about_content: {
@@ -115,7 +115,7 @@ if (!fallbackProfiles.default) {
         {
           question: 'How do you approach building a product?',
           answer:
-            "Honestly I'm not sure I have a fixed process. Ok I would say it depends. Sometimes rough, sometimes straight to the point — from research and interface through to the code. The truth is that books say one thing but reality says otherwise.",
+            "Honestly I'm not sure I have a fixed process. Ok I would say it depends. Sometimes rough, sometimes straight to the point, from research and interface through to the code. The truth is that books say one thing but reality says otherwise.",
         },
         {
           question: 'Are you open to speaking engagements?',

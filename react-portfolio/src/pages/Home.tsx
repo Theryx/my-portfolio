@@ -189,7 +189,7 @@ export default function Home() {
                   <p className="bento-card__text">
                     {profile.hero_title ? (
                       <>
-                        I am <strong>Ndouken Theryx</strong> — <strong>{profile.hero_title}</strong>. {profile.hero_subtitle}
+                        I am <strong>Ndouken Theryx</strong>, <strong>{profile.hero_title}</strong>. {profile.hero_subtitle}
                       </>
                     ) : (
                       <>

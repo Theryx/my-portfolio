@@ -440,7 +440,7 @@ export default function Admin() {
                   </select>
                 </div>
                 <p className="cms-list-header__hint" style={{ margin: 0 }}>
-                  Editing the <strong>{section === 'home' ? 'Home' : 'About'}</strong> page for this profile — saves to that profile only.
+                  Editing the <strong>{section === 'home' ? 'Home' : 'About'}</strong> page for this profile; saves to that profile only.
                 </p>
               </div>
               {selectedProfile ? (
@@ -469,7 +469,7 @@ export default function Admin() {
             <section aria-label="Profiles">
               <div className="cms-list-header">
                 <p className="cms-list-header__hint">
-                  Each profile is a complete persona — its own hero, philosophy, projects, and posts.
+                  Each profile is a complete persona: its own hero, philosophy, projects, and posts.
                   Share one with <code>?profile=&lt;id&gt;</code>.
                 </p>
                 <button className="cms-btn cms-btn--primary" onClick={() => setEditing({ kind: 'profile', item: null })}>
@@ -708,7 +708,7 @@ function Dashboard({ profiles, projects, posts, onNavigate, onSynced, addToast }
       const result = await syncContentToDatabase((msg) => setSyncLog((l) => [...l, msg]));
       setSyncResult(result);
       if (result.errors.length === 0) {
-        addToast(`Sync complete — ${result.updated.length} updated, ${result.created.length} created`, 'success');
+        addToast(`Sync complete: ${result.updated.length} updated, ${result.created.length} created`, 'success');
       } else {
         addToast(`Sync finished with ${result.errors.length} error(s)`, 'error');
       }
@@ -748,7 +748,7 @@ function Dashboard({ profiles, projects, posts, onNavigate, onSynced, addToast }
         <p>
           Imports the case studies and blog content bundled in the code into the database, so
           everything becomes editable here. It only fills fields that are currently empty in the
-          database — nothing you've already edited in the CMS is overwritten. Safe to run any time.
+          database; nothing you've already edited in the CMS is overwritten. Safe to run any time.
         </p>
         <button className="cms-btn cms-btn--primary" onClick={runSync} disabled={syncing}>
           {syncing ? 'Syncing…' : 'Sync content to database'}
@@ -759,7 +759,7 @@ function Dashboard({ profiles, projects, posts, onNavigate, onSynced, addToast }
             {syncResult && (
               <div className="cms-sync-log__summary">
                 {syncResult.errors.length === 0
-                  ? <><CheckCircle2 size={14} aria-hidden="true" /> Done — {syncResult.updated.length} updated, {syncResult.created.length} created, {syncResult.skipped.length} already in sync.</>
+                  ? <><CheckCircle2 size={14} aria-hidden="true" /> Done: {syncResult.updated.length} updated, {syncResult.created.length} created, {syncResult.skipped.length} already in sync.</>
                   : <><AlertTriangle size={14} aria-hidden="true" /> {syncResult.errors.length} failed: {syncResult.errors.map((e) => e.id).join(', ')}</>}
               </div>
             )}
