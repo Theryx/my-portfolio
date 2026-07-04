@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import ProfileLink from '../components/ProfileLink';
 import { PageTransition } from '../components/PageTransition';
 import { useProfile } from '../context/ProfileContext';
 import { blogImageMap } from '../data/blog';
@@ -47,7 +47,7 @@ export default function Blog() {
                   const isFeatured = index === 0;
                   return (
                     <motion.div key={post.id} variants={tileVariants} className={isFeatured ? 'blog-card-wrap--featured' : ''}>
-                      <Link to={`/blog/${post.id}`} className={`blog-card ${isFeatured ? 'blog-card--featured' : ''}`}>
+                      <ProfileLink to={`/blog/${post.id}`} className={`blog-card ${isFeatured ? 'blog-card--featured' : ''}`}>
                         {isFeatured && <span className="blog-card__latest">Latest</span>}
                         <div className="blog-card__image">
                           <img
@@ -77,7 +77,7 @@ export default function Blog() {
                           </div>
                           <span className="blog-card__cta">Read More <span className="blog-card__cta-arrow">→</span></span>
                         </div>
-                      </Link>
+                      </ProfileLink>
                     </motion.div>
                   );
                 })}

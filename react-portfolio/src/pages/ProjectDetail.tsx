@@ -1,4 +1,5 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import ProfileLink from '../components/ProfileLink';
 import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -93,9 +94,9 @@ export default function ProjectDetail() {
       <PageTransition>
         <div className="container" style={{ padding: '120px 0', textAlign: 'center' }}>
           <h1>Project not found</h1>
-          <Link to="/projects" className="btn btn--primary" style={{ marginTop: '20px' }}>
+          <ProfileLink to="/projects" className="btn btn--primary" style={{ marginTop: '20px' }}>
             Back to Projects
-          </Link>
+          </ProfileLink>
         </div>
       </PageTransition>
     );
@@ -115,10 +116,10 @@ export default function ProjectDetail() {
       <ReadingProgress />
       <article className="project-detail">
         <div className="container">
-          <Link to="/projects" className="project-detail__back">
+          <ProfileLink to="/projects" className="project-detail__back">
             <ArrowLeft size={20} />
             Back to Projects
-          </Link>
+          </ProfileLink>
 
           <header className="project-detail__header">
             <span className="project-detail__tag">{project.tag}</span>
@@ -477,10 +478,10 @@ export default function ProjectDetail() {
 
           <footer className="project-detail__footer">
             <div className="project-detail__navigation">
-              <Link to="/projects" className="project-detail__nav-btn">
+              <ProfileLink to="/projects" className="project-detail__nav-btn">
                 <ArrowLeft size={20} />
                 All Projects
-              </Link>
+              </ProfileLink>
             </div>
           </footer>
         </div>

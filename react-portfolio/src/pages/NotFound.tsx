@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import ProfileLink from '../components/ProfileLink';
 import { PageTransition } from '../components/PageTransition';
 import { ArrowLeft } from 'lucide-react';
 
@@ -13,10 +13,10 @@ export default function NotFound() {
             <p className="not-found__text">
               The page you're looking for may have been moved, renamed, or never existed.
             </p>
-            <Link to="/" className="btn btn--primary">
+            <ProfileLink to="/" className="btn btn--primary">
               <ArrowLeft size={20} />
               Go Home
-            </Link>
+            </ProfileLink>
           </div>
         </div>
       </div>

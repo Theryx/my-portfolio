@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import ProfileLink from '../components/ProfileLink';
 import { PageTransition } from '../components/PageTransition';
 import { useProfile } from '../context/ProfileContext';
 import { projectImageMap } from '../data/projects';
@@ -51,7 +51,7 @@ export default function Projects() {
                   const isFeatured = index === 0;
                   return (
                     <motion.div key={project.id} variants={tileVariants} className={isFeatured ? 'project-card-wrap--featured' : ''}>
-                      <Link
+                      <ProfileLink
                         to={`/projects/${project.id}`}
                         className={`project-card ${isFeatured ? 'project-card--featured' : ''}`}
                       >
@@ -81,7 +81,7 @@ export default function Projects() {
 
                           <span className="project-card__cta">View Case Study <span className="project-card__cta-arrow">→</span></span>
                         </div>
-                      </Link>
+                      </ProfileLink>
                     </motion.div>
                   );
                 })}

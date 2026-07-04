@@ -1,9 +1,10 @@
 import type { ReactNode } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import myProfile from '../assets/img/My profile.jfif';
 import { useProfile } from '../context/ProfileContext';
+import ProfileLink from './ProfileLink';
 
 const DEFAULT_RESUME_URL = 'https://drive.google.com/open?id=1OzU-HPN-l2s9Le4iSFd44F6PK4Z0W6bp&usp=drive_fs';
 
@@ -45,22 +46,22 @@ export default function Layout({ children }: LayoutProps) {
     <div className="layout">
       <header className="header">
         <div className="container header__inner">
-          <Link to="/" onClick={closeMenu} className="header__logo" aria-label="Ndouken Theryx - Home">
+          <ProfileLink to="/" onClick={closeMenu} className="header__logo" aria-label="Ndouken Theryx - Home">
             <img src={myProfile} alt="Ndouken Theryx" className="header__logo-img" />
-          </Link>
+          </ProfileLink>
 
           <nav className="header__nav desktop-nav" aria-label="Main navigation">
             {NAV_LINKS.map(link => {
               const active = location.pathname === link.to;
               return (
-                <Link
+                <ProfileLink
                   key={link.to}
                   to={link.to}
                   className={`header__nav-link ${active ? 'header__nav-link--active' : ''}`}
                   aria-current={active ? 'page' : undefined}
                 >
                   {link.label}
-                </Link>
+                </ProfileLink>
               );
             })}
           </nav>
@@ -89,7 +90,7 @@ export default function Layout({ children }: LayoutProps) {
         <div className="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
           <nav className="mobile-menu__nav" aria-label="Main navigation">
             {NAV_LINKS.map(link => (
-              <Link
+              <ProfileLink
                 key={link.to}
                 to={link.to}
                 onClick={closeMenu}
@@ -97,7 +98,7 @@ export default function Layout({ children }: LayoutProps) {
                 aria-current={location.pathname === link.to ? 'page' : undefined}
               >
                 {link.label}
-              </Link>
+              </ProfileLink>
             ))}
             <button className="mobile-menu__theme-btn" onClick={toggleTheme} aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}>
               {isDark ? <Sun size={24} /> : <Moon size={24} />}

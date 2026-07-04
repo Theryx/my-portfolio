@@ -1,4 +1,5 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import ProfileLink from '../components/ProfileLink';
 import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -54,9 +55,9 @@ export default function BlogPostDetail() {
       <PageTransition>
         <div className="container" style={{ padding: '120px 0', textAlign: 'center' }}>
           <h1>Post not found</h1>
-          <Link to="/blog" className="btn btn--primary" style={{ marginTop: '20px' }}>
+          <ProfileLink to="/blog" className="btn btn--primary" style={{ marginTop: '20px' }}>
             Back to Blog
-          </Link>
+          </ProfileLink>
         </div>
       </PageTransition>
     );
@@ -69,10 +70,10 @@ export default function BlogPostDetail() {
       <ReadingProgress />
       <article className="blog-detail">
         <div className="container">
-          <Link to="/blog" className="blog-detail__back">
+          <ProfileLink to="/blog" className="blog-detail__back">
             <ArrowLeft size={20} />
             Back to Blog
-          </Link>
+          </ProfileLink>
 
           <header className="blog-detail__header">
             <div className="blog-detail__tags">
@@ -171,10 +172,10 @@ export default function BlogPostDetail() {
 
           <footer className="blog-detail__footer">
             <div className="blog-detail__navigation">
-              <Link to="/blog" className="blog-detail__nav-btn">
+              <ProfileLink to="/blog" className="blog-detail__nav-btn">
                 <ArrowLeft size={20} />
                 All Posts
-              </Link>
+              </ProfileLink>
             </div>
           </footer>
         </div>

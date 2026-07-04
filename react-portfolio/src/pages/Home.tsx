@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import ProfileLink from '../components/ProfileLink';
 import { motion, useReducedMotion } from 'framer-motion';
 import { PageTransition } from '../components/PageTransition';
 import { useProfile } from '../context/ProfileContext';
@@ -252,7 +252,7 @@ export default function Home() {
             {/* Featured project — 2x1 */}
             {featuredProject && (
               <motion.div variants={tileVariants} {...playful} className="bento-card bento-card--featured" {...hoverable('see the case study')}>
-                <Link to={`/projects/${featuredProject.id}`} className="bento-card__featured-link" aria-label={`Featured project: ${featuredProject.title}`}>
+                <ProfileLink to={`/projects/${featuredProject.id}`} className="bento-card__featured-link" aria-label={`Featured project: ${featuredProject.title}`}>
                   <div className="bento-card__featured-text">
                     <span className="bento-card__mini-label">Featured work</span>
                     <span className="bento-card__featured-title">
@@ -275,7 +275,7 @@ export default function Home() {
                       loading="eager"
                     />
                   )}
-                </Link>
+                </ProfileLink>
               </motion.div>
             )}
 
@@ -295,13 +295,13 @@ export default function Home() {
             {/* Latest blog post — 2x1 */}
             {latestPost && (
               <motion.div variants={tileVariants} {...playful} className="bento-card bento-card--post" {...hoverable('read the article')}>
-                <Link to={`/blog/${latestPost.id}`} className="bento-card__featured-link" aria-label={`Latest article: ${latestPost.title}`}>
+                <ProfileLink to={`/blog/${latestPost.id}`} className="bento-card__featured-link" aria-label={`Latest article: ${latestPost.title}`}>
                   <div className="bento-card__featured-text">
                     <span className="bento-card__mini-label"><Newspaper size={14} aria-hidden="true" /> Latest writing</span>
                     <span className="bento-card__featured-title">{latestPost.title} <ArrowUpRight size={18} aria-hidden="true" /></span>
                     <span className="bento-card__metric-caption">{latestPost.read_time}</span>
                   </div>
-                </Link>
+                </ProfileLink>
               </motion.div>
             )}
 
