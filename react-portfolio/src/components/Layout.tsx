@@ -27,6 +27,7 @@ export default function Layout({ children }: LayoutProps) {
     return !window.matchMedia('(prefers-color-scheme: light)').matches;
   });
   const location = useLocation();
+  const isAdmin = location.pathname.startsWith('/admin');
   const { profile } = useProfile();
   const resumeUrl = profile?.social_links?.resume || DEFAULT_RESUME_URL;
   const contactEmail = profile?.social_links?.email || 'ndouken@gmail.com';
@@ -114,41 +115,43 @@ export default function Layout({ children }: LayoutProps) {
 
       <footer className="footer footer--bento">
         <div className="container">
-          <div className="footer__cta">
-            <h2 className="footer__cta-title">
-              Let's build something <em>people trust</em>.
-            </h2>
-            <div className="footer__cta-actions">
-              <button
-                type="button"
-                className="btn btn--primary"
-                onClick={() => {
-                  navigator.clipboard.writeText(contactEmail);
-                  setEmailCopied(true);
-                  setTimeout(() => setEmailCopied(false), 2000);
-                }}
-              >
-                {emailCopied ? 'Email copied ✓' : 'Copy my email'}
-              </button>
-              <a
-                href={linkedinUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn--secondary"
-              >
-                LinkedIn
-              </a>
-              <a
-                href={resumeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn--secondary"
-                aria-label="Download CV / Resume (PDF)"
-              >
-                View CV
-              </a>
+          {!isAdmin && (
+            <div className="footer__cta">
+              <h2 className="footer__cta-title">
+                Let's build something <em>people trust</em>.
+              </h2>
+              <div className="footer__cta-actions">
+                <button
+                  type="button"
+                  className="btn btn--primary"
+                  onClick={() => {
+                    navigator.clipboard.writeText(contactEmail);
+                    setEmailCopied(true);
+                    setTimeout(() => setEmailCopied(false), 2000);
+                  }}
+                >
+                  {emailCopied ? 'Email copied ✓' : 'Copy my email'}
+                </button>
+                <a
+                  href={linkedinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn--secondary"
+                >
+                  LinkedIn
+                </a>
+                <a
+                  href={resumeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn--secondary"
+                  aria-label="Download CV / Resume (PDF)"
+                >
+                  View CV
+                </a>
+              </div>
             </div>
-          </div>
+          )}
           <div className="footer__meta">
             <p className="footer__text">
               &copy; {new Date().getFullYear()} Ndouken Theryx. All rights reserved.
