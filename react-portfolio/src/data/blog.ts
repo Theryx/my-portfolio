@@ -34,7 +34,7 @@ OSS Cameroon also exists to promote the talent and know-how of Cameroonians by u
 ### What is a maintainer?
 At OSS Cameroon, I’m one of the maintainers of a project called **jobsika.cm**, but what is an open source maintainer? We can talk about what it means to maintain an open source project another day in another blog, but I just want to touch on it so that you don’t feel confused.
 
-> “Maintainers are the conductors of an open source project orchestra,” — *Steven J. Vaughan-Nichols*. “If a bug hasn't been fixed by a developer, they'll fix it. If the code hasn't been reviewed, they'll review it. And, with large projects like Linux, there are often hundreds of code patches, which need to be maintained a week.”
+> “Maintainers are the conductors of an open source project orchestra,” says *Steven J. Vaughan-Nichols*. “If a bug hasn't been fixed by a developer, they'll fix it. If the code hasn't been reviewed, they'll review it. And, with large projects like Linux, there are often hundreds of code patches, which need to be maintained a week.”
 
 ---
 
@@ -86,7 +86,7 @@ Aaaaaand… that's it! You have just completed your contribution to an open sour
 
 Before concluding this section, I must say that contributing to an open source project is not exactly the same for every project. Every project defines its own contribution rules and processes. As a general rule, you should always read the documentation of each project to know how to submit your contribution.
 
-Also, some projects may limit the extent to which you can contribute. Lastly, your contribution could take some time to be implemented, reviewed, or merged. Sometimes maintainers may consider your contribution as less important and not give it immediate attention. It is important to know that, but that should not kill your energy—go for it!
+Also, some projects may limit the extent to which you can contribute. Lastly, your contribution could take some time to be implemented, reviewed, or merged. Sometimes maintainers may consider your contribution as less important and not give it immediate attention. It is important to know that, but that should not kill your energy, so go for it!
 
 ---
 
@@ -159,7 +159,7 @@ If I had to pay for Illustrator and use it for one year, it will cost me **USD 2
 
 ![Adobe Illustrator Annual Pricing Plan Screenshot](illustrator_pricing_plan.png)
 
-On the other hand, Affinity Designer costs **USD 49.99 (approx. XAF 27,200)** for the Mac and Windows app. There is no subscription—you own the app for life, and all minor updates are free.
+On the other hand, Affinity Designer costs **USD 49.99 (approx. XAF 27,200)** for the Mac and Windows app. There is no subscription: you own the app for life, and all minor updates are free.
 
 ![Affinity Designer App Store Screenshot](affinity_pricing_plan.png)
 

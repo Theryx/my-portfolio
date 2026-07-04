@@ -56,7 +56,7 @@ To synchronize product development and marketing cycles, I designed two core wor
 *   **Design-to-Engineering**: Rebuilt our developer handoff in Figma. I documented edge cases, interaction states, and design system variables, reducing layout errors and developer back-and-forth during sprint implementation.
 
 ### Designed End-to-End Mobile App
-I architected the core user journeys from the ground up, focusing on a frictionless and intuitive experience. This included the complete onboarding flow, a seamless KYC verification pipeline, and the digital card management experience—all strictly designed to operate efficiently even in fluctuating network environments.
+I architected the core user journeys from the ground up, focusing on a frictionless and intuitive experience. This included the complete onboarding flow, a seamless KYC verification pipeline, and the digital card management experience, all strictly designed to operate efficiently even in fluctuating network environments.
 
 ### Led Physical Debit Card Experience & Packaging
 I directed the physical debit card design and its accompanying custom unboxing packaging. I worked directly with the card manufacturer to select materials that made the card feel like a premium, banking-grade asset while maintaining our vibrant fintech brand identity.
@@ -83,7 +83,7 @@ By acting as a bridge between design, tech, and business, I helped establish a c
     title: 'Jobsika',
     tagline: 'Connecting Cameroonian job seekers with local opportunities.',
     image: 'Screenshot of the UI of Jobsika.PNG',
-    description: 'At OSS Cameroon (Open Source Society Cameroon), I serve as co-maintainer and design lead for jobsika.cm—a community-driven platform. I established the visual guidelines, designed low-friction workflows, and spearheaded open-source design contributions.',
+    description: 'At OSS Cameroon (Open Source Society Cameroon), I serve as co-maintainer and design lead for jobsika.cm, a community-driven platform. I established the visual guidelines, designed low-friction workflows, and spearheaded open-source design contributions.',
     impact: 'Helping job seekers find opportunities across Cameroon.',
     site: 'https://jobsika.cm/',
     role: 'Co-maintainer & Design Lead (Open Source)',
@@ -120,7 +120,7 @@ By acting as a bridge between design, tech, and business, I helped establish a c
       'Crafted the brand identity and visual design language'
     ],
     challenge: 'The Challenge',
-    challengeText: 'Our startup Kody needed to build Shomi—a highly engaging educational platform for secondary school students in Cameroon, taking into account limited smartphone access at home and complex local payment integration.',
+    challengeText: 'Our startup Kody needed to build Shomi, a highly engaging educational platform for secondary school students in Cameroon, taking into account limited smartphone access at home and complex local payment integration.',
     solution: 'The Solution',
     solutionText: 'As the UI/UX designer on our lean two-person team at Kody, I designed Shomi as a mobile-first experience with a clean layout, offline-first study materials, and interactive booklet features, collaborating closely with the Tech Engineer.',
     result: 'The Result',
@@ -285,7 +285,7 @@ Although the app was eventually shut down after a year due to retention and cont
       'Conducted interactive design handoffs with engineering teams, ensuring visual fidelity and responsive layouts'
     ],
     challenge: 'The Challenge',
-    challengeText: 'Matanga\'s diverse client portfolio required highly tailored digital transformations—ranging from early-stage fintech MVPs to established e-commerce systems—demanding rapid, pixel-perfect design execution without existing brand guidelines.',
+    challengeText: 'Matanga\'s diverse client portfolio required highly tailored digital transformations, ranging from early-stage fintech MVPs to established e-commerce systems, demanding rapid, pixel-perfect design execution without existing brand guidelines.',
     solution: 'The Solution',
     solutionText: 'I acted as a plug-and-play design leader, auditing client briefs, defining visual design languages from scratch, and shipping responsive web and mobile interfaces. I leveraged Component Libraries in Figma to enable rapid iterations and maintain a unified design system.',
     result: 'The Result',
