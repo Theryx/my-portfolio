@@ -19,7 +19,7 @@ async function handleRequest(req: VercelRequest, res: VercelResponse) {
     const { profile_id } = req.query as { profile_id?: string };
     const isAdmin = verifyAuth(req);
 
-    if (profile_id && !isAdmin) {
+    if (profile_id) {
       const rows = await sql`
         SELECT * FROM blog_posts
         WHERE profile_id = ${profile_id} AND is_hidden = false
@@ -29,9 +29,7 @@ async function handleRequest(req: VercelRequest, res: VercelResponse) {
     }
 
     if (isAdmin) {
-      const rows = profile_id
-        ? await sql`SELECT * FROM blog_posts WHERE profile_id = ${profile_id} ORDER BY sort_order ASC`
-        : await sql`SELECT * FROM blog_posts ORDER BY sort_order ASC`;
+      const rows = await sql`SELECT * FROM blog_posts ORDER BY sort_order ASC`;
       return res.status(200).json(rows);
     }
 
