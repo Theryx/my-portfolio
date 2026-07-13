@@ -473,7 +473,7 @@ export default function ProjectDetail() {
 
 
 
-            {project.content && (
+            {project.content && !isPaySikaBrand && (
               <section className="project-detail__section project-detail__full-content">
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
