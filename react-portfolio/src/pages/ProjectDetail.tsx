@@ -24,6 +24,13 @@ import paysikaProcessDocs1 from '../assets/img/paysika/paysika-process-docs1.png
 import paysikaProcessDocs2 from '../assets/img/paysika/paysika-process-docs2.png';
 import paysikaMockup from '../assets/img/paysika_mockup.png';
 
+// Brand Designer profile — PaySika brand ownership assets
+import paysikaBrandGuide from '../assets/img/paysika/brand/brand-guide.png';
+import paysikaDesignSystem from '../assets/img/paysika/brand/design-system.png';
+import paysikaDesignFiles from '../assets/img/paysika/brand/design-files.png';
+import paysikaPresentations from '../assets/img/paysika/brand/presentations.webp';
+import paysikaMarketingSurfaces from '../assets/img/paysika/brand/marketing-surfaces.webp';
+
 const paysikaProcessArtifacts = [
   {
     title: 'Design system and team process',
@@ -49,6 +56,39 @@ const paysikaProcessArtifacts = [
     title: 'Usability testing archive',
     description: 'I conducted usability tests, creating the consent forms, scripts, observer guides, reports, and recordings.',
     image: paysikaResearchArchive,
+  },
+];
+
+// Brand Designer profile — the system behind a consistent brand
+const paysikaBrandSystemArtifacts = [
+  {
+    title: 'PaySika brand guide',
+    description: 'The rules in one place: typography (Muli + AmpleSoft Pro), the colour system (a blue-to-green gradient over #00B0F4 and #00CC92 on deep navy), logo usage, iconography, and layout.',
+    image: paysikaBrandGuide,
+  },
+  {
+    title: 'PaySika design system',
+    description: 'The rules turned into reusable Figma components, text styles, and colour styles, the single source product and marketing both build from.',
+    image: paysikaDesignSystem,
+  },
+  {
+    title: 'Organised design files',
+    description: 'The file structure behind the system: onboarding, card, KYC, language, backoffice, and more, all versioned and named so the current asset is the one people find.',
+    image: paysikaDesignFiles,
+  },
+];
+
+// Brand Designer profile — one identity from product to marketing
+const paysikaBrandSurfaceArtifacts = [
+  {
+    title: 'On-brand presentation library',
+    description: 'Pitch and business-case decks built from shared, AI-friendly templates, so stakeholder and AI-generated decks stayed on-brand without me policing every slide.',
+    image: paysikaPresentations,
+  },
+  {
+    title: 'One brand across surfaces',
+    description: 'The same identity from the mobile app to Facebook and social campaigns to slide decks: one promise, one look, no matter the touchpoint.',
+    image: paysikaMarketingSurfaces,
   },
 ];
 
@@ -103,6 +143,7 @@ export default function ProjectDetail() {
   }
 
   const isPaySika = project.id === 'paysika' || project.id.startsWith('paysika_');
+  const isPaySikaBrand = project.id === 'paysika_brand-designer';
   const isCrowdRemit = project.id.startsWith('crowdremit');
   const imageSrc = isPaySika ? paysikaMockup : projectImageMap[project.image];
   const heroCaption = isPaySika 
@@ -240,7 +281,93 @@ export default function ProjectDetail() {
               </section>
             )}
 
-            {isPaySika && (
+            {isPaySikaBrand && (
+              <>
+                <section className="project-detail__section paysika-story">
+                  <div className="paysika-story__intro">
+                    <span className="paysika-story__eyebrow">Brand ownership</span>
+                    <h2>One brand, every touchpoint</h2>
+                    <p>
+                      I owned the PaySika visual identity across digital products and marketing: one brand guide, one design system, applied consistently from the app to the ad to the pitch deck.
+                    </p>
+                  </div>
+
+                  <div className="paysika-story__stats">
+                    <div className="paysika-story__stat">
+                      <FileText size={22} />
+                      <strong>Brand guide</strong>
+                      <span>Typography, colour, logo, iconography, and layout rules in one living source of truth.</span>
+                    </div>
+                    <div className="paysika-story__stat">
+                      <Users size={22} />
+                      <strong>Design system</strong>
+                      <span>Reusable components and styles feeding product and marketing from the same parts.</span>
+                    </div>
+                    <div className="paysika-story__stat">
+                      <Award size={22} />
+                      <strong>Consistency</strong>
+                      <span>Reviewed journeys, campaigns, and decks so every surface shipped on-brand.</span>
+                    </div>
+                  </div>
+                </section>
+
+                <section className="project-detail__section paysika-process">
+                  <div className="paysika-process__header">
+                    <span className="paysika-story__eyebrow">The system</span>
+                    <h2>One source of truth</h2>
+                    <p>
+                      The brand guide held the rules; the design system turned them into reusable parts. Together they let every team build on-brand without reinventing it.
+                    </p>
+                  </div>
+                  <div className="paysika-process__grid">
+                    {paysikaBrandSystemArtifacts.map((artifact) => (
+                      <article className="paysika-process__item" key={artifact.title}>
+                        <img
+                          src={artifact.image}
+                          alt={artifact.title}
+                          loading="lazy"
+                          {...lightboxTrigger(() => handleImageClick(artifact.image, `${artifact.title} - ${artifact.description}`), `Enlarge: ${artifact.title}`)}
+                          style={{ cursor: 'pointer' }}
+                        />
+                        <div>
+                          <h3>{artifact.title}</h3>
+                          <p>{artifact.description}</p>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+
+                <section className="project-detail__section paysika-process">
+                  <div className="paysika-process__header">
+                    <span className="paysika-story__eyebrow">On-brand everywhere</span>
+                    <h2>From product to marketing</h2>
+                    <p>
+                      The same identity across the app, Facebook and social campaigns, and stakeholder-ready pitch decks. On-brand presentation templates meant even AI-generated decks stayed consistent.
+                    </p>
+                  </div>
+                  <div className="paysika-process__grid">
+                    {paysikaBrandSurfaceArtifacts.map((artifact) => (
+                      <article className="paysika-process__item" key={artifact.title}>
+                        <img
+                          src={artifact.image}
+                          alt={artifact.title}
+                          loading="lazy"
+                          {...lightboxTrigger(() => handleImageClick(artifact.image, `${artifact.title} - ${artifact.description}`), `Enlarge: ${artifact.title}`)}
+                          style={{ cursor: 'pointer' }}
+                        />
+                        <div>
+                          <h3>{artifact.title}</h3>
+                          <p>{artifact.description}</p>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              </>
+            )}
+
+            {isPaySika && !isPaySikaBrand && (
               <>
                 <section className="project-detail__section paysika-story">
                   <div className="paysika-story__intro">
