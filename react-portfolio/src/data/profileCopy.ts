@@ -10,8 +10,8 @@
 //      are NOT overwritten, so any field already edited in the CMS is safe.
 //
 // Profile ids covered: fintech, design-engineer, digital-marketing,
-// project-manager. The `default` profile is intentionally absent — the owner
-// has already curated it.
+// project-manager, brand-designer. The `default` profile is intentionally
+// absent — the owner has already curated it.
 
 import type { Profile, Project, BlogPost } from '../lib/api';
 
@@ -1062,6 +1062,248 @@ The content moat question, *can we keep this product fed sustainably at our team
   },
 };
 
+// ─── brand-designer ──────────────────────────────────────────────────────
+
+const brandDesignerPreset: ProfilePreset = {
+  profile: {
+    name: 'Brand Designer',
+    is_active: false,
+    bio:
+      'Brand Designer who owns visual identity end to end for African fintech: brand systems, reusable asset libraries, and accessible design language across mobile, web, and print.',
+    tagline: 'A brand is a promise kept on every screen.',
+    hero_title: 'Brand Designer',
+    hero_subtitle:
+      'Four years shaping and safeguarding the PaySika brand across mobile, web, developer surfaces, and physical cards. I build brand systems, reusable asset kits, and an accessible visual language that reads as trust, simplicity, and reliability in French and English.',
+    philosophy_title: 'Consistency is what turns a logo into a brand.',
+    philosophy_text:
+      'A brand is not the logo, it is the thousandth touchpoint looking like the first. My job is to define the visual system (type, colour, iconography, imagery, motion) once, document it clearly, and make the right choice the easy choice for every team that touches a customer. Every expression should quietly say the same thing: this is trustworthy, simple, and built to last.',
+    badges: ['Open to Brand Designer roles', 'Brand systems · Accessibility · FR/EN'],
+    social_links: {},
+  },
+  social_links: commonLinks({
+    now: 'Building a brand hub and reusable asset kits for a Central African fintech',
+    projects_intro:
+      'Visual identity, brand systems, and accessible design language shipped across fintech mobile, web, developer, and print surfaces.',
+    blog_intro: 'Notes on brand governance, accessible colour, and keeping a fintech brand consistent as it scales.',
+    metric_label: 'years building fintech brand systems',
+  }),
+  projects: [
+    {
+      id: 'paysika_brand-designer',
+      tag: 'Visual identity · Brand system',
+      title: 'PaySika brand identity',
+      tagline:
+        'Owned the PaySika visual identity across mobile, web, developer surfaces, and physical cards.',
+      image: 'paysika_mockup.png',
+      description:
+        'As Lead Product Designer and founding-team member, I shaped and safeguarded the PaySika brand as it grew from MVP to a multi-product fintech serving thousands of users in Central Africa. I defined the visual system (typography, colour, iconography, imagery), built the reusable asset library that Marketing and Product pulled from, and extended the brand into the physical Visa-partner card and its packaging.',
+      impact: 'A single, documented visual identity applied consistently across every PaySika touchpoint.',
+      site: 'https://www.paysika.co',
+      role: 'Lead Product Designer · Brand Owner',
+      period: 'Dec 2021 - Present',
+      location: 'Douala, Cameroon',
+      responsibilities: [
+        'Defined and maintained the brand system: typography, colour, logo usage, iconography, imagery, and layout',
+        'Built a reusable asset library so Marketing and Product could ship on-brand without a design bottleneck',
+        'Extended the identity into the physical debit card and mailer, working directly with the manufacturer',
+        'Localised brand voice and UI copy across French and English with Claude as a copy partner',
+      ],
+      challenge: 'The Challenge',
+      challenge_text:
+        'PaySika needed to look and feel like one trustworthy institution across a growing set of surfaces (app, web, developer portal, ad creative, physical card) while a small team shipped fast. Without a shared system, every new surface drifted a little further from the last.',
+      solution: 'The Solution',
+      solution_text:
+        'I built one brand system and made it the easy default. Semantic tokens for colour and type, a documented logo and iconography set, and a self-serve asset library meant any team could produce on-brand work without waiting on design. Every brand expression was checked against the same promise: trust, simplicity, reliability.',
+      result: 'The Result',
+      result_text:
+        'A consistent identity from the first ad a user sees to the card that arrives in the mail, and an asset pipeline that let Marketing and Product move without breaking the brand.',
+      is_hidden: false,
+      sort_order: 0,
+      content: `## Owning the PaySika brand
+
+### One system, every surface
+The unlock was treating the brand as a system, not a set of files. I defined semantic colour and type tokens, a logo-usage spec, an iconography set, and imagery guidelines, then documented them where every team could find them. The rule I held: the on-brand choice has to be the easy choice, or consistency will always lose to deadlines.
+
+### A self-serve asset library
+Before, Marketing waited on design for every campaign asset. I built a brand-approved library (logos, lockups, type lockups, photo treatments, templates) that Marketing and Product could pull from directly. Velocity in both teams went up and the brand stopped drifting between departments.
+
+### Brand into the physical world
+I extended the identity into the physical Visa-partner card and its mailer, working directly with the manufacturer on substrate, finish, and emboss placement. The mailer was designed so the first thing a user sees on opening is the card itself, framed against a brand-colour insert. The same brand promise, now in the hand.
+
+### One brand voice, two languages
+I localised brand voice and UI copy across French and English, using Claude to draft French variants that our francophone team edited. A bilingual audience should never feel like it is reading a translation of someone else's brand.`,
+    },
+    {
+      id: 'crowdremit_brand-designer',
+      tag: 'Accessible brand · WCAG',
+      title: 'CrowdRemit accessible brand',
+      tagline: 'Rebranded the primary colour after WCAG testing exposed a contrast failure on CTAs.',
+      image: 'crowdremit_mockup.png',
+      description:
+        'As UX Researcher and Product Designer, I built the CrowdRemit visual identity and design system across iOS, Android, web, and dashboard, then led a brand-level decision to rebrand the primary colour after WCAG contrast testing showed it failed on buttons. Accessibility drove a core brand choice, not the other way around.',
+      impact: 'A brand identity that passes WCAG AA contrast on every CTA across four surfaces.',
+      site: '',
+      role: 'UX Researcher & Product Designer',
+      period: 'Jan 2021 - Jun 2021',
+      location: 'Nigeria (remote)',
+      responsibilities: [
+        'Built the visual identity and design system: colour, type, iconography, and components',
+        'Tested brand colour against WCAG AA contrast on real CTAs, including with visually-impaired participants',
+        'Led the primary-colour rebrand and re-applied it across mobile, web, and the marketing site',
+        'Documented the system as tokens so engineering could implement the brand consistently',
+      ],
+      challenge: 'The Challenge',
+      challenge_text:
+        'The original CrowdRemit primary colour failed WCAG AA contrast on CTA buttons against the lightest neutral. The brand looked good in a moodboard and excluded real users in production.',
+      solution: 'The Solution',
+      solution_text:
+        'I tested four candidate replacements with a small group of users, including two visually-impaired participants, and picked a high-contrast orange that passes AA on every CTA. Then I re-applied it as a semantic token across all four surfaces and the marketing site so the fix was systemic, not per-screen.',
+      result: 'The Result',
+      result_text:
+        'A brand that passes WCAG AA contrast on every CTA across iOS, Android, web, and dashboard, proving accessibility and a distinctive identity are not a trade-off.',
+      is_hidden: false,
+      sort_order: 1,
+      content: `## Accessibility as a brand decision
+
+CrowdRemit's original primary colour failed WCAG AA contrast on CTA buttons against the lightest neutral. It is easy to treat that as an engineering ticket. I treated it as a brand decision, because the primary colour is the brand, and a brand that excludes users with low vision is not doing its job.
+
+## Testing the replacement
+
+I tested four candidate colours against AA contrast on the actual CTAs, not in isolation, with a small group of users that included two visually-impaired participants. The selected high-contrast orange passes AA on every button in the product and held up across the marketing site.
+
+## Fixing it systemically
+
+The fix lived in one place: a semantic colour token. Changing the token re-applied the new primary across iOS, Android, web, and the dashboard at once. That is the whole argument for tokenised brand systems: a brand-level change should be one edit, not a forty-screen migration.`,
+    },
+    {
+      id: 'matanga_brand-designer',
+      tag: 'Agency · Client branding',
+      title: 'Matanga client brand systems',
+      tagline: 'Built brand systems from scratch for international and Cameroonian agency clients.',
+      image: 'Matanga agancy website.PNG',
+      description:
+        'As Senior UI/UX Consultant (part-time) at Matanga Agency, I defined visual identities and reusable component libraries for clients ranging from early-stage MVPs to established e-commerce, most of whom arrived with no brand system at all.',
+      impact: 'Delivered brand systems and asset libraries for 6+ clients across Central Africa and Europe.',
+      site: 'https://matangaagency.com/fr/',
+      role: 'Senior UI/UX Consultant (Part-time)',
+      period: 'Dec 2022 - Dec 2023',
+      location: 'Cameroon',
+      responsibilities: [
+        'Defined visual language from scratch (type, colour, iconography) where clients had none',
+        'Built reusable component libraries and typography guides per client',
+        'Documented brand usage so client teams could stay consistent after handoff',
+      ],
+      challenge: 'The Challenge',
+      challenge_text:
+        "Matanga's clients ranged from fintech MVPs to mature e-commerce, and most had no existing brand system. Each wanted pixel-perfect, consistent execution across their surfaces.",
+      solution: 'The Solution',
+      solution_text:
+        'I worked as a plug-and-play brand lead: defined the visual language, built a reusable component library and type guide, and documented usage so the client could stay on-brand after I left. The library, not just the deliverable, was the point.',
+      result: 'The Result',
+      result_text:
+        'Delivered brand systems for 6+ client launches and left each with documentation and an asset library their own teams could maintain.',
+      is_hidden: false,
+      sort_order: 2,
+      content: '',
+    },
+  ],
+  blogPosts: [
+    {
+      id: 'brand_hub_fintech',
+      title: 'Building a brand hub that a fast-moving fintech will actually use',
+      excerpt:
+        'A brand guideline nobody opens is decoration. Here is how I built a brand hub at PaySika that Marketing and Product reached for by default.',
+      date: 'June 2, 2026',
+      author: 'Ndouken Theryx',
+      read_time: '6 min read',
+      tags: ['Brand', 'Design systems'],
+      image: 'paysika_mockup.png',
+      is_hidden: false,
+      sort_order: 0,
+      content: `# Building a brand hub that a fast-moving fintech will actually use
+
+Most brand guidelines die the same way: a beautiful 60-page PDF, shared once, opened never. At PaySika I stopped treating the brand as a document and started treating it as a hub, a living, self-serve source of truth that teams reached for because it was faster than not reaching for it.
+
+## The rule: the on-brand choice has to be the easy choice
+
+Consistency loses to deadlines every time you make people choose between them. So the whole design of a brand hub is about removing that choice. If the fastest way to make a campaign asset is to pull an approved template from the hub, the campaign asset will be on-brand. If the fastest way is to eyeball last quarter's file, it won't.
+
+## What went in the hub
+
+- **Tokens, not swatches.** Colour and type as semantic tokens (color/accent/primary, not "the orange"), so a brand change is one edit.
+- **Logo and iconography specs** with clear do and don't examples, because "don't" prevents more drift than "do".
+- **A reusable asset library**: logos, lockups, photo treatments, presentation templates, social and email templates, per team.
+- **Usage documentation** written for the person in a hurry, not the person with an afternoon.
+
+## Governance without becoming a bottleneck
+
+Owning the brand does not mean reviewing every asset. It means building the system so most work is on-brand without review, and reserving review for the high-visibility, high-stakes launches. I reviewed significant initiatives before they shipped; everything else the hub handled on its own.
+
+## The signal it was working
+
+The signal was not compliments on the guidelines. It was Marketing shipping a campaign without opening a design ticket, and it still looking like PaySika. That is when a brand hub has done its job.`,
+    },
+    {
+      id: 'brand_accessible_color',
+      title: 'When your brand colour fails WCAG: an accessibility rebrand story',
+      excerpt:
+        'The CrowdRemit primary colour looked great and failed contrast on every button. Here is how I turned an accessibility failure into a better brand.',
+      date: 'April 25, 2026',
+      author: 'Ndouken Theryx',
+      read_time: '5 min read',
+      tags: ['Brand', 'Accessibility'],
+      image: 'crowdremit_mockup.png',
+      is_hidden: false,
+      sort_order: 1,
+      content: `# When your brand colour fails WCAG: an accessibility rebrand story
+
+Every brand designer eventually meets this moment: the primary colour that looked perfect on the moodboard fails WCAG AA contrast the instant it lands on a real button. At CrowdRemit, that was our colour. Here is what I did, and why I think it made the brand stronger.
+
+## Accessibility is a brand decision, not a bug ticket
+
+It is tempting to hand a contrast failure to engineering as "make the text darker". But the primary colour *is* the brand. A brand colour that excludes users with low vision is a brand that does not keep its promise. So I owned the fix as a brand decision.
+
+## Testing the candidates on real CTAs
+
+I generated four replacement candidates and tested each against AA contrast on the actual call-to-action buttons, not in a swatch grid. I ran it past a small group of users including two visually-impaired participants. The winner, a high-contrast orange, passes AA on every CTA in the product.
+
+## Fix it in one place
+
+Because the colour lived as a semantic token, changing it re-applied the new primary across iOS, Android, web, and the marketing site at once. A brand-level change should be one edit, not a per-screen migration. If your brand colour is pasted as a hex value in forty files, that is the real problem to fix first.
+
+## What I took from it
+
+Accessible and distinctive are not opposites. The constraint made the palette better, not blander. Now I contrast-test brand colour on real components before it is ever "the colour", not after.`,
+    },
+  ],
+  about: {
+    speakingIntro:
+      'I write and speak about brand systems, accessible visual design, and keeping a fintech brand consistent as it scales across surfaces and languages.',
+    faqs: [
+      {
+        question: 'What does owning a brand end to end look like for you?',
+        answer:
+          'Defining the visual system (type, colour, iconography, imagery, motion), documenting it as a self-serve hub, building reusable asset kits per team, reviewing high-visibility work before it ships, and extending the identity into every surface: mobile, web, developer portals, and print. At PaySika that included the physical Visa-partner card.',
+      },
+      {
+        question: 'How do you keep a brand consistent without becoming a bottleneck?',
+        answer:
+          'Build the system so the on-brand choice is the fastest choice, then let most work happen without review. Semantic tokens, an approved asset library, and clear usage docs handle the everyday; I reserve hands-on review for the high-stakes launches.',
+      },
+      {
+        question: 'How do you handle accessibility in brand work?',
+        answer:
+          'I treat WCAG as a brand input, not a compliance afterthought. At CrowdRemit I led a primary-colour rebrand after contrast testing on real CTAs failed AA, and validated the replacement with visually-impaired users. Accessible and distinctive are not a trade-off.',
+      },
+      {
+        question: 'Which tools do you work in?',
+        answer:
+          'Figma for brand systems and component libraries, Adobe Creative Suite (Illustrator, Photoshop, InDesign, After Effects) for identity and motion work, and AI-assisted tools like Claude for bilingual copy and production boilerplate. I work fluently in both French and English.',
+      },
+    ],
+  },
+};
+
 // ─── exports ─────────────────────────────────────────────────────────────
 
 export const profilePresets: Record<string, ProfilePreset> = {
@@ -1069,6 +1311,7 @@ export const profilePresets: Record<string, ProfilePreset> = {
   'design-engineer': designEngineerPreset,
   'digital-marketing': digitalMarketingPreset,
   'project-manager': projectManagerPreset,
+  'brand-designer': brandDesignerPreset,
 };
 
 export const presetProfileIds = Object.keys(profilePresets);
