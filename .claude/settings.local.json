@@ -41,7 +41,44 @@
       "Bash(ls react-portfolio/scripts scratch)",
       "Bash(head -30 scratch/test-db.js)",
       "Bash(curl -s \"https://react-portfolio-pi-topaz.vercel.app/api/profiles\")",
-      "Bash(curl -s \"https://react-portfolio-pi-topaz.vercel.app/api/projects\" -o /tmp/prod-projects.json -w \"%{http_code}\")"
+      "Bash(curl -s \"https://react-portfolio-pi-topaz.vercel.app/api/projects\" -o /tmp/prod-projects.json -w \"%{http_code}\")",
+      "Bash(git fetch *)",
+      "Bash(git rev-list *)",
+      "Bash(claude mcp *)",
+      "Read(//c/Users/ndouk/**)",
+      "Read(//c/Users/ndouk/.claude/**)",
+      "Read(//c/Users/ndouk/AppData/Roaming/npm/node_modules/@anthropic-ai/claude-code/bin//**)",
+      "Read(//c/Users/ndouk/AppData/Roaming/npm/node_modules/@anthropic-ai/claude-code/**)",
+      "Bash(node \"/c/Users/ndouk/AppData/Roaming/npm/node_modules/@anthropic-ai/claude-code/install.cjs\")",
+      "Bash(npm config *)",
+      "Bash(ls -la \"/c/Users/ndouk/AppData/Roaming/npm/node_modules/@anthropic-ai/claude-code/bin/\" 2>&1; echo \"---optional pkg check---\"; ls \"/c/Users/ndouk/AppData/Roaming/npm/node_modules/@anthropic-ai/\" 2>&1)",
+      "Bash(\"/c/Users/ndouk/AppData/Roaming/npm/node_modules/@anthropic-ai/claude-code/bin/claude.exe\" --version)",
+      "mcp__neon__get_database_tables",
+      "mcp__neon__describe_table_schema",
+      "Bash(find . -path ./node_modules -prune -o -type d -iname \"admin\" -print)",
+      "Bash(find . -path ./node_modules -prune -o -type f -iname \"route.ts\" -print)",
+      "Bash(find . -path ./node_modules -prune -o -type f \\\\\\( -iname \"db.ts\" -o -iname \"queries.ts\" -o -iname \"actions.ts\" \\\\\\) -print)",
+      "mcp__neon__run_sql",
+      "WebFetch(domain:claude.ai)",
+      "Bash(npx tsc *)",
+      "Bash(npx --yes typescript@5 tsc --noEmit --target es2020 --module esnext --moduleResolution bundler --esModuleInterop --skipLibCheck api/blog/index.ts)",
+      "mcp__neon__list_projects",
+      "Bash(npx vitest *)",
+      "Bash(git -C \"D:/Personal/Portfolio\" add react-portfolio/src)",
+      "Bash(git -C \"D:/Personal/Portfolio\" status -sb)",
+      "Bash(git -C D:/Personal/Portfolio commit -m ' *)",
+      "Bash(git -C \"D:/Personal/Portfolio\" push origin master)",
+      "Bash(git -C \"D:/Personal/Portfolio\" add react-portfolio/src/components/Layout.tsx)",
+      "mcp__neon__run_sql_transaction",
+      "Bash(git -C \"D:/Personal/Portfolio\" status -s)",
+      "Bash(git -C \"D:/Personal/Portfolio\" add react-portfolio/src/data/blog.ts react-portfolio/src/data/projects.ts)",
+      "Bash(grep -v '^\\\\S*://.*//')",
+      "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('scripts',{}\\),indent=2\\)\\)\")",
+      "Bash(python -c \"import json; d=json.load\\(open\\('D:/Personal/Portfolio/react-portfolio/package.json'\\)\\); print\\(json.dumps\\(d.get\\('scripts',{}\\),indent=2\\)\\)\")"
     ]
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "neon"
+  ]
 }

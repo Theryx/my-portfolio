@@ -6,3 +6,7 @@ dist/
 .DS_Store
 .vercel
 .env*.local
+
+# Local AI-tooling artifacts (Codex CLI config + remote session attachment cache)
+.codex/
+.codex-remote-attachments/
