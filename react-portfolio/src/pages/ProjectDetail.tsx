@@ -288,7 +288,7 @@ export default function ProjectDetail() {
                     <span className="paysika-story__eyebrow">Brand ownership</span>
                     <h2>One brand, every touchpoint</h2>
                     <p>
-                      I owned the PaySika visual identity across digital products and marketing: one brand guide, one design system, applied consistently from the app to the ad to the pitch deck.
+                      As the lead designer, I led the PaySika design team and owned the visual identity across digital products and marketing: one brand guide, one design system, applied consistently from the app to the ad to the pitch deck.
                     </p>
                   </div>
 
@@ -316,7 +316,7 @@ export default function ProjectDetail() {
                     <span className="paysika-story__eyebrow">The system</span>
                     <h2>One source of truth</h2>
                     <p>
-                      The brand guide held the rules; the design system turned them into reusable parts. Together they let every team build on-brand without reinventing it.
+                      The brand guide held the rules; the design system turned them into reusable parts. Together they let every team build on-brand without reinventing it. I reviewed journeys, campaigns, and screens for the small drifts that erode a brand, and significant work came to me before it shipped, so what a customer saw was on-brand by the time it went live.
                     </p>
                   </div>
                   <div className="paysika-process__grid">
@@ -343,7 +343,7 @@ export default function ProjectDetail() {
                     <span className="paysika-story__eyebrow">On-brand everywhere</span>
                     <h2>From product to marketing</h2>
                     <p>
-                      The same identity across the app, Facebook and social campaigns, and stakeholder-ready pitch decks. On-brand presentation templates meant even AI-generated decks stayed consistent.
+                      The same identity across the app, Facebook and social campaigns, and stakeholder-ready pitch decks. When AI tools spread through the company and colleagues started generating their own off-brand decks, I did not police every slide: I built on-brand, AI-friendly templates so the fastest way to make a deck was also the on-brand way.
                     </p>
                   </div>
                   <div className="paysika-process__grid">
@@ -362,6 +362,16 @@ export default function ProjectDetail() {
                         </div>
                       </article>
                     ))}
+                  </div>
+                </section>
+
+                <section className="project-detail__section paysika-story">
+                  <div className="paysika-story__intro">
+                    <span className="paysika-story__eyebrow">Why it matters</span>
+                    <h2>Every expression reinforces the positioning</h2>
+                    <p>
+                      Trust, simplicity, innovation, professionalism, reliability, and security are not taglines: they are things a visual system either communicates or quietly undermines. I designed toward them deliberately, so the brand said the same thing whether a customer was opening the app or seeing an ad for the first time.
+                    </p>
                   </div>
                 </section>
               </>

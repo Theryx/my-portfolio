@@ -1096,24 +1096,25 @@ const brandDesignerPreset: ProfilePreset = {
         'Owned the PaySika visual identity across digital products and marketing.',
       image: 'paysika_mockup.png',
       description:
-        'As Lead Product Designer and founding-team member, I shaped and safeguarded the PaySika brand as it grew from MVP to a multi-product fintech serving thousands of users in Central Africa. I defined the visual system (typography, colour, iconography, imagery), built the reusable asset library that Marketing and Product pulled from, and extended the brand into the physical Visa-partner card and its packaging.',
+        'As Lead Designer and a founding-team member, I led the PaySika design team and owned the visual identity end to end as the company grew from MVP to a multi-product fintech serving thousands of users in Central Africa. I built and maintained the brand guide and design system, ran the reusable asset library that Marketing and Product pulled from, and carried the identity from the app all the way to the physical Visa-partner card and its packaging.',
       impact: 'A single, documented visual identity applied consistently across every PaySika touchpoint.',
       site: 'https://www.paysika.co',
-      role: 'Lead Product Designer · Brand Owner',
+      role: 'Lead Designer · Brand Owner',
       period: 'Dec 2021 - Present',
       location: 'Douala, Cameroon',
       responsibilities: [
-        'Defined and maintained the brand system: typography, colour, logo usage, iconography, imagery, layout, and motion',
+        'Led the PaySika design team and owned the visual identity across every customer and employee touchpoint',
+        'Defined and maintained the brand guide and design system: typography, colour, logo usage, iconography, imagery, layout, and motion',
         'Built and governed a reusable asset library with clear naming conventions, versioning, and file structure so Marketing and Product could ship on-brand without a design bottleneck',
         'Extended the identity into the physical debit card and mailer, working directly with the manufacturer',
-        'Produced launch and campaign visuals including light motion (UI micro-interactions and short promo and onboarding animations)',
-        'Partnered with the compliance side and our partner bank so customer-facing communications stayed accurate and regulator-aligned',
+        'Produced launch and campaign visuals including light motion (short promo and onboarding animations)',
+        'Partnered with compliance and our partner bank so customer-facing communications stayed accurate and regulator-aligned',
         'Ran a simple intake process to receive, prioritise, and track design requests across teams',
-        'Localised brand voice and UI copy across French and English with Claude as a copy partner',
+        'Localised brand voice and copy across French and English with Claude as a copy partner',
       ],
       challenge: 'The Challenge',
       challenge_text:
-        'PaySika needed to look and feel like one trustworthy institution across a growing set of surfaces (app, web, developer portal, ad creative, physical card) while a small team shipped fast. Without a shared system, every new surface drifted a little further from the last.',
+        'PaySika needed to look and feel like one trustworthy institution across a fast-growing set of surfaces (app, web, ad creative, sales decks, and the physical card) while a small team shipped quickly. Without a shared system, every new surface drifted a little further from the last.',
       solution: 'The Solution',
       solution_text:
         'I built one brand system and made it the easy default. Semantic tokens for colour and type, a documented logo and iconography set, and a self-serve asset library meant any team could produce on-brand work without waiting on design. Every brand expression was checked against the same promise: trust, simplicity, reliability.',
@@ -1122,21 +1123,7 @@ const brandDesignerPreset: ProfilePreset = {
         'A consistent identity from the first ad a user sees to the card that arrives in the mail, and an asset pipeline that let Marketing and Product move without breaking the brand.',
       is_hidden: false,
       sort_order: 0,
-      content: `## Guardian of the PaySika brand
-
-I owned the PaySika visual identity end to end and made it my job that the brand looked and felt like one company everywhere a customer or colleague met it: the mobile and web apps, marketing campaigns, customer communications, sales materials, corporate presentations, events, and internal communications. One promise, one look, no matter the touchpoint.
-
-### One source of truth: the brand guide and design system
-I maintained two connected artifacts. The PaySika **brand guide** held the rules: typography (Muli for UI, AmpleSoft Pro for display), the colour system (a blue-to-green gradient over #00B0F4 and #00CC92 on a deep navy), logo usage, imagery, iconography, illustration, and layout. The **design system** turned those rules into reusable components so product and marketing built from the same parts instead of reinterpreting them. Neither was frozen; both evolved as the product grew, so a new surface always had a standard to follow instead of a fresh improvisation.
-
-### Reviewing for consistency
-I regularly walked the actual customer journeys, campaigns, and product screens the way a user would, looking for the small drifts that erode a brand: a heading in the wrong weight, an off-palette green, a logo squeezed out of its clear space, an illustration in an older style. Significant initiatives came to me before they shipped, so what went live, a campaign, a product surface, or a sales deck, was on-brand by the time a customer saw it, not corrected after the fact.
-
-### The AI-deck moment
-As AI tools spread through the company, stakeholders and colleagues started generating their own presentation decks. They moved fast, but the output drifted straight off-brand: default fonts, generic stock aesthetics, colours that were almost-but-not-PaySika. Policing every deck was not the answer. I built on-brand, AI-friendly presentation templates and shared the brand guide so the fastest way to make a deck was also the on-brand way. Governance worked because I made the correct path the easy path, not because I said no.
-
-### Every expression reinforces the positioning
-Every brand expression had one job: reinforce what PaySika stands for. Trust, simplicity, innovation, professionalism, reliability, and security are not taglines, they are things a visual system either communicates or quietly undermines. I designed toward them deliberately, from the calm of a confirmation screen to the restraint of an ad.`,
+      content: '',
     },
     {
       id: 'crowdremit_brand-designer',
