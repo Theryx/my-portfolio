@@ -43,6 +43,23 @@ export default function Layout({ children }: LayoutProps) {
 
   const toggleTheme = () => setIsDark(prev => !prev);
 
+  // The footer CTA points to the next place worth visiting, based on where the
+  // visitor currently is: Home → About, About → Projects, Projects → Blog.
+  const footerCta = (() => {
+    const path = location.pathname;
+    if (path === '/about') {
+      return { to: '/projects', lead: 'Curious what I have shipped?', em: 'See my projects' };
+    }
+    if (path.startsWith('/projects')) {
+      return { to: '/blog', lead: 'I write about design & building too.', em: 'Read the blog' };
+    }
+    if (path.startsWith('/blog')) {
+      return { to: '/', lead: "That's my story so far.", em: 'Back to home' };
+    }
+    // Home and anything else.
+    return { to: '/about', lead: 'Want to know the person behind the work?', em: 'Get to know me' };
+  })();
+
   return (
     <div className="layout">
       <header className="header">
@@ -118,7 +135,10 @@ export default function Layout({ children }: LayoutProps) {
           {!isAdmin && (
             <div className="footer__cta">
               <h2 className="footer__cta-title">
-                Let's build something <em>people trust</em>.
+                {footerCta.lead}{' '}
+                <ProfileLink to={footerCta.to} className="footer__cta-link">
+                  <em>{footerCta.em}</em>
+                </ProfileLink>
               </h2>
               <div className="footer__cta-actions">
                 <button

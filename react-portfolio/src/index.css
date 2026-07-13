@@ -3500,6 +3500,18 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
     color: var(--color-accent);
 }
 
+.footer__cta-link {
+    color: inherit;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.footer__cta-link:hover em,
+.footer__cta-link:focus-visible em {
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+}
+
 .footer__cta-actions {
     display: flex;
     gap: 12px;
