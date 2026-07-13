@@ -1103,9 +1103,12 @@ const brandDesignerPreset: ProfilePreset = {
       period: 'Dec 2021 - Present',
       location: 'Douala, Cameroon',
       responsibilities: [
-        'Defined and maintained the brand system: typography, colour, logo usage, iconography, imagery, and layout',
-        'Built a reusable asset library so Marketing and Product could ship on-brand without a design bottleneck',
+        'Defined and maintained the brand system: typography, colour, logo usage, iconography, imagery, layout, and motion',
+        'Built and governed a reusable asset library with clear naming conventions, versioning, and file structure so Marketing and Product could ship on-brand without a design bottleneck',
         'Extended the identity into the physical debit card and mailer, working directly with the manufacturer',
+        'Produced launch and campaign visuals including light motion (UI micro-interactions and short promo and onboarding animations)',
+        'Partnered with the compliance side and our partner bank so customer-facing communications stayed accurate and regulator-aligned',
+        'Ran a simple intake process to receive, prioritise, and track design requests across teams',
         'Localised brand voice and UI copy across French and English with Claude as a copy partner',
       ],
       challenge: 'The Challenge',
@@ -1124,11 +1127,17 @@ const brandDesignerPreset: ProfilePreset = {
 ### One system, every surface
 The unlock was treating the brand as a system, not a set of files. I defined semantic colour and type tokens, a logo-usage spec, an iconography set, and imagery guidelines, then documented them where every team could find them. The rule I held: the on-brand choice has to be the easy choice, or consistency will always lose to deadlines.
 
-### A self-serve asset library
-Before, Marketing waited on design for every campaign asset. I built a brand-approved library (logos, lockups, type lockups, photo treatments, templates) that Marketing and Product could pull from directly. Velocity in both teams went up and the brand stopped drifting between departments.
+### A self-serve, governed asset library
+Before, Marketing waited on design for every campaign asset. I built a brand-approved library (logos, lockups, type lockups, photo treatments, templates) that Marketing and Product could pull from directly. Just as important as the assets was the governance around them: clear naming conventions, versioning, and a predictable file structure, so people found the current file instead of resurrecting last quarter's. Velocity in both teams went up and the brand stopped drifting between departments.
 
 ### Brand into the physical world
 I extended the identity into the physical Visa-partner card and its mailer, working directly with the manufacturer on substrate, finish, and emboss placement. The mailer was designed so the first thing a user sees on opening is the card itself, framed against a brand-colour insert. The same brand promise, now in the hand.
+
+### Motion, kept light and on-brand
+Not every brand needs a motion studio, but it does need motion that behaves. I handled the lighter end myself: UI micro-interactions, short promo and onboarding animations for launches, and social clips, all built from the same tokens and timing so movement felt like part of the brand rather than a bolt-on. When work went beyond my depth, I art-directed it against the same system.
+
+### Working with compliance
+At a regulated fintech, customer-facing communication is a shared responsibility. I worked with the compliance side and our partner bank so that required disclosures and regulator-sensitive copy stayed accurate without reading like fine-print afterthoughts, treating compliance language as design, not decoration.
 
 ### One brand voice, two languages
 I localised brand voice and UI copy across French and English, using Claude to draft French variants that our francophone team edited. A bilingual audience should never feel like it is reading a translation of someone else's brand.`,
@@ -1233,6 +1242,7 @@ Consistency loses to deadlines every time you make people choose between them. S
 - **Tokens, not swatches.** Colour and type as semantic tokens (color/accent/primary, not "the orange"), so a brand change is one edit.
 - **Logo and iconography specs** with clear do and don't examples, because "don't" prevents more drift than "do".
 - **A reusable asset library**: logos, lockups, photo treatments, presentation templates, social and email templates, per team.
+- **Naming, versioning, and file structure** so the current asset is always the one people find, and stale files retire cleanly.
 - **Usage documentation** written for the person in a hurry, not the person with an afternoon.
 
 ## Governance without becoming a bottleneck
@@ -1296,9 +1306,14 @@ Accessible and distinctive are not opposites. The constraint made the palette be
           'I treat WCAG as a brand input, not a compliance afterthought. At CrowdRemit I led a primary-colour rebrand after contrast testing on real CTAs failed AA, and validated the replacement with visually-impaired users. Accessible and distinctive are not a trade-off.',
       },
       {
+        question: 'How do you handle incoming design requests?',
+        answer:
+          'With a simple, visible intake: every request is logged, then prioritised on business impact, customer visibility, compliance sensitivity, urgency, and effort, so the highest-value work gets attention first and nothing gets lost in DMs. Requesters can see where their ask sits, which cuts the "any update?" pings dramatically.',
+      },
+      {
         question: 'Which tools do you work in?',
         answer:
-          'Figma for brand systems and component libraries, Adobe Creative Suite (Illustrator, Photoshop, InDesign, After Effects) for identity and motion work, and AI-assisted tools like Claude for bilingual copy and production boilerplate. I work fluently in both French and English.',
+          'Figma for brand systems and component libraries; Adobe Creative Suite (Illustrator, Photoshop, InDesign) for identity work, with After Effects for lighter motion; and AI-assisted tools like Claude for bilingual copy and production boilerplate. I also read and write basic HTML/CSS, which keeps my handoffs honest about what is buildable. I work fluently in both French and English.',
       },
     ],
   },
