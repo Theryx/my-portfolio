@@ -59,21 +59,23 @@ const paysikaProcessArtifacts = [
   },
 ];
 
-// Brand Designer profile — the system behind a consistent brand
-const paysikaBrandSystemArtifacts = [
-  {
-    title: 'PaySika brand guide',
-    description: 'The rules in one place: typography (Muli + AmpleSoft Pro), the colour system (a blue-to-green gradient over #00B0F4 and #00CC92 on deep navy), logo usage, iconography, and layout.',
-    image: paysikaBrandGuide,
-  },
+// Brand Designer profile — the brand guide: the rulebook
+const paysikaBrandGuideArtifact = {
+  title: 'PaySika brand guide',
+  description: 'The rules in one place: typography (Muli + AmpleSoft Pro), the colour system (a blue-to-green gradient over #00B0F4 and #00CC92 on deep navy), logo usage, iconography, and layout.',
+  image: paysikaBrandGuide,
+};
+
+// Brand Designer profile — the design system across every digital surface
+const paysikaDesignSystemArtifacts = [
   {
     title: 'PaySika design system',
-    description: 'The rules turned into reusable Figma components, text styles, and colour styles, the single source product and marketing both build from.',
+    description: 'The rules turned into reusable Figma components, text styles, and colour styles, the single source every digital surface builds from.',
     image: paysikaDesignSystem,
   },
   {
-    title: 'Organised design files',
-    description: 'The file structure behind the system: onboarding, card, KYC, language, backoffice, and more, all versioned and named so the current asset is the one people find.',
+    title: 'One system, many surfaces',
+    description: 'The same system fed the mobile app, backoffice dashboards, the agent app, and the web experience: onboarding, KYC, cards, deposits, and more, all versioned and named so the current asset is the one people find.',
     image: paysikaDesignFiles,
   },
 ];
@@ -313,14 +315,39 @@ export default function ProjectDetail() {
 
                 <section className="project-detail__section paysika-process">
                   <div className="paysika-process__header">
-                    <span className="paysika-story__eyebrow">The system</span>
+                    <span className="paysika-story__eyebrow">The rulebook</span>
                     <h2>One source of truth</h2>
                     <p>
-                      The brand guide held the rules; the design system turned them into reusable parts. Together they let every team build on-brand without reinventing it. I reviewed journeys, campaigns, and screens for the small drifts that erode a brand, and significant work came to me before it shipped, so what a customer saw was on-brand by the time it went live.
+                      The brand guide was the single source of truth: typography, colour, logo, iconography, illustration, and layout in one living document every team could reach for. I reviewed journeys, campaigns, and screens for the small drifts that erode a brand, and significant work came to me before it shipped, so what a customer saw was on-brand by the time it went live.
+                    </p>
+                  </div>
+                  <div className="paysika-process__grid" style={{ gridTemplateColumns: '1fr' }}>
+                    <article className="paysika-process__item">
+                      <img
+                        src={paysikaBrandGuideArtifact.image}
+                        alt={paysikaBrandGuideArtifact.title}
+                        loading="lazy"
+                        {...lightboxTrigger(() => handleImageClick(paysikaBrandGuideArtifact.image, `${paysikaBrandGuideArtifact.title} - ${paysikaBrandGuideArtifact.description}`), `Enlarge: ${paysikaBrandGuideArtifact.title}`)}
+                        style={{ cursor: 'pointer' }}
+                      />
+                      <div>
+                        <h3>{paysikaBrandGuideArtifact.title}</h3>
+                        <p>{paysikaBrandGuideArtifact.description}</p>
+                      </div>
+                    </article>
+                  </div>
+                </section>
+
+                <section className="project-detail__section paysika-process">
+                  <div className="paysika-process__header">
+                    <span className="paysika-story__eyebrow">Digital brand experience</span>
+                    <h2>One design system, every digital surface</h2>
+                    <p>
+                      Working alongside product and engineering, I kept one consistent visual language across every digital experience: components, icons, illustrations, typography, spacing, and colour defined once and reused across the mobile app, backoffice dashboards, the agent app, and the web experience. My job was the brand layer on top of usability, visual direction that made each experience not only usable but unmistakably PaySika, reviewed screen by screen so the brand survived the trip from Figma to production.
                     </p>
                   </div>
                   <div className="paysika-process__grid">
-                    {paysikaBrandSystemArtifacts.map((artifact) => (
+                    {paysikaDesignSystemArtifacts.map((artifact) => (
                       <article className="paysika-process__item" key={artifact.title}>
                         <img
                           src={artifact.image}
