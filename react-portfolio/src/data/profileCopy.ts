@@ -1093,7 +1093,7 @@ const brandDesignerPreset: ProfilePreset = {
       tag: 'Visual identity · Brand system',
       title: 'PaySika brand identity',
       tagline:
-        'Owned the PaySika visual identity across mobile, web, developer surfaces, and physical cards.',
+        'Owned the PaySika visual identity across digital products and marketing.',
       image: 'paysika_mockup.png',
       description:
         'As Lead Product Designer and founding-team member, I shaped and safeguarded the PaySika brand as it grew from MVP to a multi-product fintech serving thousands of users in Central Africa. I defined the visual system (typography, colour, iconography, imagery), built the reusable asset library that Marketing and Product pulled from, and extended the brand into the physical Visa-partner card and its packaging.',
@@ -1122,25 +1122,21 @@ const brandDesignerPreset: ProfilePreset = {
         'A consistent identity from the first ad a user sees to the card that arrives in the mail, and an asset pipeline that let Marketing and Product move without breaking the brand.',
       is_hidden: false,
       sort_order: 0,
-      content: `## Owning the PaySika brand
+      content: `## Guardian of the PaySika brand
 
-### One system, every surface
-The unlock was treating the brand as a system, not a set of files. I defined semantic colour and type tokens, a logo-usage spec, an iconography set, and imagery guidelines, then documented them where every team could find them. The rule I held: the on-brand choice has to be the easy choice, or consistency will always lose to deadlines.
+I owned the PaySika visual identity end to end and made it my job that the brand looked and felt like one company everywhere a customer or colleague met it: the mobile and web apps, marketing campaigns, customer communications, sales materials, corporate presentations, events, and internal communications. One promise, one look, no matter the touchpoint.
 
-### A self-serve, governed asset library
-Before, Marketing waited on design for every campaign asset. I built a brand-approved library (logos, lockups, type lockups, photo treatments, templates) that Marketing and Product could pull from directly. Just as important as the assets was the governance around them: clear naming conventions, versioning, and a predictable file structure, so people found the current file instead of resurrecting last quarter's. Velocity in both teams went up and the brand stopped drifting between departments.
+### One source of truth: the brand guide and design system
+I maintained two connected artifacts. The PaySika **brand guide** held the rules: typography (Muli for UI, AmpleSoft Pro for display), the colour system (a blue-to-green gradient over #00B0F4 and #00CC92 on a deep navy), logo usage, imagery, iconography, illustration, and layout. The **design system** turned those rules into reusable components so product and marketing built from the same parts instead of reinterpreting them. Neither was frozen; both evolved as the product grew, so a new surface always had a standard to follow instead of a fresh improvisation.
 
-### Brand into the physical world
-I extended the identity into the physical Visa-partner card and its mailer, working directly with the manufacturer on substrate, finish, and emboss placement. The mailer was designed so the first thing a user sees on opening is the card itself, framed against a brand-colour insert. The same brand promise, now in the hand.
+### Reviewing for consistency
+I regularly walked the actual customer journeys, campaigns, and product screens the way a user would, looking for the small drifts that erode a brand: a heading in the wrong weight, an off-palette green, a logo squeezed out of its clear space, an illustration in an older style. Significant initiatives came to me before they shipped, so what went live, a campaign, a product surface, or a sales deck, was on-brand by the time a customer saw it, not corrected after the fact.
 
-### Motion, kept light and on-brand
-Not every brand needs a motion studio, but it does need motion that behaves. I handled the lighter end myself: UI micro-interactions, short promo and onboarding animations for launches, and social clips, all built from the same tokens and timing so movement felt like part of the brand rather than a bolt-on. When work went beyond my depth, I art-directed it against the same system.
+### The AI-deck moment
+As AI tools spread through the company, stakeholders and colleagues started generating their own presentation decks. They moved fast, but the output drifted straight off-brand: default fonts, generic stock aesthetics, colours that were almost-but-not-PaySika. Policing every deck was not the answer. I built on-brand, AI-friendly presentation templates and shared the brand guide so the fastest way to make a deck was also the on-brand way. Governance worked because I made the correct path the easy path, not because I said no.
 
-### Working with compliance
-At a regulated fintech, customer-facing communication is a shared responsibility. I worked with the compliance side and our partner bank so that required disclosures and regulator-sensitive copy stayed accurate without reading like fine-print afterthoughts, treating compliance language as design, not decoration.
-
-### One brand voice, two languages
-I localised brand voice and UI copy across French and English, using Claude to draft French variants that our francophone team edited. A bilingual audience should never feel like it is reading a translation of someone else's brand.`,
+### Every expression reinforces the positioning
+Every brand expression had one job: reinforce what PaySika stands for. Trust, simplicity, innovation, professionalism, reliability, and security are not taglines, they are things a visual system either communicates or quietly undermines. I designed toward them deliberately, from the calm of a confirmation screen to the restraint of an ad.`,
     },
     {
       id: 'crowdremit_brand-designer',
