@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { PageTransition } from '../components/PageTransition';
-import { ArrowLeft, Calendar, MapPin, ExternalLink, Award, FileText, Users } from 'lucide-react';
+import { ArrowLeft, Calendar, MapPin, ExternalLink, Award, FileText, Users, Accessibility, Film, ClipboardList } from 'lucide-react';
 import teamDiscussion from '../assets/img/Me discussion with my collegue.jfif';
 import teamAward from '../assets/img/Team spirit award_2025.jfif';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -389,6 +389,39 @@ export default function ProjectDetail() {
                         </div>
                       </article>
                     ))}
+                  </div>
+                </section>
+
+                <section className="project-detail__section paysika-story">
+                  <div className="paysika-story__intro">
+                    <span className="paysika-story__eyebrow">Running the brand</span>
+                    <h2>What owning the brand meant day to day</h2>
+                    <p>
+                      Beyond the guide and the system, owning the brand meant keeping it accessible, telling its story in motion, working across every team, and running a clear queue so the highest-impact work shipped first.
+                    </p>
+                  </div>
+
+                  <div className="paysika-story__stats">
+                    <div className="paysika-story__stat">
+                      <Accessibility size={22} />
+                      <strong>Accessible &amp; inclusive by default</strong>
+                      <span>Colour contrast, readable typography, clear hierarchy, and inclusive imagery built into the system so the brand works for the widest range of users.</span>
+                    </div>
+                    <div className="paysika-story__stat">
+                      <Film size={22} />
+                      <strong>Motion &amp; visual storytelling</strong>
+                      <span>Light motion for launches, onboarding, and social, with larger pieces art-directed against the same system and timing.</span>
+                    </div>
+                    <div className="paysika-story__stat">
+                      <Users size={22} />
+                      <strong>Cross-functional partner</strong>
+                      <span>Worked across Marketing, Product, Engineering, Compliance, Risk, Sales, and Customer Experience to keep every touchpoint on-brand and regulator-aligned.</span>
+                    </div>
+                    <div className="paysika-story__stat">
+                      <ClipboardList size={22} />
+                      <strong>Intake &amp; prioritisation</strong>
+                      <span>A simple request process ranked on business impact, customer visibility, compliance sensitivity, urgency, and effort.</span>
+                    </div>
                   </div>
                 </section>
 
