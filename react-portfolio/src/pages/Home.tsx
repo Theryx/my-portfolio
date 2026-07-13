@@ -91,14 +91,10 @@ export default function Home() {
     },
   });
 
-  // Gentle playful drag — tiles can be nudged and spring back home.
+  // Gentle tap feedback — tiles are no longer draggable.
   const playful = prefersReducedMotion
     ? {}
     : {
-        drag: true,
-        dragSnapToOrigin: true,
-        dragElastic: 0.18,
-        dragTransition: { bounceStiffness: 420, bounceDamping: 22 },
         whileTap: { scale: 0.985 },
       };
 
