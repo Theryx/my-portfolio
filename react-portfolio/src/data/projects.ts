@@ -433,6 +433,7 @@ import matangaImage from '../assets/img/Matanga agancy website.PNG';
 
 import paysikaMockup from '../assets/img/paysika_mockup.png';
 import crowdremitMockup from '../assets/img/crowdremit_mockup.png';
+import gueemshomeLogo from '../assets/img/gueemshome/logo.png';
 import crowdremitDesignSystem from '../assets/img/crowdremit_design_system.png';
 import crowdremitLandingPage from '../assets/img/crowdremit_landing_page.png';
 import crowdremitUserInterviews from '../assets/img/crowdremit_user_interviews.png';
@@ -481,7 +482,8 @@ export const projectImageMap: Record<string, string> = {
   'Screenshot of the UI of Jobsika.PNG': jobsikaImage,
   'shomi-cover.png': shomiImage,
   'Matanga agancy website.PNG': matangaImage,
-  'crowdremit_mockup.png': crowdremitMockup
+  'crowdremit_mockup.png': crowdremitMockup,
+  'gueemshome_logo.png': gueemshomeLogo
 };
 
 export const shomiMarkdownImageMap: Record<string, string> = {

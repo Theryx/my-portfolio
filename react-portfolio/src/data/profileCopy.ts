@@ -1126,46 +1126,37 @@ const brandDesignerPreset: ProfilePreset = {
       content: '',
     },
     {
-      id: 'crowdremit_brand-designer',
-      tag: 'Accessible brand · WCAG',
-      title: 'CrowdRemit accessible brand',
-      tagline: 'Rebranded the primary colour after WCAG testing exposed a contrast failure on CTAs.',
-      image: 'crowdremit_mockup.png',
+      id: 'gueemshome_brand-designer',
+      tag: 'Brand identity · Web · Marketing',
+      title: 'GUEEMSHOME',
+      tagline:
+        'End-to-end brand for a French artisanal home-fragrance house: identity, brand guide, website, and marketing assets.',
+      image: 'gueemshome_logo.png',
       description:
-        'As UX Researcher and Product Designer, I built the CrowdRemit visual identity and design system across iOS, Android, web, and dashboard, then led a brand-level decision to rebrand the primary colour after WCAG contrast testing showed it failed on buttons. Accessibility drove a core brand choice, not the other way around.',
-      impact: 'A brand identity that passes WCAG AA contrast on every CTA across four surfaces.',
-      site: '',
-      role: 'UX Researcher & Product Designer',
-      period: 'Jan 2021 - Jun 2021',
-      location: 'Nigeria (remote)',
+        "GUEEMSHOME is a Paris-based artisanal home-fragrance house, plant-based, rechargeable candles, room perfumes, and gift sets, founded by Anasthasie Gueem's. As the brand designer, I built the brand from the ground up: the visual identity and brand guide, the design of the e-commerce website, and the marketing assets, so a founder's vision arrived online as one coherent, premium brand.",
+      impact: 'A complete, coherent brand from logo to storefront to social, launched and live.',
+      site: 'https://gueemshome.com/',
+      role: 'Brand Designer (Freelance)',
+      period: '2022',
+      location: 'Remote — client in Paris, France',
       responsibilities: [
-        'Built the visual identity and design system: colour, type, iconography, and components',
-        'Tested brand colour against WCAG AA contrast on real CTAs, including with visually-impaired participants',
-        'Led the primary-colour rebrand and re-applied it across mobile, web, and the marketing site',
-        'Documented the system as tokens so engineering could implement the brand consistently',
+        'Designed the GUEEMSHOME visual identity: the GH monogram logo, typography, colour palette, and imagery direction',
+        'Created the brand guide so the identity stayed consistent as the brand grew',
+        'Designed the e-commerce website, from layout to product pages, which a developer then built in WordPress',
+        'Produced marketing assets: social content, product and campaign visuals',
       ],
       challenge: 'The Challenge',
       challenge_text:
-        'The original CrowdRemit primary colour failed WCAG AA contrast on CTA buttons against the lightest neutral. The brand looked good in a moodboard and excluded real users in production.',
+        'A founder had a clear vision, artisanal, conscious, warm home fragrance, but no brand to carry it. GUEEMSHOME needed a complete identity, a website to sell from, and marketing assets, all feeling premium and hand-made rather than mass-market, on a small-business budget.',
       solution: 'The Solution',
       solution_text:
-        'I tested four candidate replacements with a small group of users, including two visually-impaired participants, and picked a high-contrast orange that passes AA on every CTA. Then I re-applied it as a semantic token across all four surfaces and the marketing site so the fix was systemic, not per-screen.',
+        'I built the brand from the name outward: a monogram identity and a brand guide fixing typography, colour, and imagery; an e-commerce website designed around the product for a developer to build; and a kit of marketing assets so social, product, and campaign visuals all shared one warm, restrained look.',
       result: 'The Result',
       result_text:
-        'A brand that passes WCAG AA contrast on every CTA across iOS, Android, web, and dashboard, proving accessibility and a distinctive identity are not a trade-off.',
+        "GUEEMSHOME launched as a coherent brand, live at gueemshome.com and active on Instagram with a growing community, consistent from the logo to the storefront to the feed.",
       is_hidden: false,
       sort_order: 1,
-      content: `## Accessibility as a brand decision
-
-CrowdRemit's original primary colour failed WCAG AA contrast on CTA buttons against the lightest neutral. It is easy to treat that as an engineering ticket. I treated it as a brand decision, because the primary colour is the brand, and a brand that excludes users with low vision is not doing its job.
-
-## Testing the replacement
-
-I tested four candidate colours against AA contrast on the actual CTAs, not in isolation, with a small group of users that included two visually-impaired participants. The selected high-contrast orange passes AA on every button in the product and held up across the marketing site.
-
-## Fixing it systemically
-
-The fix lived in one place: a semantic colour token. Changing the token re-applied the new primary across iOS, Android, web, and the dashboard at once. That is the whole argument for tokenised brand systems: a brand-level change should be one edit, not a forty-screen migration.`,
+      content: '',
     },
     {
       id: 'matanga_brand-designer',
