@@ -1175,7 +1175,7 @@ const brandDesignerPreset: ProfilePreset = {
       responsibilities: [
         'Designed the GEFONA visual identity: the geometric Africa mark, colour palette, and typography, and documented it in a brand guide',
         'Redesigned and rebuilt the foundation\'s WordPress website across desktop, tablet, and mobile, keeping the information architecture while modernising the visual system',
-        'Designed business cards, an onboarding deck, and internal recognition materials for the founding team',
+        'Designed business cards, an onboarding deck, and a team-recognition certificate template for internal awards',
         'Designed bilingual (French/English) campaign and sponsorship-proposal decks for the foundation\'s outreach programmes',
         'Produce ongoing social media content and campaign graphics as one of the foundation\'s founding designers',
       ],
