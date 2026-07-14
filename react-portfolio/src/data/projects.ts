@@ -435,6 +435,7 @@ import paysikaMockup from '../assets/img/paysika_mockup.png';
 import crowdremitMockup from '../assets/img/crowdremit_mockup.png';
 import gueemshomeLogo from '../assets/img/gueemshome/logo.png';
 import gueemshomeHero from '../assets/img/gueemshome/hero.jpg';
+import gefonaLogo from '../assets/img/gefona/logo-final.png';
 import crowdremitDesignSystem from '../assets/img/crowdremit_design_system.png';
 import crowdremitLandingPage from '../assets/img/crowdremit_landing_page.png';
 import crowdremitUserInterviews from '../assets/img/crowdremit_user_interviews.png';
@@ -485,7 +486,8 @@ export const projectImageMap: Record<string, string> = {
   'Matanga agancy website.PNG': matangaImage,
   'crowdremit_mockup.png': crowdremitMockup,
   'gueemshome_logo.png': gueemshomeLogo,
-  'gueemshome_hero.jpg': gueemshomeHero
+  'gueemshome_hero.jpg': gueemshomeHero,
+  'gefona_logo.png': gefonaLogo
 };
 
 export const shomiMarkdownImageMap: Record<string, string> = {

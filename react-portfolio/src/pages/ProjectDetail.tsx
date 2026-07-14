@@ -52,6 +52,14 @@ import gueemsWebsiteNav from '../assets/img/gueemshome/website-nav.jpg';
 import gueemsSocialFeed from '../assets/img/gueemshome/social-feed.png';
 import gueemsLookbook from '../assets/img/gueemshome/collection-lookbook.jpg';
 
+// Brand Designer profile — GEFONA Digital Foundation
+import gefonaLogoFinal from '../assets/img/gefona/logo-final.png';
+import gefonaBusinessCards from '../assets/img/gefona/business-cards.png';
+import gefonaOnboardingDeck from '../assets/img/gefona/onboarding-deck.png';
+import gefonaCampaignProposal from '../assets/img/gefona/campaign-proposal.png';
+import gefonaWebsiteRedesign from '../assets/img/gefona/website-redesign-figma.png';
+import gefonaContentArchive from '../assets/img/gefona/content-archive.png';
+
 const paysikaProcessArtifacts = [
   {
     title: 'Design system and team process',
@@ -230,6 +238,48 @@ const gueemsDigitalArtifacts = [
   },
 ];
 
+// Brand Designer profile — GEFONA identity, cards & onboarding
+const gefonaIdentityArtifacts = [
+  {
+    title: 'The GEFONA mark',
+    description: 'A geometric mark built from an Africa silhouette, faceted in blue, green, and orange, paired with a clean wordmark.',
+    image: gefonaLogoFinal,
+  },
+  {
+    title: 'Business cards',
+    description: 'Cards for the founding team, front and back, carrying the mark, contact details, and social handles.',
+    image: gefonaBusinessCards,
+  },
+  {
+    title: 'Onboarding deck',
+    description: 'A "Welcome to GEFONA" deck introducing the foundation to new partners and team members on-brand from page one.',
+    image: gefonaOnboardingDeck,
+  },
+];
+
+// Brand Designer profile — GEFONA website redesign
+const gefonaWebsiteArtifacts = [
+  {
+    title: 'Redesigning the website',
+    description: 'The WordPress site rebuilt across desktop, tablet, and mobile, keeping the original information architecture while modernising the visual system, documented with a named colour-token palette in Figma.',
+    image: gefonaWebsiteRedesign,
+  },
+];
+
+// Brand Designer profile — GEFONA campaigns & content
+const gefonaCampaignArtifacts = [
+  {
+    title: 'Bilingual campaign proposals',
+    description: 'A French/English sponsorship-proposal deck for an e-learning outreach campaign, with objectives, personas, and a campaign chronogram all on-brand.',
+    image: gefonaCampaignProposal,
+  },
+  {
+    title: 'Ongoing content design',
+    description: 'The working archive of social posts, report covers, and campaign graphics produced as one of the foundation\'s founding designers.',
+    image: gefonaContentArchive,
+  },
+];
+
 export default function ProjectDetail() {
   const { id } = useParams();
   const [project, setProject] = useState<Project | null>(null);
@@ -283,6 +333,7 @@ export default function ProjectDetail() {
   const isPaySika = project.id === 'paysika' || project.id.startsWith('paysika_');
   const isPaySikaBrand = project.id === 'paysika_brand-designer';
   const isGueemsHome = project.id === 'gueemshome_brand-designer';
+  const isGefona = project.id === 'gefona_brand-designer';
   const isCrowdRemit = project.id.startsWith('crowdremit');
   const imageSrc = isPaySika ? paysikaMockup : projectImageMap[project.image];
   const heroCaption = isPaySika 
@@ -694,6 +745,88 @@ export default function ProjectDetail() {
                   </div>
                   <div className="paysika-process__grid">
                     {gueemsDigitalArtifacts.map((artifact) => (
+                      <article className="paysika-process__item" key={artifact.title}>
+                        <img
+                          src={artifact.image}
+                          alt={artifact.title}
+                          loading="lazy"
+                          {...lightboxTrigger(() => handleImageClick(artifact.image, `${artifact.title} - ${artifact.description}`), `Enlarge: ${artifact.title}`)}
+                          style={{ cursor: 'pointer' }}
+                        />
+                        <div>
+                          <h3>{artifact.title}</h3>
+                          <p>{artifact.description}</p>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              </>
+            )}
+
+            {isGefona && (
+              <>
+                <section className="project-detail__section paysika-process">
+                  <div className="paysika-process__header">
+                    <span className="paysika-story__eyebrow">Identity, cards & onboarding</span>
+                    <h2>A mark built for a research foundation</h2>
+                    <p>
+                      A geometric Africa-shaped mark, a documented brand guide, and the collateral that carries it: business cards for the founding team and an onboarding deck that introduces the foundation on-brand from the first page.
+                    </p>
+                  </div>
+                  <div className="paysika-process__grid">
+                    {gefonaIdentityArtifacts.map((artifact) => (
+                      <article className="paysika-process__item" key={artifact.title}>
+                        <img
+                          src={artifact.image}
+                          alt={artifact.title}
+                          loading="lazy"
+                          {...lightboxTrigger(() => handleImageClick(artifact.image, `${artifact.title} - ${artifact.description}`), `Enlarge: ${artifact.title}`)}
+                          style={{ cursor: 'pointer' }}
+                        />
+                        <div>
+                          <h3>{artifact.title}</h3>
+                          <p>{artifact.description}</p>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+
+                <section className="project-detail__section paysika-process">
+                  <div className="paysika-process__header">
+                    <span className="paysika-story__eyebrow">The website</span>
+                    <h2>Same structure, modernised system</h2>
+                  </div>
+                  <div className="paysika-process__grid">
+                    {gefonaWebsiteArtifacts.map((artifact) => (
+                      <article className="paysika-process__item" key={artifact.title}>
+                        <img
+                          src={artifact.image}
+                          alt={artifact.title}
+                          loading="lazy"
+                          {...lightboxTrigger(() => handleImageClick(artifact.image, `${artifact.title} - ${artifact.description}`), `Enlarge: ${artifact.title}`)}
+                          style={{ cursor: 'pointer' }}
+                        />
+                        <div>
+                          <h3>{artifact.title}</h3>
+                          <p>{artifact.description}</p>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+
+                <section className="project-detail__section paysika-process">
+                  <div className="paysika-process__header">
+                    <span className="paysika-story__eyebrow">Campaigns & content</span>
+                    <h2>Ongoing, since 2022</h2>
+                    <p>
+                      As a founding designer I still design GEFONA's outreach: bilingual campaign and sponsorship decks, and the ongoing library of social and report graphics.
+                    </p>
+                  </div>
+                  <div className="paysika-process__grid">
+                    {gefonaCampaignArtifacts.map((artifact) => (
                       <article className="paysika-process__item" key={artifact.title}>
                         <img
                           src={artifact.image}
