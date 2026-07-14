@@ -2843,8 +2843,8 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
 
 .image-lightbox__content {
     position: relative;
-    max-width: 1000px;
-    width: 100%;
+    width: fit-content;
+    max-width: min(1000px, calc(100vw - (var(--spacing-md) * 2)));
     max-height: 90vh;
     display: flex;
     flex-direction: column;
