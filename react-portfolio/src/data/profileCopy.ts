@@ -1143,7 +1143,7 @@ const brandDesignerPreset: ProfilePreset = {
         'Designed the GUEEMSHOME visual identity: the GH monogram logo, typography, colour palette, and imagery direction',
         'Created the brand guide so the identity stayed consistent as the brand grew',
         'Designed the e-commerce website, from layout to product pages, which a developer then built in WordPress',
-        'Produced marketing assets: social content, product and campaign visuals',
+        'Produced marketing assets and collateral: social content, product and campaign visuals, bilingual insert cards, and custom branded QR codes',
       ],
       challenge: 'The Challenge',
       challenge_text:
