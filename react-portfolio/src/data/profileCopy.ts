@@ -1069,11 +1069,11 @@ const brandDesignerPreset: ProfilePreset = {
     name: 'Brand Designer',
     is_active: false,
     bio:
-      'Brand Designer who owns visual identity end to end for African fintech: brand systems, reusable asset libraries, and accessible design language across mobile, web, and print.',
+      'Brand Designer who owns visual identity end to end across fintech, small business, and non-profit: brand systems, reusable asset libraries, and accessible design language across mobile, web, and print.',
     tagline: 'A brand is a promise kept on every screen.',
     hero_title: 'Brand Designer',
     hero_subtitle:
-      'Four years shaping and safeguarding the PaySika brand across mobile, web, developer surfaces, and physical cards. I build brand systems, reusable asset kits, and an accessible visual language that reads as trust, simplicity, and reliability in French and English.',
+      'Four years shaping and safeguarding the PaySika brand across mobile, web, and physical cards, plus founding brand work for GUEEMSHOME and GEFONA Digital Foundation. I build brand systems, reusable asset kits, and an accessible visual language that reads as trust, simplicity, and reliability in French and English.',
     philosophy_title: 'Consistency is what turns a logo into a brand.',
     philosophy_text:
       'A brand is not the logo, it is the thousandth touchpoint looking like the first. My job is to define the visual system (type, colour, iconography, imagery, motion) once, document it clearly, and make the right choice the easy choice for every team that touches a customer. Every expression should quietly say the same thing: this is trustworthy, simple, and built to last.',
@@ -1081,11 +1081,11 @@ const brandDesignerPreset: ProfilePreset = {
     social_links: {},
   },
   social_links: commonLinks({
-    now: 'Building a brand hub and reusable asset kits for a Central African fintech',
+    now: 'Building a brand hub and reusable asset kits for a Central African fintech, plus ongoing brand work for GUEEMSHOME and GEFONA Digital Foundation',
     projects_intro:
-      'Visual identity, brand systems, and accessible design language shipped across fintech mobile, web, developer, and print surfaces.',
-    blog_intro: 'Notes on brand governance, accessible colour, and keeping a fintech brand consistent as it scales.',
-    metric_label: 'years building fintech brand systems',
+      'Visual identity, brand systems, and accessible design language shipped across fintech, small business, and non-profit, on mobile, web, and print.',
+    blog_intro: 'Notes on brand governance, accessible colour, and keeping a brand consistent as it scales.',
+    metric_label: 'years building brand systems',
   }),
   projects: [
     {
@@ -1232,45 +1232,41 @@ The signal was not compliments on the guidelines. It was Marketing shipping a ca
     },
     {
       id: 'brand_accessible_color',
-      title: 'When your brand colour fails WCAG: an accessibility rebrand story',
+      title: 'Why accessible colour is a brand decision, not a compliance checkbox',
       excerpt:
-        'The CrowdRemit primary colour looked great and failed contrast on every button. Here is how I turned an accessibility failure into a better brand.',
+        'WCAG contrast rules read like a compliance checklist. Treat them as a brand decision instead, and the colour system gets better, not blander.',
       date: 'April 25, 2026',
       author: 'Ndouken Theryx',
       read_time: '5 min read',
       tags: ['Brand', 'Accessibility'],
-      image: 'crowdremit_mockup.png',
+      image: 'paysika_mockup.png',
       is_hidden: false,
       sort_order: 1,
-      content: `# When your brand colour fails WCAG: an accessibility rebrand story
+      content: `# Why accessible colour is a brand decision, not a compliance checkbox
 
-Every brand designer eventually meets this moment: the primary colour that looked perfect on the moodboard fails WCAG AA contrast the instant it lands on a real button. At CrowdRemit, that was our colour. Here is what I did, and why I think it made the brand stronger.
+Every brand designer eventually meets this moment: a primary colour that looks perfect in a moodboard and fails WCAG AA contrast the instant it lands on a real button. The easy move is to hand that off to engineering as "make the text darker." The harder, better move is to own it as a brand decision, because the primary colour *is* the brand, and a colour that excludes users with low vision is a brand that does not keep its promise.
 
-## Accessibility is a brand decision, not a bug ticket
+## Test on real components, not swatches
 
-It is tempting to hand a contrast failure to engineering as "make the text darker". But the primary colour *is* the brand. A brand colour that excludes users with low vision is a brand that does not keep its promise. So I owned the fix as a brand decision.
-
-## Testing the candidates on real CTAs
-
-I generated four replacement candidates and tested each against AA contrast on the actual call-to-action buttons, not in a swatch grid. I ran it past a small group of users including two visually-impaired participants. The winner, a high-contrast orange, passes AA on every CTA in the product.
+Contrast has to be checked on the actual component, not a colour-picker preview. A hex value can pass a swatch test and still fail the moment it sits behind white text on a real button, at real size, on a real screen. In the PaySika design system, I check contrast at the component level before a colour or type choice ships, not after a complaint comes in.
 
 ## Fix it in one place
 
-Because the colour lived as a semantic token, changing it re-applied the new primary across iOS, Android, web, and the marketing site at once. A brand-level change should be one edit, not a per-screen migration. If your brand colour is pasted as a hex value in forty files, that is the real problem to fix first.
+The reason to build a brand system on semantic tokens instead of pasted hex values: a fix only has to happen once. Change the token, and every surface that reads from it updates together. If your brand colour is pasted as a raw hex value in forty files, that is the real problem to fix before the next contrast issue even shows up.
 
-## What I took from it
+## What I'd tell a brand designer starting today
 
-Accessible and distinctive are not opposites. The constraint made the palette better, not blander. Now I contrast-test brand colour on real components before it is ever "the colour", not after.`,
+Accessible and distinctive are not opposites. Constraint makes a palette better, not blander, the same way a tight brief makes a design better. Contrast-test your brand colour on real components before it is ever "the colour," not after.`,
     },
   ],
   about: {
     speakingIntro:
-      'I write and speak about brand systems, accessible visual design, and keeping a fintech brand consistent as it scales across surfaces and languages.',
+      'I write and speak about brand systems, accessible visual design, and keeping a brand consistent as it scales across surfaces, sectors, and languages.',
     faqs: [
       {
         question: 'What does owning a brand end to end look like for you?',
         answer:
-          'Defining the visual system (type, colour, iconography, imagery, motion), documenting it as a self-serve hub, building reusable asset kits per team, reviewing high-visibility work before it ships, and extending the identity into every surface: mobile, web, developer portals, and print. At PaySika that included the physical Visa-partner card.',
+          'Defining the visual system (type, colour, iconography, imagery, motion), documenting it as a self-serve hub, building reusable asset kits per team, reviewing high-visibility work before it ships, and extending the identity into every surface: mobile, web, and print. At PaySika that included the physical Visa-partner card.',
       },
       {
         question: 'How do you keep a brand consistent without becoming a bottleneck?',
@@ -1280,7 +1276,7 @@ Accessible and distinctive are not opposites. The constraint made the palette be
       {
         question: 'How do you handle accessibility in brand work?',
         answer:
-          'I treat WCAG as a brand input, not a compliance afterthought. At CrowdRemit I led a primary-colour rebrand after contrast testing on real CTAs failed AA, and validated the replacement with visually-impaired users. Accessible and distinctive are not a trade-off.',
+          'I treat WCAG as a brand input, not a compliance afterthought. In the PaySika design system, every colour and type choice is checked for contrast and legibility before it ships, and imagery is chosen to represent the audience the brand actually serves. Accessible and distinctive are not a trade-off.',
       },
       {
         question: 'How do you handle incoming design requests?',
