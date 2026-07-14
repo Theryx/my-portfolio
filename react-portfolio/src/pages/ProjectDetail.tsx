@@ -37,6 +37,8 @@ import gueemsAmbreVanille from '../assets/img/gueemshome/candle-ambre-vanille.jp
 import gueemsAqua7 from '../assets/img/gueemshome/perfume-aqua7.jpg';
 import gueemsSpray from '../assets/img/gueemshome/spray-lifestyle.jpg';
 import gueemsPackaging from '../assets/img/gueemshome/packaging-gift.jpg';
+import gueemsConcept from '../assets/img/gueemshome/identity-concept.jpg';
+import gueemsPalette from '../assets/img/gueemshome/palette-exploration.jpg';
 
 const paysikaProcessArtifacts = [
   {
@@ -98,6 +100,20 @@ const paysikaBrandSurfaceArtifacts = [
     title: 'One brand across surfaces',
     description: 'The same identity from the mobile app to Facebook and social campaigns to slide decks: one promise, one look, no matter the touchpoint.',
     image: paysikaMarketingSurfaces,
+  },
+];
+
+// Brand Designer profile — GUEEMSHOME identity, from concept to system
+const gueemsProcessArtifacts = [
+  {
+    title: 'Early concept & tagline',
+    description: 'One of the first directions: a boxed "G | H" serif mark under the line "Déco. Qualité. Design." Exploring the brand\'s voice before settling the final identity.',
+    image: gueemsConcept,
+  },
+  {
+    title: 'Colour & mark exploration',
+    description: 'Testing the GH monogram across light and dark colourways with candidate palettes, the groundwork for the colour system that now flexes per scent.',
+    image: gueemsPalette,
   },
 ];
 
@@ -480,6 +496,33 @@ export default function ProjectDetail() {
 
             {isGueemsHome && (
               <>
+                <section className="project-detail__section paysika-process">
+                  <div className="paysika-process__header">
+                    <span className="paysika-story__eyebrow">Building the identity</span>
+                    <h2>From concept to a system</h2>
+                    <p>
+                      I explored the mark, the palette, and the type before locking the brand: the wordmark settled on Hammersmith One, the mark on the GH hexagon monogram, and the palette on a warm, restrained set that could flex per product.
+                    </p>
+                  </div>
+                  <div className="paysika-process__grid">
+                    {gueemsProcessArtifacts.map((artifact) => (
+                      <article className="paysika-process__item" key={artifact.title}>
+                        <img
+                          src={artifact.image}
+                          alt={artifact.title}
+                          loading="lazy"
+                          {...lightboxTrigger(() => handleImageClick(artifact.image, `${artifact.title} - ${artifact.description}`), `Enlarge: ${artifact.title}`)}
+                          style={{ cursor: 'pointer' }}
+                        />
+                        <div>
+                          <h3>{artifact.title}</h3>
+                          <p>{artifact.description}</p>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+
                 <section className="project-detail__section paysika-process">
                   <div className="paysika-process__header">
                     <span className="paysika-story__eyebrow">The identity, applied</span>
