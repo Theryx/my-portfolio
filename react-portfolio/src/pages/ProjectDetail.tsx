@@ -37,9 +37,15 @@ import gueemsAmbreVanille from '../assets/img/gueemshome/candle-ambre-vanille.jp
 import gueemsAqua7 from '../assets/img/gueemshome/perfume-aqua7.jpg';
 import gueemsSpray from '../assets/img/gueemshome/spray-lifestyle.jpg';
 import gueemsPackaging from '../assets/img/gueemshome/packaging-gift.jpg';
-import gueemsConcept from '../assets/img/gueemshome/identity-concept.jpg';
 import gueemsPalette from '../assets/img/gueemshome/palette-exploration.jpg';
-import gueemsInsertCards from '../assets/img/gueemshome/insert-cards.jpg';
+import gueemsSketch from '../assets/img/gueemshome/sketch.jpg';
+import gueemsLogoEarly from '../assets/img/gueemshome/logo-early.jpg';
+import gueemsBusinessCard from '../assets/img/gueemshome/business-card.png';
+import gueemsBusinessCardPrinted from '../assets/img/gueemshome/business-card-printed.jpg';
+import gueemsGiftCard from '../assets/img/gueemshome/gift-card.png';
+import gueemsWebsiteNav from '../assets/img/gueemshome/website-nav.jpg';
+import gueemsSocialFeed from '../assets/img/gueemshome/social-feed.png';
+import gueemsLookbook from '../assets/img/gueemshome/collection-lookbook.jpg';
 
 const paysikaProcessArtifacts = [
   {
@@ -104,16 +110,21 @@ const paysikaBrandSurfaceArtifacts = [
   },
 ];
 
-// Brand Designer profile — GUEEMSHOME identity, from concept to system
+// Brand Designer profile — GUEEMSHOME identity, from sketch to system
 const gueemsProcessArtifacts = [
   {
-    title: 'Early concept & tagline',
-    description: 'One of the first directions: a boxed "G | H" serif mark under the line "Déco. Qualité. Design." Exploring the brand\'s voice before settling the final identity.',
-    image: gueemsConcept,
+    title: 'First sketches',
+    description: 'Pen-and-paper layout for the brand card, the GH mark, contact block, and QR, worked out by hand before any pixels.',
+    image: gueemsSketch,
+  },
+  {
+    title: 'Early logo directions',
+    description: 'Exploring the wordmark and mark, from a literal house motif to the refined GH monogram the brand landed on.',
+    image: gueemsLogoEarly,
   },
   {
     title: 'Colour & mark exploration',
-    description: 'Testing the GH monogram across light and dark colourways with candidate palettes, the groundwork for the colour system that now flexes per scent.',
+    description: 'Testing the GH monogram across light and dark colourways with candidate palettes, the groundwork for the colour system.',
     image: gueemsPalette,
   },
 ];
@@ -137,22 +148,51 @@ const gueemsIdentityArtifacts = [
   },
 ];
 
-// Brand Designer profile — GUEEMSHOME from packaging to campaign
-const gueemsMarketingArtifacts = [
+// Brand Designer profile — GUEEMSHOME print, cards & packaging
+const gueemsCollateralArtifacts = [
   {
-    title: 'Campaign & product imagery',
-    description: 'Art-directed with a photographer: warm, restrained styling that carries the brand across the storefront and the Instagram feed.',
-    image: gueemsSpray,
+    title: 'Business card',
+    description: 'The full logo lockup and the Déco-Qualité-Design tagline, front and back, with contact details and a branded QR code.',
+    image: gueemsBusinessCard,
+  },
+  {
+    title: 'Printed and in hand',
+    description: 'The card produced on tan stock with a white monogram, the identity holding up off-screen.',
+    image: gueemsBusinessCardPrinted,
+  },
+  {
+    title: 'Merci card',
+    description: 'A bilingual thank-you card slipped into every order, with a review QR and the #gueemshome hashtag.',
+    image: gueemsGiftCard,
   },
   {
     title: 'Branded packaging',
     description: 'Kraft gift boxes with a signature ribbon, so the unboxing feels as considered and hand-made as the product.',
     image: gueemsPackaging,
   },
+];
+
+// Brand Designer profile — GUEEMSHOME web, social & campaigns
+const gueemsDigitalArtifacts = [
   {
-    title: 'Bilingual insert cards',
-    description: 'Reusable thank-you, merci, and review-request cards, French and English, so every order closes on-brand and in the customer\'s language.',
-    image: gueemsInsertCards,
+    title: 'The e-commerce site',
+    description: 'The identity carried into the website I designed (built in WordPress): logo, navigation, and hero all on-brand.',
+    image: gueemsWebsiteNav,
+  },
+  {
+    title: 'A consistent social feed',
+    description: 'Product photography, launches, and campaigns styled as one on-brand grid across the Instagram presence.',
+    image: gueemsSocialFeed,
+  },
+  {
+    title: 'Collection lookbook',
+    description: 'Editorial layout for the GRAFRICA / Bogolan cushion collection, telling the artisanal, Paris-made story.',
+    image: gueemsLookbook,
+  },
+  {
+    title: 'Campaign imagery',
+    description: 'Art-directed product and campaign photography, the same warm, restrained look across every channel.',
+    image: gueemsSpray,
   },
 ];
 
@@ -558,14 +598,41 @@ export default function ProjectDetail() {
 
                 <section className="project-detail__section paysika-process">
                   <div className="paysika-process__header">
-                    <span className="paysika-story__eyebrow">From packaging to campaign</span>
-                    <h2>One look, from the box to the feed</h2>
+                    <span className="paysika-story__eyebrow">Print, cards & packaging</span>
+                    <h2>In the hand, on the shelf</h2>
                     <p>
-                      The identity extends into packaging and marketing. I art-directed the product and campaign photography with a photographer so everything, storefront to social, shares one warm, restrained look.
+                      The identity extends into tactile collateral, business cards, bilingual thank-you cards, and packaging, designed and then produced, so the brand feels as considered off-screen as on.
                     </p>
                   </div>
                   <div className="paysika-process__grid">
-                    {gueemsMarketingArtifacts.map((artifact) => (
+                    {gueemsCollateralArtifacts.map((artifact) => (
+                      <article className="paysika-process__item" key={artifact.title}>
+                        <img
+                          src={artifact.image}
+                          alt={artifact.title}
+                          loading="lazy"
+                          {...lightboxTrigger(() => handleImageClick(artifact.image, `${artifact.title} - ${artifact.description}`), `Enlarge: ${artifact.title}`)}
+                          style={{ cursor: 'pointer' }}
+                        />
+                        <div>
+                          <h3>{artifact.title}</h3>
+                          <p>{artifact.description}</p>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+
+                <section className="project-detail__section paysika-process">
+                  <div className="paysika-process__header">
+                    <span className="paysika-story__eyebrow">Web, social & campaigns</span>
+                    <h2>Online and everywhere</h2>
+                    <p>
+                      The same identity across the website I designed, a consistent Instagram feed, campaign imagery, and an editorial lookbook, one look from the storefront to the feed.
+                    </p>
+                  </div>
+                  <div className="paysika-process__grid">
+                    {gueemsDigitalArtifacts.map((artifact) => (
                       <article className="paysika-process__item" key={artifact.title}>
                         <img
                           src={artifact.image}
