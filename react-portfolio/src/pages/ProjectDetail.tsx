@@ -39,6 +39,7 @@ import gueemsSpray from '../assets/img/gueemshome/spray-lifestyle.jpg';
 import gueemsPackaging from '../assets/img/gueemshome/packaging-gift.jpg';
 import gueemsConcept from '../assets/img/gueemshome/identity-concept.jpg';
 import gueemsPalette from '../assets/img/gueemshome/palette-exploration.jpg';
+import gueemsInsertCards from '../assets/img/gueemshome/insert-cards.jpg';
 
 const paysikaProcessArtifacts = [
   {
@@ -147,6 +148,11 @@ const gueemsMarketingArtifacts = [
     title: 'Branded packaging',
     description: 'Kraft gift boxes with a signature ribbon, so the unboxing feels as considered and hand-made as the product.',
     image: gueemsPackaging,
+  },
+  {
+    title: 'Bilingual insert cards',
+    description: 'Reusable thank-you, merci, and review-request cards, French and English, so every order closes on-brand and in the customer\'s language.',
+    image: gueemsInsertCards,
   },
 ];
 
