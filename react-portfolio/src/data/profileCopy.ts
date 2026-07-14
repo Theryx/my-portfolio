@@ -1136,7 +1136,7 @@ const brandDesignerPreset: ProfilePreset = {
         "GUEEMSHOME is a Paris-based artisanal home-fragrance house, plant-based, rechargeable candles, room perfumes, and gift sets, founded by Anasthasie Gueem's. As the brand designer, I built the brand from the ground up: the visual identity and brand guide, the design of the e-commerce website, and the marketing assets, so a founder's vision arrived online as one coherent, premium brand.",
       impact: 'A complete, coherent brand from logo to storefront to social, launched and live.',
       site: 'https://gueemshome.com/',
-      role: 'Brand Designer (Freelance)',
+      role: 'Brand Designer (Remote)',
       period: '2022',
       location: 'Remote — client in Paris, France',
       responsibilities: [
