@@ -1131,7 +1131,7 @@ const brandDesignerPreset: ProfilePreset = {
       title: 'GUEEMSHOME',
       tagline:
         'End-to-end brand for a French artisanal home-fragrance house: identity, brand guide, website, and marketing assets.',
-      image: 'gueemshome_logo.png',
+      image: 'gueemshome_hero.jpg',
       description:
         "GUEEMSHOME is a Paris-based artisanal home-fragrance house, plant-based, rechargeable candles, room perfumes, and gift sets, founded by Anasthasie Gueem's. As the brand designer, I built the brand from the ground up: the visual identity and brand guide, the design of the e-commerce website, and the marketing assets, so a founder's vision arrived online as one coherent, premium brand.",
       impact: 'A complete, coherent brand from logo to storefront to social, launched and live.',

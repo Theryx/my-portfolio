@@ -31,6 +31,13 @@ import paysikaDesignFiles from '../assets/img/paysika/brand/design-files.png';
 import paysikaPresentations from '../assets/img/paysika/brand/presentations.webp';
 import paysikaMarketingSurfaces from '../assets/img/paysika/brand/marketing-surfaces.webp';
 
+// Brand Designer profile — GUEEMSHOME brand engagement
+import gueemsBoisSecret from '../assets/img/gueemshome/candle-bois-secret.jpg';
+import gueemsAmbreVanille from '../assets/img/gueemshome/candle-ambre-vanille.jpg';
+import gueemsAqua7 from '../assets/img/gueemshome/perfume-aqua7.jpg';
+import gueemsSpray from '../assets/img/gueemshome/spray-lifestyle.jpg';
+import gueemsPackaging from '../assets/img/gueemshome/packaging-gift.jpg';
+
 const paysikaProcessArtifacts = [
   {
     title: 'Design system and team process',
@@ -94,6 +101,39 @@ const paysikaBrandSurfaceArtifacts = [
   },
 ];
 
+// Brand Designer profile — GUEEMSHOME identity applied across the range
+const gueemsIdentityArtifacts = [
+  {
+    title: 'Bois Secret',
+    description: 'The GH hexagon monogram on a clean label, the anchor of the identity across every product.',
+    image: gueemsBoisSecret,
+  },
+  {
+    title: 'Ambre Vanille',
+    description: 'A colour-coded label per scent, so the range reads as one family while each fragrance keeps its own character.',
+    image: gueemsAmbreVanille,
+  },
+  {
+    title: 'Aqua 7',
+    description: 'The same system in a fresh, green colourway, applied to the room-perfume line.',
+    image: gueemsAqua7,
+  },
+];
+
+// Brand Designer profile — GUEEMSHOME from packaging to campaign
+const gueemsMarketingArtifacts = [
+  {
+    title: 'Campaign & product imagery',
+    description: 'Art-directed with a photographer: warm, restrained styling that carries the brand across the storefront and the Instagram feed.',
+    image: gueemsSpray,
+  },
+  {
+    title: 'Branded packaging',
+    description: 'Kraft gift boxes with a signature ribbon, so the unboxing feels as considered and hand-made as the product.',
+    image: gueemsPackaging,
+  },
+];
+
 export default function ProjectDetail() {
   const { id } = useParams();
   const [project, setProject] = useState<Project | null>(null);
@@ -146,6 +186,7 @@ export default function ProjectDetail() {
 
   const isPaySika = project.id === 'paysika' || project.id.startsWith('paysika_');
   const isPaySikaBrand = project.id === 'paysika_brand-designer';
+  const isGueemsHome = project.id === 'gueemshome_brand-designer';
   const isCrowdRemit = project.id.startsWith('crowdremit');
   const imageSrc = isPaySika ? paysikaMockup : projectImageMap[project.image];
   const heroCaption = isPaySika 
@@ -432,6 +473,64 @@ export default function ProjectDetail() {
                     <p>
                       Trust, simplicity, innovation, professionalism, reliability, and security are not taglines: they are things a visual system either communicates or quietly undermines. I designed toward them deliberately, so the brand said the same thing whether a customer was opening the app or seeing an ad for the first time.
                     </p>
+                  </div>
+                </section>
+              </>
+            )}
+
+            {isGueemsHome && (
+              <>
+                <section className="project-detail__section paysika-process">
+                  <div className="paysika-process__header">
+                    <span className="paysika-story__eyebrow">The identity, applied</span>
+                    <h2>One monogram, a colour per scent</h2>
+                    <p>
+                      The brand hangs on the GH hexagon monogram, then flexes through a colour-coded label per fragrance, so the range feels like one family while each scent keeps its own character.
+                    </p>
+                  </div>
+                  <div className="paysika-process__grid">
+                    {gueemsIdentityArtifacts.map((artifact) => (
+                      <article className="paysika-process__item" key={artifact.title}>
+                        <img
+                          src={artifact.image}
+                          alt={artifact.title}
+                          loading="lazy"
+                          {...lightboxTrigger(() => handleImageClick(artifact.image, `${artifact.title} - ${artifact.description}`), `Enlarge: ${artifact.title}`)}
+                          style={{ cursor: 'pointer' }}
+                        />
+                        <div>
+                          <h3>{artifact.title}</h3>
+                          <p>{artifact.description}</p>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+
+                <section className="project-detail__section paysika-process">
+                  <div className="paysika-process__header">
+                    <span className="paysika-story__eyebrow">From packaging to campaign</span>
+                    <h2>One look, from the box to the feed</h2>
+                    <p>
+                      The identity extends into packaging and marketing. I art-directed the product and campaign photography with a photographer so everything, storefront to social, shares one warm, restrained look.
+                    </p>
+                  </div>
+                  <div className="paysika-process__grid">
+                    {gueemsMarketingArtifacts.map((artifact) => (
+                      <article className="paysika-process__item" key={artifact.title}>
+                        <img
+                          src={artifact.image}
+                          alt={artifact.title}
+                          loading="lazy"
+                          {...lightboxTrigger(() => handleImageClick(artifact.image, `${artifact.title} - ${artifact.description}`), `Enlarge: ${artifact.title}`)}
+                          style={{ cursor: 'pointer' }}
+                        />
+                        <div>
+                          <h3>{artifact.title}</h3>
+                          <p>{artifact.description}</p>
+                        </div>
+                      </article>
+                    ))}
                   </div>
                 </section>
               </>
