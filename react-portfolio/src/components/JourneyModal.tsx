@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import type { Profile } from '../lib/api';
 
 interface JourneyModalProps {
@@ -22,7 +23,10 @@ export const JourneyModal: React.FC<JourneyModalProps> = ({ isOpen, onClose, pro
 
   if (!isOpen) return null;
 
-  return (
+  // Rendered through a portal to <body> so the fixed-position backdrop escapes
+  // the page-transition wrapper's transform (a transformed ancestor would
+  // otherwise become its containing block and mis-anchor / clip the modal).
+  return createPortal(
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close-btn" onClick={onClose} aria-label="Close modal">
@@ -49,6 +53,7 @@ export const JourneyModal: React.FC<JourneyModalProps> = ({ isOpen, onClose, pro
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };

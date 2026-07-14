@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 interface Venture {
   title: string;
@@ -28,7 +29,9 @@ export const BenevolentModal: React.FC<BenevolentModalProps> = ({ isOpen, onClos
 
   if (!isOpen || !venture) return null;
 
-  return (
+  // Portal to <body> so the fixed backdrop escapes the page-transition wrapper's
+  // transform (see JourneyModal for the full rationale).
+  return createPortal(
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close-btn" onClick={onClose} aria-label="Close modal">
@@ -49,6 +52,7 @@ export const BenevolentModal: React.FC<BenevolentModalProps> = ({ isOpen, onClos
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
