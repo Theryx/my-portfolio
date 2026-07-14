@@ -30,6 +30,11 @@ import paysikaDesignSystem from '../assets/img/paysika/brand/design-system.png';
 import paysikaDesignFiles from '../assets/img/paysika/brand/design-files.png';
 import paysikaPresentations from '../assets/img/paysika/brand/presentations.webp';
 import paysikaMarketingSurfaces from '../assets/img/paysika/brand/marketing-surfaces.webp';
+import paysikaCardStates from '../assets/img/paysika/brand/card-states.png';
+import paysikaIconLibrary from '../assets/img/paysika/brand/icon-library.png';
+import paysikaIllustrationLibrary from '../assets/img/paysika/brand/illustration-library.png';
+import paysikaBillboards from '../assets/img/paysika/brand/billboards.png';
+import paysikaMerchEvents from '../assets/img/paysika/brand/merch-events.png';
 
 // Brand Designer profile — GUEEMSHOME brand engagement
 import gueemsBoisSecret from '../assets/img/gueemshome/candle-bois-secret.jpg';
@@ -93,6 +98,35 @@ const paysikaDesignSystemArtifacts = [
     title: 'One system, many surfaces',
     description: 'The same system fed the mobile app, backoffice dashboards, the agent app, and the web experience: onboarding, KYC, cards, deposits, and more, all versioned and named so the current asset is the one people find.',
     image: paysikaDesignFiles,
+  },
+  {
+    title: 'Card state library',
+    description: 'Every card state, physical and virtual, active, deleted, inactive, expired, locked, designed once and reused everywhere a card appears.',
+    image: paysikaCardStates,
+  },
+  {
+    title: 'Icon library',
+    description: 'A shared icon set covering card settings, mobile money and bank partners, and physical-card actions, so icons read the same across every screen.',
+    image: paysikaIconLibrary,
+  },
+  {
+    title: 'Illustration library',
+    description: 'Reusable illustrations for onboarding, KYC, empty states, rewards, and celebration moments, giving the product a consistent visual voice beyond UI chrome.',
+    image: paysikaIllustrationLibrary,
+  },
+];
+
+// Brand Designer profile — brand assets, merch & events
+const paysikaMerchArtifacts = [
+  {
+    title: 'Out-of-home billboards',
+    description: 'Co-branded VISA · Ecobank billboards in situ, carrying the brand from the app onto the street.',
+    image: paysikaBillboards,
+  },
+  {
+    title: 'Merch, events & internal assets',
+    description: 'Roll-up banners, mugs, notebooks, and tote bags, including "Bonne Fête du Travail" event collateral, all co-branded and on-system.',
+    image: paysikaMerchEvents,
   },
 ];
 
@@ -478,6 +512,33 @@ export default function ProjectDetail() {
                   </div>
                   <div className="paysika-process__grid">
                     {paysikaBrandSurfaceArtifacts.map((artifact) => (
+                      <article className="paysika-process__item" key={artifact.title}>
+                        <img
+                          src={artifact.image}
+                          alt={artifact.title}
+                          loading="lazy"
+                          {...lightboxTrigger(() => handleImageClick(artifact.image, `${artifact.title} - ${artifact.description}`), `Enlarge: ${artifact.title}`)}
+                          style={{ cursor: 'pointer' }}
+                        />
+                        <div>
+                          <h3>{artifact.title}</h3>
+                          <p>{artifact.description}</p>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+
+                <section className="project-detail__section paysika-process">
+                  <div className="paysika-process__header">
+                    <span className="paysika-story__eyebrow">Beyond the screen</span>
+                    <h2>Brand assets, merch &amp; events</h2>
+                    <p>
+                      I supervised branded events and produced the merchandise and internal assets that carried the brand off-screen: co-branded out-of-home billboards, roll-up banners, mugs, notebooks, and tote bags.
+                    </p>
+                  </div>
+                  <div className="paysika-process__grid">
+                    {paysikaMerchArtifacts.map((artifact) => (
                       <article className="paysika-process__item" key={artifact.title}>
                         <img
                           src={artifact.image}
