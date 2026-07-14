@@ -1108,6 +1108,7 @@ const brandDesignerPreset: ProfilePreset = {
         'Built and governed a reusable asset library with clear naming conventions, versioning, and file structure so Marketing and Product could ship on-brand without a design bottleneck',
         'Extended the identity into the physical debit card and mailer, working directly with the manufacturer',
         'Produced launch and campaign visuals including light motion (short promo and onboarding animations)',
+        'Supervised branded events and produced branded merchandise and internal assets: notebooks, mugs, stickers, roll-up banners, out-of-home billboards, and screen wallpapers',
         'Partnered with compliance and our partner bank so customer-facing communications stayed accurate and regulator-aligned',
         'Ran a simple intake process to receive, prioritise, and track design requests across teams',
         'Localised brand voice and copy across French and English with Claude as a copy partner',
