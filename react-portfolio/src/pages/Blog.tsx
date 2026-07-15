@@ -1,7 +1,7 @@
 import ProfileLink from '../components/ProfileLink';
 import { PageTransition } from '../components/PageTransition';
 import { useProfile } from '../context/ProfileContext';
-import { blogImageMap } from '../data/blog';
+import { resolveBlogImage } from '../data/blog';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, PenLine } from 'lucide-react';
 import { gridVariants, tileVariants } from '../lib/motion';
@@ -51,7 +51,7 @@ export default function Blog() {
                         {isFeatured && <span className="blog-card__latest">Latest</span>}
                         <div className="blog-card__image">
                           <img
-                            src={blogImageMap[post.image] || ''}
+                            src={resolveBlogImage(post.image)}
                             alt={post.title}
                             loading={isFeatured ? 'eager' : 'lazy'}
                             onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}

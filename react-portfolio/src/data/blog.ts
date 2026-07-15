@@ -240,4 +240,12 @@ export const blogImageMap: Record<string, string> = {
   'affinity_zoom_workspace.png': affinityZoomWorkspace,
 };
 
+// CMS-uploaded images (Cloudinary) are stored as full URLs; bundled images are
+// stored as bare filenames that must be resolved through blogImageMap.
+export function resolveBlogImage(image: string | undefined): string {
+  if (!image) return '';
+  if (/^(https?:\/\/|\/)/.test(image)) return image;
+  return blogImageMap[image] || '';
+}
+
 export const blogTags = ['All', 'Fintech', 'Africa', 'Product Design', 'UX Design', 'Accessibility', 'Emerging Markets', 'Open Source', 'Design Tools'];

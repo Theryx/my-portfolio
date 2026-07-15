@@ -8,7 +8,7 @@ import { PageTransition } from '../components/PageTransition';
 import { ArrowLeft, Calendar, Clock, User } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getBlogPostById, type BlogPost } from '../lib/api';
-import { blogImageMap } from '../data/blog';
+import { blogImageMap, resolveBlogImage } from '../data/blog';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { lightboxTrigger } from '../lib/a11y';
 import { ReadingProgress } from '../components/ReadingProgress';
@@ -63,7 +63,7 @@ export default function BlogPostDetail() {
     );
   }
 
-  const imageSrc = blogImageMap[post.image];
+  const imageSrc = resolveBlogImage(post.image);
 
   return (
     <PageTransition>
