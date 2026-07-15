@@ -1073,18 +1073,18 @@ const brandDesignerPreset: ProfilePreset = {
     tagline: 'A brand is a promise kept on every screen.',
     hero_title: 'Brand Designer',
     hero_subtitle:
-      'Four years shaping and safeguarding the PaySika brand across mobile, web, and physical cards, plus founding brand work for GUEEMSHOME and GEFONA Digital Foundation. I build brand systems, reusable asset kits, and an accessible visual language that reads as trust, simplicity, and reliability in French and English.',
+      'Four years shaping and looking after the PaySika brand across mobile, web, and physical cards, plus founding brand work for GUEEMSHOME and GEFONA Digital Foundation. I build brand systems and reusable asset kits, and I make sure the visual language holds up equally well in French and English.',
     philosophy_title: 'Consistency is what turns a logo into a brand.',
     philosophy_text:
-      'A brand is not the logo, it is the thousandth touchpoint looking like the first. My job is to define the visual system (type, colour, iconography, imagery, motion) once, document it clearly, and make the right choice the easy choice for every team that touches a customer. Every expression should quietly say the same thing: this is trustworthy, simple, and built to last.',
+      "A brand is not the logo, it's whether the thousandth thing someone sees still looks like the first. I build the visual system once, write it down somewhere people actually check, and make the on-brand version the fastest one to grab, so nobody has to choose between shipping on time and shipping on-brand.",
     badges: ['Open to Brand Designer roles', 'Brand systems · Accessibility · FR/EN'],
     social_links: {},
   },
   social_links: commonLinks({
-    now: 'Building a brand hub and reusable asset kits for a Central African fintech, plus ongoing brand work for GUEEMSHOME and GEFONA Digital Foundation',
+    now: 'Building out a shared brand library and reusable asset kits for a Central African fintech, plus ongoing brand work for GUEEMSHOME and GEFONA Digital Foundation',
     projects_intro:
       'Visual identity, brand systems, and accessible design language shipped across fintech, small business, and non-profit, on mobile, web, and print.',
-    blog_intro: 'Notes on brand governance, accessible colour, and keeping a brand consistent as it scales.',
+    blog_intro: 'Notes on keeping a brand from drifting, accessible colour, and what actually scales.',
     metric_label: 'years building brand systems',
   }),
   projects: [
@@ -1103,9 +1103,9 @@ const brandDesignerPreset: ProfilePreset = {
       period: 'Dec 2021 - Present',
       location: 'Douala, Cameroon',
       responsibilities: [
-        'Led the PaySika design team and owned the visual identity across every customer and employee touchpoint',
+        'Led the PaySika design team and owned the visual identity everywhere a customer or teammate ran into the brand',
         'Defined and maintained the brand guide and design system: typography, colour, logo usage, iconography, imagery, layout, and motion',
-        'Built and governed a reusable asset library with clear naming conventions, versioning, and file structure so Marketing and Product could ship on-brand without a design bottleneck',
+        'Built and kept a shared asset library organised, with clear file names and version history, so Marketing and Product could grab the current file and ship on-brand without waiting on design',
         'Extended the identity into the physical debit card and mailer, working directly with the manufacturer',
         'Produced launch and campaign visuals including light motion (short promo and onboarding animations)',
         'Supervised branded events and produced branded merchandise and internal assets: notebooks, mugs, stickers, roll-up banners, out-of-home billboards, and screen wallpapers',
@@ -1118,7 +1118,7 @@ const brandDesignerPreset: ProfilePreset = {
         'PaySika needed to look and feel like one trustworthy institution across a fast-growing set of surfaces (app, web, ad creative, sales decks, and the physical card) while a small team shipped quickly. Without a shared system, every new surface drifted a little further from the last.',
       solution: 'The Solution',
       solution_text:
-        'I built one brand system and made it the easy default. Semantic tokens for colour and type, a documented logo and iconography set, and a self-serve asset library meant any team could produce on-brand work without waiting on design. Every brand expression was checked against the same promise: trust, simplicity, reliability.',
+        'I built one brand system and made it the easy default. Semantic tokens for colour and type, a documented logo and iconography set, and a self-serve asset library meant any team could produce on-brand work without waiting on design. Every piece of work got the same gut check: would this feel like it came from anyone, or does it feel like PaySika.',
       result: 'The Result',
       result_text:
         'A consistent identity from the first ad a user sees to the card that arrives in the mail, and an asset pipeline that let Marketing and Product move without breaking the brand.',
@@ -1196,9 +1196,9 @@ const brandDesignerPreset: ProfilePreset = {
   blogPosts: [
     {
       id: 'brand_hub_fintech',
-      title: 'Building a brand hub that a fast-moving fintech will actually use',
+      title: 'Keeping brand assets somewhere people actually use them',
       excerpt:
-        'A brand guideline nobody opens is decoration. Here is how I built a brand hub at PaySika that Marketing and Product reached for by default.',
+        'A folder of logos nobody opens might as well not exist. Here is how I built a shared library at PaySika that people reached for on their own.',
       date: 'June 2, 2026',
       author: 'Ndouken Theryx',
       read_time: '6 min read',
@@ -1206,29 +1206,29 @@ const brandDesignerPreset: ProfilePreset = {
       image: 'paysika_mockup.png',
       is_hidden: false,
       sort_order: 0,
-      content: `# Building a brand hub that a fast-moving fintech will actually use
+      content: `# Keeping brand assets somewhere people actually use them
 
-Most brand guidelines die the same way: a beautiful 60-page PDF, shared once, opened never. At PaySika I stopped treating the brand as a document and started treating it as a hub, a living, self-serve source of truth that teams reached for because it was faster than not reaching for it.
+Most style guides die the same way: a beautiful PDF, shared once, opened never. At PaySika I stopped thinking of the brand as a document and built a shared library instead, a living place people actually reached for because pulling from it was faster than not.
 
-## The rule: the on-brand choice has to be the easy choice
+## Make the on-brand option the fast option
 
-Consistency loses to deadlines every time you make people choose between them. So the whole design of a brand hub is about removing that choice. If the fastest way to make a campaign asset is to pull an approved template from the hub, the campaign asset will be on-brand. If the fastest way is to eyeball last quarter's file, it won't.
+Consistency loses to a deadline every single time you make someone choose between them. So the whole point of the library was removing that choice. If grabbing an approved template is the fastest way to make a campaign asset, the campaign asset ends up on-brand. If digging up last quarter's file is faster, it won't.
 
-## What went in the hub
+## What lived in it
 
-- **Tokens, not swatches.** Colour and type as semantic tokens (color/accent/primary, not "the orange"), so a brand change is one edit.
-- **Logo and iconography specs** with clear do and don't examples, because "don't" prevents more drift than "do".
-- **A reusable asset library**: logos, lockups, photo treatments, presentation templates, social and email templates, per team.
-- **Naming, versioning, and file structure** so the current asset is always the one people find, and stale files retire cleanly.
-- **Usage documentation** written for the person in a hurry, not the person with an afternoon.
+- **Tokens, not swatches.** Colour and type saved as named values (accent/primary, not "the orange"), so a brand-wide change is one edit, not a search-and-replace.
+- **Logo and icon rules** with side-by-side right and wrong examples, since showing the wrong way stops more drift than describing the right one.
+- **A library people could actually search**: logos, lockups, photo treatments, deck templates, social and email templates, sorted by team.
+- **Clear names and version history**, so the file someone opens is the current one, and old drafts don't quietly outlive their usefulness.
+- **Instructions written for someone in a rush**, not someone with a spare afternoon.
 
-## Governance without becoming a bottleneck
+## Staying out of the way
 
-Owning the brand does not mean reviewing every asset. It means building the system so most work is on-brand without review, and reserving review for the high-visibility, high-stakes launches. I reviewed significant initiatives before they shipped; everything else the hub handled on its own.
+Owning the brand didn't mean signing off on every asset. It meant building things so most work landed on-brand without me looking at it, and saving my attention for the handful of launches where getting it wrong would actually cost something.
 
-## The signal it was working
+## How I knew it was working
 
-The signal was not compliments on the guidelines. It was Marketing shipping a campaign without opening a design ticket, and it still looking like PaySika. That is when a brand hub has done its job.`,
+Not compliments on the guidelines. It was marketing shipping a campaign without filing a design request, and it still looking like PaySika. That's the only signal that actually matters.`,
     },
     {
       id: 'brand_accessible_color',
@@ -1266,7 +1266,7 @@ Accessible and distinctive are not opposites. Constraint makes a palette better,
       {
         question: 'What does owning a brand end to end look like for you?',
         answer:
-          'Defining the visual system (type, colour, iconography, imagery, motion), documenting it as a self-serve hub, building reusable asset kits per team, reviewing high-visibility work before it ships, and extending the identity into every surface: mobile, web, and print. At PaySika that included the physical Visa-partner card.',
+          "Defining the visual system once (type, colour, icons, imagery, motion), writing it down somewhere people actually check, building reusable kits per team, stepping in myself before the big, visible launches, and carrying the identity into every surface: mobile, web, and print. At PaySika that included the physical Visa-partner card.",
       },
       {
         question: 'How do you keep a brand consistent without becoming a bottleneck?',
@@ -1281,12 +1281,12 @@ Accessible and distinctive are not opposites. Constraint makes a palette better,
       {
         question: 'How do you handle incoming design requests?',
         answer:
-          'With a simple, visible intake: every request is logged, then prioritised on business impact, customer visibility, compliance sensitivity, urgency, and effort, so the highest-value work gets attention first and nothing gets lost in DMs. Requesters can see where their ask sits, which cuts the "any update?" pings dramatically.',
+          'Every request goes into one visible list instead of someone\'s DMs. I weigh a handful of things when I decide what\'s next: how many people will actually notice it, whether it touches anything regulated, how urgent it really is versus how urgent it feels, and how long it will take. Anyone can see where their ask sits, which cuts down the "any update?" messages a lot.',
       },
       {
         question: 'Which tools do you work in?',
         answer:
-          'Figma for brand systems and component libraries; Adobe Creative Suite (Illustrator, Photoshop, InDesign) for identity work, with After Effects for lighter motion; and AI-assisted tools like Claude for bilingual copy and production boilerplate. I also read and write basic HTML/CSS, which keeps my handoffs honest about what is buildable. I work fluently in both French and English.',
+          "Figma's where the brand system and components live day to day. For identity and print work I'm in Illustrator, Photoshop, and InDesign, and I'll drop into After Effects when something needs to move. I lean on Claude for French and English copy and the more tedious production tasks, and I know enough HTML/CSS to know what I'm asking an engineer for.",
       },
     ],
   },

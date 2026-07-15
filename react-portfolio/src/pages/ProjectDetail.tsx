@@ -496,7 +496,7 @@ export default function ProjectDetail() {
                     <div className="paysika-story__stat">
                       <Award size={22} />
                       <strong>Consistency</strong>
-                      <span>Reviewed journeys, campaigns, and decks so every surface shipped on-brand.</span>
+                      <span>Caught the small inconsistencies before launch so nothing shipped feeling like it came from a different company.</span>
                     </div>
                   </div>
                 </section>
@@ -506,7 +506,7 @@ export default function ProjectDetail() {
                     <span className="paysika-story__eyebrow">The rulebook</span>
                     <h2>One source of truth</h2>
                     <p>
-                      The brand guide was the single source of truth: typography, colour, logo, iconography, illustration, and layout in one living document every team could reach for. I reviewed journeys, campaigns, and screens for the small drifts that erode a brand, and significant work came to me before it shipped, so what a customer saw was on-brand by the time it went live.
+                      The brand guide held every rule in one place: type, colour, logo, icons, illustration, layout, all in a living document instead of a PDF nobody reopens. I kept an eye on new work as it went out the door, an ad here, a deck there, an updated screen, and got a look at the big-ticket launches before they went live, so what customers actually saw stayed on-brand.
                     </p>
                   </div>
                   <div className="paysika-process__grid" style={{ gridTemplateColumns: '1fr' }}>
@@ -528,10 +528,10 @@ export default function ProjectDetail() {
 
                 <section className="project-detail__section paysika-process">
                   <div className="paysika-process__header">
-                    <span className="paysika-story__eyebrow">Digital brand experience</span>
+                    <span className="paysika-story__eyebrow">Same brand, every screen</span>
                     <h2>One design system, every digital surface</h2>
                     <p>
-                      Working alongside product and engineering, I kept one consistent visual language across every digital experience: components, icons, illustrations, typography, spacing, and colour defined once and reused across the mobile app, backoffice dashboards, the agent app, and the web experience. My job was the brand layer on top of usability, visual direction that made each experience not only usable but unmistakably PaySika, reviewed screen by screen so the brand survived the trip from Figma to production.
+                      I sat next to the people building the app, the backoffice, and the agent tools, and made sure the same visual language showed up everywhere: the same button shapes, the same icon style, the same type scale, the same spacing rhythm. Usability was product's call; making sure it still looked and felt like PaySika once it shipped was mine, checked screen by screen so nothing drifted between the Figma file and what actually went live.
                     </p>
                   </div>
                   <div className="paysika-process__grid">
@@ -619,23 +619,23 @@ export default function ProjectDetail() {
                   <div className="paysika-story__stats">
                     <div className="paysika-story__stat">
                       <Accessibility size={22} />
-                      <strong>Accessible &amp; inclusive by default</strong>
-                      <span>Colour contrast, readable typography, clear hierarchy, and inclusive imagery built into the system so the brand works for the widest range of users.</span>
+                      <strong>Usable by more people, not fewer</strong>
+                      <span>Text you can actually read, colours that still work for low-vision users, and photography that looks like our real customers, all built in by default.</span>
                     </div>
                     <div className="paysika-story__stat">
                       <Film size={22} />
-                      <strong>Motion &amp; visual storytelling</strong>
-                      <span>Light motion for launches, onboarding, and social, with larger pieces art-directed against the same system and timing.</span>
+                      <strong>A little motion, kept in character</strong>
+                      <span>Light motion for launches, onboarding, and social, with anything bigger art-directed against the same system and timing.</span>
                     </div>
                     <div className="paysika-story__stat">
                       <Users size={22} />
                       <strong>Cross-functional partner</strong>
-                      <span>Worked across Marketing, Product, Engineering, Compliance, Risk, Sales, and Customer Experience to keep every touchpoint on-brand and regulator-aligned.</span>
+                      <span>Sat in on planning with marketing, product, and engineering, and looped in compliance early on anything customer-facing so it didn't need redoing after the fact.</span>
                     </div>
                     <div className="paysika-story__stat">
                       <ClipboardList size={22} />
                       <strong>Intake &amp; prioritisation</strong>
-                      <span>A simple request process ranked on business impact, customer visibility, compliance sensitivity, urgency, and effort.</span>
+                      <span>Every ask went into one queue and got ranked by how much it actually mattered, not by who asked first or loudest.</span>
                     </div>
                   </div>
                 </section>
@@ -643,9 +643,9 @@ export default function ProjectDetail() {
                 <section className="project-detail__section paysika-story">
                   <div className="paysika-story__intro">
                     <span className="paysika-story__eyebrow">Why it matters</span>
-                    <h2>Every expression reinforces the positioning</h2>
+                    <h2>The brand had to say the same thing every time</h2>
                     <p>
-                      Trust, simplicity, innovation, professionalism, reliability, and security are not taglines: they are things a visual system either communicates or quietly undermines. I designed toward them deliberately, so the brand said the same thing whether a customer was opening the app or seeing an ad for the first time.
+                      A calm confirmation screen and a loud billboard ad are doing different jobs, but they need to leave someone with the same feeling: this company knows what it's doing and isn't going to waste your time or your money. I checked every new piece of work against that feeling, not just against a style guide.
                     </p>
                   </div>
                 </section>
