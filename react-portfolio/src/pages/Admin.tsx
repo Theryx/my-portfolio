@@ -301,6 +301,7 @@ export default function Admin() {
           hero_subtitle: '',
           philosophy_title: '',
           philosophy_text: '',
+          intro_expanded_text: '',
           badges: [],
           social_links: {},
           about_content: {},

@@ -81,7 +81,7 @@ export function validateProfileBody(b: Record<string, unknown>): string | null {
   for (const f of ['bio', 'tagline', 'hero_title'] as const) {
     if (!isShortText(b[f], { required: false })) return `Invalid ${f}`;
   }
-  for (const f of ['hero_subtitle', 'philosophy_title', 'philosophy_text'] as const) {
+  for (const f of ['hero_subtitle', 'philosophy_title', 'philosophy_text', 'intro_expanded_text'] as const) {
     if (!isLongText(b[f])) return `Invalid ${f}`;
   }
   if (!isStringArray(b.badges)) return 'Invalid badges';

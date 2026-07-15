@@ -66,6 +66,8 @@ const fintechPreset: ProfilePreset = {
     philosophy_title: 'Trust is the core currency of financial design.',
     philosophy_text:
       'Every financial product asks the user to bet their money on a screen. My job is to make that bet feel obvious: clear hierarchy, predictable interactions, honest copy, no surprises. I pair Mixpanel data with usability testing to find where trust breaks and rebuild from there.',
+    intro_expanded_text:
+      'Every financial product asks the user to bet their money on a screen. My job is to make that bet feel obvious: clear hierarchy, predictable interactions, honest copy, no surprises. I pair Mixpanel data with usability testing to find where trust breaks and rebuild from there.',
     badges: ['Open to fintech design roles', 'Payments · KYC · Mobile money'],
     social_links: {},
   },
@@ -318,6 +320,8 @@ const designEngineerPreset: ProfilePreset = {
     philosophy_title: 'The best handoff is no handoff.',
     philosophy_text:
       'When the person making the design decision also writes the component, there is no fidelity loss, no "looks different from the mock" ticket, no handoff document that goes stale the moment it ships. AI doesn\'t replace taste: it removes the boring middle so taste can show up everywhere.',
+    intro_expanded_text:
+      'When the person making the design decision also writes the component, there is no fidelity loss, no "looks different from the mock" ticket, no handoff document that goes stale the moment it ships. AI doesn\'t replace taste: it removes the boring middle so taste can show up everywhere.',
     badges: ['Available for design-engineering work', 'Figma · React · TypeScript · AI tooling'],
     social_links: {},
   },
@@ -563,6 +567,8 @@ const digitalMarketingPreset: ProfilePreset = {
     philosophy_title: 'Marketing should be clear, measurable, and useful.',
     philosophy_text:
       'I combine audience research, creative storytelling, performance tracking, and product thinking to build campaigns that do more than get attention. They help people understand, trust, and act, and I can show you the number.',
+    intro_expanded_text:
+      'I combine audience research, creative storytelling, performance tracking, and product thinking to build campaigns that do more than get attention. They help people understand, trust, and act, and I can show you the number.',
     badges: ['Available for marketing projects', 'Strategy · Paid · Content · Analytics'],
     social_links: {},
   },
@@ -800,6 +806,8 @@ const projectManagerPreset: ProfilePreset = {
       'I lead cross-functional teams through scoping, delivery, and the messy middle. Four years coordinating design, engineering, and marketing at PaySika; co-founder of Kody (Tony Elumelu Foundation-funded MVP); maintainer of an open-source community platform.',
     philosophy_title: 'Clarity is a deliverable.',
     philosophy_text:
+      "Most projects don't fail on talent or budget. They fail because the team disagrees about what \"done\" looks like and nobody writes it down. My job is to write it down, explicitly, early, and with the right level of detail, and to keep the team aligned through the parts where reality contradicts the plan.",
+    intro_expanded_text:
       "Most projects don't fail on talent or budget. They fail because the team disagrees about what \"done\" looks like and nobody writes it down. My job is to write it down, explicitly, early, and with the right level of detail, and to keep the team aligned through the parts where reality contradicts the plan.",
     badges: ['Open to PM & delivery roles', 'Product · Cross-functional · Open source'],
     social_links: {},
@@ -1077,6 +1085,8 @@ const brandDesignerPreset: ProfilePreset = {
     philosophy_title: 'Consistency is what turns a logo into a brand.',
     philosophy_text:
       "A brand is not the logo, it's whether the thousandth thing someone sees still looks like the first. I build the visual system once, write it down somewhere people actually check, and make the on-brand version the fastest one to grab, so nobody has to choose between shipping on time and shipping on-brand.",
+    intro_expanded_text:
+      "The best compliment I get isn't \"nice logo,\" it's someone recognising a screen they've never seen before as unmistakably ours. That only happens when the system holds up without me in the room. The case studies below show that work: the guides, the systems, the process, not just the finished screens.",
     badges: ['Open to Brand Designer roles', 'Brand systems · Accessibility · FR/EN'],
     social_links: {},
   },

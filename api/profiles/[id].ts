@@ -25,11 +25,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const rows = await sql`
         INSERT INTO profiles (
           id, name, is_active, bio, tagline, hero_title, hero_subtitle,
-          philosophy_title, philosophy_text, badges, social_links, about_content, created_at, updated_at
+          philosophy_title, philosophy_text, intro_expanded_text, badges, social_links, about_content, created_at, updated_at
         ) VALUES (
           ${profileId}, ${body.name}, ${body.is_active ?? true}, ${body.bio},
           ${body.tagline}, ${body.hero_title}, ${body.hero_subtitle},
-          ${body.philosophy_title}, ${body.philosophy_text}, ${body.badges ?? []},
+          ${body.philosophy_title}, ${body.philosophy_text}, ${body.intro_expanded_text}, ${body.badges ?? []},
           ${JSON.stringify(body.social_links ?? {})}, ${JSON.stringify(body.about_content ?? {})}, ${now}, ${now}
         )
         ON CONFLICT (id) DO UPDATE SET
@@ -41,6 +41,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           hero_subtitle = EXCLUDED.hero_subtitle,
           philosophy_title = EXCLUDED.philosophy_title,
           philosophy_text = EXCLUDED.philosophy_text,
+          intro_expanded_text = EXCLUDED.intro_expanded_text,
           badges = EXCLUDED.badges,
           social_links = EXCLUDED.social_links,
           about_content = EXCLUDED.about_content,

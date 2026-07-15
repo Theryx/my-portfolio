@@ -30,6 +30,7 @@ export interface Profile {
   hero_subtitle: string;
   philosophy_title: string;
   philosophy_text: string;
+  intro_expanded_text: string;
   badges: string[];
   social_links: Record<string, string>;
   about_content: AboutContent;
@@ -106,6 +107,8 @@ if (!fallbackProfiles.default) {
       'I design and ship digital products end to end: UX, interface, and code. Led design at PaySika, co-founded ventures, and build in the open. Based in Cameroon.',
     philosophy_title: 'I design experiences that bridge technology and human needs.',
     philosophy_text:
+      'I work across design and engineering to turn ideas into products people trust. Four years leading design at PaySika, plus co-founding ventures and shipping code, taught me that the strongest products come from one person owning the whole loop: research, interface, and implementation.',
+    intro_expanded_text:
       'I work across design and engineering to turn ideas into products people trust. Four years leading design at PaySika, plus co-founding ventures and shipping code, taught me that the strongest products come from one person owning the whole loop: research, interface, and implementation.',
     badges: ['Design · Engineering · Product'],
     social_links: {},

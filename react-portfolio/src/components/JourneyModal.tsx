@@ -49,7 +49,7 @@ export const JourneyModal: React.FC<JourneyModalProps> = ({ isOpen, onClose, pro
                 </>
               )}
             </p>
-            {profile?.philosophy_text && <p>{profile.philosophy_text}</p>}
+            {profile?.intro_expanded_text && <p>{profile.intro_expanded_text}</p>}
           </div>
         </div>
       </div>
