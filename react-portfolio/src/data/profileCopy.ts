@@ -1100,7 +1100,7 @@ const brandDesignerPreset: ProfilePreset = {
       impact: 'A single, documented visual identity applied consistently across every PaySika touchpoint.',
       site: 'https://www.paysika.co',
       role: 'Lead Designer · Brand Owner',
-      period: 'Dec 2021 - Present',
+      period: 'Nov 2022 - Present',
       location: 'Douala, Cameroon',
       responsibilities: [
         'Led the PaySika design team and owned the visual identity everywhere a customer or teammate ran into the brand',
