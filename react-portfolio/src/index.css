@@ -1066,6 +1066,7 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
     color: var(--color-text-muted);
     margin-bottom: var(--spacing-lg);
     line-height: 1.7;
+    white-space: pre-line;
 }
 
 .about__interests {
@@ -2987,6 +2988,7 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
     line-height: 1.6;
     color: var(--color-text-subtle);
     margin-bottom: var(--spacing-md);
+    white-space: pre-line;
 }
 
 .interactive-text {
@@ -3131,6 +3133,7 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
     line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    white-space: pre-line;
 }
 
 .bento-card__text strong {
@@ -3378,6 +3381,7 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
     line-height: 1.45;
     color: var(--color-text);
     opacity: 0.85;
+    white-space: pre-line;
 }
 
 .bento-card__hammer {
@@ -3803,6 +3807,7 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
     color: var(--color-text-muted);
     line-height: 1.7;
     max-width: 720px;
+    white-space: pre-line;
 }
 
 @media (max-width: 768px) {
