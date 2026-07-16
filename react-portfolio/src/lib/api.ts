@@ -464,6 +464,7 @@ export interface MultiProfileMigrationResult {
   ok: boolean;
   blog_post_profiles: number;
   project_profiles: number;
+  log?: string[];
 }
 
 // Runs the server-side migration that backfills the blog_post_profiles and

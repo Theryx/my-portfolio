@@ -701,7 +701,7 @@ function Dashboard({ profiles, projects, posts, onNavigate, onSynced, addToast }
   const [syncLog, setSyncLog] = useState<string[]>([]);
   const [syncResult, setSyncResult] = useState<SyncResult | null>(null);
   const [migrating, setMigrating] = useState(false);
-  const [migrationResult, setMigrationResult] = useState<{ ok: boolean; blog_post_profiles: number; project_profiles: number } | null>(null);
+  const [migrationResult, setMigrationResult] = useState<{ ok: boolean; blog_post_profiles: number; project_profiles: number; log?: string[] } | null>(null);
 
   const drafts = posts.filter((p) => p.is_hidden).length;
   const hiddenProjects = projects.filter((p) => p.is_hidden).length;
@@ -821,6 +821,9 @@ function Dashboard({ profiles, projects, posts, onNavigate, onSynced, addToast }
               <CheckCircle2 size={14} aria-hidden="true" /> Done: {migrationResult.blog_post_profiles}{' '}
               blog links and {migrationResult.project_profiles} project links created.
             </div>
+            {migrationResult.log?.map((line, i) => (
+              <div key={i} className="cms-sync-log__line">{line}</div>
+            ))}
           </div>
         )}
       </div>
