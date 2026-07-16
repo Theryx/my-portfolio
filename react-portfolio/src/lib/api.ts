@@ -458,6 +458,22 @@ export async function deleteBlogPost(id: string): Promise<void> {
   await apiFetch(`/api/blog/${id}`, { method: 'DELETE' });
 }
 
+// --- One-time migration: legacy profile_id -> profile_ids join tables ---
+
+export interface MultiProfileMigrationResult {
+  ok: boolean;
+  blog_post_profiles: number;
+  project_profiles: number;
+}
+
+// Runs the server-side migration that backfills the blog_post_profiles and
+// project_profiles join tables from the legacy profile_id column. Gated on the
+// server by MIGRATIONS_ENABLED — returns 403 if that env var is not set on
+// Vercel. Safe to run multiple times: every step is idempotent.
+export async function runMultiProfileMigration(): Promise<MultiProfileMigrationResult> {
+  return apiFetch<MultiProfileMigrationResult>('/api/admin/migrate-multi-profile', { method: 'POST' });
+}
+
 // --- Content sync (one-time migration helper, runs from the CMS) ---
 
 export interface SyncResult {

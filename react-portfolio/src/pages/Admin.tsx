@@ -3,13 +3,15 @@ import './admin/cms.css';
 import {
   LayoutDashboard, Users, FolderKanban, Newspaper, Settings, LogOut, RefreshCw,
   ExternalLink, Search, Eye, EyeOff, Pencil, Trash2, Copy, ArrowUp, ArrowDown,
-  ArrowLeft, DatabaseZap, CheckCircle2, AlertTriangle, Sparkles, Home, UserRound
+  ArrowLeft, DatabaseZap, CheckCircle2, AlertTriangle, Sparkles, Home, UserRound,
+  GitMerge
 } from 'lucide-react';
 import {
   login, logout, getSession,
   getAllProfiles, getAllProjects, getAllBlogPosts,
   updateProfile, deleteProfile, upsertProject, updateProject, deleteProject,
   upsertBlogPost, updateBlogPost, deleteBlogPost, syncContentToDatabase,
+  runMultiProfileMigration,
   type Profile, type Project, type BlogPost, type SyncResult,
 } from '../lib/api';
 import { HomeForm, AboutForm, ProfileMetaForm, ProjectForm, BlogForm, SecurityForm } from './admin/forms';
@@ -698,6 +700,8 @@ function Dashboard({ profiles, projects, posts, onNavigate, onSynced, addToast }
   const [syncing, setSyncing] = useState(false);
   const [syncLog, setSyncLog] = useState<string[]>([]);
   const [syncResult, setSyncResult] = useState<SyncResult | null>(null);
+  const [migrating, setMigrating] = useState(false);
+  const [migrationResult, setMigrationResult] = useState<{ ok: boolean; blog_post_profiles: number; project_profiles: number } | null>(null);
 
   const drafts = posts.filter((p) => p.is_hidden).length;
   const hiddenProjects = projects.filter((p) => p.is_hidden).length;
@@ -720,6 +724,30 @@ function Dashboard({ profiles, projects, posts, onNavigate, onSynced, addToast }
       addToast(err instanceof Error ? err.message : 'Sync failed', 'error');
     } finally {
       setSyncing(false);
+    }
+  };
+
+  const runMigration = async () => {
+    setMigrating(true);
+    try {
+      const result = await runMultiProfileMigration();
+      setMigrationResult(result);
+      addToast(
+        `Migration complete: ${result.blog_post_profiles} blog links, ${result.project_profiles} project links`,
+        'success',
+      );
+      onSynced();
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Migration failed';
+      // The endpoint returns 403 when MIGRATIONS_ENABLED is not set on Vercel —
+      // surface that as a hint so the user knows where to look.
+      if (msg.toLowerCase().includes('not enabled') || msg.toLowerCase().includes('migrations are')) {
+        addToast('Migration is disabled. Set MIGRATIONS_ENABLED=true on Vercel, redeploy, then retry.', 'error');
+      } else {
+        addToast(msg, 'error');
+      }
+    } finally {
+      setMigrating(false);
     }
   };
 
@@ -766,6 +794,33 @@ function Dashboard({ profiles, projects, posts, onNavigate, onSynced, addToast }
                   : <><AlertTriangle size={14} aria-hidden="true" /> {syncResult.errors.length} failed: {syncResult.errors.map((e) => e.id).join(', ')}</>}
               </div>
             )}
+          </div>
+        )}
+      </div>
+
+      <div className="cms-card">
+        <div className="cms-card__header">
+          <GitMerge size={18} aria-hidden="true" />
+          <h2>Multi-profile migration</h2>
+        </div>
+        <p>
+          One-shot backfill that switches blogs and projects from a single profile to the
+          many-to-many link tables, so the same post or case study can appear under more than one
+          persona. Run this once after deploying the multi-profile update; every step is idempotent.
+        </p>
+        <p className="cms-field__hint">
+          Requires the <code>MIGRATIONS_ENABLED</code> environment variable to be set to{' '}
+          <code>true</code> on Vercel. Remove it again after a successful run.
+        </p>
+        <button className="cms-btn cms-btn--primary" onClick={runMigration} disabled={migrating}>
+          {migrating ? 'Migrating…' : 'Run multi-profile migration'}
+        </button>
+        {migrationResult && (
+          <div className="cms-sync-log" role="status" aria-live="polite">
+            <div className="cms-sync-log__summary">
+              <CheckCircle2 size={14} aria-hidden="true" /> Done: {migrationResult.blog_post_profiles}{' '}
+              blog links and {migrationResult.project_profiles} project links created.
+            </div>
           </div>
         )}
       </div>
