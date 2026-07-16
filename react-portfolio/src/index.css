@@ -584,13 +584,14 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
     .project-card--featured .project-card__image {
         flex: 1;
         height: auto;
-        min-height: 300px;
+        min-height: 220px;
+        max-height: 340px;
         margin: 0;
         border-radius: 0;
     }
     .project-card--featured .project-card__content {
         flex: 1.2;
-        padding: var(--spacing-2xl);
+        padding: var(--spacing-xl);
     }
 }
 
