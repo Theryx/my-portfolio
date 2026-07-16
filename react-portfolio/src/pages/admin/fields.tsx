@@ -195,6 +195,54 @@ export function FaqEditor({ label, value, onChange, hint }: {
   );
 }
 
+/* ─── Checkbox group (multi-profile picker) ─────────────────────────────── */
+
+export interface CheckboxOption {
+  value: string;
+  label: string;
+  hint?: string;
+}
+
+export function CheckboxGroup({ label, value, options, onChange, hint }: {
+  label: string;
+  value: string[];
+  options: CheckboxOption[];
+  onChange: (v: string[]) => void;
+  hint?: string;
+}) {
+  const toggle = (v: string, checked: boolean) => {
+    if (checked) {
+      if (!value.includes(v)) onChange([...value, v]);
+    } else {
+      onChange(value.filter((x) => x !== v));
+    }
+  };
+
+  return (
+    <div className="cms-field">
+      <label>{label}</label>
+      <div className="cms-checkbox-group" role="group" aria-label={label}>
+        {options.map((opt) => {
+          const id = `cb-${label.replace(/\s+/g, '-').toLowerCase()}-${opt.value}`;
+          return (
+            <label key={opt.value} htmlFor={id} className="cms-checkbox-group__row">
+              <input
+                id={id}
+                type="checkbox"
+                checked={value.includes(opt.value)}
+                onChange={(e) => toggle(opt.value, e.target.checked)}
+              />
+              <span className="cms-checkbox-group__label">{opt.label}</span>
+              {opt.hint && <span className="cms-checkbox-group__hint">{opt.hint}</span>}
+            </label>
+          );
+        })}
+      </div>
+      {hint && <p className="cms-field__hint">{hint}</p>}
+    </div>
+  );
+}
+
 /* ─── Key-value editor (social links etc.) ──────────────────────────────── */
 
 export function KVEditor({ label, value, onChange, hint }: {

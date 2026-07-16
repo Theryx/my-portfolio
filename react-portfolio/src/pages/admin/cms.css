@@ -548,6 +548,40 @@
 .cms-check input { accent-color: var(--color-accent); }
 .cms-check code { font-size: 12px; }
 
+.cms-checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.cms-checkbox-group__row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 10px;
+  border: 1px solid var(--cms-border, #33333a);
+  border-radius: 8px;
+  background: var(--cms-surface, rgba(255, 255, 255, 0.02));
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.cms-checkbox-group__row:has(input:checked) {
+  border-color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+}
+
+.cms-checkbox-group__row input { accent-color: var(--color-accent); }
+
+.cms-checkbox-group__label { font-weight: 500; }
+
+.cms-checkbox-group__hint {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
 .cms-required { color: #e5484d; }
 
 .cms-tags {

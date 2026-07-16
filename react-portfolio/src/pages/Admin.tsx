@@ -248,7 +248,8 @@ export default function Admin() {
       let createdProjects = 0;
       for (const seed of preset.projects) {
         if (!projects.some((p) => p.id === seed.id)) {
-          await upsertProject({ ...seed, profile_id: profileId } as Project);
+          const profileIds = seed.profile_ids?.length ? seed.profile_ids : [profileId];
+          await upsertProject({ ...seed, profile_ids: profileIds } as Project);
           createdProjects++;
         }
       }
@@ -257,7 +258,8 @@ export default function Admin() {
       let createdPosts = 0;
       for (const seed of preset.blogPosts) {
         if (!blogPosts.some((p) => p.id === seed.id)) {
-          await upsertBlogPost({ ...seed, profile_id: profileId } as BlogPost);
+          const profileIds = seed.profile_ids?.length ? seed.profile_ids : [profileId];
+          await upsertBlogPost({ ...seed, profile_ids: profileIds } as BlogPost);
           createdPosts++;
         }
       }
@@ -321,7 +323,7 @@ export default function Admin() {
   const visibleProjects = useMemo(() => {
     const q = search.toLowerCase();
     return [...projects]
-      .filter((p) => profileFilter === 'all' || p.profile_id === profileFilter)
+      .filter((p) => profileFilter === 'all' || (p.profile_ids ?? []).includes(profileFilter))
       .filter((p) => !q || p.title.toLowerCase().includes(q) || p.id.toLowerCase().includes(q) || p.tag.toLowerCase().includes(q))
       .sort((a, b) => a.sort_order - b.sort_order);
   }, [projects, profileFilter, search]);
@@ -329,7 +331,7 @@ export default function Admin() {
   const visiblePosts = useMemo(() => {
     const q = search.toLowerCase();
     return [...blogPosts]
-      .filter((p) => profileFilter === 'all' || p.profile_id === profileFilter)
+      .filter((p) => profileFilter === 'all' || (p.profile_ids ?? []).includes(profileFilter))
       .filter((p) => !q || p.title.toLowerCase().includes(q) || p.id.toLowerCase().includes(q))
       .sort((a, b) => a.sort_order - b.sort_order);
   }, [blogPosts, profileFilter, search]);
@@ -555,11 +557,11 @@ export default function Admin() {
                           </span>
                         </div>
                         <div className="cms-item__meta">
-                          <code>{project.id}</code> · {project.tag || 'no tag'} · {profiles.find((p) => p.id === project.profile_id)?.name ?? project.profile_id}
+                          <code>{project.id}</code> · {project.tag || 'no tag'} · {(project.profile_ids ?? []).map((pid) => profiles.find((p) => p.id === pid)?.name ?? pid).join(', ') || 'no profile'}
                         </div>
                       </div>
                       <div className="cms-item__actions">
-                        <a className="cms-icon-btn" href={`/projects/${project.id}?profile=${project.profile_id}`} target="_blank" rel="noopener noreferrer" aria-label={`Preview ${project.title}`} title="Preview">
+                        <a className="cms-icon-btn" href={`/projects/${project.id}?profile=${project.profile_ids?.[0] ?? ''}`} target="_blank" rel="noopener noreferrer" aria-label={`Preview ${project.title}`} title="Preview">
                           <ExternalLink size={15} />
                         </a>
                         <button className="cms-icon-btn" onClick={() => toggleHidden('project', project)} aria-label={project.is_hidden ? 'Show on site' : 'Hide from site'} title={project.is_hidden ? 'Show' : 'Hide'}>
@@ -607,11 +609,11 @@ export default function Admin() {
                           </span>
                         </div>
                         <div className="cms-item__meta">
-                          <code>{post.id}</code> · {post.date} · {profiles.find((p) => p.id === post.profile_id)?.name ?? post.profile_id}
+                          <code>{post.id}</code> · {post.date} · {(post.profile_ids ?? []).map((pid) => profiles.find((p) => p.id === pid)?.name ?? pid).join(', ') || 'no profile'}
                         </div>
                       </div>
                       <div className="cms-item__actions">
-                        <a className="cms-icon-btn" href={`/blog/${post.id}?profile=${post.profile_id}`} target="_blank" rel="noopener noreferrer" aria-label={`Preview ${post.title}`} title="Preview">
+                        <a className="cms-icon-btn" href={`/blog/${post.id}?profile=${post.profile_ids?.[0] ?? ''}`} target="_blank" rel="noopener noreferrer" aria-label={`Preview ${post.title}`} title="Preview">
                           <ExternalLink size={15} />
                         </a>
                         <button className="cms-icon-btn" onClick={() => toggleHidden('post', post)} aria-label={post.is_hidden ? 'Publish' : 'Unpublish'} title={post.is_hidden ? 'Publish' : 'Unpublish'}>

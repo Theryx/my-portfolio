@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { MarkdownEditor } from '../../components/MarkdownEditor';
 import { changePassword, type Profile, type Project, type BlogPost } from '../../lib/api';
-import { PasswordInput, ImageField, ArrayEditor, FaqEditor } from './fields';
+import { PasswordInput, ImageField, ArrayEditor, FaqEditor, CheckboxGroup } from './fields';
 
 // The page forms below each edit a slice of a profile but SAVE THE WHOLE object
 // (the API upserts every column, so a partial body would blank the rest). They
@@ -301,7 +301,7 @@ export function ProjectForm({ project, profiles, onSave, onCancel, saving }: {
 }) {
   const [form, setForm] = useState({
     id: project?.id || '',
-    profile_id: project?.profile_id || profiles[0]?.id || '',
+    profile_ids: project?.profile_ids?.length ? project.profile_ids : (profiles[0]?.id ? [profiles[0].id] : []),
     tag: project?.tag || '',
     title: project?.title || '',
     tagline: project?.tagline || '',
@@ -337,10 +337,13 @@ export function ProjectForm({ project, profiles, onSave, onCancel, saving }: {
             {!isNew && <p className="cms-field__hint">The ID can't change once created; it's part of the project URL.</p>}
           </div>
           <div className="cms-field">
-            <label htmlFor="pj-profile">Profile</label>
-            <select id="pj-profile" value={form.profile_id} onChange={(e) => set('profile_id', e.target.value)}>
-              {profiles.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
-            </select>
+            <CheckboxGroup
+              label="Profiles"
+              value={form.profile_ids}
+              options={profiles.map((p) => ({ value: p.id, label: p.name }))}
+              onChange={(v) => set('profile_ids', v)}
+              hint="A post can appear under one or more profiles. Uncheck all to hide it everywhere."
+            />
           </div>
         </div>
         <div className="cms-form__grid">
@@ -489,7 +492,7 @@ export function BlogForm({ post, profiles, onSave, onCancel, saving }: {
 }) {
   const [form, setForm] = useState({
     id: post?.id || '',
-    profile_id: post?.profile_id || profiles[0]?.id || '',
+    profile_ids: post?.profile_ids?.length ? post.profile_ids : (profiles[0]?.id ? [profiles[0].id] : []),
     title: post?.title || '',
     excerpt: post?.excerpt || '',
     content: post?.content || '',
@@ -529,10 +532,13 @@ export function BlogForm({ post, profiles, onSave, onCancel, saving }: {
               : <p className="cms-field__hint">The ID can't change once created; it's part of the post URL.</p>}
           </div>
           <div className="cms-field">
-            <label htmlFor="bp-profile">Profile</label>
-            <select id="bp-profile" value={form.profile_id} onChange={(e) => set('profile_id', e.target.value)}>
-              {profiles.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
-            </select>
+            <CheckboxGroup
+              label="Profiles"
+              value={form.profile_ids}
+              options={profiles.map((p) => ({ value: p.id, label: p.name }))}
+              onChange={(v) => set('profile_ids', v)}
+              hint="A post can appear under one or more profiles. Uncheck all to hide it everywhere."
+            />
           </div>
         </div>
         <div className="cms-field">

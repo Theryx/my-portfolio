@@ -22,6 +22,14 @@ export function isId(v: unknown): boolean {
   return typeof v === 'string' && /^[a-zA-Z0-9_-]{1,100}$/.test(v);
 }
 
+// Validate a list of profile ids (many-to-many). Accepts `undefined` only when
+// the caller opts in via `{ required: false }`.
+export function isProfileIdList(v: unknown, { required = true } = {}): boolean {
+  if (v === undefined || v === null) return !required;
+  if (!Array.isArray(v) || v.length < 1) return false;
+  return v.every(isId);
+}
+
 function isFaqArray(v: unknown): boolean {
   if (v === undefined || v === null) return true;
   if (!Array.isArray(v)) return false;
@@ -52,7 +60,7 @@ export function isAboutContent(v: unknown): boolean {
 
 export function validateProjectBody(b: Record<string, unknown>, { requireId = true } = {}): string | null {
   if (requireId && !isId(b.id)) return 'Invalid id';
-  if (requireId && !isId(b.profile_id)) return 'Invalid profile_id';
+  if (requireId && !isProfileIdList(b.profile_ids)) return 'Invalid profile_ids';
   if (!isShortText(b.title)) return 'Invalid title';
   for (const f of ['tag', 'tagline', 'image', 'impact', 'site', 'role', 'period', 'location', 'challenge', 'solution', 'result'] as const) {
     if (!isShortText(b[f], { required: false })) return `Invalid ${f}`;
@@ -66,7 +74,7 @@ export function validateProjectBody(b: Record<string, unknown>, { requireId = tr
 
 export function validateBlogBody(b: Record<string, unknown>, { requireId = true } = {}): string | null {
   if (requireId && !isId(b.id)) return 'Invalid id';
-  if (requireId && !isId(b.profile_id)) return 'Invalid profile_id';
+  if (requireId && !isProfileIdList(b.profile_ids)) return 'Invalid profile_ids';
   if (!isShortText(b.title)) return 'Invalid title';
   for (const f of ['date', 'author', 'read_time', 'image'] as const) {
     if (!isShortText(b[f], { required: false })) return `Invalid ${f}`;

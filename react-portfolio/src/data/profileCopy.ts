@@ -25,8 +25,8 @@ export interface AboutContent {
   faqs: AboutFaq[];
 }
 
-export type ProjectSeed = Omit<Project, 'profile_id'>;
-export type BlogPostSeed = Omit<BlogPost, 'profile_id'>;
+export type ProjectSeed = Omit<Project, 'profile_ids'> & { profile_ids?: string[] };
+export type BlogPostSeed = Omit<BlogPost, 'profile_ids'> & { profile_ids?: string[] };
 
 export interface ProfilePreset {
   profile: Omit<Profile, 'id' | 'about_content'>;

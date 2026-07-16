@@ -53,8 +53,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (req.method === 'DELETE') {
       try { requireAuth(req); } catch { return res.status(401).json({ error: 'Unauthorized' }); }
-      await sql`DELETE FROM blog_posts WHERE profile_id = ${id}`;
-      await sql`DELETE FROM projects WHERE profile_id = ${id}`;
+      // Many-to-many: only drop the join rows. The blog posts and projects
+      // themselves stay (they may still belong to other profiles).
+      await sql`DELETE FROM blog_post_profiles WHERE profile_id = ${id}`;
+      await sql`DELETE FROM project_profiles WHERE profile_id = ${id}`;
       await sql`DELETE FROM profiles WHERE id = ${id}`;
       return res.status(204).end();
     }

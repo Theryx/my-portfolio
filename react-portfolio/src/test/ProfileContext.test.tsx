@@ -20,7 +20,7 @@ vi.mock('../lib/api', () => {
 
   const mockProject = {
     id: 'paysika',
-    profile_id: 'default',
+    profile_ids: ['default'],
     tag: 'Fintech',
     title: 'PaySika',
     tagline: 'Mobile finance',
@@ -44,7 +44,7 @@ vi.mock('../lib/api', () => {
 
   const mockBlogPost = {
     id: 'test-post',
-    profile_id: 'default',
+    profile_ids: ['default'],
     title: 'Test Post',
     excerpt: 'Excerpt',
     content: '<p>Content</p>',

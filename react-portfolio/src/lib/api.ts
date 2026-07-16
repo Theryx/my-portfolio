@@ -38,7 +38,7 @@ export interface Profile {
 
 export interface Project {
   id: string;
-  profile_id: string;
+  profile_ids: string[];
   tag: string;
   title: string;
   tagline: string;
@@ -63,7 +63,7 @@ export interface Project {
 
 export interface BlogPost {
   id: string;
-  profile_id: string;
+  profile_ids: string[];
   title: string;
   excerpt: string;
   content: string;
@@ -265,10 +265,10 @@ function mergeProject(p: Project, st: StaticProject | undefined): Project {
   };
 }
 
-function staticToProject(p: StaticProject, profileId: string): Project {
+function staticToProject(p: StaticProject, profileIds: string[]): Project {
   return {
     id: p.id,
-    profile_id: profileId,
+    profile_ids: profileIds,
     tag: p.tag,
     title: p.title,
     tagline: p.tagline,
@@ -318,10 +318,10 @@ function mergeBlogPost(p: BlogPost, st: StaticBlogPost | undefined): BlogPost {
   };
 }
 
-function staticToBlogPost(p: StaticBlogPost, profileId: string): BlogPost {
+function staticToBlogPost(p: StaticBlogPost, profileIds: string[]): BlogPost {
   return {
     id: p.id,
-    profile_id: profileId,
+    profile_ids: profileIds,
     title: p.title,
     excerpt: p.excerpt,
     content: p.content,
@@ -343,7 +343,7 @@ export async function getProjectsByProfile(profileId: string): Promise<Project[]
     return dbProjects.map((p) => mergeProject(p, findStaticProject(p.id)));
   } catch (err) {
     console.warn('API fetch projects failed, using static fallback:', err);
-    return staticProjects.map((p) => staticToProject(p, profileId));
+    return staticProjects.map((p) => staticToProject(p, [profileId]));
   }
 }
 
@@ -353,7 +353,7 @@ export async function getAllProjects(): Promise<Project[]> {
     return dbProjects.map((p) => mergeProject(p, findStaticProject(p.id)));
   } catch (err) {
     console.warn('getAllProjects API failed, using static fallback:', err);
-    return staticProjects.map((p) => staticToProject(p, 'default'));
+    return staticProjects.map((p) => staticToProject(p, ['default']));
   }
 }
 
@@ -405,7 +405,7 @@ export async function getBlogPostsByProfile(profileId: string): Promise<BlogPost
     return dbPosts.map((p) => mergeBlogPost(p, matchStaticPost(p.id)));
   } catch (err) {
     console.warn('API fetch blog posts failed, using static fallback:', err);
-    return staticBlogPosts.map((p) => staticToBlogPost(p, profileId));
+    return staticBlogPosts.map((p) => staticToBlogPost(p, [profileId]));
   }
 }
 
@@ -415,7 +415,7 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
     return dbPosts.map((p) => mergeBlogPost(p, matchStaticPost(p.id)));
   } catch {
     console.warn('getAllBlogPosts API failed, using static fallback');
-    return staticBlogPosts.map((p) => staticToBlogPost(p, 'default'));
+    return staticBlogPosts.map((p) => staticToBlogPost(p, ['default']));
   }
 }
 

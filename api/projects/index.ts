@@ -21,18 +21,51 @@ async function handleRequest(req: VercelRequest, res: VercelResponse) {
 
     if (profile_id && !isAdmin) {
       const rows = await sql`
-        SELECT * FROM projects
-        WHERE profile_id = ${profile_id} AND is_hidden = false
-        ORDER BY sort_order ASC
+        SELECT p.*, COALESCE(
+          (
+            SELECT string_agg(pp.profile_id, ',' ORDER BY pp.profile_id)
+            FROM project_profiles pp
+            WHERE pp.project_id = p.id
+          ),
+          ''
+        ) AS profile_ids_csv
+        FROM projects p
+        INNER JOIN project_profiles pp ON pp.project_id = p.id
+        WHERE pp.profile_id = ${profile_id} AND p.is_hidden = false
+        ORDER BY p.sort_order ASC
       `;
-      return res.status(200).json(rows);
+      return res.status(200).json(rows.map(rowToProject));
     }
 
     if (isAdmin) {
       const rows = profile_id
-        ? await sql`SELECT * FROM projects WHERE profile_id = ${profile_id} ORDER BY sort_order ASC`
-        : await sql`SELECT * FROM projects ORDER BY sort_order ASC`;
-      return res.status(200).json(rows);
+        ? await sql`
+            SELECT p.*, COALESCE(
+              (
+                SELECT string_agg(pp.profile_id, ',' ORDER BY pp.profile_id)
+                FROM project_profiles pp
+                WHERE pp.project_id = p.id
+              ),
+              ''
+            ) AS profile_ids_csv
+            FROM projects p
+            INNER JOIN project_profiles pp ON pp.project_id = p.id
+            WHERE pp.profile_id = ${profile_id}
+            ORDER BY p.sort_order ASC
+          `
+        : await sql`
+            SELECT p.*, COALESCE(
+              (
+                SELECT string_agg(pp.profile_id, ',' ORDER BY pp.profile_id)
+                FROM project_profiles pp
+                WHERE pp.project_id = p.id
+              ),
+              ''
+            ) AS profile_ids_csv
+            FROM projects p
+            ORDER BY p.sort_order ASC
+          `;
+      return res.status(200).json(rows.map(rowToProject));
     }
 
     return res.status(400).json({ error: 'profile_id required' });
@@ -44,20 +77,21 @@ async function handleRequest(req: VercelRequest, res: VercelResponse) {
     const validationError = validateProjectBody(b);
     if (validationError) return res.status(400).json({ error: validationError });
     const now = new Date().toISOString();
+    const profileIds: string[] = b.profile_ids;
     const rows = await sql`
       INSERT INTO projects (
-        id, profile_id, tag, title, tagline, image, description, impact, site, role, period,
+        id, tag, title, tagline, image, description, impact, site, role, period,
         location, responsibilities, challenge, challenge_text, solution, solution_text,
         result, result_text, is_hidden, sort_order, content, created_at, updated_at
       ) VALUES (
-        ${b.id}, ${b.profile_id}, ${b.tag}, ${b.title}, ${b.tagline}, ${b.image},
+        ${b.id}, ${b.tag}, ${b.title}, ${b.tagline}, ${b.image},
         ${b.description}, ${b.impact}, ${b.site}, ${b.role}, ${b.period}, ${b.location},
         ${b.responsibilities}, ${b.challenge}, ${b.challenge_text}, ${b.solution},
         ${b.solution_text}, ${b.result}, ${b.result_text}, ${b.is_hidden ?? false},
         ${b.sort_order ?? 0}, ${b.content ?? ''}, ${now}, ${now}
       )
       ON CONFLICT (id) DO UPDATE SET
-        profile_id = EXCLUDED.profile_id, tag = EXCLUDED.tag, title = EXCLUDED.title,
+        tag = EXCLUDED.tag, title = EXCLUDED.title,
         tagline = EXCLUDED.tagline, image = EXCLUDED.image, description = EXCLUDED.description,
         impact = EXCLUDED.impact, site = EXCLUDED.site, role = EXCLUDED.role,
         period = EXCLUDED.period, location = EXCLUDED.location,
@@ -68,8 +102,25 @@ async function handleRequest(req: VercelRequest, res: VercelResponse) {
         sort_order = EXCLUDED.sort_order, content = EXCLUDED.content, updated_at = ${now}
       RETURNING *
     `;
-    return res.status(200).json(rows[0]);
+    const project = rows[0];
+    await sql`DELETE FROM project_profiles WHERE project_id = ${project.id}`;
+    for (const pid of profileIds) {
+      await sql`INSERT INTO project_profiles (project_id, profile_id) VALUES (${project.id}, ${pid})`;
+    }
+    return res.status(200).json({
+      ...rowToProject(project),
+      profile_ids: profileIds,
+    });
   }
 
   return res.status(405).end();
+}
+
+function rowToProject(row: Record<string, unknown>): Record<string, unknown> {
+  const csv = row.profile_ids_csv;
+  const profileIds = typeof csv === 'string' && csv.length > 0
+    ? csv.split(',')
+    : Array.isArray(row.profile_ids) ? row.profile_ids as string[] : [];
+  const { profile_ids_csv: _csv, ...rest } = row;
+  return { ...rest, profile_ids: profileIds };
 }

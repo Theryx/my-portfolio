@@ -48,10 +48,19 @@ async function handleRequest(req: VercelRequest, res: VercelResponse) {
       RETURNING *
     `;
     if (!rows.length) return res.status(404).json({ error: 'Not found' });
-    return res.status(200).json(rows[0]);
+    const profileIds: string[] = Array.isArray(b.profile_ids) ? b.profile_ids : [];
+    await sql`DELETE FROM blog_post_profiles WHERE blog_post_id = ${id}`;
+    for (const pid of profileIds) {
+      await sql`INSERT INTO blog_post_profiles (blog_post_id, profile_id) VALUES (${id}, ${pid})`;
+    }
+    return res.status(200).json({ ...rows[0], profile_ids: profileIds });
   }
 
   if (req.method === 'DELETE') {
+    // Drop join rows first so there's no chance of an orphaned reference
+    // surviving if the FK is added later. ON DELETE CASCADE would do this
+    // automatically but no FK is currently declared.
+    await sql`DELETE FROM blog_post_profiles WHERE blog_post_id = ${id}`;
     await sql`DELETE FROM blog_posts WHERE id = ${id}`;
     return res.status(204).end();
   }

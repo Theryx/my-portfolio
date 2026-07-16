@@ -53,10 +53,16 @@ async function handleRequest(req: VercelRequest, res: VercelResponse) {
       RETURNING *
     `;
     if (!rows.length) return res.status(404).json({ error: 'Not found' });
-    return res.status(200).json(rows[0]);
+    const profileIds: string[] = Array.isArray(b.profile_ids) ? b.profile_ids : [];
+    await sql`DELETE FROM project_profiles WHERE project_id = ${id}`;
+    for (const pid of profileIds) {
+      await sql`INSERT INTO project_profiles (project_id, profile_id) VALUES (${id}, ${pid})`;
+    }
+    return res.status(200).json({ ...rows[0], profile_ids: profileIds });
   }
 
   if (req.method === 'DELETE') {
+    await sql`DELETE FROM project_profiles WHERE project_id = ${id}`;
     await sql`DELETE FROM projects WHERE id = ${id}`;
     return res.status(204).end();
   }
