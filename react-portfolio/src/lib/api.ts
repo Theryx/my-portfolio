@@ -16,7 +16,11 @@ export interface AboutContent {
   languages_label?: string;
   fun_fact?: string;
   speaking_intro?: string;
+  /** Legacy single image. Kept for back-compat with profiles edited before
+   *  the multi-image upgrade — new edits write to `speaking_images`. */
   speaking_image?: string;
+  /** Up to 3 images shown in the Research & Speaking collage. */
+  speaking_images?: string[];
   faqs?: ProfileFaq[];
 }
 

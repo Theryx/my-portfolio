@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { MarkdownEditor } from '../../components/MarkdownEditor';
 import { changePassword, type Profile, type Project, type BlogPost } from '../../lib/api';
-import { PasswordInput, ImageField, ArrayEditor, FaqEditor, CheckboxGroup } from './fields';
+import { PasswordInput, ImageField, ArrayEditor, FaqEditor, CheckboxGroup, SpeakingImagesEditor } from './fields';
 
 // The page forms below each edit a slice of a profile but SAVE THE WHOLE object
 // (the API upserts every column, so a partial body would blank the rest). They
@@ -162,11 +162,13 @@ export function AboutForm({ profile, onSave, onCancel, saving }: {
           <label htmlFor="af-speaking-intro">Intro</label>
           <textarea id="af-speaking-intro" value={about.speaking_intro ?? ''} onChange={(e) => setAbout('speaking_intro', e.target.value)} rows={4} placeholder="Wrap **text** in double asterisks for bold. Use a blank line to separate paragraphs." />
         </div>
-        <ImageField
-          label="Speaking image"
-          value={about.speaking_image ?? ''}
-          onChange={(v) => setAbout('speaking_image', v)}
-          hint="A Cloudinary URL, or the filename of a bundled image."
+        <SpeakingImagesEditor
+          value={about.speaking_images ?? (about.speaking_image ? [about.speaking_image] : [])}
+          onChange={(urls) => {
+            setAbout('speaking_images', urls);
+            // Keep speaking_image in sync so older consumers still get a value.
+            setAbout('speaking_image', urls[0] ?? '');
+          }}
         />
       </fieldset>
 

@@ -55,6 +55,14 @@ export function isAboutContent(v: unknown): boolean {
   for (const f of ['fun_fact', 'speaking_intro'] as const) {
     if (!isLongText(o[f])) return false;
   }
+  // speaking_images: array of up to 3 URLs/filenames.
+  if (o.speaking_images !== undefined && o.speaking_images !== null) {
+    if (!Array.isArray(o.speaking_images)) return false;
+    if (o.speaking_images.length > 3) return false;
+    for (const item of o.speaking_images) {
+      if (typeof item !== 'string' || item.length > SHORT_TEXT) return false;
+    }
+  }
   return isFaqArray(o.faqs);
 }
 

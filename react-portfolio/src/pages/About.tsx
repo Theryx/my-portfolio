@@ -89,10 +89,20 @@ export default function About() {
     : preset?.speakingIntro
       ? splitParagraphs(preset.speakingIntro)
       : DEFAULT_SPEAKING_INTRO_PARAS;
-  const speakingImage =
-    about.speaking_image && /^(https?:\/\/|\/)/.test(about.speaking_image)
-      ? about.speaking_image
-      : givingLecture;
+  // Build the collage image list. We prefer the new speaking_images array;
+  // fall back to the legacy single field, then to the bundled asset. The
+  // page always renders up to 3 tiles — if the admin leaves a slot empty,
+  // we pad with the first available image so the layout stays balanced.
+  const rawSpeakingImages = (about.speaking_images && about.speaking_images.length > 0)
+    ? about.speaking_images
+    : (about.speaking_image ? [about.speaking_image] : [givingLecture]);
+  const validSpeakingImages = rawSpeakingImages.filter((u) => u && /^(https?:\/\/|\/)/.test(u));
+  const speakingImages = validSpeakingImages.length > 0 ? validSpeakingImages : [givingLecture];
+  const paddedSpeakingImages = [
+    speakingImages[0],
+    speakingImages[1] ?? speakingImages[0],
+    speakingImages[2] ?? speakingImages[1] ?? speakingImages[0],
+  ];
   const location = about.location || 'Douala';
   const locationLabel = about.location_label || 'Cameroon 🇨🇲';
   const languages = about.languages || 'EN & FR';
@@ -173,15 +183,15 @@ export default function About() {
             <div className="speaking__content">
               <div className="speaking__collage">
                 <img
-                  src={speakingImage}
+                  src={paddedSpeakingImages[0]}
                   alt="Theryx presenting research"
                   className="speaking__image"
                   loading="lazy"
-                  {...lightboxTrigger(() => handleImageClick(speakingImage, 'Research & speaking'), 'Enlarge speaking photo')}
+                  {...lightboxTrigger(() => handleImageClick(paddedSpeakingImages[0], 'Research & speaking'), 'Enlarge speaking photo')}
                   style={{ cursor: 'pointer', objectPosition: 'center 30%' }}
                 />
                 <img
-                  src={speakingImage}
+                  src={paddedSpeakingImages[1]}
                   alt=""
                   className="speaking__image"
                   loading="lazy"
@@ -189,7 +199,7 @@ export default function About() {
                   style={{ objectPosition: 'right center' }}
                 />
                 <img
-                  src={speakingImage}
+                  src={paddedSpeakingImages[2]}
                   alt=""
                   className="speaking__image"
                   loading="lazy"

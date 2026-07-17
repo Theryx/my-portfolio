@@ -93,6 +93,57 @@ export function ImageField({ label, value, onChange, hint }: {
   );
 }
 
+/* ─── Speaking images (Research & Speaking collage, up to 3) ────────────── */
+
+export const MAX_SPEAKING_IMAGES = 3;
+
+export function SpeakingImagesEditor({ value, onChange }: {
+  value: string[];
+  onChange: (v: string[]) => void;
+}) {
+  const slots = Array.from({ length: MAX_SPEAKING_IMAGES }, (_, i) => value[i] ?? '');
+  const setSlot = (i: number, v: string) =>
+    onChange(slots.map((s, idx) => (idx === i ? v : s)));
+  const clearSlot = (i: number) => setSlot(i, '');
+
+  return (
+    <div className="cms-field">
+      <label>Speaking images</label>
+      <p className="cms-field__hint">
+        Up to {MAX_SPEAKING_IMAGES} images for the Research &amp; Speaking collage.
+        The first image opens the lightbox. Leave a slot empty to skip it.
+      </p>
+      {slots.map((slot, i) => (
+        <div key={i} className="cms-field" style={{ marginBottom: 12 }}>
+          <label htmlFor={`af-speaking-image-${i}`}>Image {i + 1}{i === 0 ? ' (hero)' : ''}</label>
+          <div className="cms-field__row">
+            <input
+              id={`af-speaking-image-${i}`}
+              value={slot}
+              onChange={(e) => setSlot(i, e.target.value)}
+              placeholder={i === 0 ? 'https://… or a bundled image filename' : 'Optional — leave empty to skip'}
+            />
+            <CloudinaryUploadButton onUpload={(url) => setSlot(i, url)} label="Upload" />
+            {slot && (
+              <button
+                type="button"
+                className="cms-btn cms-btn--ghost"
+                onClick={() => clearSlot(i)}
+                aria-label={`Clear image ${i + 1}`}
+              >
+                <X size={14} /> Clear
+              </button>
+            )}
+          </div>
+          {slot && /^(https?:\/\/|\/)/.test(slot) && (
+            <img src={slot} alt="" className="cms-field__preview" />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /* ─── Array (tag list) editor ───────────────────────────────────────────── */
 
 export function ArrayEditor({ label, values, onChange, placeholder }: {
