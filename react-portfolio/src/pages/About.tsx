@@ -3,7 +3,7 @@ import { useProfile } from '../context/ProfileContext';
 import myProfile from '../assets/img/My profile.jfif';
 import givingLecture from '../assets/img/theryx giving a lecture to a comunity of open source.png';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { MapPin, Languages, Fish } from 'lucide-react';
 import { lightboxTrigger } from '../lib/a11y';
 import { gridVariants, tileVariants } from '../lib/motion';
@@ -43,37 +43,9 @@ export default function About() {
   const [selectedImage, setSelectedImage] = useState<{ src: string; caption: string } | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  // Custom cursor state for interactive cards
-  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
-  const [cursorLabel, setCursorLabel] = useState('');
-  const [isHovering, setIsHovering] = useState(false);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setCursorPos({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
   };
-
-  // Custom cursor label on hover — mirrors the home page bento cards.
-  const hoverable = (label: string) => ({
-    onMouseEnter: () => {
-      setIsHovering(true);
-      setCursorLabel(label);
-    },
-    onMouseLeave: () => {
-      setIsHovering(false);
-      setCursorLabel('');
-    },
-  });
 
   // Per-profile About content. Prefer the CMS-edited about_content, then the
   // bundled preset, then the hardcoded site defaults.
@@ -115,15 +87,6 @@ export default function About() {
 
   return (
     <PageTransition>
-      {isHovering && (
-        <div
-          className="custom-cursor-label"
-          style={{ left: `${cursorPos.x}px`, top: `${cursorPos.y}px` }}
-        >
-          {cursorLabel}
-        </div>
-      )}
-
       {/* ── Bento intro mosaic ── */}
       <section className="about">
         <div className="container">
@@ -136,7 +99,7 @@ export default function About() {
             whileInView="visible"
             viewport={{ once: true, amount: 0.1 }}
           >
-            <motion.div className="bento-card about-bento__main" variants={tileVariants} {...hoverable('a little about me')}>
+            <motion.div className="bento-card about-bento__main" variants={tileVariants}>
               <img src={myProfile} alt="Ndouken Theryx" className="about-bento__photo" loading="lazy" />
               <p className="about__text">
                 {profile?.bio || 'I am a product designer who also builds: I work across UX, interface, and front-end code to ship digital products end to end. I have been building and leading the design team at PaySika since December 2021, alongside co-founding ventures and shipping real-world applications.'}
@@ -146,7 +109,7 @@ export default function About() {
               </p>
             </motion.div>
 
-            <motion.div className="bento-card bento-card--mini" variants={tileVariants} {...hoverable('born & based here')}>
+            <motion.div className="bento-card bento-card--mini" variants={tileVariants}>
               <span className="bento-card__mini-icon bento-card__pin">
                 <MapPin size={20} aria-hidden="true" />
                 <span className="bento-card__pin-pulse" aria-hidden="true" />
@@ -155,7 +118,7 @@ export default function About() {
               <span className="bento-card__mini-label">{locationLabel}</span>
             </motion.div>
 
-            <motion.div className="bento-card bento-card--mini" variants={tileVariants} {...hoverable('oui & yes 🙂')}>
+            <motion.div className="bento-card bento-card--mini" variants={tileVariants}>
               <span className="bento-card__mini-icon">
                 <Languages size={20} aria-hidden="true" />
               </span>
@@ -163,7 +126,7 @@ export default function About() {
               <span className="bento-card__mini-label">{languagesLabel}</span>
             </motion.div>
 
-            <motion.div className="bento-card bento-card--mini bento-card--fish" variants={tileVariants} {...hoverable('fun fact 🐟')}>
+            <motion.div className="bento-card bento-card--mini bento-card--fish" variants={tileVariants}>
               <span className="bento-card__mini-icon bento-card__fish">
                 <Fish size={20} aria-hidden="true" />
               </span>

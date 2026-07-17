@@ -3764,10 +3764,15 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
     margin-top: var(--spacing-md);
 }
 
+/* About bento cards are informational, not clickable — keep the native cursor
+   instead of the home page's hidden-cursor + floating label treatment. */
+.about-bento .bento-card {
+    cursor: default !important;
+}
+
 .about-bento__main {
     grid-column: 1 / -1;
     padding: var(--spacing-xl);
-    cursor: default;
 }
 
 .about-bento__photo {
