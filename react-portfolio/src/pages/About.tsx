@@ -124,14 +124,12 @@ export default function About() {
           >
             <motion.div className="bento-card about-bento__main" variants={tileVariants} {...hoverable('a little about me')}>
               <img src={myProfile} alt="Ndouken Theryx" className="about-bento__photo" loading="lazy" />
-              <div>
-                <p className="about__text">
-                  {profile?.bio || 'I am a product designer who also builds: I work across UX, interface, and front-end code to ship digital products end to end. I have been building and leading the design team at PaySika since December 2021, alongside co-founding ventures and shipping real-world applications.'}
-                </p>
-                <p className="about__text about-bento__tagline">
-                  {profile?.tagline || 'I bridge the gap between design and development. I believe in clean design, simple language, and practical problem-solving.'}
-                </p>
-              </div>
+              <p className="about__text">
+                {profile?.bio || 'I am a product designer who also builds: I work across UX, interface, and front-end code to ship digital products end to end. I have been building and leading the design team at PaySika since December 2021, alongside co-founding ventures and shipping real-world applications.'}
+              </p>
+              <p className="about__text about-bento__tagline">
+                {profile?.tagline || 'I bridge the gap between design and development. I believe in clean design, simple language, and practical problem-solving.'}
+              </p>
             </motion.div>
 
             <motion.div className="bento-card bento-card--mini" variants={tileVariants} {...hoverable('born & based here')}>
@@ -169,14 +167,32 @@ export default function About() {
             <span className="section-sticker">On stage</span>
             <h2 className="section__title">Research & Speaking</h2>
             <div className="speaking__content">
-              <img
-                src={speakingImage}
-                alt="Theryx presenting research"
-                className="speaking__image"
-                loading="lazy"
-                {...lightboxTrigger(() => handleImageClick(speakingImage, 'Research & speaking'), 'Enlarge speaking photo')}
-                style={{ cursor: 'pointer' }}
-              />
+              <div className="speaking__collage">
+                <img
+                  src={speakingImage}
+                  alt="Theryx presenting research"
+                  className="speaking__image"
+                  loading="lazy"
+                  {...lightboxTrigger(() => handleImageClick(speakingImage, 'Research & speaking'), 'Enlarge speaking photo')}
+                  style={{ cursor: 'pointer', objectPosition: 'center 30%' }}
+                />
+                <img
+                  src={speakingImage}
+                  alt=""
+                  className="speaking__image"
+                  loading="lazy"
+                  aria-hidden="true"
+                  style={{ objectPosition: 'right center' }}
+                />
+                <img
+                  src={speakingImage}
+                  alt=""
+                  className="speaking__image"
+                  loading="lazy"
+                  aria-hidden="true"
+                  style={{ objectPosition: 'left center' }}
+                />
+              </div>
               <div className="speaking__text">
                 {speakingParas.map((para, i) => (
                   <p key={i}>{renderBold(para)}</p>
