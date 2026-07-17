@@ -80,10 +80,14 @@ export default function About() {
   const preset = profile ? profilePresets[profile.id]?.about : undefined;
   const about = profile?.about_content ?? {};
   const faqs = about.faqs?.length ? about.faqs : (preset?.faqs ?? DEFAULT_FAQS);
+  // Split on any line break (single or blank-line, incl. CRLF) so each
+  // paragraph the author entered renders as its own <p>.
+  const splitParagraphs = (text: string) =>
+    text.replace(/\r\n/g, '\n').split(/\n+/).map((p) => p.trim()).filter(Boolean);
   const speakingParas = about.speaking_intro
-    ? about.speaking_intro.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean)
+    ? splitParagraphs(about.speaking_intro)
     : preset?.speakingIntro
-      ? [preset.speakingIntro]
+      ? splitParagraphs(preset.speakingIntro)
       : DEFAULT_SPEAKING_INTRO_PARAS;
   const speakingImage =
     about.speaking_image && /^(https?:\/\/|\/)/.test(about.speaking_image)
