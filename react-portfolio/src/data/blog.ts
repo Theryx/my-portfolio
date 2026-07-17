@@ -224,6 +224,17 @@ import affinityPricingPlan from '../assets/img/affinity_pricing_plan.png';
 import affinityPlatforms from '../assets/img/affinity_platforms.png';
 import affinityZoomWorkspace from '../assets/img/affinity_zoom_workspace.png';
 import theryxLiveCoding from '../assets/img/paysika/theryx live coding.PNG';
+import careathonJoinChallengePoster from '../assets/img/OSSCameroon/image-1784258365824.webp';
+import careathonCestRepartiTweet from '../assets/img/OSSCameroon/image-1784258339019.png';
+import careathonTwitterProfile from '../assets/img/OSSCameroon/image-1784258322729.png';
+import careathonAmbassadorCards from '../assets/img/OSSCameroon/image-1784258352478.png';
+import careathonSpace2Promo from '../assets/img/OSSCameroon/image-1784258360291.webp';
+import careathonRegistrationClosed from '../assets/img/OSSCameroon/image-1784258250032.png';
+import careathonCountdownTimeline from '../assets/img/OSSCameroon/image-1784258310570.png';
+import careathonRevealCard from '../assets/img/OSSCameroon/image-1784258315254.webp';
+import careathonWinnersRepost from '../assets/img/OSSCameroon/image-1784258318796.png';
+import careathonOldPoster2023 from '../assets/img/paysika/Old careathon1.png';
+import careathonOldLohceMilestone from '../assets/img/paysika/Old careathon3.png';
 
 export const blogImageMap: Record<string, string> = {
   'PaySika website.PNG': paysikaImage,
@@ -240,6 +251,17 @@ export const blogImageMap: Record<string, string> = {
   'affinity_platforms.png': affinityPlatforms,
   'affinity_zoom_workspace.png': affinityZoomWorkspace,
   'theryx live coding.PNG': theryxLiveCoding,
+  'careathon24-join-challenge-poster.webp': careathonJoinChallengePoster,
+  'careathon24-cest-reparti-tweet.png': careathonCestRepartiTweet,
+  'careathon24-twitter-profile.png': careathonTwitterProfile,
+  'careathon24-ambassador-cards.png': careathonAmbassadorCards,
+  'careathon24-space2-promo.webp': careathonSpace2Promo,
+  'careathon24-registration-closed.png': careathonRegistrationClosed,
+  'careathon24-countdown-timeline.png': careathonCountdownTimeline,
+  'careathon24-reveal-card.webp': careathonRevealCard,
+  'careathon24-winners-repost.png': careathonWinnersRepost,
+  'careathon24-old-poster-2023.png': careathonOldPoster2023,
+  'careathon24-old-lohce-milestone.png': careathonOldLohceMilestone,
 };
 
 // CMS-uploaded images (Cloudinary) are stored as full URLs; bundled images are
