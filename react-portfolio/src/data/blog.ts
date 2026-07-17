@@ -223,6 +223,7 @@ import illustratorPricingPlan from '../assets/img/illustrator_pricing_plan.png';
 import affinityPricingPlan from '../assets/img/affinity_pricing_plan.png';
 import affinityPlatforms from '../assets/img/affinity_platforms.png';
 import affinityZoomWorkspace from '../assets/img/affinity_zoom_workspace.png';
+import theryxLiveCoding from '../assets/img/paysika/theryx live coding.PNG';
 
 export const blogImageMap: Record<string, string> = {
   'PaySika website.PNG': paysikaImage,
@@ -238,6 +239,7 @@ export const blogImageMap: Record<string, string> = {
   'affinity_pricing_plan.png': affinityPricingPlan,
   'affinity_platforms.png': affinityPlatforms,
   'affinity_zoom_workspace.png': affinityZoomWorkspace,
+  'theryx live coding.PNG': theryxLiveCoding,
 };
 
 // CMS-uploaded images (Cloudinary) are stored as full URLs; bundled images are
