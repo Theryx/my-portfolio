@@ -20,6 +20,7 @@ export default function Blog() {
             </span>
             <h2 className="section__title page-hero__title">Blog & Insights</h2>
             <p className="page-hero__sub">{profile?.social_links?.blog_intro || 'Thoughts on design, technology, and the future of fintech in Africa.'}</p>
+            <p className="page-hero__note">Some posts are drafted with AI assistance, then edited and fact-checked by me.</p>
           </div>
 
           {loading ? (

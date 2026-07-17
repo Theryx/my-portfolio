@@ -3654,6 +3654,15 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
     line-height: 1.6;
 }
 
+.page-hero__note {
+    color: var(--color-text-subtle);
+    font-size: 12px;
+    max-width: 560px;
+    line-height: 1.5;
+    margin-top: 6px;
+    opacity: 0.7;
+}
+
 /* Project cards: giant index + impact chip */
 .project-card {
     position: relative;
