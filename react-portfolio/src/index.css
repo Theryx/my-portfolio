@@ -428,28 +428,6 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
     border-color: rgba(255, 255, 255, 0.25);
 }
 
-/* PHILOSOPHY SECTION */
-.philosophy {
-    padding: var(--spacing-3xl) 0;
-    background: var(--gradient-dark);
-}
-
-.philosophy__inner {
-    max-width: 900px;
-}
-
-.philosophy__title {
-    font-size: var(--font-size-3xl);
-    margin-bottom: var(--spacing-lg);
-    line-height: 1.3;
-}
-
-.philosophy__text {
-    font-size: var(--font-size-lg);
-    color: var(--color-text-muted);
-    line-height: 1.7;
-}
-
 /* SECTION TITLES */
 .section__title {
     font-size: var(--font-size-3xl);
@@ -3786,29 +3764,6 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
 .about-bento__tagline {
     margin-top: 10px;
     color: var(--color-text-muted);
-}
-
-.about-bento__philosophy {
-    grid-column: 1 / -1;
-    padding: var(--spacing-xl);
-    cursor: default;
-}
-
-.about-bento__quote-icon {
-    color: var(--color-accent);
-    margin-bottom: 8px;
-}
-
-.about-bento__philosophy-title {
-    font-size: 22px;
-    margin-bottom: 10px;
-}
-
-.about-bento__philosophy-text {
-    color: var(--color-text-muted);
-    line-height: 1.7;
-    max-width: 720px;
-    white-space: pre-line;
 }
 
 @media (max-width: 768px) {

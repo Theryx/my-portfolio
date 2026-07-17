@@ -4,7 +4,7 @@ import myProfile from '../assets/img/My profile.jfif';
 import givingLecture from '../assets/img/theryx giving a lecture to a comunity of open source.png';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { MapPin, Languages, Fish, Quote } from 'lucide-react';
+import { MapPin, Languages, Fish } from 'lucide-react';
 import { lightboxTrigger } from '../lib/a11y';
 import { gridVariants, tileVariants } from '../lib/motion';
 import { profilePresets } from '../data/profileCopy';
@@ -159,13 +159,6 @@ export default function About() {
               <p className="bento-card__now-text">{funFact}</p>
             </motion.div>
 
-            {profile?.philosophy_text && (
-              <motion.div className="bento-card about-bento__philosophy" variants={tileVariants} {...hoverable('how I think')}>
-                <Quote size={18} aria-hidden="true" className="about-bento__quote-icon" />
-                <h3 className="about-bento__philosophy-title">{profile.philosophy_title}</h3>
-                <p className="about-bento__philosophy-text">{profile.philosophy_text}</p>
-              </motion.div>
-            )}
           </motion.div>
         </div>
       </section>
