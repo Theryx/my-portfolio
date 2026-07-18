@@ -876,6 +876,30 @@ button, input, textarea { font-family: inherit; font-size: inherit; }
     line-height: 1.6;
 }
 
+/* Product Owner profile: artifact cards reflow (5 items) instead of a fixed 3-up */
+.paysika-story__stats--artifacts {
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+
+/* Placeholder caption on PO artifact cards, until real screenshots are supplied */
+.paysika-process__todo {
+    margin-top: auto;
+    color: var(--color-accent);
+    font-size: var(--font-size-xs, 12px);
+    font-style: italic;
+    opacity: 0.85;
+    border-top: 1px dashed rgba(255, 255, 255, 0.14);
+    padding-top: 10px;
+}
+
+.paysika-process__placeholder-note {
+    color: var(--color-text-subtle);
+    font-size: var(--font-size-sm);
+    font-style: italic;
+    opacity: 0.8;
+    margin-top: 6px;
+}
+
 .paysika-recognition__header {
     margin-bottom: var(--spacing-xl);
     text-align: left;
