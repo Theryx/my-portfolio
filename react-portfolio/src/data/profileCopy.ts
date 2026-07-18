@@ -796,50 +796,49 @@ Don’t hire a "social media person" before you have a system. Without a system,
 
 const projectManagerPreset: ProfilePreset = {
   profile: {
-    name: 'Project Manager',
+    name: 'Product Owner & PM',
     is_active: false,
     bio:
-      'Product & Project Manager with four years scaling PaySika from MVP to a multi-product fintech, plus co-founding experience taking Kody from $5,000 funding to live MVP.',
+      'Product Owner and Project Manager with a technical background, owning the backlog and shipping across a startup, a foundation, and a scaling fintech. Four years at PaySika as the bridge between engineering, compliance, operations, support, and external partners; co-founder of Kody, a Tony Elumelu Foundation-funded ed-tech MVP taken end to end; open-source community delivery lead. I turn strategy into a prioritized, outcome-driven roadmap and keep regulated products moving.',
     tagline: 'Clarity is a deliverable.',
-    hero_title: 'Product & Project Manager',
+    hero_title: 'Product Owner & Project Manager',
     hero_subtitle:
-      'I lead cross-functional teams through scoping, delivery, and the messy middle. Four years coordinating design, engineering, and marketing at PaySika; co-founder of Kody (Tony Elumelu Foundation-funded MVP); maintainer of an open-source community platform.',
+      'I own the "what" and the "why": one prioritized backlog, clear acceptance criteria, and outcome-driven roadmaps across mobile and web. Four years at PaySika coordinating engineering, compliance, operations, support, and partner banks through regulated fintech delivery, plus co-founding a Tony Elumelu Foundation-funded MVP from pitch to sunset. I make sure teams always know what "done" means and why it matters.',
     philosophy_title: 'Clarity is a deliverable.',
     philosophy_text:
-      "Most projects don't fail on talent or budget. They fail because the team disagrees about what \"done\" looks like and nobody writes it down. My job is to write it down, explicitly, early, and with the right level of detail, and to keep the team aligned through the parts where reality contradicts the plan.",
+      "Most products don't stall on talent or budget. They stall because the team disagrees about what \"done\" means, and nobody wrote it down. My job is to own that definition early, at the right altitude, hold a single prioritized backlog against it, and keep engineering, compliance, and stakeholders aligned when reality contradicts the plan.",
     intro_expanded_text:
-      "Most projects don't fail on talent or budget. They fail because the team disagrees about what \"done\" looks like and nobody writes it down. My job is to write it down, explicitly, early, and with the right level of detail, and to keep the team aligned through the parts where reality contradicts the plan.",
-    badges: ['Open to PM & delivery roles', 'Product · Cross-functional · Open source'],
+      "Most products don't stall on talent or budget. They stall because the team disagrees about what \"done\" means, and nobody wrote it down. My job is to own that definition early, at the right altitude, hold a single prioritized backlog against it, and keep engineering, compliance, and stakeholders aligned when reality contradicts the plan.",
+    badges: ['Open to Product Owner & PM roles', 'Fintech · Agile delivery · Regulated products'],
     social_links: {},
   },
   social_links: commonLinks({
-    now: 'Coordinating a multi-quarter PaySika roadmap across design, eng, and marketing',
+    now: 'Coordinating a multi-quarter PaySika roadmap across mobile, web, engineering, and compliance',
     projects_intro:
-      'Cross-functional product and delivery work: at PaySika, at Kody (where I co-founded an ed-tech MVP), and in the open-source community.',
-    blog_intro: 'Notes on shipping cross-functional work: scoping, async coordination, and what to cut when reality bites.',
-    metric_label: 'years leading product delivery',
+      'Product ownership and cross-functional delivery: regulated fintech roadmaps at PaySika, co-founding an ed-tech MVP at Kody, and open-source community delivery.',
+    blog_intro: 'Notes on owning a backlog, cross-functional delivery, and shipping regulated products without stalling.',
+    metric_label: 'years owning product delivery',
   }),
   projects: [
     {
       id: 'paysika_project-manager',
-      tag: 'Fintech · Cross-functional delivery',
-      title: 'PaySika product & design delivery',
+      tag: 'Fintech · Regulated product delivery',
+      title: 'PaySika product & delivery ownership',
       tagline:
-        'Coordinated design, engineering, and marketing through a multi-product fintech roadmap: KYC, cards, transactions, dashboards.',
+        'Owned a prioritized product backlog and bridged engineering, compliance, and partner banks across mobile and web at a scaling fintech.',
       image: 'paysika_mockup.png',
       description:
-        "As Lead Product Designer and a founding-team member, I owned cross-functional delivery for design at PaySika: managing a two-person design team, coordinating with engineering and marketing on sprint and release cycles, and acting as the bridge that kept the roadmap honest when reality contradicted the plan.",
-      impact: 'Shipped major redesigns (KYC, transactions, physical card) on cadence across a multi-product fintech.',
+        "As a founding-team member, I owned cross-functional delivery at PaySika: holding a single prioritized backlog across mobile and web, coordinating engineering, marketing, compliance, and the partner bank on sprint and release cycles, and acting as the bridge that kept the roadmap honest when reality contradicted the plan.",
+      impact: 'Shipped a KYC redesign that lifted conversion and passed the regulator, delivered on a three-sprint cadence.',
       site: 'https://www.paysika.co',
-      role: 'Lead Product Designer · Team Lead',
+      role: 'Product Owner & Project Manager',
       period: 'Dec 2021 - Present',
       location: 'Douala, Cameroon',
       responsibilities: [
-        'Recruited and managed a two-person design team: hiring, performance, growth',
-        'Engineered the design-to-engineering handoff process (Figma, documentation, PR review rhythms)',
-        'Engineered the design-to-marketing pipeline so marketing could fetch brand-approved assets without blocking design',
-        'Drove KYC redesign delivery in three sprints with eng, design, and the partner bank',
-        'Translated product briefs into scoped, deliverable user flows, and protected the team from scope creep',
+        'Owned a single prioritized product backlog across mobile and web, translating roadmap initiatives into epics, user stories, and acceptance criteria',
+        'Ran sprint planning and weekly releases for a 10+ person cross-functional squad (design, engineering, marketing), cutting time-to-market by 25%',
+        'Bridged compliance, the partner bank, and engineering on regulated flows like KYC, keeping acceptance criteria and release evidence auditable',
+        'Analyzed adoption, conversion, and drop-off in Mixpanel to prioritize by business value, customer impact, and technical feasibility',
       ],
       challenge: 'The Challenge',
       challenge_text:
@@ -871,23 +870,23 @@ At a fintech with a partner bank, regulator, and investors all asking for update
     },
     {
       id: 'shomi_project-manager',
-      tag: 'EdTech · Co-founding',
+      tag: 'EdTech · Product ownership',
       title: 'Kody / Shomi: co-founding an ed-tech MVP',
       tagline:
-        'Took an ed-tech idea from Tony Elumelu Foundation funding ($5,000) to live MVP with a two-person team.',
+        'Owned product end to end for a Tony Elumelu Foundation-funded ed-tech MVP, from backlog and roadmap to a live launch and a documented sunset.',
       image: 'shomi-cover.png',
       description:
-        'Co-founder of Kody (the company) and product lead on Shomi (the product). We raised $5,000 from the Tony Elumelu Foundation, built and launched the MVP with a two-person team (me on product/design, my co-founder on engineering), and ran the product live for a year before sunsetting it.',
-      impact: 'Raised $5,000, shipped a live MVP, and closed the loop with a documented post-mortem on retention.',
+        'Co-founder of Kody (the company) and product owner on Shomi (the product). We raised $5,000 from the Tony Elumelu Foundation, built and launched the MVP with a two-person team (me on product, my co-founder on engineering), and ran the product live for a year before sunsetting it.',
+      impact: 'Raised $5,000 and owned the full product lifecycle, from pitch to live MVP to a documented post-mortem.',
       site: '',
-      role: 'Co-founder · Product Lead',
+      role: 'Co-founder & Product Owner',
       period: 'Dec 2019 - Dec 2020',
       location: 'Cameroon',
       responsibilities: [
-        'Wrote the funding pitch that won the Tony Elumelu Foundation award',
-        'Owned product scope, roadmap, and user research',
-        'Coordinated with our partner school (PREXCEL) for user access and validation',
-        'Ran the post-mortem when retention told us the model wasn\'t working',
+        'Owned product scope, roadmap, and backlog from pitch to launch, translating 100+ student surveys into requirements and acceptance criteria',
+        'Secured and managed a $5,000 Tony Elumelu Foundation grant, directing budget across the product lifecycle',
+        'Ran usability tests with real students before build to validate scope, then sequenced the MVP backlog around one validated need',
+        'Owned the full lifecycle including the sunset decision, writing the post-mortem when retention data invalidated the model',
       ],
       challenge: 'The Challenge',
       challenge_text:
@@ -914,23 +913,22 @@ When we sunset the product, I wrote a long-form post-mortem covering what we got
     },
     {
       id: 'jobsika_project-manager',
-      tag: 'Open source · Community delivery',
-      title: 'JobSika: open-source community management',
+      tag: 'Open source · Backlog & delivery',
+      title: 'JobSika: open-source backlog & delivery',
       tagline:
-        'Co-maintainer of a fully open-source jobs platform built by the Cameroonian developer community.',
+        'Owned the backlog and release milestones for an open-source jobs platform built by the Cameroonian developer community.',
       image: 'Screenshot of the UI of Jobsika.PNG',
       description:
-        'As co-maintainer of JobSika at OSS Cameroon, I worked the project-management side of an open-source product: triaging issues, coordinating contributors across time zones, designing low-friction onboarding for first-time contributors, and keeping the roadmap visible and honest.',
-      impact: 'A live open-source jobs platform with an active contributor community and a public roadmap.',
+        'As co-maintainer of JobSika at OSS Cameroon, I owned the delivery side of an open-source product: prioritizing the backlog, triaging issues, coordinating contributors across time zones, designing low-friction onboarding for first-time contributors, and keeping the roadmap visible and honest.',
+      impact: 'Kept a volunteer-built platform shipping with a transparent, prioritized backlog and low-friction contributor onboarding.',
       site: 'https://jobsika.cm/',
-      role: 'Co-maintainer & Design Lead (Open Source)',
+      role: 'Project Manager & Backlog Owner (Open Source)',
       period: '2022 - 2024',
       location: 'Cameroon',
       responsibilities: [
-        'Triaged GitHub issues: labelling, prioritisation, assignment',
-        'Coordinated contributors across time zones with async-by-default communication',
-        'Designed contributor onboarding (good-first-issue labelling, contribution guides, design issues alongside code issues)',
-        'Kept the public roadmap honest and visible',
+        'Owned and prioritized the GitHub backlog: scoping issues, defining acceptance criteria, and sequencing release milestones',
+        'Coordinated volunteer developers and designers across time zones with async-by-default communication and clear assignments',
+        'Designed contributor onboarding as a product (good-first-issue scoping, contribution guides) to keep delivery moving',
       ],
       challenge: 'The Challenge',
       challenge_text:
@@ -943,6 +941,39 @@ When we sunset the product, I wrote a long-form post-mortem covering what we got
         "A live open-source jobs platform, a track record of new designers and developers landing their first open-source contribution through OSS Cameroon, and a documented contributor playbook still in use.",
       is_hidden: false,
       sort_order: 2,
+      content: '',
+    },
+    {
+      id: 'gefona_project-manager',
+      tag: 'Nonprofit · Project & stakeholder delivery',
+      title: 'GEFONA Digital Foundation',
+      tagline:
+        'Owned delivery, stakeholder communications, and finance for a digital-economy and cybersecurity research foundation.',
+      image: '',
+      description:
+        "At the GEFONA Digital Foundation, which supports policy research on the digital economy and cybersecurity in Africa, I ran project delivery alongside communications and finance: coordinating timelines, keeping stakeholders aligned, and managing the money.",
+      impact: "Kept a lean foundation's research projects on schedule, funded, and clearly reported to stakeholders.",
+      site: 'https://www.gefona.org/',
+      role: 'Project, Communications & Finance Lead',
+      period: '',
+      location: 'Cameroon',
+      responsibilities: [
+        'Owned project timelines and deliverables across contributors, sequencing work and reporting status to stakeholders',
+        "Ran external communications and the foundation's public voice across audiences",
+        'Managed budgeting and finance tracking with auditable records',
+        'Kept research, comms, and funding stakeholders aligned on scope and priorities',
+      ],
+      challenge: 'The Challenge',
+      challenge_text:
+        'A lean foundation juggling research output, public communication, and tight finances, with no room for dropped balls.',
+      solution: 'The Solution',
+      solution_text:
+        'I made delivery the connective tissue: one source of truth for timelines, a steady communications rhythm, and disciplined finance tracking so decisions were made on real numbers.',
+      result: 'The Result',
+      result_text:
+        'Research projects that shipped on schedule, were communicated clearly, and stayed within budget.',
+      is_hidden: false,
+      sort_order: 3,
       content: '',
     },
   ],
@@ -1044,27 +1075,27 @@ The content moat question, *can we keep this product fed sustainably at our team
   ],
   about: {
     speakingIntro:
-      'I write and speak about cross-functional delivery, scope discipline, and what shipping at a small African fintech taught me about PM work.',
+      "I presented research on Cameroon's tech ecosystem at an **OSS Cameroon** event in 2022, and I write about the unglamorous core of shipping: scoping, cross-functional coordination, and what to cut when reality contradicts the plan.",
     faqs: [
       {
-        question: 'Are you a PM, a designer, or both?',
+        question: 'How do you prioritize what goes on the roadmap?',
         answer:
-          'My title at PaySika is Lead Product Designer but the role is closer to "design PM": I own scope, hiring, delivery rhythm, and cross-functional handoffs alongside the design work itself. If you\'re hiring for a PM role where design fluency is a strength, I am that person.',
+          'I weigh four things against each other: business value, customer impact, regulatory implications, and technical feasibility. Then I let data break ties: adoption, conversion, and drop-off show me where the real problems are before opinions do. Everything lands in one transparent, prioritized backlog so the whole team sees the same order.',
       },
       {
-        question: 'How do you handle scope creep?',
+        question: 'What does a backlog item look like before it reaches a squad?',
         answer:
-          "With a written contract before kickoff that names what we will and won't ship, signed by every team. Mid-sprint requests go to next sprint by default; blocking mid-sprint requests get triaged: we cut something or extend, but never both silently.",
+          'Well-defined, estimated, sequenced, and ready. Each initiative becomes epics and user stories with explicit acceptance criteria and a measurable outcome, so engineering is never blocked by ambiguity and "done" isn\'t a debate mid-sprint.',
       },
       {
-        question: 'What\'s your async-vs-sync philosophy?',
+        question: 'How do you handle scope creep and mid-sprint priority changes?',
         answer:
-          'Async by default, sync by exception. A 30-minute meeting that could have been a Notion doc is a 30-minute tax on everyone present. I write clearly so meetings are reserved for decisions that genuinely need real-time conversation.',
+          "With a written scope agreement before kickoff that names what we will and won't ship, signed by every team. Mid-sprint requests go to the next sprint by default; genuinely blocking ones get triaged: we cut something or extend, but never both silently. Protecting the sprint is how a backlog stays believable.",
       },
       {
-        question: 'What did you learn from shipping a product that didn\'t make it?',
+        question: 'How do you balance growth with compliance and risk?',
         answer:
-          'Most of what I know about PM work. Kody/Shomi taught me that the operational-sustainability question (can we keep this product fed?) belongs in week one of design, not month six of operations. Every PM project I start now begins by re-reading my own post-mortems.',
+          "At a regulated fintech, every product decision has to survive transaction integrity, data security, compliance, and audit traceability. On PaySika's KYC redesign I worked hand in hand with compliance and the partner bank so the flow lifted conversion and still held up to the regulator, with acceptance criteria and release evidence documented for audit. Growth and governance aren't opposites; you design for both.",
       },
     ],
   },
