@@ -477,6 +477,7 @@ import paysikaProcessDocs1 from '../assets/img/paysika/paysika-process-docs1.png
 import paysikaProductAssets from '../assets/img/paysika/paysika-product-assets.png';
 import paysikaMailerAssets from '../assets/img/paysika/paysika-mailer-assets.png';
 import paysikaResearchArchive from '../assets/img/paysika/paysika-research-archive.png';
+import paysikaRecognition from '../assets/img/paysika/paysika-recognition.png';
 
 export const projectImageMap: Record<string, string> = {
   'PaySika website.PNG': paysikaImage,
@@ -487,8 +488,22 @@ export const projectImageMap: Record<string, string> = {
   'crowdremit_mockup.png': crowdremitMockup,
   'gueemshome_logo.png': gueemshomeLogo,
   'gueemshome_hero.jpg': gueemshomeHero,
-  'gefona_logo.png': gefonaLogo
+  'gefona_logo.png': gefonaLogo,
+  // Recognition / team photos, referenceable by filename from content blocks
+  'paysika-recognition.png': paysikaRecognition,
+  'Me discussion with my collegue.jfif': shomiColleague,
+  'Team spirit award_2025.jfif': shomiFundingAward
 };
+
+// Resolve a stored project image string to a real asset URL.
+// Mirrors resolveBlogImage: a Cloudinary URL or absolute path passes through;
+// a bare filename is looked up in the bundled maps. Used for content-block
+// images (and any field that may hold either a URL or a bundled filename).
+export function resolveProjectImage(image: string | undefined): string {
+  if (!image) return '';
+  if (/^(https?:\/\/|\/)/.test(image)) return image;
+  return projectImageMap[image] || shomiMarkdownImageMap[image] || '';
+}
 
 export const shomiMarkdownImageMap: Record<string, string> = {
   'Untitled.png': shomiHero,

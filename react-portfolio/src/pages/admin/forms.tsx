@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { MarkdownEditor } from '../../components/MarkdownEditor';
 import { changePassword, type Profile, type Project, type BlogPost } from '../../lib/api';
-import { PasswordInput, ImageField, ArrayEditor, FaqEditor, CheckboxGroup, SpeakingImagesEditor } from './fields';
+import { PasswordInput, ImageField, ArrayEditor, FaqEditor, CheckboxGroup, SpeakingImagesEditor, JsonBlocksEditor } from './fields';
 
 // The page forms below each edit a slice of a profile but SAVE THE WHOLE object
 // (the API upserts every column, so a partial body would blank the rest). They
@@ -324,6 +324,7 @@ export function ProjectForm({ project, profiles, onSave, onCancel, saving }: {
     is_hidden: project?.is_hidden ?? false,
     sort_order: project?.sort_order ?? 0,
     content: project?.content || '',
+    content_blocks: project?.content_blocks,
   });
   const isNew = !project?.id;
   const set = (k: string, v: unknown) => setForm((f) => ({ ...f, [k]: v }));
@@ -437,6 +438,16 @@ export function ProjectForm({ project, profiles, onSave, onCancel, saving }: {
       <fieldset className="cms-form__section">
         <legend>Full case study</legend>
         <MarkdownEditor label="Case study content (Markdown)" value={form.content} onChange={(v) => set('content', v)} rows={18} placeholder="Write the detailed case study using Markdown…" />
+      </fieldset>
+
+      <fieldset className="cms-form__section">
+        <legend>Case-study sections (structured blocks)</legend>
+        <JsonBlocksEditor
+          label="Content blocks (JSON)"
+          value={form.content_blocks}
+          onChange={(v) => set('content_blocks', v)}
+          hint="Structured sections rendered above the markdown: intro, stat-cards, gallery, photos, richtext. Rewritable anytime; the UI is applied by the site."
+        />
       </fieldset>
 
       <fieldset className="cms-form__section">

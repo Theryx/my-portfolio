@@ -66,6 +66,49 @@ export function isAboutContent(v: unknown): boolean {
   return isFaqArray(o.faqs);
 }
 
+// Structured project case-study sections. An ordered array of typed blocks,
+// each a small object whose shape depends on `type`. Kept permissive on optional
+// fields but strict on types, string lengths, and array bounds.
+const BLOCK_TYPES = new Set(['intro', 'stat-cards', 'gallery', 'photos', 'richtext']);
+function isShort(v: unknown): boolean { return v === undefined || v === null || (typeof v === 'string' && v.length <= SHORT_TEXT); }
+export function isContentBlocks(v: unknown): boolean {
+  if (v === undefined || v === null) return true;
+  if (!Array.isArray(v) || v.length > 50) return false;
+  return v.every((blk) => {
+    if (!blk || typeof blk !== 'object' || Array.isArray(blk)) return false;
+    const o = blk as Record<string, unknown>;
+    if (typeof o.type !== 'string' || !BLOCK_TYPES.has(o.type)) return false;
+    switch (o.type) {
+      case 'intro':
+        return isShort(o.eyebrow) && typeof o.heading === 'string' && o.heading.length <= SHORT_TEXT && isLongText(o.text);
+      case 'richtext':
+        return isLongText(o.markdown);
+      case 'stat-cards': {
+        if (!Array.isArray(o.cards) || o.cards.length > 30) return false;
+        return o.cards.every((c) => {
+          if (!c || typeof c !== 'object' || Array.isArray(c)) return false;
+          const card = c as Record<string, unknown>;
+          return isShort(card.icon) && typeof card.title === 'string' && card.title.length <= SHORT_TEXT
+            && isLongText(card.text) && isShort(card.note);
+        });
+      }
+      case 'gallery':
+      case 'photos': {
+        if (!isShort(o.eyebrow) || !isShort(o.heading) || !isLongText(o.text)) return false;
+        if (!Array.isArray(o.items) || o.items.length > 30) return false;
+        return o.items.every((it) => {
+          if (!it || typeof it !== 'object' || Array.isArray(it)) return false;
+          const item = it as Record<string, unknown>;
+          if (typeof item.image !== 'string' || item.image.length > SHORT_TEXT) return false;
+          return isShort(item.title) && isLongText(item.description) && isLongText(item.caption);
+        });
+      }
+      default:
+        return false;
+    }
+  });
+}
+
 export function validateProjectBody(b: Record<string, unknown>, { requireId = true } = {}): string | null {
   if (requireId && !isId(b.id)) return 'Invalid id';
   if (requireId && !isProfileIdList(b.profile_ids)) return 'Invalid profile_ids';
@@ -77,6 +120,7 @@ export function validateProjectBody(b: Record<string, unknown>, { requireId = tr
     if (!isLongText(b[f])) return `Invalid ${f}`;
   }
   if (!isStringArray(b.responsibilities)) return 'Invalid responsibilities';
+  if (!isContentBlocks(b.content_blocks)) return 'Invalid content_blocks';
   return null;
 }
 

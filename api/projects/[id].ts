@@ -48,6 +48,7 @@ async function handleRequest(req: VercelRequest, res: VercelResponse) {
         solution_text = ${b.solution_text}, result = ${b.result},
         result_text = ${b.result_text}, is_hidden = ${b.is_hidden},
         sort_order = ${b.sort_order}, content = ${b.content ?? ''},
+        content_blocks = ${b.content_blocks ? JSON.stringify(b.content_blocks) : null},
         updated_at = ${now}
       WHERE id = ${id}
       RETURNING *

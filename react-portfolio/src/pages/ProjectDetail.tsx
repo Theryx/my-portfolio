@@ -4,15 +4,16 @@ import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { PageTransition } from '../components/PageTransition';
-import { ArrowLeft, Calendar, MapPin, ExternalLink, Award, FileText, Users, Accessibility, Film, ClipboardList, Target, BarChart3, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, Calendar, MapPin, ExternalLink, Award, FileText, Users, Accessibility, Film, ClipboardList } from 'lucide-react';
 import teamDiscussion from '../assets/img/Me discussion with my collegue.jfif';
 import teamAward from '../assets/img/Team spirit award_2025.jfif';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getProjectById, type Project } from '../lib/api';
-import { projectImageMap, shomiMarkdownImageMap } from '../data/projects';
+import { shomiMarkdownImageMap, resolveProjectImage } from '../data/projects';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { lightboxTrigger } from '../lib/a11y';
 import { ReadingProgress } from '../components/ReadingProgress';
+import ProjectSections from '../components/ProjectSections';
 
 import paysikaDesignDocs from '../assets/img/paysika/paysika-design-docs.png';
 import paysikaDesignRequirements from '../assets/img/paysika/paysika-design-requirements.png';
@@ -332,11 +333,13 @@ export default function ProjectDetail() {
 
   const isPaySika = project.id === 'paysika' || project.id.startsWith('paysika_');
   const isPaySikaBrand = project.id === 'paysika_brand-designer';
-  const isPaySikaPM = project.id === 'paysika_project-manager';
   const isGueemsHome = project.id === 'gueemshome_brand-designer';
   const isGefona = project.id === 'gefona_brand-designer';
   const isCrowdRemit = project.id.startsWith('crowdremit');
-  const imageSrc = isPaySika ? paysikaMockup : projectImageMap[project.image];
+  // When a project has structured content blocks, they replace the hardcoded,
+  // id-gated case-study fragments below.
+  const hasBlocks = Array.isArray(project.content_blocks) && project.content_blocks.length > 0;
+  const imageSrc = isPaySika ? paysikaMockup : resolveProjectImage(project.image);
   const heroCaption = isPaySika 
     ? 'PaySika mobile interface phone mockup' 
     : isCrowdRemit 
@@ -442,7 +445,11 @@ export default function ProjectDetail() {
               </section>
             )}
 
-            {isCrowdRemit && (
+            {hasBlocks && (
+              <ProjectSections blocks={project.content_blocks!} onImageClick={handleImageClick} />
+            )}
+
+            {!hasBlocks && isCrowdRemit && (
               <section className="project-detail__section paysika-story">
                 <div className="paysika-story__intro">
                   <span className="paysika-story__eyebrow">Fintech case study</span>
@@ -472,7 +479,7 @@ export default function ProjectDetail() {
               </section>
             )}
 
-            {isPaySikaBrand && (
+            {!hasBlocks && isPaySikaBrand && (
               <>
                 <section className="project-detail__section paysika-story">
                   <div className="paysika-story__intro">
@@ -653,7 +660,7 @@ export default function ProjectDetail() {
               </>
             )}
 
-            {isGueemsHome && (
+            {!hasBlocks && isGueemsHome && (
               <>
                 <section className="project-detail__section paysika-process">
                   <div className="paysika-process__header">
@@ -765,7 +772,7 @@ export default function ProjectDetail() {
               </>
             )}
 
-            {isGefona && (
+            {!hasBlocks && isGefona && (
               <>
                 <section className="project-detail__section paysika-process">
                   <div className="paysika-process__header">
@@ -847,7 +854,7 @@ export default function ProjectDetail() {
               </>
             )}
 
-            {isPaySika && !isPaySikaBrand && !isPaySikaPM && (
+            {!hasBlocks && isPaySika && !isPaySikaBrand && (
               <>
                 <section className="project-detail__section paysika-story">
                   <div className="paysika-story__intro">
@@ -940,118 +947,6 @@ export default function ProjectDetail() {
                 </section>
               </>
             )}
-
-            {isPaySikaPM && (
-              <>
-                <section className="project-detail__section paysika-story">
-                  <div className="paysika-story__intro">
-                    <span className="paysika-story__eyebrow">Flagship case study</span>
-                    <h2>From feature requests to product operations</h2>
-                    <p>
-                      PaySika is where I turned scattered feature requests into one prioritized backlog and a delivery system: OKRs, a Definition of Ready, testable acceptance criteria, and the cross-functional rituals that keep engineering, compliance, operations, support, and partner banks moving in the same direction.
-                    </p>
-                  </div>
-
-                  <div className="paysika-story__stats">
-                    <div className="paysika-story__stat">
-                      <Users size={22} />
-                      <strong>Cross-functional leadership</strong>
-                      <span>The single bridge between engineering, compliance, operations, support, and partner banks, surfacing dependencies before they block delivery.</span>
-                    </div>
-                    <div className="paysika-story__stat">
-                      <ClipboardList size={22} />
-                      <strong>Backlog &amp; delivery ops</strong>
-                      <span>One prioritized backlog with a Definition of Ready and acceptance criteria, plus the OKRs that turn strategy into shippable, measurable work.</span>
-                    </div>
-                    <div className="paysika-story__stat">
-                      <Award size={22} />
-                      <strong>Recognition</strong>
-                      <span>Recognized for ownership, reliability, and team spirit across the PaySika journey.</span>
-                    </div>
-                  </div>
-                </section>
-
-                <section className="project-detail__section paysika-process">
-                  <div className="paysika-process__header">
-                    <span className="paysika-story__eyebrow">Behind the process</span>
-                    <h2>The operating system behind the roadmap</h2>
-                    <p>
-                      The artefacts I own behind the shipped product: the backlog, the requirements, the roadmap, the analytics, and the audit trail. {/* TODO(theryx): replace these icon placeholders with real screenshots (backlog board, a PRD, the roadmap, a Mixpanel funnel, a release/audit doc). */}
-                    </p>
-                    <p className="paysika-process__placeholder-note">
-                      <em>Screenshots to add, one per card below. Send me the files and I will drop them in.</em>
-                    </p>
-                  </div>
-
-                  <div className="paysika-story__stats paysika-story__stats--artifacts">
-                    <div className="paysika-story__stat">
-                      <ClipboardList size={22} />
-                      <strong>Prioritized product backlog</strong>
-                      <span>One transparent backlog across mobile and web, every item with an owner, acceptance criteria, and a Definition of Ready.</span>
-                      <span className="paysika-process__todo">🖼️ Screenshot to add — backlog / board 【TODO: tool, e.g. Jira / Linear / Notion】</span>
-                    </div>
-                    <div className="paysika-story__stat">
-                      <FileText size={22} />
-                      <strong>PRDs &amp; requirements</strong>
-                      <span>Requirement docs connecting dashboard, KYC, fees, and mobile flows to clear, testable outcomes.</span>
-                      <span className="paysika-process__todo">🖼️ Screenshot to add — a PRD / requirements doc</span>
-                    </div>
-                    <div className="paysika-story__stat">
-                      <Target size={22} />
-                      <strong>Roadmap &amp; OKRs</strong>
-                      <span>Company strategy translated into product OKRs and a sequenced, multi-quarter roadmap.</span>
-                      <span className="paysika-process__todo">🖼️ Screenshot to add — roadmap / OKR sheet</span>
-                    </div>
-                    <div className="paysika-story__stat">
-                      <BarChart3 size={22} />
-                      <strong>Product analytics</strong>
-                      <span>Mixpanel funnels on adoption, conversion, and drop-off driving data-based prioritization.</span>
-                      <span className="paysika-process__todo">🖼️ Screenshot to add — a Mixpanel funnel</span>
-                    </div>
-                    <div className="paysika-story__stat">
-                      <ShieldCheck size={22} />
-                      <strong>Compliance &amp; release evidence</strong>
-                      <span>Auditable acceptance criteria, approval workflows, and release evidence for regulated flows.</span>
-                      <span className="paysika-process__todo">🖼️ Screenshot to add — a release / audit checklist</span>
-                    </div>
-                  </div>
-                </section>
-
-                <section className="project-detail__section paysika-recognition">
-                  <div className="paysika-recognition__header">
-                    <h2>The Guy people can rely on. Team player? For suuur !</h2>
-                    <p>
-                      Owning product at PaySika also meant being dependable inside the team: clarifying flows, unblocking teammates, and getting my hands dirty on things outside my lane...but hey! that's the startup spirit, turning messy product questions into decisions people can act on.
-                    </p>
-                  </div>
-                  <div className="paysika-recognition__gallery">
-                    <img
-                      src={teamDiscussion}
-                      alt="Brainstorming session with colleague on product flows"
-                      loading="lazy"
-                      {...lightboxTrigger(() => handleImageClick(teamDiscussion, "Brainstorming and collaborative session with my colleague on product flows."), 'Enlarge team discussion photo')}
-                      style={{ cursor: 'pointer' }}
-                    />
-                    <img
-                      src={teamAward}
-                      alt="Team Spirit Award 2025"
-                      loading="lazy"
-                      {...lightboxTrigger(() => handleImageClick(teamAward, "Receiving the Team Spirit Award in 2025 for collaboration and leadership."), 'Enlarge award photo')}
-                      style={{ cursor: 'pointer' }}
-                    />
-                    <img
-                      src={paysikaRecognition}
-                      alt="Receiving recognition during the PaySika journey"
-                      loading="lazy"
-                      {...lightboxTrigger(() => handleImageClick(paysikaRecognition, "Receiving recognition for outstanding teamwork and reliability during the PaySika journey"), 'Enlarge recognition photo')}
-                      style={{ cursor: 'pointer' }}
-                    />
-                  </div>
-                </section>
-              </>
-            )}
-
-
 
             {project.content && !isPaySikaBrand && (
               <section className="project-detail__section project-detail__full-content">

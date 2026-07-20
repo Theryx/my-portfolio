@@ -69,6 +69,83 @@ export function CloudinaryUploadButton({ onUpload, label }: { onUpload: (url: st
   );
 }
 
+/* ─── Structured content-blocks editor (JSON) ───────────────────────────── */
+
+const BLOCKS_LEGEND = `[
+  { "type": "intro", "eyebrow": "Flagship case study", "heading": "Title", "text": "Paragraph." },
+  { "type": "stat-cards", "cards": [
+    { "icon": "users", "title": "Card title", "text": "Card body." }
+  ] },
+  { "type": "stat-cards", "variant": "artifacts", "cards": [
+    { "icon": "clipboard", "title": "Artifact", "text": "Desc.", "note": "Screenshot to add" }
+  ] },
+  { "type": "gallery", "eyebrow": "Behind", "heading": "Heading", "text": "Intro.", "items": [
+    { "image": "https://res.cloudinary…/x.png", "title": "Item", "description": "Desc." }
+  ] },
+  { "type": "photos", "heading": "Heading", "items": [
+    { "image": "filename-or-url.png", "caption": "Caption" }
+  ] },
+  { "type": "richtext", "markdown": "## Heading\\n\\nProse in **markdown**." }
+]
+icons: users · clipboard · target · chart · shield · file · award · sparkles · rocket · line · layers · branch · message
+image: a Cloudinary URL, or a bundled filename registered in projectImageMap.`;
+
+export function JsonBlocksEditor({ label, value, onChange, hint }: {
+  label: string;
+  value: unknown[] | undefined;
+  onChange: (v: unknown[] | undefined) => void;
+  hint?: string;
+}) {
+  const [text, setText] = useState(() => {
+    try { return value && value.length ? JSON.stringify(value, null, 2) : ''; }
+    catch { return ''; }
+  });
+  const [error, setError] = useState<string | null>(null);
+  const [lastUpload, setLastUpload] = useState('');
+
+  const handleText = (t: string) => {
+    setText(t);
+    if (t.trim() === '') { setError(null); onChange(undefined); return; }
+    try {
+      const parsed = JSON.parse(t);
+      if (!Array.isArray(parsed)) { setError('Top level must be an array of blocks.'); return; }
+      setError(null);
+      onChange(parsed);
+    } catch (e) {
+      setError('Invalid JSON: ' + (e as Error).message);
+    }
+  };
+
+  return (
+    <div className="cms-field">
+      <label>{label}</label>
+      {hint && <p className="cms-field__hint">{hint}</p>}
+      <details className="cms-field__hint" style={{ marginBottom: 8 }}>
+        <summary style={{ cursor: 'pointer' }}>Block types &amp; example</summary>
+        <pre style={{ whiteSpace: 'pre-wrap', fontSize: 12, marginTop: 6 }}>{BLOCKS_LEGEND}</pre>
+      </details>
+      <textarea
+        value={text}
+        onChange={(e) => handleText(e.target.value)}
+        rows={16}
+        spellCheck={false}
+        style={{ fontFamily: 'monospace', fontSize: 13 }}
+        placeholder={'[\n  { "type": "intro", "heading": "…" }\n]'}
+      />
+      {error
+        ? <p className="cms-field__hint" style={{ color: 'var(--color-error, #e53e3e)' }}>{error}</p>
+        : text.trim() && <p className="cms-field__hint" style={{ color: 'var(--color-accent)' }}>Valid JSON ✓</p>}
+      <div className="cms-field__row">
+        <input readOnly value={lastUpload} placeholder="Uploaded image URL appears here (also copied to clipboard)" />
+        <CloudinaryUploadButton
+          onUpload={(url) => { setLastUpload(url); try { navigator.clipboard.writeText(url); } catch { /* clipboard unavailable */ } }}
+          label="Upload image"
+        />
+      </div>
+    </div>
+  );
+}
+
 /* ─── Image field with upload + manual URL ──────────────────────────────── */
 
 export function ImageField({ label, value, onChange, hint }: {

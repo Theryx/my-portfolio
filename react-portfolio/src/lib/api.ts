@@ -40,6 +40,32 @@ export interface Profile {
   about_content: AboutContent;
 }
 
+// --- Structured project case-study sections ("content blocks") ---
+// An ordered, DB-stored array of typed blocks rendered by <ProjectSections>.
+// Editable from the CMS (JSON) so case-study sections can be rewritten without
+// a code change. Images accept a Cloudinary URL or a bundled filename.
+export interface ProjectStatCard {
+  icon?: string;      // whitelisted key, e.g. 'users' | 'clipboard' | 'target' | 'chart' | 'shield' | 'file' | 'award'
+  title: string;
+  text?: string;
+  note?: string;      // small italic caption, e.g. a "screenshot to add" placeholder
+}
+export interface ProjectGalleryItem {
+  image: string;
+  title?: string;
+  description?: string;
+}
+export interface ProjectPhotoItem {
+  image: string;
+  caption?: string;
+}
+export type ProjectBlock =
+  | { type: 'intro'; eyebrow?: string; heading: string; text?: string }
+  | { type: 'stat-cards'; variant?: 'artifacts'; cards: ProjectStatCard[] }
+  | { type: 'gallery'; eyebrow?: string; heading?: string; text?: string; items: ProjectGalleryItem[] }
+  | { type: 'photos'; heading?: string; text?: string; items: ProjectPhotoItem[] }
+  | { type: 'richtext'; markdown: string };
+
 export interface Project {
   id: string;
   profile_ids: string[];
@@ -63,6 +89,7 @@ export interface Project {
   is_hidden: boolean;
   sort_order: number;
   content: string;
+  content_blocks?: ProjectBlock[];
 }
 
 export interface BlogPost {

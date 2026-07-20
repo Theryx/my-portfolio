@@ -82,13 +82,14 @@ async function handleRequest(req: VercelRequest, res: VercelResponse) {
       INSERT INTO projects (
         id, tag, title, tagline, image, description, impact, site, role, period,
         location, responsibilities, challenge, challenge_text, solution, solution_text,
-        result, result_text, is_hidden, sort_order, content, created_at, updated_at
+        result, result_text, is_hidden, sort_order, content, content_blocks, created_at, updated_at
       ) VALUES (
         ${b.id}, ${b.tag}, ${b.title}, ${b.tagline}, ${b.image},
         ${b.description}, ${b.impact}, ${b.site}, ${b.role}, ${b.period}, ${b.location},
         ${b.responsibilities}, ${b.challenge}, ${b.challenge_text}, ${b.solution},
         ${b.solution_text}, ${b.result}, ${b.result_text}, ${b.is_hidden ?? false},
-        ${b.sort_order ?? 0}, ${b.content ?? ''}, ${now}, ${now}
+        ${b.sort_order ?? 0}, ${b.content ?? ''},
+        ${b.content_blocks ? JSON.stringify(b.content_blocks) : null}, ${now}, ${now}
       )
       ON CONFLICT (id) DO UPDATE SET
         tag = EXCLUDED.tag, title = EXCLUDED.title,
@@ -99,7 +100,8 @@ async function handleRequest(req: VercelRequest, res: VercelResponse) {
         challenge_text = EXCLUDED.challenge_text, solution = EXCLUDED.solution,
         solution_text = EXCLUDED.solution_text, result = EXCLUDED.result,
         result_text = EXCLUDED.result_text, is_hidden = EXCLUDED.is_hidden,
-        sort_order = EXCLUDED.sort_order, content = EXCLUDED.content, updated_at = ${now}
+        sort_order = EXCLUDED.sort_order, content = EXCLUDED.content,
+        content_blocks = EXCLUDED.content_blocks, updated_at = ${now}
       RETURNING *
     `;
     const project = rows[0];
