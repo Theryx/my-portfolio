@@ -478,6 +478,38 @@ import paysikaProductAssets from '../assets/img/paysika/paysika-product-assets.p
 import paysikaMailerAssets from '../assets/img/paysika/paysika-mailer-assets.png';
 import paysikaResearchArchive from '../assets/img/paysika/paysika-research-archive.png';
 import paysikaRecognition from '../assets/img/paysika/paysika-recognition.png';
+// Case-study section images (referenced by filename from content blocks)
+import paysikaDesignRequirements from '../assets/img/paysika/paysika-design-requirements.png';
+import paysikaBrandGuide from '../assets/img/paysika/brand/brand-guide.png';
+import paysikaDesignSystem from '../assets/img/paysika/brand/design-system.png';
+import paysikaDesignFiles from '../assets/img/paysika/brand/design-files.png';
+import paysikaCardStates from '../assets/img/paysika/brand/card-states.png';
+import paysikaIconLibrary from '../assets/img/paysika/brand/icon-library.png';
+import paysikaIllustrationLibrary from '../assets/img/paysika/brand/illustration-library.png';
+import paysikaPresentations from '../assets/img/paysika/brand/presentations.webp';
+import paysikaMarketingSurfaces from '../assets/img/paysika/brand/marketing-surfaces.webp';
+import paysikaBillboards from '../assets/img/paysika/brand/billboards.png';
+import paysikaMerchEvents from '../assets/img/paysika/brand/merch-events.png';
+import gueemsSketch from '../assets/img/gueemshome/sketch.jpg';
+import gueemsLogoEarly from '../assets/img/gueemshome/logo-early.jpg';
+import gueemsPalette from '../assets/img/gueemshome/palette-exploration.jpg';
+import gueemsBoisSecret from '../assets/img/gueemshome/candle-bois-secret.jpg';
+import gueemsAmbreVanille from '../assets/img/gueemshome/candle-ambre-vanille.jpg';
+import gueemsAqua7 from '../assets/img/gueemshome/perfume-aqua7.jpg';
+import gueemsBusinessCard from '../assets/img/gueemshome/business-card.png';
+import gueemsBusinessCardPrinted from '../assets/img/gueemshome/business-card-printed.jpg';
+import gueemsGiftCard from '../assets/img/gueemshome/gift-card.png';
+import gueemsPackaging from '../assets/img/gueemshome/packaging-gift.jpg';
+import gueemsWebsiteNav from '../assets/img/gueemshome/website-nav.jpg';
+import gueemsSocialFeed from '../assets/img/gueemshome/social-feed.png';
+import gueemsLookbook from '../assets/img/gueemshome/collection-lookbook.jpg';
+import gueemsSpray from '../assets/img/gueemshome/spray-lifestyle.jpg';
+import gefonaLogoFinal from '../assets/img/gefona/logo-final.png';
+import gefonaBusinessCards from '../assets/img/gefona/business-cards.png';
+import gefonaOnboardingDeck from '../assets/img/gefona/onboarding-deck.png';
+import gefonaWebsiteRedesign from '../assets/img/gefona/website-redesign-figma.png';
+import gefonaCampaignProposal from '../assets/img/gefona/campaign-proposal.png';
+import gefonaContentArchive from '../assets/img/gefona/content-archive.png';
 
 export const projectImageMap: Record<string, string> = {
   'PaySika website.PNG': paysikaImage,
@@ -492,7 +524,43 @@ export const projectImageMap: Record<string, string> = {
   // Recognition / team photos, referenceable by filename from content blocks
   'paysika-recognition.png': paysikaRecognition,
   'Me discussion with my collegue.jfif': shomiColleague,
-  'Team spirit award_2025.jfif': shomiFundingAward
+  'Team spirit award_2025.jfif': shomiFundingAward,
+  // Case-study section images (content blocks)
+  'paysika-design-docs.png': paysikaDesignDocs,
+  'paysika-design-requirements.png': paysikaDesignRequirements,
+  'paysika-product-assets.png': paysikaProductAssets,
+  'paysika-mailer-assets.png': paysikaMailerAssets,
+  'paysika-research-archive.png': paysikaResearchArchive,
+  'brand-guide.png': paysikaBrandGuide,
+  'design-system.png': paysikaDesignSystem,
+  'design-files.png': paysikaDesignFiles,
+  'card-states.png': paysikaCardStates,
+  'icon-library.png': paysikaIconLibrary,
+  'illustration-library.png': paysikaIllustrationLibrary,
+  'presentations.webp': paysikaPresentations,
+  'marketing-surfaces.webp': paysikaMarketingSurfaces,
+  'billboards.png': paysikaBillboards,
+  'merch-events.png': paysikaMerchEvents,
+  'sketch.jpg': gueemsSketch,
+  'logo-early.jpg': gueemsLogoEarly,
+  'palette-exploration.jpg': gueemsPalette,
+  'candle-bois-secret.jpg': gueemsBoisSecret,
+  'candle-ambre-vanille.jpg': gueemsAmbreVanille,
+  'perfume-aqua7.jpg': gueemsAqua7,
+  'business-card.png': gueemsBusinessCard,
+  'business-card-printed.jpg': gueemsBusinessCardPrinted,
+  'gift-card.png': gueemsGiftCard,
+  'packaging-gift.jpg': gueemsPackaging,
+  'website-nav.jpg': gueemsWebsiteNav,
+  'social-feed.png': gueemsSocialFeed,
+  'collection-lookbook.jpg': gueemsLookbook,
+  'spray-lifestyle.jpg': gueemsSpray,
+  'logo-final.png': gefonaLogoFinal,
+  'business-cards.png': gefonaBusinessCards,
+  'onboarding-deck.png': gefonaOnboardingDeck,
+  'website-redesign-figma.png': gefonaWebsiteRedesign,
+  'campaign-proposal.png': gefonaCampaignProposal,
+  'content-archive.png': gefonaContentArchive
 };
 
 // Resolve a stored project image string to a real asset URL.
