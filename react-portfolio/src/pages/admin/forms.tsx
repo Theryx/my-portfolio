@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { MarkdownEditor } from '../../components/MarkdownEditor';
-import { changePassword, type Profile, type Project, type BlogPost } from '../../lib/api';
-import { PasswordInput, ImageField, ArrayEditor, FaqEditor, CheckboxGroup, SpeakingImagesEditor, JsonBlocksEditor } from './fields';
+import { changePassword, type Profile, type Project, type BlogPost, type ProjectBlock } from '../../lib/api';
+import { PasswordInput, ImageField, ArrayEditor, FaqEditor, CheckboxGroup, SpeakingImagesEditor } from './fields';
+import { BlockBuilder } from './BlockBuilder';
 
 // The page forms below each edit a slice of a profile but SAVE THE WHOLE object
 // (the API upserts every column, so a partial body would blank the rest). They
@@ -442,11 +443,13 @@ export function ProjectForm({ project, profiles, onSave, onCancel, saving }: {
 
       <fieldset className="cms-form__section">
         <legend>Case-study sections (structured blocks)</legend>
-        <JsonBlocksEditor
-          label="Content blocks (JSON)"
-          value={form.content_blocks}
+        <p className="cms-field__hint" style={{ marginBottom: 10 }}>
+          Structured sections rendered above the markdown: intro, stat cards, gallery, photos, rich text.
+          Rewritable anytime; the site applies the styling. Build them visually, or switch to JSON.
+        </p>
+        <BlockBuilder
+          value={form.content_blocks as ProjectBlock[] | undefined}
           onChange={(v) => set('content_blocks', v)}
-          hint="Structured sections rendered above the markdown: intro, stat-cards, gallery, photos, richtext. Rewritable anytime; the UI is applied by the site."
         />
       </fieldset>
 
