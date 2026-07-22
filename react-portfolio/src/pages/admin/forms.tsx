@@ -237,7 +237,7 @@ export function ProfileMetaForm({ profile, onSave, onCancel, saving }: {
         <div className="cms-form__grid">
           <div className="cms-field">
             <label htmlFor="pm-id">Profile ID (slug)</label>
-            <input id="pm-id" value={id} onChange={(e) => setId(e.target.value)} placeholder="e.g. fintech, design-engineer" required disabled={!isNew} />
+            <input id="pm-id" value={id} onChange={(e) => setId(e.target.value)} placeholder="e.g. product-design, design-engineer" required disabled={!isNew} />
             {!isNew && <p className="cms-field__hint">The ID can't change once created; it's part of shared URLs.</p>}
           </div>
           <div className="cms-field">

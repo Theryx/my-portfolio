@@ -9,7 +9,7 @@
 //      content" button in Studio (CMS) — projects/posts with matching ids
 //      are NOT overwritten, so any field already edited in the CMS is safe.
 //
-// Profile ids covered: fintech, design-engineer, digital-marketing,
+// Profile ids covered: product-design, design-engineer, digital-marketing,
 // project-manager, brand-designer. The `default` profile is intentionally
 // absent — the owner has already curated it.
 
@@ -52,23 +52,23 @@ function commonLinks(extras: Record<string, string>): Record<string, string> {
   };
 }
 
-// ─── fintech ─────────────────────────────────────────────────────────────
+// ─── product-design ──────────────────────────────────────────────────────
 
-const fintechPreset: ProfilePreset = {
+const productDesignPreset: ProfilePreset = {
   profile: {
-    name: 'Fintech Focus',
+    name: 'Product Design',
     is_active: false,
-    bio: 'Fintech Product Designer with four years leading design at PaySika across mobile, web, and physical card products serving thousands of users in Central Africa.',
-    tagline: 'I design financial products that earn trust with the first tap.',
-    hero_title: 'Fintech Product Designer',
+    bio: 'Product Designer with four years leading design at PaySika across mobile, web, and physical card products serving thousands of users in Central Africa.',
+    tagline: 'I design digital products that earn trust with the first tap.',
+    hero_title: 'Product Designer',
     hero_subtitle:
-      'Four years leading design at PaySika across onboarding, KYC, transactions, and physical cards. I specialise in simplifying complex financial flows for African mobile users.',
-    philosophy_title: 'Trust is the core currency of financial design.',
+      'Four years leading design at PaySika across onboarding, KYC, transactions, and physical cards. I specialise in simplifying complex product flows for African mobile users.',
+    philosophy_title: 'Trust is the core currency of product design.',
     philosophy_text:
       'Every financial product asks the user to bet their money on a screen. My job is to make that bet feel obvious: clear hierarchy, predictable interactions, honest copy, no surprises. I pair Mixpanel data with usability testing to find where trust breaks and rebuild from there.',
     intro_expanded_text:
       'Every financial product asks the user to bet their money on a screen. My job is to make that bet feel obvious: clear hierarchy, predictable interactions, honest copy, no surprises. I pair Mixpanel data with usability testing to find where trust breaks and rebuild from there.',
-    badges: ['Open to fintech design roles', 'Payments · KYC · Mobile money'],
+    badges: ['Open to product design roles', 'Payments · KYC · Mobile money'],
     social_links: {},
   },
   social_links: commonLinks({
@@ -76,7 +76,7 @@ const fintechPreset: ProfilePreset = {
     projects_intro:
       'Payments, KYC, cards, and cross-border transfers for African fintech, shipped at scale and measured in retention.',
     blog_intro: 'Notes on trust, compliance, and mobile money UX from the field in Cameroon.',
-    metric_label: 'years leading fintech design',
+    metric_label: 'years leading product design',
   }),
   projects: [
     {
@@ -285,10 +285,10 @@ If I were building this again I'd add export-to-CSV from the start. Users asked 
   ],
   about: {
     speakingIntro:
-      'I speak about fintech design, mobile money UX, and what scales (and what doesn\'t) across the African market.',
+      'I speak about product design, mobile money UX, and what scales (and what doesn\'t) across the African market.',
     faqs: [
       {
-        question: 'What fintech surfaces have you shipped?',
+        question: 'What product surfaces have you shipped?',
         answer:
           'Onboarding, KYC photo capture, transaction history, multi-currency wallets, virtual & physical Visa-partner cards, mobile money top-up, and admin dashboards. Mobile, web, and native iOS/Android.',
       },
@@ -397,7 +397,7 @@ For the React side, I use Claude as a pair-programmer for the boring parts of co
       ],
       challenge: 'The Challenge',
       challenge_text:
-        'A single codebase that serves multiple persona-tailored portfolios (default, fintech, design-engineer, marketing, PM) from one URL, editable end-to-end through a CMS, without losing the playful identity of a bento-style design.',
+        'A single codebase that serves multiple persona-tailored portfolios (default, product-design, design-engineer, marketing, PM) from one URL, editable end-to-end through a CMS, without losing the playful identity of a bento-style design.',
       solution: 'The Solution',
       solution_text:
         'Profiles live in Neon; the React app reads them via ProfileContext and falls back to bundled static content when the API is unreachable. The Studio CMS lets me edit every visible field. AI handles boilerplate; design and architecture decisions are mine.',
@@ -1336,7 +1336,7 @@ Accessible and distinctive are not opposites. Constraint makes a palette better,
 // ─── exports ─────────────────────────────────────────────────────────────
 
 export const profilePresets: Record<string, ProfilePreset> = {
-  fintech: fintechPreset,
+  'product-design': productDesignPreset,
   'design-engineer': designEngineerPreset,
   'digital-marketing': digitalMarketingPreset,
   'project-manager': projectManagerPreset,
