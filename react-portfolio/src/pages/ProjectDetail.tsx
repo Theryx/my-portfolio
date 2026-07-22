@@ -70,7 +70,6 @@ export default function ProjectDetail() {
   }
 
   const isPaySika = project.id === 'paysika' || project.id.startsWith('paysika_');
-  const isPaySikaBrand = project.id === 'paysika_brand-designer';
   const isCrowdRemit = project.id.startsWith('crowdremit');
   // When a project has structured content blocks, they replace the hardcoded,
   // id-gated case-study fragments below.
@@ -185,7 +184,7 @@ export default function ProjectDetail() {
               <ProjectSections blocks={project.content_blocks!} onImageClick={handleImageClick} />
             )}
 
-            {project.content && !isPaySikaBrand && (
+            {project.content && !hasBlocks && (
               <section className="project-detail__section project-detail__full-content">
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
