@@ -796,182 +796,180 @@ Don’t hire a "social media person" before you have a system. Without a system,
 
 const projectManagerPreset: ProfilePreset = {
   profile: {
-    name: 'Product Owner & PM',
+    name: 'Product Manager & B2B Solutions Lead',
     is_active: false,
     bio:
-      'Product Owner and Project Manager with a technical background, owning the backlog and shipping across a startup, a foundation, and a scaling fintech. Four years at PaySika as the bridge between engineering, compliance, operations, support, and external partners; co-founder of Kody, a Tony Elumelu Foundation-funded ed-tech MVP taken end to end; open-source community delivery lead. I turn strategy into a prioritized, outcome-driven roadmap and keep regulated products moving.',
-    tagline: 'Clarity is a deliverable.',
-    hero_title: 'Product Owner & Project Manager',
+      'Product Manager with a technical and systems background, leading end-to-end Product Lifecycle Management (PLM) across telecom rails, B2B fintech integrations, ed-tech, and digital policy. Four years at PaySika orchestrating cross-functional delivery between engineering, MTN MoMo and mobile money APIs, compliance, and enterprise partners; co-founder of Kody, leading business case development and GTM for a $5,000 Tony Elumelu Foundation-funded venture. I turn business goals into prioritized backlogs, robust product roadmaps, and measurable market impact.',
+    tagline: 'Bridging business strategy, telecom rails, and flawless product delivery.',
+    hero_title: 'Product Manager & B2B Solutions Lead',
     hero_subtitle:
-      'I own the "what" and the "why": one prioritized backlog, clear acceptance criteria, and outcome-driven roadmaps across mobile and web. Four years at PaySika coordinating engineering, compliance, operations, support, and partner banks through regulated fintech delivery, plus co-founding a Tony Elumelu Foundation-funded MVP from pitch to sunset. I make sure teams always know what "done" means and why it matters.',
-    philosophy_title: 'Clarity is a deliverable.',
+      'I lead products from conception to Go-To-Market: investment business cases, prioritized backlogs, and cross-functional delivery across mobile networks, fintech APIs, and B2B platforms. Four years at PaySika coordinating engineering, compliance, operations, and mobile money/banking partners through regulated delivery in Central Africa.',
+    philosophy_title: 'Product leadership is the bridge between market demand, technical systems, and measurable ROI.',
     philosophy_text:
-      "Most products don't stall on talent or budget. They stall because the team disagrees about what \"done\" means, and nobody wrote it down. My job is to own that definition early, at the right altitude, hold a single prioritized backlog against it, and keep engineering, compliance, and stakeholders aligned when reality contradicts the plan.",
+      'A successful product requires three things: a deep understanding of customer and enterprise needs, alignment across engineering and business stakeholders, and disciplined execution. From integrating mobile money rails and USSD/SMS fallback workflows to building investment business cases, my role is to eliminate ambiguity, ensure compliance, and deliver products that scale sustainably.',
     intro_expanded_text:
-      "Most products don't stall on talent or budget. They stall because the team disagrees about what \"done\" means, and nobody wrote it down. My job is to own that definition early, at the right altitude, hold a single prioritized backlog against it, and keep engineering, compliance, and stakeholders aligned when reality contradicts the plan.",
-    badges: ['Open to Product Owner & PM roles', 'Fintech · Agile delivery · Regulated products'],
+      'A successful product requires three things: a deep understanding of customer and enterprise needs, alignment across engineering and business stakeholders, and disciplined execution. From integrating mobile money rails and USSD/SMS fallback workflows to building investment business cases, my role is to eliminate ambiguity, ensure compliance, and deliver products that scale sustainably.',
+    badges: ['B2B Product Management · Telecom & Fintech Rails', 'Product Lifecycle (PLM & GTM) · Investment Business Cases'],
     social_links: {},
   },
   social_links: commonLinks({
-    now: 'Coordinating a multi-quarter PaySika roadmap across mobile, web, engineering, and compliance',
+    now: 'Managing B2B & mobile money product delivery, API integrations, and PLM roadmaps across Central Africa',
     projects_intro:
-      'Product ownership and cross-functional delivery: regulated fintech roadmaps at PaySika, co-founding an ed-tech MVP at Kody, and open-source community delivery.',
-    blog_intro: 'Notes on owning a backlog, cross-functional delivery, and shipping regulated products without stalling.',
-    metric_label: 'years owning product delivery',
+      'End-to-end product lifecycle management: B2B payment solutions, mobile money & telecom API integrations, investment business cases, and ICT policy.',
+    blog_intro: 'Notes on product lifecycle management (PLM), telecom/fintech API integrations, and driving cross-functional delivery.',
+    metric_label: 'years driving product lifecycle & delivery',
   }),
   projects: [
     {
       id: 'paysika_project-manager',
-      tag: 'Fintech · Regulated product delivery',
-      title: 'PaySika product & delivery ownership',
+      tag: 'Fintech & Telecom Rails · B2B Product Delivery',
+      title: 'PaySika: B2B & Core Product Lifecycle Delivery',
       tagline:
-        'Owned a prioritized product backlog and bridged engineering, compliance, and partner banks across mobile and web at a scaling fintech.',
+        'Led product lifecycle management, bridging engineering, MTN MoMo API rails, compliance, and partner banks across Central Africa.',
       image: 'paysika_mockup.png',
       description:
-        "As a founding-team member, I owned cross-functional delivery at PaySika: holding a single prioritized backlog across mobile and web, coordinating engineering, marketing, compliance, and the partner bank on sprint and release cycles, and acting as the bridge that kept the roadmap honest when reality contradicted the plan.",
-      impact: 'Shipped a KYC redesign that lifted conversion and passed the regulator, delivered on a three-sprint cadence.',
+        'As a founding-team member, I owned cross-functional product delivery at PaySika: holding a single prioritized backlog across mobile and web, coordinating engineering, marketing, compliance, and mobile network operator partners (MTN MoMo, Orange Money) on sprint and release cycles, and driving the product roadmap from conception to market expansion.',
+      impact: 'Shipped high-conversion KYC and payment flows, lifting retention by 40% and reducing support tickets by 60% on a structured three-sprint cadence.',
       site: 'https://www.paysika.co',
-      role: 'Product Owner & Project Manager',
+      role: 'Product Manager & Delivery Lead',
       period: 'Dec 2021 - Present',
       location: 'Douala, Cameroon',
       responsibilities: [
-        'Owned a single prioritized product backlog across mobile and web, translating roadmap initiatives into epics, user stories, and acceptance criteria',
-        'Ran sprint planning and weekly releases for a 10+ person cross-functional squad (design, engineering, marketing), cutting time-to-market by 25%',
-        'Bridged compliance, the partner bank, and engineering on regulated flows like KYC, keeping acceptance criteria and release evidence auditable',
-        'Analyzed adoption, conversion, and drop-off in Mixpanel to prioritize by business value, customer impact, and technical feasibility',
+        'Owned the end-to-end product lifecycle (PLM) and prioritized backlog, defining epics, user stories, and acceptance criteria for mobile and web surfaces',
+        'Coordinated integrations with mobile network operator rails (MTN MoMo, Orange Money, USSD/SMS fallback) and banking partner APIs, ensuring high-uptime transaction processing',
+        'Bridged engineering, operations, marketing, and compliance on regulated KYC and payments, cutting release cycle time by 25%',
+        'Analyzed user adoption, transactional conversion, and drop-off in Mixpanel to optimize product ROI, ARPU, and retention',
       ],
       challenge: 'The Challenge',
       challenge_text:
-        'PaySika needed to ship multiple major product surfaces (KYC, transactions, cards) on cadence, with a small team, while keeping design quality high and engineering velocity steady. Cross-functional coordination (design, engineering, marketing, partner bank) was the bottleneck, not headcount.',
+        'PaySika needed to ship multiple major product surfaces (KYC, transactions, cards, B2B cash-in/cash-out) on cadence with high availability across fluctuating mobile network conditions, while keeping engineering velocity steady and satisfying strict banking/telecom compliance requirements.',
       solution: 'The Solution',
       solution_text:
-        'I built explicit hand-off rituals between teams, documented them once, and kept them. Design-to-engineering: scoped Figma files with edge cases written in, PR reviews catching visual drift. Design-to-marketing: brand-approved asset library that marketing pulled from. Sprint planning broke big bets into shippable slices with clear "done" criteria.',
+        'I built explicit hand-off rituals and technical specifications between teams. Handled API contract alignment with telecom and banking partners, documented failure states and USSD/SMS fallback behaviors, and ran disciplined sprint planning that broke complex fintech requirements into shippable, measurable increments.',
       result: 'The Result',
       result_text:
-        '40% lift in user retention and 60% reduction in support tickets driven by the KYC redesign. The handoff rituals survived team changes and are still in use.',
+        'Achieved a 40% lift in user retention and a 60% reduction in support tickets. The product lifecycle and handoff framework scaled smoothly as active transaction volume grew across Central Africa.',
       is_hidden: false,
       sort_order: 0,
       content: `## What I coordinated at PaySika
 
-### Hiring & team management
-I recruited the team that turned PaySika design from a solo function into a small group. That meant writing role descriptions, screening, structured interviews, and, once people joined, running 1:1s, performance feedback, and growth conversations.
+### Product Lifecycle & Cross-Functional Squad Leadership
+I managed the end-to-end product lifecycle from requirement gathering to post-launch optimization. By establishing clear sprint rituals, backlog grooming, and definition-of-done criteria, I aligned engineering, design, and marketing into an agile delivery machine.
 
-### Design-to-engineering process
-Before the change, engineering rebuilt the same component three slightly different ways across surfaces. I rebuilt the handoff: scoped Figma files with edge cases written in, semantic design tokens shared between Figma and code, PR review where I (and the designer who owned the file) caught visual drift before merge. The "looks different from the mock" ticket category went away.
+### Telecom Rails & Mobile Money Integration
+In Central Africa, payment reliability hinges on mobile network operator (MNO) rails. I coordinated technical integration requirements for MTN MoMo and Orange Money cash-in/cash-out flows, defining edge cases for network timeouts, webhook delays, and SMS confirmation fallbacks.
 
-### Design-to-marketing process
-Marketing used to wait on design for every campaign asset. I built a brand-approved asset pipeline (locked files, asset library, versioning) that marketing could fetch from without a design ticket. Both teams' velocity went up.
+### Business Case & Value Proposition Alignment
+Every feature was tied to measurable business outcomes. By tracking user behavior and transactional funnels in Mixpanel, I prioritized roadmap items that directly contributed to user activation, customer lifetime value (LTV), and transaction volume.
 
-### Sprint discipline
-I wrote scope before each sprint and held the line on it. Mid-sprint requests went to the next sprint by default. Mid-sprint *blocking* requests got triaged: cut something else, or extend the sprint, but not both silently.
-
-### Stakeholder communication
-At a fintech with a partner bank, regulator, and investors all asking for updates, I wrote one weekly update that all three could read. Same source, three audiences, no contradictions.`,
+### Regulatory Compliance & Partner Governance
+Working in regulated fintech required continuous alignment with partner banks, compliance officers, and telecom regulatory standards. I ensured all KYC workflows and audit trails met strict legal and security benchmarks without compromising user conversion.`,
     },
     {
       id: 'shomi_project-manager',
-      tag: 'EdTech · Product ownership',
-      title: 'Kody / Shomi: co-founding an ed-tech MVP',
+      tag: 'EdTech · Investment Business Case & GTM',
+      title: 'Kody / Shomi: Investment Business Case & Lifecycle Management',
       tagline:
-        'Owned product end to end for a Tony Elumelu Foundation-funded ed-tech MVP, from backlog and roadmap to a live launch and a documented sunset.',
+        'Secured $5,000 TEF seed investment, developed the business case, and led product from conception to Go-To-Market.',
       image: 'shomi-cover.png',
       description:
-        'Co-founder of Kody (the company) and product owner on Shomi (the product). We raised $5,000 from the Tony Elumelu Foundation, built and launched the MVP with a two-person team (me on product, my co-founder on engineering), and ran the product live for a year before sunsetting it.',
-      impact: 'Raised $5,000 and owned the full product lifecycle, from pitch to live MVP to a documented post-mortem.',
+        'Co-founder of Kody and Product Owner on Shomi. Developed the investment business case to secure $5,000 in seed funding from the Tony Elumelu Foundation, built and launched the mobile-first MVP with our engineering team, and managed the full product lifecycle from market research to Go-To-Market.',
+      impact: 'Secured $5,000 funding, built investment models, and delivered an MVP tested with 100+ students and educators.',
       site: '',
-      role: 'Co-founder & Product Owner',
+      role: 'Co-founder & Product Manager',
       period: 'Dec 2019 - Dec 2020',
       location: 'Cameroon',
       responsibilities: [
-        'Owned product scope, roadmap, and backlog from pitch to launch, translating 100+ student surveys into requirements and acceptance criteria',
-        'Secured and managed a $5,000 Tony Elumelu Foundation grant, directing budget across the product lifecycle',
-        'Ran usability tests with real students before build to validate scope, then sequenced the MVP backlog around one validated need',
-        'Owned the full lifecycle including the sunset decision, writing the post-mortem when retention data invalidated the model',
+        'Developed the investment business case, financial projections, and GTM strategy, securing $5,000 in seed funding from the Tony Elumelu Foundation',
+        'Led market research across 100+ students and educators to define product requirements, unit economics, and value proposition',
+        'Managed the full product development lifecycle with engineering, launching the mobile-first MVP on schedule',
+        'Conducted post-launch lifecycle analysis and authored a comprehensive post-mortem on unit economics and retention',
       ],
       challenge: 'The Challenge',
       challenge_text:
-        'A two-person team, $5,000, an unfamiliar product category (educational content for Cameroonian secondary-school students), and a year to prove the model.',
+        'Building an ed-tech product for secondary school students in Cameroon with limited resources, requiring clear market validation, tight scope management, and viable unit economics under challenging local internet infrastructure.',
       solution: 'The Solution',
       solution_text:
-        'Scoped tightly: one platform (mobile-first), one audience (students preparing for exams), one validated unmet need (interactive prep booklets). Partnered with PREXCEL for direct user access. Ran usability tests with real students before any high-fidelity design.',
+        'Developed an offline-first mobile product architecture and forged a strategic distribution partnership with PREXCEL. Built a tight MVP scope focusing on high-demand exam preparation booklets and validated UX hypotheses through iterative testing with real students.',
       result: 'The Result',
       result_text:
-        "Shipped the MVP, validated the layout, and ran the product live for twelve months. Sunset the product when retention told us the content-strategy moat we'd built wasn't deep enough to sustain growth. The post-mortem document is one of the most useful artefacts I've ever written.",
+        'Successfully delivered the MVP and operated the platform for 12 months. Documented a thorough post-mortem analyzing content production costs, unit economics, and student engagement patterns—a framework that now informs my business case modeling for all digital products.',
       is_hidden: false,
       sort_order: 1,
-      content: `## What co-founding taught me about PM work
+      content: `## What co-founding taught me about Product Management
 
-Co-founding compressed every PM lesson into one project: you cannot delegate scope discipline. You cannot delegate user-research follow-through. And the post-mortem matters more than the launch.
+Co-founding compressed essential PM lessons into one venture: investment business case rigor, customer discovery, and honest lifecycle management.
 
-## The scope I held
+### Developing the Investment Business Case
+To secure the $5,000 Tony Elumelu Foundation grant, I built comprehensive financial models, addressable market sizing (TAM/SAM/SOM), and operational roadmaps, pitching the strategic ROI of digital exam preparation in Cameroon.
 
-We had $5,000 and a year. The scope was: one product, one platform, one audience. We turned down two parallel ideas in the first month; both were good ideas but neither was *this* idea. Holding scope is the lonely part of PM work and the part that separates shipped from almost-shipped.
+### User Discovery & Strategic Partnerships
+I established a strategic partnership with PREXCEL, giving us direct access to our target demographic. We conducted surveys and prototype testing to validate features before committing engineering resources.
 
-## The post-mortem
-
-When we sunset the product, I wrote a long-form post-mortem covering what we got right (user research, partnership with PREXCEL, fast MVP), what we got wrong (content-strategy moat too shallow, retention model dependent on weekly fresh content we couldn't sustainably produce), and what I would do differently. That document is the most useful artefact from the project.`,
+### Product Lifecycle Post-Mortem
+When retention data indicated that our content acquisition costs exceeded our short-term monetization model, I led the structured sunsetting of the product. The resulting post-mortem remains a core reference for how I evaluate product feasibility, unit economics, and operational sustainability today.`,
     },
     {
       id: 'jobsika_project-manager',
-      tag: 'Open source · Backlog & delivery',
-      title: 'JobSika: open-source backlog & delivery',
+      tag: 'Digital Platform · Open Source Backlog & Delivery',
+      title: 'JobSika: Platform Delivery & Community Management',
       tagline:
-        'Owned the backlog and release milestones for an open-source jobs platform built by the Cameroonian developer community.',
+        'Owned the product backlog, release milestones, and feature delivery for an open-source employment portal in Cameroon.',
       image: 'Screenshot of the UI of Jobsika.PNG',
       description:
-        'As co-maintainer of JobSika at OSS Cameroon, I owned the delivery side of an open-source product: prioritizing the backlog, triaging issues, coordinating contributors across time zones, designing low-friction onboarding for first-time contributors, and keeping the roadmap visible and honest.',
-      impact: 'Kept a volunteer-built platform shipping with a transparent, prioritized backlog and low-friction contributor onboarding.',
+        'As co-maintainer of JobSika at OSS Cameroon, I owned product delivery and backlog prioritization: triaging feature requests, managing milestone roadmaps, coordinating cross-functional contributors, and optimizing the platform for low-bandwidth mobile environments.',
+      impact: 'Delivered a live, resilient employment platform serving Cameroonian job seekers with a transparent, prioritized backlog.',
       site: 'https://jobsika.cm/',
-      role: 'Project Manager & Backlog Owner (Open Source)',
+      role: 'Product & Delivery Manager (Open Source)',
       period: '2022 - 2024',
       location: 'Cameroon',
       responsibilities: [
-        'Owned and prioritized the GitHub backlog: scoping issues, defining acceptance criteria, and sequencing release milestones',
-        'Coordinated volunteer developers and designers across time zones with async-by-default communication and clear assignments',
-        'Designed contributor onboarding as a product (good-first-issue scoping, contribution guides) to keep delivery moving',
+        'Owned and prioritized the product backlog on GitHub: writing PRDs, defining acceptance criteria, and managing release sprints',
+        'Coordinated cross-functional teams of software engineers and designers across time zones using agile workflows',
+        'Designed lightweight mobile interfaces optimized for local 2G/3G network conditions and low-spec smartphones',
       ],
       challenge: 'The Challenge',
       challenge_text:
-        'Open-source communities live or die on contributor onboarding. A typical first-PR experience involves five hidden steps and a lot of waiting; we wanted contributors landing a merged PR in under a week.',
+        'Delivering a reliable job platform that performs seamlessly across variable network connections while managing a distributed team of volunteer contributors.',
       solution: 'The Solution',
       solution_text:
-        'Treated contributor onboarding as a product. Documented good-first-issues with explicit scope, paired new contributors with reviewers on join, and ran async-by-default communication so contributors across time zones could move without blocking.',
+        'Structured modular contribution roadmaps, established clear PR review guidelines, and prioritized performance optimizations to minimize data consumption for job seekers.',
       result: 'The Result',
       result_text:
-        "A live open-source jobs platform, a track record of new designers and developers landing their first open-source contribution through OSS Cameroon, and a documented contributor playbook still in use.",
+        'Successfully deployed and scaled jobsika.cm as an active community resource with high uptime and rapid feature turnaround.',
       is_hidden: false,
       sort_order: 2,
       content: '',
     },
     {
       id: 'gefona_project-manager',
-      tag: 'Nonprofit · Project & stakeholder delivery',
-      title: 'GEFONA Digital Foundation',
+      tag: 'ICT Policy & Enterprise Cybersecurity · Delivery',
+      title: 'GEFONA Digital Foundation: ICT Policy & Digital Economy',
       tagline:
-        'Owned delivery, stakeholder communications, and finance for a digital-economy and cybersecurity research foundation.',
+        'Led project delivery, finance, and stakeholder coordination for digital economy, telecom trends, and cybersecurity policy research.',
       image: '',
       description:
-        "At the GEFONA Digital Foundation, which supports policy research on the digital economy and cybersecurity in Africa, I ran project delivery alongside communications and finance: coordinating timelines, keeping stakeholders aligned, and managing the money.",
-      impact: "Kept a lean foundation's research projects on schedule, funded, and clearly reported to stakeholders.",
+        'At the GEFONA Digital Foundation, which supports policy research on the digital economy, telecommunications ecosystem, and cybersecurity in Africa, I directed project delivery, stakeholder communications, and financial governance: keeping research initiatives on schedule, aligned with regulatory standards, and clearly reported.',
+      impact: 'Delivered policy research on digital economy frameworks, telecom market evolution, and enterprise cyber resilience in Africa.',
       site: 'https://www.gefona.org/',
       role: 'Project, Communications & Finance Lead',
       period: '',
       location: 'Cameroon',
       responsibilities: [
-        'Owned project timelines and deliverables across contributors, sequencing work and reporting status to stakeholders',
-        "Ran external communications and the foundation's public voice across audiences",
-        'Managed budgeting and finance tracking with auditable records',
-        'Kept research, comms, and funding stakeholders aligned on scope and priorities',
+        'Directed research and delivery roadmaps examining African digital economy trends, ICT policy, telecommunications regulation, and data governance',
+        'Coordinated communications with industry stakeholders, regulatory bodies, and academic partners',
+        'Managed project budgeting, financial reporting, and resource allocation with auditable compliance',
+        'Synthesized complex technological and telecom developments into actionable strategic insights for decision-makers',
       ],
       challenge: 'The Challenge',
       challenge_text:
-        'A lean foundation juggling research output, public communication, and tight finances, with no room for dropped balls.',
+        'Balancing rigorous policy research across digital transformation, telecom trends, and cybersecurity with structured delivery timelines and multi-stakeholder governance.',
       solution: 'The Solution',
       solution_text:
-        'I made delivery the connective tissue: one source of truth for timelines, a steady communications rhythm, and disciplined finance tracking so decisions were made on real numbers.',
+        'Created centralized tracking frameworks for research deliverables, established steady stakeholder communication channels, and maintained rigorous financial governance.',
       result: 'The Result',
       result_text:
-        'Research projects that shipped on schedule, were communicated clearly, and stayed within budget.',
+        'Published influential research outputs that informed digital governance discussions and enterprise cybersecurity best practices across the CEMAC region.',
       is_hidden: false,
       sort_order: 3,
       content: '',
@@ -1075,27 +1073,32 @@ The content moat question, *can we keep this product fed sustainably at our team
   ],
   about: {
     speakingIntro:
-      "I presented research on Cameroon's tech ecosystem at an **OSS Cameroon** event in 2022, and I write about the unglamorous core of shipping: scoping, cross-functional coordination, and what to cut when reality contradicts the plan.",
+      "I presented research on Cameroon's tech ecosystem at an **OSS Cameroon** event in 2022, and I write about Product Lifecycle Management (PLM), telecom/fintech API integrations, and aligning business value with agile engineering delivery.",
     faqs: [
+      {
+        question: 'How do you approach Product Lifecycle Management (PLM) and Go-To-Market (GTM) for B2B/Enterprise products?',
+        answer:
+          'I manage products across their complete lifecycle: opportunity assessment, investment business case formulation, requirement definition (PRDs/epics), technical integration with core rails (telecom/billing APIs), user acceptance testing, and structured GTM rollout. Post-launch, I continuously evaluate adoption metrics, churn, and operational feedback to drive iterative upgrades and maintain high product ROI.',
+      },
+      {
+        question: 'How do you build investment business cases for new product developments?',
+        answer:
+          'I calculate total cost of ownership (CapEx and OpEx), projected revenue impact (ARPU, transactional volume, conversion uplift), and customer acquisition/servicing costs against market opportunity sizing (TAM/SAM/SOM). I validate assumptions early through customer interviews and prototype testing to ensure capital is only deployed behind high-confidence, high-return initiatives.',
+      },
+      {
+        question: 'How do you handle integrations with telecom networks, mobile charging, and local market constraints in Central Africa?',
+        answer:
+          'I design and coordinate product flows with real African network realities in mind: handling API latency, building robust webhook retry mechanisms for Mobile Money (MTN MoMo/Orange Money), implementing USSD/SMS transactional fallback, and ensuring user experiences remain frictionless even on 2G/3G connections and lower-end Android devices.',
+      },
       {
         question: 'How do you prioritize what goes on the roadmap?',
         answer:
-          'I weigh four things against each other: business value, customer impact, regulatory implications, and technical feasibility. Then I let data break ties: adoption, conversion, and drop-off show me where the real problems are before opinions do. Everything lands in one transparent, prioritized backlog so the whole team sees the same order.',
+          'I weigh four critical vectors: enterprise/business value, customer experience impact, regulatory/compliance requirements, and technical feasibility. Then I leverage analytics (Mixpanel funnels, transaction logs) to break ties with real behavioral data rather than intuition, maintaining one single prioritized backlog aligned with executive strategy.',
       },
       {
-        question: 'What does a backlog item look like before it reaches a squad?',
+        question: 'How do you balance growth with regulatory compliance and telecom/banking standards?',
         answer:
-          'Well-defined, estimated, sequenced, and ready. Each initiative becomes epics and user stories with explicit acceptance criteria and a measurable outcome, so engineering is never blocked by ambiguity and "done" isn\'t a debate mid-sprint.',
-      },
-      {
-        question: 'How do you handle scope creep and mid-sprint priority changes?',
-        answer:
-          "With a written scope agreement before kickoff that names what we will and won't ship, signed by every team. Mid-sprint requests go to the next sprint by default; genuinely blocking ones get triaged: we cut something or extend, but never both silently. Protecting the sprint is how a backlog stays believable.",
-      },
-      {
-        question: 'How do you balance growth with compliance and risk?',
-        answer:
-          "At a regulated fintech, every product decision has to survive transaction integrity, data security, compliance, and audit traceability. On PaySika's KYC redesign I worked hand in hand with compliance and the partner bank so the flow lifted conversion and still held up to the regulator, with acceptance criteria and release evidence documented for audit. Growth and governance aren't opposites; you design for both.",
+          'In regulated fintech and telecom environments, compliance and data security are core design constraints, not afterthoughts. At PaySika and GEFONA, I worked directly with compliance officers, partner banks, and regulatory guidelines (ART, MINPOSTEL, COBAC) so that our onboarding, KYC, and transactional flows complied with all legal frameworks while maintaining high conversion rates.',
       },
     ],
   },
