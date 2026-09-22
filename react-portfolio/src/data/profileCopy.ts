@@ -1349,6 +1349,70 @@ Accessible and distinctive are not opposites. Constraint makes a palette better,
   },
 };
 
+// ─── trust-wallet ────────────────────────────────────────────────────────
+
+const trustWalletPreset: ProfilePreset = {
+  profile: {
+    name: 'Trust Wallet',
+    is_active: true,
+    bio: 'Design Engineer bridging Figma and production React Native. 4+ years in fintech mobile apps, tokenized design systems, and zero-loss handoffs.',
+    tagline: 'Translating high-craft design into performant React Native interfaces for 200M+ users.',
+    hero_title: 'Design Engineer for Trust Wallet',
+    hero_subtitle:
+      'Closing the gap between Figma and production code. 4+ years leading fintech mobile UX, engineering token-based design systems, and eliminating handoff friction for crypto & payments.',
+    philosophy_title: 'The best handoff is no handoff.',
+    philosophy_text:
+      'When the person making the design decision also writes the component, there is no fidelity loss, no "looks different from the mock" ticket, and no handoff doc going stale. I build systems where Figma variables and code tokens are the same single source of truth.',
+    intro_expanded_text:
+      'Trust Wallet gives 200M+ people self-custodial ownership over their assets. At that scale, interaction fidelity, state clarity, and 60fps micro-animations are paramount. I bridge design systems and React Native components so product teams ship faster with zero drift.',
+    badges: [
+      'Design Engineering',
+      'Figma ↔ React Native',
+      'Design Systems & Tokens',
+      'Fintech & Self-Custody UX',
+    ],
+    social_links: {},
+  },
+  social_links: commonLinks({
+    now: 'Targeted profile for Trust Wallet — Design Engineer role',
+    company_name: 'Trust Wallet',
+    role_target: 'Design Engineer',
+    job_url: 'https://jobs.ashbyhq.com/trust-wallet/72c2f324-d2d7-4037-b3a8-d9afb25dbe18',
+    projects_intro:
+      'Token-based design systems, mobile wallet flows, and production React components engineered for scale and high fidelity.',
+    blog_intro: 'Notes on the Figma-to-code pipeline, token architecture, and eliminating handoff friction.',
+    metric_label: 'years bridging design & code',
+  }),
+  projects: designEngineerPreset.projects,
+  blogPosts: designEngineerPreset.blogPosts,
+  about: {
+    speakingIntro:
+      'I write and speak about design systems, Figma-to-code workflows, and how design engineers bridge high craft and performant code in fintech and Web3.',
+    faqs: [
+      {
+        question: 'Why Trust Wallet?',
+        answer:
+          'Trust Wallet is the standard for self-custody with over 200M users. At that scale, design engineering is not cosmetic — it directly determines whether users feel confident sending funds or navigating on-chain protocols. I want to build the UI primitives and interaction systems that empower that confidence.',
+      },
+      {
+        question: 'How do you handle Figma to React Native handoff?',
+        answer:
+          'By removing the traditional handoff barrier. I align Figma variables directly with code tokens, build reusable primitives, and write the React Native components myself or run peer PR reviews with engineers.',
+      },
+      {
+        question: 'What experience do you have with mobile fintech?',
+        answer:
+          'Nearly four years at PaySika as UX Design Lead and founding designer, building mobile wallets, KYC verification cameras, and card journeys that scaled to thousands of active users with a 40% retention lift.',
+      },
+      {
+        question: 'How do you balance 60fps micro-interactions and performance?',
+        answer:
+          'I prototype motion directly in code using gesture handlers and hardware-accelerated transforms (Reanimated / CSS springs). Animations must never block interaction or cause jank on lower-end devices.',
+      },
+    ],
+  },
+};
+
 // ─── exports ─────────────────────────────────────────────────────────────
 
 export const profilePresets: Record<string, ProfilePreset> = {
@@ -1357,6 +1421,7 @@ export const profilePresets: Record<string, ProfilePreset> = {
   'digital-marketing': digitalMarketingPreset,
   'project-manager': projectManagerPreset,
   'brand-designer': brandDesignerPreset,
+  'trust-wallet': trustWalletPreset,
 };
 
 export const presetProfileIds = Object.keys(profilePresets);

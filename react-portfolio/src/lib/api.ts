@@ -435,6 +435,19 @@ export async function getProfileById(id: string): Promise<Profile | null> {
   }
 }
 
+export async function getCompanyBySlug(slug: string): Promise<Company | null> {
+  try {
+    const direct = await apiFetch<Company>(`/api/companies/${encodeURIComponent(slug)}`).catch(() => null);
+    if (direct) return direct;
+    const all = await getAllProfiles();
+    return (all as Company[]).find((c) => c.slug === slug || c.id === slug) ?? null;
+  } catch {
+    const fallback = (fallbackProfiles[slug] ??
+      Object.values(fallbackProfiles).find((p) => (p as Company).slug === slug)) as Company | undefined;
+    return fallback ?? null;
+  }
+}
+
 export async function getActiveProfile(): Promise<Profile | null> {
   const companies = await getAllProfiles();
   return companies.find((p) => p.is_active) ?? companies[0] ?? null;
@@ -576,6 +589,13 @@ export async function getProjectsByProfile(profileId: string): Promise<Project[]
       .map((p) => mergeProject(p, findStaticProject(p.id)));
   } catch (err) {
     console.warn('API fetch warehouse projects failed, using static fallback:', err);
+    const preset = profilePresets[profileId];
+    if (preset?.projects?.length) {
+      return preset.projects.map((p) => ({
+        ...p,
+        profile_ids: [profileId],
+      })) as Project[];
+    }
     return staticProjects.map((p) => staticToProject(p, [profileId]));
   }
 }
@@ -638,6 +658,13 @@ export async function getBlogPostsByProfile(profileId: string): Promise<BlogPost
       .map((p) => mergeBlogPost(p, matchStaticPost(p.id)));
   } catch (err) {
     console.warn('API fetch warehouse articles failed, using static fallback:', err);
+    const preset = profilePresets[profileId];
+    if (preset?.blogPosts?.length) {
+      return preset.blogPosts.map((p) => ({
+        ...p,
+        profile_ids: [profileId],
+      })) as BlogPost[];
+    }
     return staticBlogPosts.map((p) => staticToBlogPost(p, [profileId]));
   }
 }

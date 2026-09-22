@@ -18,6 +18,7 @@ const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
 const BlogPostDetail = lazy(() => import('./pages/BlogPostDetail'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Admin = lazy(() => import('./pages/Admin'));
+const CompanyPage = lazy(() => import('./pages/CompanyPage'));
 
 function AdminRoute() {
   return <Suspense fallback={<LoadingScreen />}><Admin /></Suspense>;
@@ -48,6 +49,9 @@ function AnimatedRoutes() {
           <Route path="/projects/:id" element={<Suspense fallback={<LoadingScreen />}><ProjectDetail /></Suspense>} />
           <Route path="/blog" element={<Suspense fallback={<LoadingScreen />}><Blog /></Suspense>} />
           <Route path="/blog/:id" element={<Suspense fallback={<LoadingScreen />}><BlogPostDetail /></Suspense>} />
+          <Route path="/trust-wallet" element={<Suspense fallback={<LoadingScreen />}><CompanyPage slug="trust-wallet" /></Suspense>} />
+          <Route path="/c/:slug" element={<Suspense fallback={<LoadingScreen />}><CompanyPage /></Suspense>} />
+          <Route path="/company/:slug" element={<Suspense fallback={<LoadingScreen />}><CompanyPage /></Suspense>} />
           <Route path="/admin" element={<AdminRoute />} />
           <Route path="*" element={<Suspense fallback={<LoadingScreen />}><NotFound /></Suspense>} />
         </Routes>
