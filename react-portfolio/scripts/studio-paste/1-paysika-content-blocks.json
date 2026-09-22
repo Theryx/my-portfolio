@@ -1,0 +1,204 @@
+[
+  {
+    "text": "For nearly four years I led UX design at PaySika, from the MVP to a multi-product neobank serving thousands of people across Central Africa. I owned the experience end to end — mobile, web, back office and the physical card — and measured my work the way the business did: in retention, in support tickets, and in the minutes a customer spends at a relay point.",
+    "type": "intro",
+    "eyebrow": "Flagship case study",
+    "heading": "From first tap to daily habit"
+  },
+  {
+    "type": "stat-cards",
+    "cards": [
+      {
+        "icon": "users",
+        "title": "Design team lead",
+        "text": "Took design from a solo effort to a small team, working shoulder to shoulder with product, engineering, compliance, operations and support."
+      },
+      {
+        "icon": "target",
+        "title": "End-to-end, beyond the app",
+        "text": "Owned onboarding, KYC, transactions and card management, then the service around the card: ordering, home delivery, relay-point pickup and activation."
+      },
+      {
+        "icon": "chart",
+        "title": "Measured in outcomes",
+        "text": "A redesigned journey that lifted retention 40%, cut support tickets 60%, and took relay-point handover from 30 minutes to 10."
+      }
+    ]
+  },
+  {
+    "text": "KYC was the biggest leak. The photo step failed quietly on most Android browsers in Cameroon, and drop-off clustered exactly where the product asked for trust without giving any back. The fix was less about visuals than honesty on every screen: what it costs, why we need it, what just happened. The card told a different story: once a customer ordered one, the journey left the app entirely — a courier, a relay point, a paper form — and nobody had mapped that half of the experience.",
+    "type": "intro",
+    "eyebrow": "The problem",
+    "heading": "Where the funnel was leaking"
+  },
+  {
+    "type": "intro",
+    "eyebrow": "The other half of the journey",
+    "heading": "The card was a service, not an object",
+    "text": "Ordering a card was the easy part. What came next happened outside the product: an agent drove it across the city, a relay point held it, a customer queued for it, and someone in the office typed the delivery status in later. Designing that meant designing three things as one journey — the agent's step, the customer's wait, and the back-office handover — not decorating the screen where it all started."
+  },
+  {
+    "type": "stat-cards",
+    "cards": [
+      {
+        "icon": "line",
+        "title": "30 minutes → 10",
+        "text": "The average time a customer spent between arriving at a relay point and leaving it, once paper forms and manual signatures became QR-code validation."
+      },
+      {
+        "icon": "users",
+        "title": "15 delivery agents",
+        "text": "Across Douala and Yaoundé, receiving orders and confirming handovers in an internal app I designed."
+      },
+      {
+        "icon": "branch",
+        "title": "Two markets",
+        "text": "Cameroon and Gabon, one product: the same card and app experience, with KYC rebuilt per market."
+      }
+    ]
+  },
+  {
+    "type": "gallery",
+    "eyebrow": "The card journey",
+    "heading": "Order, deliver, hand over, activate",
+    "text": "Four touchpoints in one experience, and three of them happen away from a screen.",
+    "items": [
+      {
+        "image": "",
+        "title": "Ordering",
+        "description": "Where the customer decides, with delivery method, fees and timing stated on the same screen."
+      },
+      {
+        "image": "",
+        "title": "Home delivery",
+        "description": "The agent's route, with the customer's details and the handover confirmed in the app."
+      },
+      {
+        "image": "",
+        "title": "Relay-point pickup",
+        "description": "QR-code validation replaced the paperwork, so the handover is recorded the moment it happens."
+      },
+      {
+        "image": "",
+        "title": "Activation",
+        "description": "Back in the app, the card goes live, and the customer's first transaction tells us whether the journey worked."
+      },
+      {
+        "image": "",
+        "title": "The card itself",
+        "description": "Production files and the mailer, designed so the first thing the customer sees is the card they waited for."
+      }
+    ]
+  },
+  {
+    "type": "photos",
+    "heading": "The app our agents used",
+    "text": "The delivery agents were not part of the product team, so the app had to be obvious on a phone in the middle of a shift: the order, the customer, the address, one button to confirm.",
+    "items": [
+      {
+        "image": "",
+        "caption": "The order list the agents worked from."
+      },
+      {
+        "image": "",
+        "caption": "QR validation at the relay point, in place of the paper form."
+      },
+      {
+        "image": "",
+        "caption": "A relay point: where the 30 minutes were being spent."
+      }
+    ]
+  },
+  {
+    "type": "intro",
+    "eyebrow": "A second market",
+    "heading": "One product, two sets of rules",
+    "text": "When PaySika opened in Gabon, KYC in Cameroon was not KYC in Gabon: different documents, different checks, different expectations from the partner bank. I led the design across the mobile app and the back office so we kept one product with market-specific onboarding, rather than two apps that drift apart — and so the card journey behaved the same way in both."
+  },
+  {
+    "text": "The systems behind the shipped interface: documentation, requirements, mobile flows, physical-card production files, and the usability-testing archive.",
+    "type": "gallery",
+    "items": [
+      {
+        "image": "paysika-design-docs.png",
+        "title": "Design system and team process",
+        "description": "The UI standards, collaboration rituals, and the repeatable delivery pipeline I built so design kept pace with engineering."
+      },
+      {
+        "image": "paysika-design-requirements.png",
+        "title": "Product requirements",
+        "description": "Requirement docs connecting the dashboard, branding, KYC, fees, and mobile flows to clear, testable outcomes."
+      },
+      {
+        "image": "paysika-product-assets.png",
+        "title": "Mobile flows and product assets",
+        "description": "The screens themselves: onboarding, transaction history, secure card flows, animations, and app assets."
+      },
+      {
+        "image": "paysika-mailer-assets.png",
+        "title": "Physical card and mailer",
+        "description": "Production files for the physical Visa-partner card and its unboxing: packaging, print, envelope, and manufacturing specs."
+      },
+      {
+        "image": "paysika-research-archive.png",
+        "title": "Usability-testing archive",
+        "description": "The consent forms, scripts, observer guides, reports, and recordings from the sessions that drove the redesign."
+      }
+    ],
+    "eyebrow": "Behind the process",
+    "heading": "The work behind the screens"
+  },
+  {
+    "text": "Usability calls were product's; making sure what shipped still looked and felt like one product was mine, checked screen by screen so nothing drifted between Figma and production.",
+    "type": "gallery",
+    "items": [
+      {
+        "image": "design-system.png",
+        "title": "One design system",
+        "description": "Tokens, components, and text styles in Figma, the single source every PaySika surface builds from."
+      },
+      {
+        "image": "card-states.png",
+        "title": "Card state library",
+        "description": "Every physical and virtual card state, active, locked, expired, inactive, designed once and reused everywhere a card appears."
+      },
+      {
+        "image": "icon-library.png",
+        "title": "Icon library",
+        "description": "A shared icon set for card settings, mobile-money and bank partners, and card actions, so icons read the same on every screen."
+      },
+      {
+        "image": "illustration-library.png",
+        "title": "Illustration library",
+        "description": "Reusable illustrations for onboarding, KYC, empty states, and success moments, giving the product one consistent voice."
+      }
+    ],
+    "eyebrow": "Same system, every screen",
+    "heading": "One design system, every surface"
+  },
+  {
+    "text": "A calm confirmation and a scary error state are doing different jobs, but they leave the user with the same question answered: is my money safe here? I designed to answer yes every time, and the retention and support-ticket numbers followed.",
+    "type": "intro",
+    "eyebrow": "Why it matters",
+    "heading": "Trust is designed one screen at a time"
+  },
+  {
+    "text": "Product design at PaySika also meant being dependable inside the team: clarifying flows, unblocking teammates, and getting my hands dirty on things outside my lane. That's the startup spirit, turning messy product questions into decisions people can act on.",
+    "type": "photos",
+    "items": [
+      {
+        "image": "Me discussion with my collegue.jfif",
+        "caption": "Brainstorming and a collaborative session with my colleague on product flows."
+      },
+      {
+        "image": "Team spirit award_2025.jfif",
+        "caption": "Receiving the Team Spirit Award in 2025 for collaboration and leadership."
+      },
+      {
+        "image": "paysika-recognition.png",
+        "caption": "Recognition for outstanding teamwork and reliability during the PaySika journey."
+      }
+    ],
+    "heading": "The guy people can rely on. Team player? For suuur!"
+  }
+]

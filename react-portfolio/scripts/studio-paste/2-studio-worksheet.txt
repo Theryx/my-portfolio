@@ -1,0 +1,110 @@
+STUDIO WORKSHEET — Product Design profile rebuild
+=================================================
+
+Do these in order. Each step names the screen in the left sidebar.
+Home page and About page each have a profile selector at the top —
+set it to "Product Design" before you edit, then press that screen's Save button.
+
+────────────────────────────────────────────────────────────
+STEP 1 · Sidebar: Projects → open PaySika
+────────────────────────────────────────────────────────────
+Go to the section "Case-study sections (structured blocks)".
+Click the "JSON" toggle (next to "Visual"). Select everything in the box,
+paste the whole contents of 1-paysika-content-blocks.json, then Save.
+That replaces all 12 sections in one go, including the four new ones.
+
+────────────────────────────────────────────────────────────
+STEP 2 · Sidebar: Home page (selector: Product Design)
+────────────────────────────────────────────────────────────
+Hero → Hero title:
+UX Design Lead
+
+Hero → Hero subtitle:
+Nearly four years leading UX at PaySika across onboarding, KYC, transactions, the physical card journey and our expansion into Gabon. I specialise in simplifying complex product and service flows for African users.
+
+Intro expander → Expander text:
+Every financial product asks someone to bet their money on a screen. My job is to make that bet feel obvious: clear hierarchy, predictable actions, honest costs, no surprises. I find where trust breaks by pairing Mixpanel funnels with real usability tests, then rebuild that exact moment. Increasingly the most important moments are not screens at all: a courier's app, a relay point, a queue.
+
+Bento tiles → "Now" status:
+On a short professional break after nearly four years at PaySika — open to CX, service design and product design roles
+
+Bento tiles → Years-metric label:
+years designing products & services
+
+────────────────────────────────────────────────────────────
+STEP 3 · Sidebar: About page (selector: Product Design)
+────────────────────────────────────────────────────────────
+Intro → Bio:
+UX Design Lead with over five years designing across digital, physical and human touchpoints in Central Africa, including nearly four years leading UX at PaySika.
+
+Intro → Tagline:
+I design the product and the service around it, so trust holds from the first tap to the final handover.
+
+Philosophy → Philosophy text:
+Every financial product asks someone to bet their money on a screen. My job is to make that bet feel obvious: clear hierarchy, predictable actions, honest costs, no surprises. I find where trust breaks by pairing Mixpanel funnels with real usability tests, then rebuild that exact moment. Increasingly the most important moments are not screens at all: a courier's app, a relay point, a queue.
+
+FAQs → replace the answer of the first question ("What have you actually shipped in fintech?") with:
+Onboarding, KYC capture, transaction history, multi-currency wallets, virtual and physical Visa cards (ordering, home delivery, relay-point pickup, activation), mobile-money top-up, back office and admin dashboards. Mobile, web, native iOS/Android, plus the internal app our 15 delivery agents used across Douala and Yaoundé.
+
+FAQs → add one new question and answer:
+Q: How do you design a journey that leaves the app?
+A: The same way I design one inside it: I map what actually happens, including the parts nobody owns. For the card that meant the delivery agent's app, the relay-point handover and the back-office update. Customers waited 30 minutes because of paperwork happening behind the scenes; QR-code validation took that to 10.
+
+────────────────────────────────────────────────────────────
+STEP 4 · Sidebar: Profiles → Product Design
+────────────────────────────────────────────────────────────
+Page intros → Blog page subtitle:
+Field notes on designing money: trust, compliance, and the parts of a journey that are not screens.
+
+Badges: optional — Studio notes badges are not shown on the public site, so skip if you like.
+(If you do want them: "Open to CX, service design & product roles" and "Payments · KYC · Cards · Multi-country".)
+
+────────────────────────────────────────────────────────────
+STEP 5 · Sidebar: Projects → PaySika
+────────────────────────────────────────────────────────────
+Basics → Tagline:
+Designing the product and the service around it: +40% retention, -60% support tickets, and a card journey that runs from the app to a relay point.
+
+Engagement details → Role:
+UX Design Lead
+
+Engagement details → Period:
+Nov 2022 - Aug 2026
+
+Engagement details → Responsibilities: add these four on separate lines
+Owned the physical card journey end to end: ordering, home delivery and relay-point pickup, through activation
+Designed the internal app our delivery agents used to receive and fulfil card orders, rolled out to 15 agents across Douala and Yaoundé
+Cut relay-point handover from 30 to 10 minutes by replacing manual paperwork with QR-code validation
+Led the multi-country design for the expansion into Gabon across the mobile app and back office, reworking KYC and onboarding for local requirements
+
+Story: challenge, solution, result → Overview (short description):
+As UX Design Lead and a founding-team member, I led design at PaySika from MVP to a multi-product neobank serving thousands of active users across Central Africa. I managed a small design team, owned the core mobile and web journeys, then took on the half of the experience that happens outside the app: the physical card, from ordering and home delivery to relay-point pickup and activation. I designed the app our delivery agents used in the field, cut relay-point handover from 30 minutes to 10, and led the design work behind the expansion into Gabon.
+
+Same section → Challenge text: add at the end of what is there
+The physical card added a second, partly offline journey — courier, relay point, paper handover — that nobody had mapped end to end.
+
+Same section → Solution text: add at the end
+For the card I designed past the app: the agent's steps, the relay-point handover and the back-office update, replacing the paper form with QR-code validation before carrying the same approach into Gabon.
+
+Same section → Result text: add at the end
+Relay-point handover dropped from 30 to 10 minutes, and the same system scaled to a second market.
+
+Note: ignore "Full case study → Case study content (Markdown)". Your case study now renders from the structured blocks in Step 1, so that older field is hidden on the site.
+
+────────────────────────────────────────────────────────────
+STEP 6 · Images (optional, do it after the text is live)
+────────────────────────────────────────────────────────────
+In the two new sections ("The card journey" gallery and "The app our agents used" photos),
+each image slot has an Upload button that sends the file to Cloudinary. Candidates in
+react-portfolio/src/assets/img/paysika/ :
+  gallery  : ordering screen, home delivery, relay-point pickup, activation, card + mailer
+  photos   : order list, QR validation, relay point
+Text blocks show fine without images: gallery items keep their title and description,
+photo items stay hidden until an image is added.
+
+────────────────────────────────────────────────────────────
+CHECK
+────────────────────────────────────────────────────────────
+Open  https://react-portfolio-pi-topaz.vercel.app/?profile=product-design
+and confirm: hero says "UX Design Lead", the PaySika card shows Nov 2022 - Aug 2026,
+and the card-service sections appear between the KYC problem and the process galleries.

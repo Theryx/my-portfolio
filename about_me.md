@@ -1,19 +1,20 @@
 # Ndouken Theryx
-**Product Designer | Tech Entrepreneur | Front-End Developer**
+**UX Design Lead | Tech Entrepreneur | Front-End Developer**
 📍 Douala, Cameroon | 🗣️ English & French
 
 ## About Me
-I am a Product Designer specializing in fintech UI/UX, mobile applications, and minimalist aesthetics. After building and leading the design team at PaySika since December 2021, I plan to step down in October 2026 to focus on tech entrepreneurship and continuing my front-end development journey. I value clean design, simple language, and practical problem-solving.
+I am a UX Design Lead specializing in fintech product and service design, mobile applications, and minimalist aesthetics. After leading the design team at PaySika from November 2022 to August 2026, I am taking a professional break to focus on tech entrepreneurship and my front-end development journey. I value clean design, simple language, and practical problem-solving.
 
 ## Current Ventures & Focus
 * **GEFONA Digital Foundation:** Leading communication and finance for a foundation supporting policy research on the digital economy and cybersecurity in Africa.
 * **osscameroon (Project Maintainer & Contributor):** Part of the founding team for JobSika. Involved in maintaining the platform and contributing to various open-source initiatives within the community.
 
 ## Professional Experience
-* **PaySika (Dec 2021 - Present)**
-  * **Product Designer:** Managed a two-person design team (#TheBestTeam), optimized payment flows, and utilized Mixpanel to track user patterns and behavior in the app. Awarded the Team Spirit Award twice.
+* **PaySika (Nov 2022 - Aug 2026)**
+  * **UX Design Lead:** Managed a two-person design team (#TheBestTeam), optimized payment flows, and utilized Mixpanel to track user patterns and behavior in the app. Awarded the Team Spirit Award twice.
   * **Founding Designer:** Shaped the initial product experience and brand identity from the ground up.
-* **Matanga Agency (Dec 2022 - Dec 2023)**
+  * **Card journey & Gabon:** Owned the physical card experience end to end (ordering, home delivery, relay-point pickup, activation), designed the internal app used by 15 delivery agents in Douala and Yaoundé, cut relay-point handover from 30 to 10 minutes with QR-code validation, and led the design work for PaySika's expansion into Gabon.
+* **Matanga Agency (Dec 2023 - Feb 2024)**
   * **UI Designer (Part-time):** Designed local and international digital products using Figma.
 ## Research & Speaking
 * **OSS Cameroon (2022):** Invited speaker presenting "State of the Design Ecosystem in Cameroon" research. Focused on industry trends and advocating for designer involvement in open source.

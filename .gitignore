@@ -10,3 +10,4 @@ dist/
 # Local AI-tooling artifacts (Codex CLI config + remote session attachment cache)
 .codex/
 .codex-remote-attachments/
+.env*

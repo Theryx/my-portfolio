@@ -381,7 +381,7 @@ export function ProjectForm({ project, profiles, onSave, onCancel, saving }: {
           </div>
           <div className="cms-field">
             <label htmlFor="pj-period">Period</label>
-            <input id="pj-period" value={form.period} onChange={(e) => set('period', e.target.value)} placeholder="e.g. Dec 2021 – Present" />
+            <input id="pj-period" value={form.period} onChange={(e) => set('period', e.target.value)} placeholder="e.g. Nov 2022 - Aug 2026" />
           </div>
         </div>
         <div className="cms-form__grid">

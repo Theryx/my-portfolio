@@ -35,7 +35,9 @@ export default function Home() {
 
   const featuredProject = projects.find((p) => !p.is_hidden) ?? projects[0];
   const latestPost = blogPosts.find((p) => !p.is_hidden) ?? blogPosts[0];
-  const yearsLeading = Math.max(1, new Date().getFullYear() - 2021);
+  // First design role: Dikalo, August 2019. PaySika ran Nov 2022 - Aug 2026.
+  const careerStartYear = 2019;
+  const yearsLeading = Math.max(1, new Date().getFullYear() - careerStartYear);
   const [yearsRef, yearsValue] = useCountUp(yearsLeading, 1200);
   // First number in the featured project's tagline (e.g. "40" from "Driving 40% user retention…")
   const featuredMetricMatch = featuredProject?.tagline?.match(/(\d+)\s*%/);
@@ -276,7 +278,7 @@ export default function Home() {
             )}
 
             {/* Years leading design */}
-            <motion.div variants={tileVariants} {...playful} className="bento-card bento-card--mini" {...hoverable('since Dec 2021 at PaySika')}>
+            <motion.div variants={tileVariants} {...playful} className="bento-card bento-card--mini" {...hoverable('Nov 2022 - Aug 2026 at PaySika')}>
               <span className="bento-card__metric-number" ref={yearsRef}>{yearsValue}+</span>
               <span className="bento-card__mini-label">{profile.social_links?.metric_label || 'years designing & building products'}</span>
             </motion.div>

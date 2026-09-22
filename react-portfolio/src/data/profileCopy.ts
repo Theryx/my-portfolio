@@ -58,55 +58,59 @@ const productDesignPreset: ProfilePreset = {
   profile: {
     name: 'Product Design',
     is_active: false,
-    bio: 'Product Designer with four years leading design at PaySika across mobile, web, and physical card products serving thousands of users in Central Africa.',
+    bio: 'UX Design Lead with over five years designing across digital, physical and human touchpoints in Central Africa, including nearly four years leading UX at PaySika.',
     tagline: 'I design digital products that earn trust with the first tap.',
-    hero_title: 'Product Designer',
+    hero_title: 'UX Design Lead',
     hero_subtitle:
-      'Four years leading design at PaySika across onboarding, KYC, transactions, and physical cards. I specialise in simplifying complex product flows for African mobile users.',
+      'Nearly four years leading UX at PaySika across onboarding, KYC, transactions, the physical card journey and our expansion into Gabon. I specialise in simplifying complex product and service flows for African users.',
     philosophy_title: 'Trust is the core currency of product design.',
     philosophy_text:
       'Every financial product asks the user to bet their money on a screen. My job is to make that bet feel obvious: clear hierarchy, predictable interactions, honest copy, no surprises. I pair Mixpanel data with usability testing to find where trust breaks and rebuild from there.',
     intro_expanded_text:
       'Every financial product asks the user to bet their money on a screen. My job is to make that bet feel obvious: clear hierarchy, predictable interactions, honest copy, no surprises. I pair Mixpanel data with usability testing to find where trust breaks and rebuild from there.',
-    badges: ['Open to product design roles', 'Payments · KYC · Mobile money'],
+    badges: ['Open to CX, service design & product roles', 'Payments · KYC · Cards · Multi-country'],
     social_links: {},
   },
   social_links: commonLinks({
-    now: 'Researching mobile-money onboarding patterns across West & Central Africa',
+    now: 'On a short professional break after nearly four years at PaySika — open to CX, service design and product design roles',
     projects_intro:
       'Payments, KYC, cards, and cross-border transfers for African fintech, shipped at scale and measured in retention.',
     blog_intro: 'Notes on trust, compliance, and mobile money UX from the field in Cameroon.',
-    metric_label: 'years leading product design',
+    metric_label: 'years designing products & services',
   }),
   projects: [
     {
       id: 'paysika_fintech',
       tag: 'Payments · KYC · Cards',
       title: 'PaySika',
-      tagline: '40% retention lift and 60% fewer support tickets across mobile, web, and physical cards.',
+      tagline: '40% retention lift and 60% fewer support tickets, plus a card journey spanning delivery, relay-point pickup and activation.',
       image: 'paysika_mockup.png',
       description:
-        'As Lead Product Designer and founding team member, I scaled PaySika from MVP to a multi-product fintech serving thousands of active users across Central Africa. I led a two-person design team, redesigned the KYC and onboarding flows, and shipped the physical Visa-partner card from artwork to unboxing.',
-      impact: 'Scaled fintech operations serving thousands of users across Central Africa.',
+        'As UX Design Lead and founding team member, I scaled PaySika from MVP to a multi-product fintech serving thousands of active users across Central Africa. I led a two-person design team, owned the end-to-end card journey — ordering, home delivery and relay-point pickup, through activation — designed the internal app our delivery agents used in the field, and led the design work behind our expansion into Gabon.',
+      impact: 'Scaled fintech operations serving thousands of users across Central Africa, including the physical card journey and a second market.',
       site: 'https://www.paysika.co',
-      role: 'Lead Product Designer',
-      period: 'Dec 2021 - Present',
+      role: 'UX Design Lead',
+      period: 'Nov 2022 - Aug 2026',
       location: 'Douala, Cameroon',
       responsibilities: [
         'Recruited and managed a two-person design team and set up the asset-handoff pipeline to engineering',
         'Redesigned onboarding, KYC photo capture, and Visa-activation flows; measured drop-off in Mixpanel and iterated',
+        'Owned the physical card journey end to end: ordering, home delivery and relay-point pickup, through activation',
+        'Designed the internal app our delivery agents used to receive and fulfil card orders, rolled out to 15 agents across Douala and Yaoundé',
+        'Cut relay-point handover from 30 to 10 minutes by replacing manual paperwork with QR-code validation',
+        'Led the multi-country design for the expansion into Gabon across the mobile app and back office, reworking KYC and onboarding for local requirements',
         'Led the physical debit card industrial and print design, working directly with the card manufacturer',
         'Wrote and localised English / French UI microcopy using Claude as a copy partner',
       ],
       challenge: 'The Challenge',
       challenge_text:
-        'PaySika needed to differentiate in a crowded African fintech market while making complex financial services accessible to everyday users on patchy mobile networks. KYC drop-off was the biggest leak in the funnel.',
+        'PaySika needed to differentiate in a crowded African fintech market while making complex financial services accessible to everyday users on patchy mobile networks. KYC drop-off was the biggest leak in the funnel, and the physical card added a second, partly offline journey — delivery agents, relay points and paperwork — that nobody had mapped end to end.',
       solution: 'The Solution',
       solution_text:
-        'I redesigned the whole journey around three rules: every screen states what it costs you, every input shows why we need it, and every success state confirms in plain language. The KYC photo step became a guided real-time camera helper rather than a generic file upload.',
+        'I redesigned the whole journey around three rules: every screen states what it costs you, every input shows why we need it, and every success state confirms in plain language. The KYC photo step became a guided real-time camera helper rather than a generic file upload. For the card, I looked past the app at everything behind it — the delivery agent, the relay-point handover, the back-office updates — and replaced the paper handover with QR-code validation before carrying the same approach into Gabon.',
       result: 'The Result',
       result_text:
-        '40% lift in user retention and 60% reduction in customer support tickets. The design system we built scaled across mobile, web, and the physical card mailer.',
+        '40% lift in user retention and 60% reduction in customer support tickets. Relay-point handover dropped from 30 to 10 minutes, and the design system scaled across mobile, web, back office, the card mailer and a second market.',
       is_hidden: false,
       sort_order: 0,
       content: `## What I designed at PaySika
@@ -119,6 +123,15 @@ I rewrote the transaction history to behave the way people actually scan financi
 
 ### Physical card
 I led the industrial design of PaySika's physical Visa-partner card and its mailer packaging. We worked directly with the card manufacturer on substrate, finish, and emboss placement; the mailer was designed so the first thing the user sees after opening is the card itself, framed against a brand-colour insert.
+
+### The delivery agent app
+Fifteen delivery agents across Douala and Yaoundé fulfilled card orders from an internal app I designed. They received the order, saw the customer and delivery details, and confirmed the handover in the app — replacing a paper dispatch sheet and a phone call back to the office.
+
+### The relay-point handover
+Relay points were the slowest moment in the journey. Customers waited an average of 30 minutes between arriving at the relay point and leaving it, because every handover meant paper forms, a manual signature and a status update that only reached the back office later. I replaced the paperwork with QR-code validation: the customer's code is scanned, the handover is recorded in that same moment, and the average dropped to 10 minutes.
+
+### Expanding to Gabon
+When PaySika opened in Gabon, KYC in Cameroon was not KYC in Gabon — different documents, different checks, different partner expectations. I led the design across the mobile app and the back office so that we shipped one product with market-specific onboarding rather than two apps that drift apart.
 
 ### Localisation with AI
 I used Claude as a translation and copy partner for English / French UI microcopy. The workflow: I drafted strings in English, Claude proposed French versions with two tone variants, our francophone team picked one and edited. This cut the localisation review cycle from a week to a day.`,
@@ -177,7 +190,7 @@ I built the system in Figma with semantic tokens (color/primary, color/surface/e
       impact: 'Delivered 6+ client product launches across Central Africa and Europe.',
       site: 'https://matangaagency.com/fr/',
       role: 'Senior UI/UX Consultant (Part-time)',
-      period: 'Dec 2022 - Dec 2023',
+      period: 'Dec 2023 - Feb 2024',
       location: 'Cameroon',
       responsibilities: [
         'Audited client briefs and translated complex product requirements into Figma mockups',
@@ -290,7 +303,7 @@ If I were building this again I'd add export-to-CSV from the start. Users asked 
       {
         question: 'What product surfaces have you shipped?',
         answer:
-          'Onboarding, KYC photo capture, transaction history, multi-currency wallets, virtual & physical Visa-partner cards, mobile money top-up, and admin dashboards. Mobile, web, and native iOS/Android.',
+          'Onboarding, KYC photo capture, transaction history, multi-currency wallets, virtual & physical Visa-partner cards (ordering, delivery, relay-point pickup, activation), mobile money top-up, back office and admin dashboards. Mobile, web, native iOS/Android, plus the internal app our delivery agents use in the field.',
       },
       {
         question: 'How do you measure design impact?',
@@ -316,7 +329,7 @@ const designEngineerPreset: ProfilePreset = {
     tagline: 'I design and build interfaces, end to end.',
     hero_title: 'Design Engineer',
     hero_subtitle:
-      'I close the loop between Figma and production code. React, TypeScript, design tokens, and Claude as a daily working partner. Four years at PaySika shipping the artwork and the implementation.',
+      'I close the loop between Figma and production code. React, TypeScript, design tokens, and Claude as a daily working partner. Nearly four years at PaySika shipping the artwork and the implementation.',
     philosophy_title: 'The best handoff is no handoff.',
     philosophy_text:
       'When the person making the design decision also writes the component, there is no fidelity loss, no "looks different from the mock" ticket, no handoff document that goes stale the moment it ships. AI doesn\'t replace taste: it removes the boring middle so taste can show up everywhere.',
@@ -344,8 +357,8 @@ const designEngineerPreset: ProfilePreset = {
         "I built and maintained PaySika's design system as semantic tokens in Figma and matching CSS variables in code. Same names on both sides, same source of truth, less drift between mock and implementation.",
       impact: 'Cut visual-fidelity bug tickets after standardising tokens between Figma and CSS.',
       site: 'https://www.paysika.co',
-      role: 'Lead Product Designer · Design Engineer',
-      period: 'Dec 2021 - Present',
+      role: 'UX Design Lead · Design Engineer',
+      period: 'Nov 2022 - Aug 2026',
       location: 'Douala, Cameroon',
       responsibilities: [
         'Defined semantic design tokens (color, type, spacing, radius) in Figma',
@@ -592,7 +605,7 @@ const digitalMarketingPreset: ProfilePreset = {
       impact: 'Connected brand, paid acquisition, and product funnel into a single measurable system.',
       site: 'https://www.paysika.co',
       role: 'Brand & Growth (in-house)',
-      period: 'Dec 2021 - Present',
+      period: 'Nov 2022 - Aug 2026',
       location: 'Douala, Cameroon',
       responsibilities: [
         'Visual brand refresh and a unified asset pipeline between design and marketing',
@@ -636,7 +649,7 @@ Stock photography of suited-up traders is wrong for this market. We used local c
       impact: 'Delivered measurable growth work for 6+ agency clients across multiple verticals.',
       site: 'https://matangaagency.com/fr/',
       role: 'Senior Consultant (Part-time)',
-      period: 'Dec 2022 - Dec 2023',
+      period: 'Dec 2023 - Feb 2024',
       location: 'Cameroon',
       responsibilities: [
         'Brand audits and refreshes for early-stage clients',
@@ -799,11 +812,11 @@ const projectManagerPreset: ProfilePreset = {
     name: 'Product Manager & B2B Solutions Lead',
     is_active: false,
     bio:
-      'Product Manager with a technical and systems background, leading end-to-end Product Lifecycle Management (PLM) across telecom rails, B2B fintech integrations, ed-tech, and digital policy. Four years at PaySika orchestrating cross-functional delivery between engineering, MTN MoMo and mobile money APIs, compliance, and enterprise partners; co-founder of Kody, leading business case development and GTM for a $5,000 Tony Elumelu Foundation-funded venture. I turn business goals into prioritized backlogs, robust product roadmaps, and measurable market impact.',
+      'Product Manager with a technical and systems background, leading end-to-end Product Lifecycle Management (PLM) across telecom rails, B2B fintech integrations, ed-tech, and digital policy. Nearly four years at PaySika orchestrating cross-functional delivery between engineering, MTN MoMo and mobile money APIs, compliance, and enterprise partners; co-founder of Kody, leading business case development and GTM for a $5,000 Tony Elumelu Foundation-funded venture. I turn business goals into prioritized backlogs, robust product roadmaps, and measurable market impact.',
     tagline: 'Bridging business strategy, telecom rails, and flawless product delivery.',
     hero_title: 'Product Manager & B2B Solutions Lead',
     hero_subtitle:
-      'I lead products from conception to Go-To-Market: investment business cases, prioritized backlogs, and cross-functional delivery across mobile networks, fintech APIs, and B2B platforms. Four years at PaySika coordinating engineering, compliance, operations, and mobile money/banking partners through regulated delivery in Central Africa.',
+      'I lead products from conception to Go-To-Market: investment business cases, prioritized backlogs, and cross-functional delivery across mobile networks, fintech APIs, and B2B platforms. Nearly four years at PaySika coordinating engineering, compliance, operations, and mobile money/banking partners through regulated delivery in Central Africa.',
     philosophy_title: 'Product leadership is the bridge between market demand, technical systems, and measurable ROI.',
     philosophy_text:
       'A successful product requires three things: a deep understanding of customer and enterprise needs, alignment across engineering and business stakeholders, and disciplined execution. From integrating mobile money rails and USSD/SMS fallback workflows to building investment business cases, my role is to eliminate ambiguity, ensure compliance, and deliver products that scale sustainably.',
@@ -832,7 +845,7 @@ const projectManagerPreset: ProfilePreset = {
       impact: 'Shipped high-conversion KYC and payment flows, lifting retention by 40% and reducing support tickets by 60% on a structured three-sprint cadence.',
       site: 'https://www.paysika.co',
       role: 'Product Manager & Delivery Lead',
-      period: 'Dec 2021 - Present',
+      period: 'Nov 2022 - Aug 2026',
       location: 'Douala, Cameroon',
       responsibilities: [
         'Owned the end-to-end product lifecycle (PLM) and prioritized backlog, defining epics, user stories, and acceptance criteria for mobile and web surfaces',
@@ -953,7 +966,7 @@ When retention data indicated that our content acquisition costs exceeded our sh
       impact: 'Delivered policy research on digital economy frameworks, telecom market evolution, and enterprise cyber resilience in Africa.',
       site: 'https://www.gefona.org/',
       role: 'Project, Communications & Finance Lead',
-      period: '',
+      period: 'Mar 2020 - Present',
       location: 'Cameroon',
       responsibilities: [
         'Directed research and delivery roadmaps examining African digital economy trends, ICT policy, telecommunications regulation, and data governance',
@@ -1115,7 +1128,7 @@ const brandDesignerPreset: ProfilePreset = {
     tagline: 'A brand is a promise kept on every screen.',
     hero_title: 'Brand Designer',
     hero_subtitle:
-      'Four years shaping and looking after the PaySika brand across mobile, web, and physical cards, plus founding brand work for GUEEMSHOME and GEFONA Digital Foundation. I build brand systems and reusable asset kits, and I make sure the visual language holds up equally well in French and English.',
+      'Nearly four years shaping and looking after the PaySika brand across mobile, web, and physical cards, plus founding brand work for GUEEMSHOME and GEFONA Digital Foundation. I build brand systems and reusable asset kits, and I make sure the visual language holds up equally well in French and English.',
     philosophy_title: 'Consistency is what turns a logo into a brand.',
     philosophy_text:
       "A brand is not the logo, it's whether the thousandth thing someone sees still looks like the first. I build the visual system once, write it down somewhere people actually check, and make the on-brand version the fastest one to grab, so nobody has to choose between shipping on time and shipping on-brand.",
@@ -1144,7 +1157,7 @@ const brandDesignerPreset: ProfilePreset = {
       impact: 'A single, documented visual identity applied consistently across every PaySika touchpoint.',
       site: 'https://www.paysika.co',
       role: 'Lead Designer · Brand Owner',
-      period: 'Nov 2022 - Present',
+      period: 'Nov 2022 - Aug 2026',
       location: 'Douala, Cameroon',
       responsibilities: [
         'Led the PaySika design team and owned the visual identity everywhere a customer or teammate ran into the brand',
@@ -1214,7 +1227,7 @@ const brandDesignerPreset: ProfilePreset = {
       impact: 'A credible, consistently branded research foundation with a live website and an ongoing campaign presence.',
       site: 'https://www.gefona.org/',
       role: 'Founding Brand Designer',
-      period: '2022 - Present',
+      period: 'Mar 2020 - Present',
       location: 'Remote — Yaoundé, Cameroon',
       responsibilities: [
         'Designed the GEFONA visual identity: the geometric Africa mark, colour palette, and typography, and documented it in a brand guide',

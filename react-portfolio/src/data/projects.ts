@@ -27,16 +27,20 @@ export const projects: Project[] = [
     title: 'PaySika',
     tagline: 'Driving 40% user retention and 60% support ticket reduction.',
     image: 'paysika_mockup.png',
-    description: 'As Lead Product Designer and Founding Team Member, I managed a two-person design team and scaled PaySika’s mobile and web applications to serve thousands of active users across Central Africa. I engineered cross-functional workflows, led visual rebranding, and leveraged Mixpanel data to optimize transactional funnels.',
+    description: 'As UX Design Lead and Founding Team Member, I managed a two-person design team and scaled PaySika’s mobile and web applications to serve thousands of active users across Central Africa. I engineered cross-functional workflows, led visual rebranding, and leveraged Mixpanel data to optimize transactional funnels.',
     impact: 'Scaled fintech operations serving thousands of users across Africa.',
     site: 'https://www.paysika.co',
-    role: 'Lead Product Designer',
-    period: 'Dec 2021 - Present',
+    role: 'UX Design Lead',
+    period: 'Nov 2022 - Aug 2026',
     location: 'Douala, Cameroon',
     responsibilities: [
       'Recruited, scaled, and managed the creative design team, establishing high-performance assets handoff pipelines',
       'Redesigned core mobile application interfaces (Onboarding, KYC, and Visa activation flows), minimizing drop-offs',
       'Conducted usability testing sessions and leveraged Mixpanel tracking to drive evidence-backed retention updates',
+      'Owned the physical card journey end to end: ordering, home delivery and relay-point pickup, through activation',
+      'Designed the internal app our delivery agents used to receive and fulfil card orders, rolled out to 15 agents across Douala and Yaoundé',
+      'Cut relay-point handover from 30 to 10 minutes by replacing manual paperwork with QR-code validation',
+      'Led the multi-country design for the expansion into Gabon across the mobile app and back office, reworking KYC and onboarding for local requirements',
       'Led the end-to-end industrial and print design of PaySika’s physical debit card experience and unboxing'
     ],
     challenge: 'The Challenge',
@@ -60,6 +64,18 @@ I architected the core user journeys from the ground up, focusing on a frictionl
 
 ### Led Physical Debit Card Experience & Packaging
 I directed the physical debit card design and its accompanying custom unboxing packaging. I worked directly with the card manufacturer to select materials that made the card feel like a premium, banking-grade asset while maintaining our vibrant fintech brand identity.
+
+### The card journey beyond the app
+The card was never only an object. It was a service: ordering, home delivery and relay-point pickup, then activation. Each of those moments had its own steps, its own owner, and its own failure modes.
+
+### The delivery agent app
+Fifteen delivery agents across Douala and Yaoundé fulfilled card orders from an internal app I designed. They received the order, saw the customer and delivery details, and confirmed the handover in the app, replacing a paper dispatch sheet and a phone call back to the office.
+
+### Relay points: 30 minutes down to 10
+Relay points were the slowest moment in the journey. Customers waited an average of 30 minutes between arriving and leaving, because every handover meant paper forms, a manual signature and a status update that only reached the back office later. I replaced the paperwork with QR-code validation, so the handover is recorded in the moment it happens. The average dropped to 10 minutes.
+
+### A second market: Gabon
+When PaySika expanded to Gabon, KYC in Cameroon was not KYC in Gabon: different documents, different checks, different partner expectations. I led the design across the mobile app and the back office so we shipped one product with market-specific onboarding instead of two apps drifting apart.
 
 ### Spearheaded AI Integration
 I introduced LLMs to design faster. By leveraging Claude, we drafted and localized our English and French UI microcopy, pressure-tested user flows against potential edge cases, and quickly generated realistic mock data for our interactive Figma prototypes. This significantly accelerated our copywriting and discovery phases.
@@ -277,7 +293,7 @@ Although the app was eventually shut down after a year due to retention and cont
     impact: 'Delivered user-centric designs for multiple client products.',
     site: 'https://matangaagency.com/fr/',
     role: 'Senior UI/UX Consultant (Part-time)',
-    period: 'Dec 2022 - Dec 2023',
+    period: 'Dec 2023 - Feb 2024',
     location: 'Cameroon',
     responsibilities: [
       'Consulted with international and local stakeholders to turn complex product requirements into intuitive Figma mockups',
