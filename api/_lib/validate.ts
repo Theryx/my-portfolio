@@ -179,6 +179,22 @@ export function isIdList(v: unknown): boolean {
   return v.every(isId);
 }
 
+// Rich company links: per-company ordering, visibility and content overrides.
+export function isCompanyLinks(v: unknown): boolean {
+  if (v === undefined || v === null) return true;
+  if (!Array.isArray(v) || v.length > 200) return false;
+  return v.every((l) => {
+    if (!l || typeof l !== 'object' || Array.isArray(l)) return false;
+    const o = l as Record<string, unknown>;
+    if (!isId(o.company_id)) return false;
+    if (o.sort_order !== undefined && o.sort_order !== null && typeof o.sort_order !== 'number') return false;
+    if (o.is_visible !== undefined && o.is_visible !== null && typeof o.is_visible !== 'boolean') return false;
+    if (!isLongText(o.override_content)) return false;
+    if (!isJsonObject(o.override_metadata)) return false;
+    return true;
+  });
+}
+
 export function validateCompanyBody(b: Record<string, unknown>): string | null {
   if (!isShortText(b.name)) return 'Invalid name';
   if (b.id !== undefined && !isId(b.id)) return 'Invalid id';
@@ -210,6 +226,7 @@ export function validateWarehouseEntryBody(b: Record<string, unknown>): string |
   if (!isJsonObject(b.metadata)) return 'Invalid metadata';
   if (!isStringArray(b.tags)) return 'Invalid tags';
   if (b.company_ids !== undefined && !isIdList(b.company_ids)) return 'Invalid company_ids';
+  if (!isCompanyLinks(b.company_links)) return 'Invalid company_links';
   if (b.asset_ids !== undefined && !isIdList(b.asset_ids)) return 'Invalid asset_ids';
   if (b.sort_order !== undefined && b.sort_order !== null && typeof b.sort_order !== 'number') {
     return 'Invalid sort_order';

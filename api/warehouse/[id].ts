@@ -5,7 +5,14 @@ import { validateWarehouseEntryBody } from '../_lib/validate.js';
 
 const LINK_SELECT = `
   COALESCE((SELECT string_agg(x.company_id, ',' ORDER BY x.company_id) FROM company_entries x WHERE x.entry_id = w.id), '') AS company_ids_csv,
-  COALESCE((SELECT string_agg(ea.asset_id, ',' ORDER BY ea.asset_id) FROM entry_assets ea WHERE ea.entry_id = w.id), '') AS asset_ids_csv
+  COALESCE((SELECT string_agg(ea.asset_id, ',' ORDER BY ea.asset_id) FROM entry_assets ea WHERE ea.entry_id = w.id), '') AS asset_ids_csv,
+  COALESCE((
+    SELECT jsonb_agg(jsonb_build_object(
+      'company_id', x.company_id, 'sort_order', x.sort_order, 'is_visible', x.is_visible,
+      'override_content', x.override_content, 'override_metadata', x.override_metadata
+    ) ORDER BY x.sort_order, x.company_id)
+    FROM company_entries x WHERE x.entry_id = w.id
+  ), '[]'::jsonb) AS company_links
 `;
 
 function toIds(v: unknown): string[] {
@@ -75,13 +82,37 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       `;
       if (!rows.length) return res.status(404).json({ error: 'Not found' });
 
-      if (Array.isArray(b.company_ids)) {
-        await sql`DELETE FROM company_entries WHERE entry_id = ${id}`;
-        let order = 0;
+      if (Array.isArray(b.company_links)) {
+        const links = b.company_links as Array<Record<string, unknown>>;
+        const keep = links.map((l) => String(l.company_id));
+        await sql.query(
+          `DELETE FROM company_entries WHERE entry_id = $1 AND company_id <> ALL($2::text[])`,
+          [id, keep],
+        );
+        for (const l of links) {
+          await sql`
+            INSERT INTO company_entries (company_id, entry_id, sort_order, override_content, override_metadata, is_visible)
+            VALUES (
+              ${l.company_id}, ${id}, ${l.sort_order ?? 0},
+              ${l.override_content ?? null},
+              ${l.override_metadata ? JSON.stringify(l.override_metadata) : null}::jsonb,
+              ${l.is_visible ?? true}
+            )
+            ON CONFLICT (company_id, entry_id) DO UPDATE SET
+              sort_order = EXCLUDED.sort_order,
+              override_content = EXCLUDED.override_content,
+              override_metadata = EXCLUDED.override_metadata,
+              is_visible = EXCLUDED.is_visible
+          `;
+        }
+      } else if (Array.isArray(b.company_ids)) {
+        await sql.query(
+          `DELETE FROM company_entries WHERE entry_id = $1 AND company_id <> ALL($2::text[])`,
+          [id, b.company_ids],
+        );
         for (const cid of b.company_ids as string[]) {
           await sql`INSERT INTO company_entries (company_id, entry_id, sort_order, is_visible)
-                    VALUES (${cid}, ${id}, ${order}, true) ON CONFLICT DO NOTHING`;
-          order += 1;
+                    VALUES (${cid}, ${id}, 0, true) ON CONFLICT DO NOTHING`;
         }
       }
       if (Array.isArray(b.asset_ids)) {

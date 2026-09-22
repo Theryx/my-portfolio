@@ -163,19 +163,23 @@ function mimeFromUrl(url) {
   return map[ext] || null;
 }
 
-// Pull image strings out of an arbitrary value (image fields, gallery blocks…).
-function collectImageStrings(value, out) {
-  if (!value) return;
-  if (typeof value === 'string') {
-    if (value.trim()) out.push(value.trim());
-    return;
-  }
-  if (Array.isArray(value)) {
-    for (const item of value) collectImageStrings(item, out);
-    return;
-  }
-  if (typeof value === 'object') {
-    for (const v of Object.values(value)) collectImageStrings(v, out);
+// Only genuine image references belong in the asset library. We read explicit
+// image fields — never a recursive walk, which would scoop up headings, prose
+// and markdown as if they were files.
+function pushImage(value, out) {
+  if (typeof value === 'string' && value.trim()) out.push(value.trim());
+}
+
+function collectBlockImages(blocks, out) {
+  if (!Array.isArray(blocks)) return;
+  for (const blk of blocks) {
+    if (!blk || typeof blk !== 'object') continue;
+    if (blk.type === 'gallery' || blk.type === 'photos') {
+      const items = Array.isArray(blk.items) ? blk.items : [];
+      for (const it of items) {
+        if (it && typeof it === 'object') pushImage(it.image, out);
+      }
+    }
   }
 }
 
@@ -250,8 +254,8 @@ async function main() {
 
     const about = p.about_content ?? {};
     const bioImages = [];
-    collectImageStrings(about.speaking_images, bioImages);
-    collectImageStrings(about.speaking_image, bioImages);
+    for (const img of Array.isArray(about.speaking_images) ? about.speaking_images : []) pushImage(img, bioImages);
+    pushImage(about.speaking_image, bioImages);
     for (const url of bioImages) linkAsset(bioId, registerAsset(url));
   }
   console.log(`  ✓ ${profiles.length} profiles`);
@@ -286,8 +290,8 @@ async function main() {
     ]);
 
     const imgs = [];
-    collectImageStrings(pr.image, imgs);
-    collectImageStrings(pr.content_blocks, imgs);
+    pushImage(pr.image, imgs);
+    collectBlockImages(pr.content_blocks, imgs);
     for (const url of imgs) linkAsset(entryId, registerAsset(url));
   }
   console.log(`  ✓ ${projects.length} projects`);
@@ -310,7 +314,7 @@ async function main() {
     ]);
 
     const imgs = [];
-    collectImageStrings(bp.image, imgs);
+    pushImage(bp.image, imgs);
     for (const url of imgs) linkAsset(entryId, registerAsset(url));
   }
   console.log(`  ✓ ${posts.length} posts`);

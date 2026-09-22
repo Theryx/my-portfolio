@@ -36,7 +36,17 @@ function mapEntry(row: Record<string, unknown>): Record<string, unknown> {
 
 const LINK_SUBSELECTS = `
   COALESCE((SELECT string_agg(x.company_id, ',' ORDER BY x.company_id) FROM company_entries x WHERE x.entry_id = w.id), '') AS company_ids_csv,
-  COALESCE((SELECT string_agg(ea.asset_id, ',' ORDER BY ea.asset_id) FROM entry_assets ea WHERE ea.entry_id = w.id), '') AS asset_ids_csv
+  COALESCE((SELECT string_agg(ea.asset_id, ',' ORDER BY ea.asset_id) FROM entry_assets ea WHERE ea.entry_id = w.id), '') AS asset_ids_csv,
+  COALESCE((
+    SELECT jsonb_agg(jsonb_build_object(
+      'company_id', x.company_id,
+      'sort_order', x.sort_order,
+      'is_visible', x.is_visible,
+      'override_content', x.override_content,
+      'override_metadata', x.override_metadata
+    ) ORDER BY x.sort_order, x.company_id)
+    FROM company_entries x WHERE x.entry_id = w.id
+  ), '[]'::jsonb) AS company_links
 `;
 
 async function handleGet(
@@ -130,14 +140,43 @@ async function handleUpsert(
   `;
   const entry = rows[0] as Record<string, unknown>;
 
-  if (Array.isArray(b.company_ids)) {
-    await sql`DELETE FROM company_entries WHERE entry_id = ${b.id}`;
-    let order = 0;
+  // Company links. Two payload shapes:
+  //  - company_links: full objects (sort_order, is_visible, overrides) → upsert
+  //    each and drop links no longer listed.
+  //  - company_ids:   plain id list → reconcile without touching existing
+  //    overrides / ordering (the old delete-and-reinsert wiped both).
+  if (Array.isArray(b.company_links)) {
+    const links = b.company_links as Array<Record<string, unknown>>;
+    const keep = links.map((l) => String(l.company_id));
+    await sql.query(
+      `DELETE FROM company_entries WHERE entry_id = $1 AND company_id <> ALL($2::text[])`,
+      [b.id, keep],
+    );
+    for (const l of links) {
+      await sql`
+        INSERT INTO company_entries (company_id, entry_id, sort_order, override_content, override_metadata, is_visible)
+        VALUES (
+          ${l.company_id}, ${b.id}, ${l.sort_order ?? 0},
+          ${l.override_content ?? null},
+          ${l.override_metadata ? JSON.stringify(l.override_metadata) : null}::jsonb,
+          ${l.is_visible ?? true}
+        )
+        ON CONFLICT (company_id, entry_id) DO UPDATE SET
+          sort_order = EXCLUDED.sort_order,
+          override_content = EXCLUDED.override_content,
+          override_metadata = EXCLUDED.override_metadata,
+          is_visible = EXCLUDED.is_visible
+      `;
+    }
+  } else if (Array.isArray(b.company_ids)) {
+    await sql.query(
+      `DELETE FROM company_entries WHERE entry_id = $1 AND company_id <> ALL($2::text[])`,
+      [b.id, b.company_ids],
+    );
     for (const cid of b.company_ids as string[]) {
       await sql`INSERT INTO company_entries (company_id, entry_id, sort_order, is_visible)
-                VALUES (${cid}, ${b.id}, ${order}, true)
+                VALUES (${cid}, ${b.id}, 0, true)
                 ON CONFLICT (company_id, entry_id) DO NOTHING`;
-      order += 1;
     }
   }
 
@@ -150,11 +189,9 @@ async function handleUpsert(
   }
 
   // Re-read with links so callers get the canonical stored shape.
-  const fresh = await sql`
-    SELECT w.*,
-      COALESCE((SELECT string_agg(x.company_id, ',' ORDER BY x.company_id) FROM company_entries x WHERE x.entry_id = w.id), '') AS company_ids_csv,
-      COALESCE((SELECT string_agg(ea.asset_id, ',' ORDER BY ea.asset_id) FROM entry_assets ea WHERE ea.entry_id = w.id), '') AS asset_ids_csv
-    FROM warehouse_entries w WHERE w.id = ${b.id}
-  `;
+  const fresh = await sql.query(
+    `SELECT w.*, ${LINK_SUBSELECTS} FROM warehouse_entries w WHERE w.id = $1`,
+    [b.id],
+  );
   return res.status(200).json(mapEntry((fresh[0] ?? entry) as Record<string, unknown>));
 }

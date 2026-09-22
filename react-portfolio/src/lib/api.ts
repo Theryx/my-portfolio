@@ -122,6 +122,14 @@ export interface Company extends Profile {
   seo?: Record<string, unknown>;
 }
 
+export interface CompanyLink {
+  company_id: string;
+  sort_order: number;
+  is_visible: boolean;
+  override_content: string | null;
+  override_metadata: Record<string, unknown> | null;
+}
+
 export interface WarehouseEntry {
   id: string;
   type: string;
@@ -132,6 +140,7 @@ export interface WarehouseEntry {
   is_hidden: boolean;
   sort_order: number;
   company_ids?: string[];
+  company_links?: CompanyLink[];
   asset_ids?: string[];
   company_sort_order?: number;
   created_at?: string;
