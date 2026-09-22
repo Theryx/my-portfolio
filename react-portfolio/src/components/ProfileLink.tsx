@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { Link, useSearchParams, type LinkProps } from 'react-router-dom';
 
 /** Appends the active `?profile=` query param to a path, if one is set. */
