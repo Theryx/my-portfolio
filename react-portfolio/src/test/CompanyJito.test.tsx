@@ -36,6 +36,13 @@ vi.mock('../lib/api', () => {
       image: '',
       responsibilities: ['Redesigned KYC'],
       is_hidden: false,
+      content_blocks: [
+        {
+          type: 'gallery',
+          heading: 'Process',
+          items: [{ image: '', title: 'KYC camera flow', description: 'Guided capture.' }],
+        },
+      ],
     },
   ];
 
@@ -48,6 +55,7 @@ vi.mock('../lib/api', () => {
       read_time: '6 min read',
       image: '',
       is_hidden: false,
+      content: 'A note.\n\n> Insert image here: a screenshot of the transaction list',
     },
   ];
 
@@ -58,15 +66,19 @@ vi.mock('../lib/api', () => {
   };
 });
 
+function renderAt(path: string) {
+  return render(
+    <MemoryRouter initialEntries={[path]}>
+      <Routes>
+        <Route path="/c/:slug/*" element={<CompanyRouter />} />
+      </Routes>
+    </MemoryRouter>
+  );
+}
+
 describe('Jito company mini-site', () => {
   it('renders the shell, selected work and nav', async () => {
-    render(
-      <MemoryRouter initialEntries={['/c/jito']}>
-        <Routes>
-          <Route path="/c/:slug/*" element={<CompanyRouter />} />
-        </Routes>
-      </MemoryRouter>
-    );
+    renderAt('/c/jito');
 
     await waitFor(() => {
       expect(screen.getAllByText(/Ndouken Theryx/).length).toBeGreaterThan(0);
@@ -76,5 +88,31 @@ describe('Jito company mini-site', () => {
     expect(screen.getByRole('link', { name: 'Work' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'About' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Writing' })).toBeInTheDocument();
+  });
+
+  it('renders a case study with structured blocks and image placeholders', async () => {
+    renderAt('/c/jito/work/paysika_fintech');
+
+    await waitFor(
+      () => {
+        expect(screen.getByRole('heading', { name: 'PaySika' })).toBeInTheDocument();
+        expect(screen.getByText('Process')).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: 'KYC camera flow' })).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    // Missing cover and missing gallery image both surface an honest placeholder.
+    expect(screen.getAllByText(/Image to add/i).length).toBeGreaterThan(0);
+  });
+
+  it('turns an "insert image here" note into a placeholder', async () => {
+    renderAt('/c/jito/writing/fintech_trust');
+
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: /start with trust/i })).toBeInTheDocument();
+    });
+
+    expect(screen.getAllByText(/Image to add/i).length).toBeGreaterThan(0);
   });
 });

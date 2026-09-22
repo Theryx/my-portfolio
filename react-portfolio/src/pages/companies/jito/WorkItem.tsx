@@ -1,10 +1,9 @@
 import { Link, useParams } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import { ArrowLeft } from 'lucide-react';
 import { useCompany } from '../../../context/CompanyContext';
 import { resolveProjectImage } from '../../../data/projects';
 import { usePageMeta } from '../../../hooks/usePageMeta';
+import Blocks, { JitoMarkdown, ImagePlaceholder } from './Blocks';
 
 export default function WorkItem() {
   const { id } = useParams<{ id: string }>();
@@ -32,6 +31,7 @@ export default function WorkItem() {
   }
 
   const hero = resolveProjectImage(project.image);
+  const hasBlocks = Array.isArray(project.content_blocks) && project.content_blocks.length > 0;
 
   return (
     <article className="jn-section jn-section--page">
@@ -71,17 +71,21 @@ export default function WorkItem() {
         </dl>
       </header>
 
-      {hero && (
+      {hero ? (
         <figure className="jn-article__hero">
           <img src={hero} alt={project.title} loading="eager" />
         </figure>
+      ) : (
+        <div className="jn-article__hero jn-article__hero--empty">
+          <ImagePlaceholder note={`Cover image for ${project.title}`} />
+        </div>
       )}
 
       <div className="jn-prose">
         {project.description && (
           <section>
             <h2>Overview</h2>
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.description}</ReactMarkdown>
+            <JitoMarkdown text={project.description} resolveImage={resolveProjectImage} />
           </section>
         )}
 
@@ -97,40 +101,34 @@ export default function WorkItem() {
         {project.challenge_text && (
           <section>
             <h2>{project.challenge || 'The challenge'}</h2>
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.challenge_text}</ReactMarkdown>
+            <JitoMarkdown text={project.challenge_text} resolveImage={resolveProjectImage} />
           </section>
         )}
 
         {project.solution_text && (
           <section>
             <h2>{project.solution || 'The solution'}</h2>
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.solution_text}</ReactMarkdown>
+            <JitoMarkdown text={project.solution_text} resolveImage={resolveProjectImage} />
           </section>
         )}
 
         {project.result_text && (
           <section>
             <h2>{project.result || 'The result'}</h2>
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.result_text}</ReactMarkdown>
-          </section>
-        )}
-
-        {project.content && (
-          <section>
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
-              components={{
-                img: ({ src, alt }) => {
-                  const resolved = resolveProjectImage(decodeURIComponent(src || '')) || src;
-                  return <img src={resolved} alt={alt || ''} loading="lazy" />;
-                },
-              }}
-            >
-              {project.content}
-            </ReactMarkdown>
+            <JitoMarkdown text={project.result_text} resolveImage={resolveProjectImage} />
           </section>
         )}
       </div>
+
+      {hasBlocks ? (
+        <Blocks blocks={project.content_blocks!} resolveImage={resolveProjectImage} />
+      ) : (
+        project.content && (
+          <div className="jn-prose">
+            <JitoMarkdown text={project.content} resolveImage={resolveProjectImage} />
+          </div>
+        )
+      )}
     </article>
   );
 }

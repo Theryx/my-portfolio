@@ -1,11 +1,9 @@
 import { Link, useParams } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import rehypeRaw from 'rehype-raw';
 import { ArrowLeft } from 'lucide-react';
 import { useCompany } from '../../../context/CompanyContext';
-import { resolveBlogImage, blogImageMap } from '../../../data/blog';
+import { resolveBlogImage } from '../../../data/blog';
 import { usePageMeta } from '../../../hooks/usePageMeta';
+import { JitoMarkdown, ImagePlaceholder } from './Blocks';
 
 export default function WritingItem() {
   const { id } = useParams<{ id: string }>();
@@ -45,25 +43,18 @@ export default function WritingItem() {
         <p className="jn-article__byline">{post.author} / {post.date} / {post.read_time}</p>
       </header>
 
-      {cover && (
+      {cover ? (
         <figure className="jn-article__hero">
           <img src={cover} alt={post.title} loading="eager" />
         </figure>
+      ) : (
+        <div className="jn-article__hero jn-article__hero--empty">
+          <ImagePlaceholder note={`Cover image for "${post.title}"`} />
+        </div>
       )}
 
       <div className="jn-prose">
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          rehypePlugins={[rehypeRaw]}
-          components={{
-            img: ({ src, alt }) => {
-              const resolved = blogImageMap[decodeURIComponent(src || '')] || src;
-              return <img src={resolved} alt={alt || ''} loading="lazy" />;
-            },
-          }}
-        >
-          {post.content}
-        </ReactMarkdown>
+        <JitoMarkdown text={post.content} resolveImage={resolveBlogImage} allowHtml />
       </div>
     </article>
   );
