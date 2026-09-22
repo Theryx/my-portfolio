@@ -107,6 +107,203 @@ export interface BlogPost {
   sort_order: number;
 }
 
+/* ── Warehouse model ──────────────────────────────────────────────────────── */
+
+// A company is a targeted microsite (was: profile). It carries every Profile
+// field plus job-offer context and a layout key.
+export interface Company extends Profile {
+  slug: string;
+  role?: string | null;
+  job_description?: string | null;
+  job_url?: string | null;
+  status?: string;
+  layout?: string;
+  theme_config?: Record<string, unknown>;
+  seo?: Record<string, unknown>;
+}
+
+export interface WarehouseEntry {
+  id: string;
+  type: string;
+  title: string;
+  content: string;
+  metadata: Record<string, unknown>;
+  tags: string[];
+  is_hidden: boolean;
+  sort_order: number;
+  company_ids?: string[];
+  asset_ids?: string[];
+  company_sort_order?: number;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface Asset {
+  id: string;
+  filename: string;
+  url: string;
+  mime_type?: string | null;
+  size?: number | null;
+  description?: string | null;
+  tags: string[];
+  created_at?: string;
+}
+
+// Warehouse entry prefixes. Entries are stored with a type prefix so project
+// and article idspaces never collide inside the shared warehouse table.
+export const entryIdForProject = (id: string) => (id.startsWith('project:') ? id : `project:${id}`);
+export const entryIdForArticle = (id: string) => (id.startsWith('article:') ? id : `article:${id}`);
+const stripPrefix = (id: string, prefix: string) => (id.startsWith(prefix) ? id.slice(prefix.length) : id);
+
+type Meta = Record<string, unknown>;
+const str = (v: unknown, fallback = ''): string => (typeof v === 'string' ? v : fallback);
+const strArr = (v: unknown): string[] => (Array.isArray(v) ? (v as string[]) : []);
+
+// Warehouse entry -> legacy Project shape, so the existing pages/CMS render
+// unchanged while reading from the warehouse.
+export function entryToProject(entry: WarehouseEntry, companyId?: string): Project {
+  const m = (entry.metadata ?? {}) as Meta;
+  return {
+    id: str(m.source_project_id) || stripPrefix(entry.id, 'project:'),
+    profile_ids: entry.company_ids ?? (companyId ? [companyId] : []),
+    tag: str(m.tag),
+    title: entry.title ?? '',
+    tagline: str(m.tagline),
+    image: str(m.image),
+    description: str(m.description),
+    impact: str(m.impact),
+    site: str(m.site),
+    role: str(m.role),
+    period: str(m.period),
+    location: str(m.location),
+    responsibilities: strArr(m.responsibilities),
+    challenge: str(m.challenge),
+    challenge_text: str(m.challenge_text),
+    solution: str(m.solution),
+    solution_text: str(m.solution_text),
+    result: str(m.result),
+    result_text: str(m.result_text),
+    is_hidden: !!entry.is_hidden,
+    sort_order: entry.company_sort_order ?? entry.sort_order ?? 0,
+    content: entry.content ?? '',
+    content_blocks: (m.content_blocks as ProjectBlock[] | null) ?? undefined,
+  };
+}
+
+// Legacy Project shape -> warehouse entry payload.
+export function projectToEntry(p: Project): Partial<WarehouseEntry> {
+  return {
+    id: entryIdForProject(p.id),
+    type: 'project',
+    title: p.title,
+    content: p.content ?? '',
+    metadata: {
+      tag: p.tag, tagline: p.tagline, image: p.image, description: p.description,
+      impact: p.impact, site: p.site, role: p.role, period: p.period, location: p.location,
+      responsibilities: p.responsibilities, challenge: p.challenge, challenge_text: p.challenge_text,
+      solution: p.solution, solution_text: p.solution_text, result: p.result, result_text: p.result_text,
+      content_blocks: p.content_blocks ?? null, source_project_id: p.id,
+    },
+    tags: p.tag ? [p.tag] : [],
+    is_hidden: p.is_hidden ?? false,
+    sort_order: p.sort_order ?? 0,
+    company_ids: p.profile_ids ?? [],
+  };
+}
+
+// Warehouse entry -> legacy BlogPost shape.
+export function entryToBlogPost(entry: WarehouseEntry, companyId?: string): BlogPost {
+  const m = (entry.metadata ?? {}) as Meta;
+  return {
+    id: str(m.source_blog_id) || stripPrefix(entry.id, 'article:'),
+    profile_ids: entry.company_ids ?? (companyId ? [companyId] : []),
+    title: entry.title ?? '',
+    excerpt: str(m.excerpt),
+    content: entry.content ?? '',
+    date: str(m.date),
+    author: str(m.author),
+    read_time: str(m.read_time),
+    tags: entry.tags ?? [],
+    image: str(m.image),
+    is_hidden: !!entry.is_hidden,
+    sort_order: entry.company_sort_order ?? entry.sort_order ?? 0,
+  };
+}
+
+export function blogPostToEntry(p: BlogPost): Partial<WarehouseEntry> {
+  return {
+    id: entryIdForArticle(p.id),
+    type: 'article',
+    title: p.title,
+    content: p.content ?? '',
+    metadata: {
+      excerpt: p.excerpt, date: p.date, author: p.author, read_time: p.read_time,
+      image: p.image, source_blog_id: p.id,
+    },
+    tags: p.tags ?? [],
+    is_hidden: p.is_hidden ?? false,
+    sort_order: p.sort_order ?? 0,
+    company_ids: p.profile_ids ?? [],
+  };
+}
+
+// --- Warehouse client ---
+
+export async function getWarehouseEntries(params: {
+  company_id?: string;
+  type?: string;
+  search?: string;
+  include_hidden?: boolean;
+  limit?: number;
+} = {}): Promise<WarehouseEntry[]> {
+  const qs = new URLSearchParams();
+  if (params.company_id) qs.set('company_id', params.company_id);
+  if (params.type) qs.set('type', params.type);
+  if (params.search) qs.set('search', params.search);
+  if (params.include_hidden) qs.set('include_hidden', 'true');
+  if (params.limit) qs.set('limit', String(params.limit));
+  const suffix = qs.toString();
+  return apiFetch<WarehouseEntry[]>(`/api/warehouse${suffix ? `?${suffix}` : ''}`);
+}
+
+export async function getWarehouseEntry(id: string): Promise<WarehouseEntry | null> {
+  try {
+    return await apiFetch<WarehouseEntry>(`/api/warehouse/${encodeURIComponent(id)}`);
+  } catch {
+    return null;
+  }
+}
+
+export async function upsertWarehouseEntry(data: Partial<WarehouseEntry>): Promise<WarehouseEntry> {
+  return apiFetch<WarehouseEntry>('/api/warehouse', { method: 'POST', body: JSON.stringify(data) });
+}
+
+export async function updateWarehouseEntry(id: string, data: Partial<WarehouseEntry>): Promise<WarehouseEntry> {
+  return apiFetch<WarehouseEntry>(`/api/warehouse/${encodeURIComponent(id)}`, {
+    method: 'PATCH',
+    body: JSON.stringify(data),
+  });
+}
+
+export async function deleteWarehouseEntry(id: string): Promise<void> {
+  await apiFetch(`/api/warehouse/${encodeURIComponent(id)}`, { method: 'DELETE' });
+}
+
+// --- Assets client ---
+
+export async function getAssets(search?: string): Promise<Asset[]> {
+  const suffix = search ? `?search=${encodeURIComponent(search)}` : '';
+  return apiFetch<Asset[]>(`/api/assets${suffix}`);
+}
+
+export async function registerAsset(data: Partial<Asset>): Promise<Asset> {
+  return apiFetch<Asset>('/api/assets', { method: 'POST', body: JSON.stringify(data) });
+}
+
+export async function deleteAsset(id: string): Promise<void> {
+  await apiFetch(`/api/assets/${encodeURIComponent(id)}`, { method: 'DELETE' });
+}
+
 export const fallbackProfiles: Record<string, Profile> = Object.entries(profilePresets).reduce(
   (acc, [id, preset]) => {
     acc[id] = {
@@ -138,9 +335,9 @@ if (!fallbackProfiles.default) {
       'I design and ship digital products end to end: UX, interface, and code. Led design at PaySika, co-founded ventures, and build in the open. Based in Cameroon.',
     philosophy_title: 'I design experiences that bridge technology and human needs.',
     philosophy_text:
-      'I work across design and engineering to turn ideas into products people trust. Four years leading design at PaySika, plus co-founding ventures and shipping code, taught me that the strongest products come from one person owning the whole loop: research, interface, and implementation.',
+      'I work across design and engineering to turn ideas into products people trust. Nearly four years leading UX design at PaySika, plus co-founding ventures and shipping code, taught me that the strongest products come from one person owning the whole loop: research, interface, and implementation.',
     intro_expanded_text:
-      'I work across design and engineering to turn ideas into products people trust. Four years leading design at PaySika, plus co-founding ventures and shipping code, taught me that the strongest products come from one person owning the whole loop: research, interface, and implementation.',
+      'I work across design and engineering to turn ideas into products people trust. Nearly four years leading UX design at PaySika, plus co-founding ventures and shipping code, taught me that the strongest products come from one person owning the whole loop: research, interface, and implementation.',
     badges: ['Design · Engineering · Product'],
     social_links: {},
     about_content: {
@@ -210,25 +407,28 @@ export async function getSession(): Promise<boolean> {
   return data.authenticated;
 }
 
-// --- Profiles ---
+// --- Companies (were: profiles) ---
+//
+// Companies are read/written through /api/companies but exposed with the
+// existing Profile shape so the pages and CMS keep working unchanged.
 
 export async function getAllProfiles(): Promise<Profile[]> {
   try {
-    return await apiFetch<Profile[]>('/api/profiles');
+    return await apiFetch<Company[]>('/api/companies');
   } catch (err) {
-    console.warn('API fetch profiles failed, using static fallback:', err);
+    console.warn('API fetch companies failed, using static fallback:', err);
     return Object.values(fallbackProfiles);
   }
 }
 
 export async function getProfileById(id: string): Promise<Profile | null> {
   try {
-    return await apiFetch<Profile>(`/api/profiles/${id}`);
+    return await apiFetch<Company>(`/api/companies/${id}`);
   } catch (err) {
     const fallback = fallbackProfiles[id] ?? null;
     if (err instanceof Error && err.message === 'Not found') return fallback;
     if (fallback) {
-      console.warn(`API fetch profile "${id}" failed, using static fallback:`, err);
+      console.warn(`API fetch company "${id}" failed, using static fallback:`, err);
       return fallback;
     }
     throw err;
@@ -236,19 +436,19 @@ export async function getProfileById(id: string): Promise<Profile | null> {
 }
 
 export async function getActiveProfile(): Promise<Profile | null> {
-  const profiles = await getAllProfiles();
-  return profiles.find((p) => p.is_active) ?? profiles[0] ?? null;
+  const companies = await getAllProfiles();
+  return companies.find((p) => p.is_active) ?? companies[0] ?? null;
 }
 
 export async function updateProfile(id: string, data: Partial<Profile>): Promise<Profile> {
-  return apiFetch<Profile>(`/api/profiles/${id}`, {
+  return apiFetch<Company>(`/api/companies/${id}`, {
     method: 'POST',
     body: JSON.stringify(data),
   });
 }
 
 export async function deleteProfile(id: string): Promise<void> {
-  await apiFetch(`/api/profiles/${id}`, { method: 'DELETE' });
+  await apiFetch(`/api/companies/${id}`, { method: 'DELETE' });
 }
 
 // --- Merge helpers ---
@@ -370,18 +570,22 @@ function staticToBlogPost(p: StaticBlogPost, profileIds: string[]): BlogPost {
 
 export async function getProjectsByProfile(profileId: string): Promise<Project[]> {
   try {
-    const dbProjects = await apiFetch<Project[]>(`/api/projects?profile_id=${profileId}`);
-    return dbProjects.map((p) => mergeProject(p, findStaticProject(p.id)));
+    const entries = await getWarehouseEntries({ company_id: profileId, type: 'project' });
+    return entries
+      .map((e) => entryToProject(e, profileId))
+      .map((p) => mergeProject(p, findStaticProject(p.id)));
   } catch (err) {
-    console.warn('API fetch projects failed, using static fallback:', err);
+    console.warn('API fetch warehouse projects failed, using static fallback:', err);
     return staticProjects.map((p) => staticToProject(p, [profileId]));
   }
 }
 
 export async function getAllProjects(): Promise<Project[]> {
   try {
-    const dbProjects = await apiFetch<Project[]>('/api/projects');
-    return dbProjects.map((p) => mergeProject(p, findStaticProject(p.id)));
+    const entries = await getWarehouseEntries({ type: 'project', include_hidden: true });
+    return entries
+      .map((e) => entryToProject(e))
+      .map((p) => mergeProject(p, findStaticProject(p.id)));
   } catch (err) {
     console.warn('getAllProjects API failed, using static fallback:', err);
     return staticProjects.map((p) => staticToProject(p, ['default']));
@@ -411,39 +615,39 @@ export async function getProjectById(id: string): Promise<Project | null> {
 }
 
 export async function upsertProject(data: Project): Promise<Project> {
-  return apiFetch<Project>('/api/projects', {
-    method: 'POST',
-    body: JSON.stringify(data),
-  });
+  const saved = await upsertWarehouseEntry(projectToEntry(data));
+  return entryToProject(saved);
 }
 
 export async function updateProject(id: string, data: Partial<Project>): Promise<Project> {
-  return apiFetch<Project>(`/api/projects/${id}`, {
-    method: 'PATCH',
-    body: JSON.stringify(data),
-  });
+  const saved = await updateWarehouseEntry(entryIdForProject(id), data as Partial<WarehouseEntry>);
+  return entryToProject(saved);
 }
 
 export async function deleteProject(id: string): Promise<void> {
-  await apiFetch(`/api/projects/${id}`, { method: 'DELETE' });
+  await deleteWarehouseEntry(entryIdForProject(id));
 }
 
 // --- Blog Posts ---
 
 export async function getBlogPostsByProfile(profileId: string): Promise<BlogPost[]> {
   try {
-    const dbPosts = await apiFetch<BlogPost[]>(`/api/blog?profile_id=${profileId}`);
-    return dbPosts.map((p) => mergeBlogPost(p, matchStaticPost(p.id)));
+    const entries = await getWarehouseEntries({ company_id: profileId, type: 'article' });
+    return entries
+      .map((e) => entryToBlogPost(e, profileId))
+      .map((p) => mergeBlogPost(p, matchStaticPost(p.id)));
   } catch (err) {
-    console.warn('API fetch blog posts failed, using static fallback:', err);
+    console.warn('API fetch warehouse articles failed, using static fallback:', err);
     return staticBlogPosts.map((p) => staticToBlogPost(p, [profileId]));
   }
 }
 
 export async function getAllBlogPosts(): Promise<BlogPost[]> {
   try {
-    const dbPosts = await apiFetch<BlogPost[]>('/api/blog');
-    return dbPosts.map((p) => mergeBlogPost(p, matchStaticPost(p.id)));
+    const entries = await getWarehouseEntries({ type: 'article', include_hidden: true });
+    return entries
+      .map((e) => entryToBlogPost(e))
+      .map((p) => mergeBlogPost(p, matchStaticPost(p.id)));
   } catch {
     console.warn('getAllBlogPosts API failed, using static fallback');
     return staticBlogPosts.map((p) => staticToBlogPost(p, ['default']));
@@ -472,21 +676,17 @@ export async function getBlogPostById(id: string): Promise<BlogPost | null> {
 }
 
 export async function upsertBlogPost(data: BlogPost): Promise<BlogPost> {
-  return apiFetch<BlogPost>('/api/blog', {
-    method: 'POST',
-    body: JSON.stringify(data),
-  });
+  const saved = await upsertWarehouseEntry(blogPostToEntry(data));
+  return entryToBlogPost(saved);
 }
 
 export async function updateBlogPost(id: string, data: Partial<BlogPost>): Promise<BlogPost> {
-  return apiFetch<BlogPost>(`/api/blog/${id}`, {
-    method: 'PATCH',
-    body: JSON.stringify(data),
-  });
+  const saved = await updateWarehouseEntry(entryIdForArticle(id), data as Partial<WarehouseEntry>);
+  return entryToBlogPost(saved);
 }
 
 export async function deleteBlogPost(id: string): Promise<void> {
-  await apiFetch(`/api/blog/${id}`, { method: 'DELETE' });
+  await deleteWarehouseEntry(entryIdForArticle(id));
 }
 
 // --- One-time migration: legacy profile_id -> profile_ids join tables ---
@@ -550,7 +750,7 @@ export async function syncContentToDatabase(
   }
 
   // 2. Fill empty project fields from static content.
-  const dbProjects = await apiFetch<Project[]>('/api/projects');
+  const dbProjects = await getAllProjects();
   for (const db of dbProjects) {
     const merged = mergeProject(db, findStaticProject(db.id));
     if (!projectNeedsSync(db, merged)) {
@@ -567,7 +767,7 @@ export async function syncContentToDatabase(
   }
 
   // 3. Fill empty blog fields from static content.
-  const dbPosts = await apiFetch<BlogPost[]>('/api/blog');
+  const dbPosts = await getAllBlogPosts();
   for (const db of dbPosts) {
     const merged = mergeBlogPost(db, matchStaticPost(db.id));
     const changed = (Object.keys(merged) as (keyof BlogPost)[]).some((k) => {

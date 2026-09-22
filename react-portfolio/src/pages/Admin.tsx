@@ -4,7 +4,7 @@ import {
   LayoutDashboard, Users, FolderKanban, Newspaper, Settings, LogOut, RefreshCw,
   ExternalLink, Search, Eye, EyeOff, Pencil, Trash2, Copy, ArrowUp, ArrowDown,
   ArrowLeft, DatabaseZap, CheckCircle2, AlertTriangle, Sparkles, Home, UserRound,
-  GitMerge
+  GitMerge, Images
 } from 'lucide-react';
 import {
   login, logout, getSession,
@@ -17,11 +17,13 @@ import {
 import { HomeForm, AboutForm, ProfileMetaForm, ProjectForm, BlogForm, SecurityForm } from './admin/forms';
 import { PasswordInput } from './admin/fields';
 import { profilePresets } from '../data/profileCopy';
+import WarehousePanel from './admin/WarehousePanel';
+import AssetPanel from './admin/AssetPanel';
 
 const MAX_ATTEMPTS = 5;
 const LOCKOUT_MS = 15 * 60 * 1000;
 
-type Section = 'dashboard' | 'home' | 'about' | 'profiles' | 'projects' | 'blog' | 'settings';
+type Section = 'dashboard' | 'home' | 'about' | 'warehouse' | 'assets' | 'profiles' | 'projects' | 'blog' | 'settings';
 type Editing =
   | { kind: 'profile'; item: Profile | null }
   | { kind: 'project'; item: Project | null }
@@ -40,9 +42,11 @@ const NAV: { id: Section; label: string; icon: typeof LayoutDashboard }[] = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'home', label: 'Home page', icon: Home },
   { id: 'about', label: 'About page', icon: UserRound },
+  { id: 'warehouse', label: 'Warehouse', icon: DatabaseZap },
+  { id: 'assets', label: 'Assets', icon: Images },
   { id: 'projects', label: 'Projects', icon: FolderKanban },
-  { id: 'blog', label: 'Blog', icon: Newspaper },
-  { id: 'profiles', label: 'Profiles', icon: Users },
+  { id: 'blog', label: 'Articles', icon: Newspaper },
+  { id: 'profiles', label: 'Companies', icon: Users },
   { id: 'settings', label: 'Settings', icon: Settings },
 ];
 
@@ -419,6 +423,10 @@ export default function Admin() {
                 <BlogForm post={editing.item} profiles={profiles} onSave={saveBlogPost} onCancel={() => setEditing(null)} saving={saving} />
               )}
             </div>
+          ) : section === 'warehouse' ? (
+            <WarehousePanel addToast={addToast} />
+          ) : section === 'assets' ? (
+            <AssetPanel addToast={addToast} />
           ) : section === 'dashboard' ? (
             <Dashboard
               profiles={profiles}

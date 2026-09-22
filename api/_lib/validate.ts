@@ -154,3 +154,80 @@ export function validateProfileBody(b: Record<string, unknown>): string | null {
   }
   return null;
 }
+
+/* ── Warehouse model (companies / entries / assets) ───────────────────────── */
+
+export const WAREHOUSE_ENTRY_TYPES = [
+  'bio', 'experience', 'skill', 'education', 'project', 'testimonial',
+  'note', 'article', 'research', 'contact', 'custom',
+] as const;
+
+function isPlainObject(v: unknown): boolean {
+  return v !== undefined && v !== null && typeof v === 'object' && !Array.isArray(v);
+}
+
+// A free-form JSON object (metadata / theme_config / seo). Bounded loosely.
+export function isJsonObject(v: unknown): boolean {
+  if (v === undefined || v === null) return true;
+  if (!isPlainObject(v)) return false;
+  return JSON.stringify(v).length <= LONG_TEXT;
+}
+
+export function isIdList(v: unknown): boolean {
+  if (v === undefined || v === null) return true;
+  if (!Array.isArray(v)) return false;
+  return v.every(isId);
+}
+
+export function validateCompanyBody(b: Record<string, unknown>): string | null {
+  if (!isShortText(b.name)) return 'Invalid name';
+  if (b.id !== undefined && !isId(b.id)) return 'Invalid id';
+  if (b.slug !== undefined && !isId(b.slug)) return 'Invalid slug';
+  for (const f of ['role', 'job_url', 'status', 'layout', 'tagline', 'hero_title'] as const) {
+    if (!isShortText(b[f], { required: false })) return `Invalid ${f}`;
+  }
+  for (const f of ['job_description', 'bio', 'hero_subtitle', 'philosophy_title', 'philosophy_text', 'intro_expanded_text'] as const) {
+    if (!isLongText(b[f])) return `Invalid ${f}`;
+  }
+  if (!isStringArray(b.badges)) return 'Invalid badges';
+  if (!isAboutContent(b.about_content)) return 'Invalid about_content';
+  if (!isJsonObject(b.theme_config)) return 'Invalid theme_config';
+  if (!isJsonObject(b.seo)) return 'Invalid seo';
+  if (b.social_links !== undefined && b.social_links !== null) {
+    if (!isPlainObject(b.social_links)) return 'Invalid social_links';
+    for (const [k, v] of Object.entries(b.social_links as Record<string, unknown>)) {
+      if (typeof v !== 'string' || v.length > SHORT_TEXT || k.length > 100) return 'Invalid social_links';
+    }
+  }
+  return null;
+}
+
+export function validateWarehouseEntryBody(b: Record<string, unknown>): string | null {
+  if (b.id !== undefined && !isId(b.id)) return 'Invalid id';
+  if (!isShortText(b.type)) return 'Invalid type';
+  if (!isShortText(b.title)) return 'Invalid title';
+  if (!isLongText(b.content)) return 'Invalid content';
+  if (!isJsonObject(b.metadata)) return 'Invalid metadata';
+  if (!isStringArray(b.tags)) return 'Invalid tags';
+  if (b.company_ids !== undefined && !isIdList(b.company_ids)) return 'Invalid company_ids';
+  if (b.asset_ids !== undefined && !isIdList(b.asset_ids)) return 'Invalid asset_ids';
+  if (b.sort_order !== undefined && b.sort_order !== null && typeof b.sort_order !== 'number') {
+    return 'Invalid sort_order';
+  }
+  if (b.is_hidden !== undefined && b.is_hidden !== null && typeof b.is_hidden !== 'boolean') {
+    return 'Invalid is_hidden';
+  }
+  return null;
+}
+
+export function validateAssetBody(b: Record<string, unknown>, { requireId = true } = {}): string | null {
+  if (requireId && !isId(b.id)) return 'Invalid id';
+  if (!isShortText(b.filename)) return 'Invalid filename';
+  if (!isShortText(b.url)) return 'Invalid url';
+  for (const f of ['mime_type'] as const) {
+    if (!isShortText(b[f], { required: false })) return `Invalid ${f}`;
+  }
+  if (!isLongText(b.description)) return 'Invalid description';
+  if (!isStringArray(b.tags)) return 'Invalid tags';
+  return null;
+}
