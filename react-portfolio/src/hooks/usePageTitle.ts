@@ -15,7 +15,9 @@ export function usePageTitle() {
     // Detail pages set their own title (and OG tags) via usePageMeta.
     const isDetailPage =
       (location.pathname.startsWith('/projects/') && location.pathname !== '/projects') ||
-      (location.pathname.startsWith('/blog/') && location.pathname !== '/blog');
+      (location.pathname.startsWith('/blog/') && location.pathname !== '/blog') ||
+      location.pathname.startsWith('/c/') ||
+      location.pathname.startsWith('/company/');
     if (isDetailPage) return;
     document.title = TITLES[location.pathname] || 'Ndouken Theryx | Product Designer & Builder';
   }, [location.pathname]);

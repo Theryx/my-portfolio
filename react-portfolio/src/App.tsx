@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Layout from './components/Layout';
 import { usePageTitle } from './hooks/usePageTitle';
@@ -18,8 +18,7 @@ const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
 const BlogPostDetail = lazy(() => import('./pages/BlogPostDetail'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Admin = lazy(() => import('./pages/Admin'));
-const CompanyPage = lazy(() => import('./pages/CompanyPage'));
-const JitoPage = lazy(() => import('./pages/companies/jito/Page'));
+const CompanyRouter = lazy(() => import('./pages/companies/CompanyRouter'));
 
 function AdminRoute() {
   return <Suspense fallback={<LoadingScreen />}><Admin /></Suspense>;
@@ -50,11 +49,9 @@ function AnimatedRoutes() {
           <Route path="/projects/:id" element={<Suspense fallback={<LoadingScreen />}><ProjectDetail /></Suspense>} />
           <Route path="/blog" element={<Suspense fallback={<LoadingScreen />}><Blog /></Suspense>} />
           <Route path="/blog/:id" element={<Suspense fallback={<LoadingScreen />}><BlogPostDetail /></Suspense>} />
-          <Route path="/trust-wallet" element={<Suspense fallback={<LoadingScreen />}><CompanyPage slug="trust-wallet" /></Suspense>} />
-          <Route path="/c/jito" element={<Suspense fallback={<LoadingScreen />}><JitoPage /></Suspense>} />
-          <Route path="/company/jito" element={<Suspense fallback={<LoadingScreen />}><JitoPage /></Suspense>} />
-          <Route path="/c/:slug" element={<Suspense fallback={<LoadingScreen />}><CompanyPage /></Suspense>} />
-          <Route path="/company/:slug" element={<Suspense fallback={<LoadingScreen />}><CompanyPage /></Suspense>} />
+          <Route path="/trust-wallet" element={<Navigate to="/c/trust-wallet" replace />} />
+          <Route path="/c/:slug/*" element={<Suspense fallback={<LoadingScreen />}><CompanyRouter /></Suspense>} />
+          <Route path="/company/:slug/*" element={<Suspense fallback={<LoadingScreen />}><CompanyRouter /></Suspense>} />
           <Route path="/admin" element={<AdminRoute />} />
           <Route path="*" element={<Suspense fallback={<LoadingScreen />}><NotFound /></Suspense>} />
         </Routes>

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
-import Page from '../pages/companies/jito/Page';
+import CompanyRouter from '../pages/companies/CompanyRouter';
 
 vi.mock('../lib/api', () => {
   const mockCompany = {
@@ -9,33 +9,33 @@ vi.mock('../lib/api', () => {
     name: 'Jito Foundation',
     slug: 'jito',
     role: 'Product Designer',
-    tagline: 'Designing the layer where execution speed becomes trust.',
-    hero_title: 'Clear at a glance. Fast under pressure.',
-    hero_subtitle: 'Product designer for dense, high-stakes financial surfaces.',
-    badges: ['Product Design', 'Token-based design systems'],
+    tagline: 'Product designer working across fintech and design systems.',
+    hero_title: 'Ndouken Theryx',
+    hero_subtitle: 'Product designer with four years in regulated fintech.',
+    badges: ['Fintech', 'Design systems'],
     job_url: 'https://jobs.lever.co/jito/97151aba-e3eb-483d-b56c-34711b873760',
-    philosophy_text: 'In a trading app, clarity is the product.',
+    philosophy_text: 'Clarity is the product.',
     social_links: {
       email: 'ndouken@gmail.com',
       linkedin: 'https://www.linkedin.com/in/ndoukentheryx',
       resume: 'https://example.com/cv.pdf',
     },
-    about_content: {
-      faqs: [{ question: 'You have not designed a trading terminal. Why JTX?', answer: 'Honest answer.' }],
-    },
+    about_content: {},
   };
 
   const mockProjects = [
     {
       id: 'paysika_fintech',
-      tag: 'Product Design / Payments',
+      tag: 'Product Design',
       title: 'PaySika',
       role: 'UX Design Lead',
       period: '2022 - 2026',
-      description: 'Payments, KYC and transactions for African fintech.',
+      tagline: 'Payments, KYC and transactions for African fintech.',
+      description: 'Payments and KYC.',
       impact: '40% retention lift.',
       image: '',
       responsibilities: ['Redesigned KYC'],
+      is_hidden: false,
     },
   ];
 
@@ -44,7 +44,10 @@ vi.mock('../lib/api', () => {
       id: 'fintech_trust',
       title: 'Why African fintech UX has to start with trust',
       excerpt: 'Trust is the product.',
+      date: 'April 2026',
+      read_time: '6 min read',
       image: '',
+      is_hidden: false,
     },
   ];
 
@@ -55,22 +58,23 @@ vi.mock('../lib/api', () => {
   };
 });
 
-describe('Jito company page', () => {
-  it('renders the hero, a case study and the CTA', async () => {
+describe('Jito company mini-site', () => {
+  it('renders the shell, selected work and nav', async () => {
     render(
       <MemoryRouter initialEntries={['/c/jito']}>
         <Routes>
-          <Route path="/c/jito" element={<Page />} />
+          <Route path="/c/:slug/*" element={<CompanyRouter />} />
         </Routes>
       </MemoryRouter>
     );
 
     await waitFor(() => {
-      expect(screen.getByText(/Clear at a glance/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/Ndouken Theryx/).length).toBeGreaterThan(0);
       expect(screen.getByText('PaySika')).toBeInTheDocument();
     });
 
-    expect(screen.getByText(/Start a conversation/i)).toBeInTheDocument();
-    expect(screen.getByText(/Let us make JTX/i)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Work' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'About' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Writing' })).toBeInTheDocument();
   });
 });

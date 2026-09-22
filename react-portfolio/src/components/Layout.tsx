@@ -28,6 +28,10 @@ export default function Layout({ children }: LayoutProps) {
   });
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/admin');
+  // Company microsites are self-contained: they bring their own nav and footer,
+  // so the global chrome is skipped for them.
+  const isCompanySite =
+    location.pathname.startsWith('/c/') || location.pathname.startsWith('/company/');
   const { profile } = useProfile();
   const resumeUrl = profile?.social_links?.resume || DEFAULT_RESUME_URL;
   const contactEmail = profile?.social_links?.email || 'ndouken@gmail.com';
@@ -42,6 +46,14 @@ export default function Layout({ children }: LayoutProps) {
   }, [isDark]);
 
   const toggleTheme = () => setIsDark(prev => !prev);
+
+  if (isCompanySite) {
+    return (
+      <div className="layout">
+        <main className="main-content">{children}</main>
+      </div>
+    );
+  }
 
   // The footer CTA points to the next place worth visiting, based on where the
   // visitor currently is: Home → About, About → Projects, Projects → Blog.

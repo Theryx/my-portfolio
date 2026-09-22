@@ -1,0 +1,26 @@
+import { lazy, type ComponentType, type ReactNode } from 'react';
+
+// A company microsite is a self-contained mini-site: its own shell (nav +
+// footer) and its own pages. Each entry below points at one company's module.
+// Companies without an entry fall back to the generic single-page brief.
+export interface CompanySiteModule {
+  Site: ComponentType<{ children: ReactNode }>;
+  Home: ComponentType;
+  Work: ComponentType;
+  WorkItem: ComponentType;
+  About: ComponentType;
+  Writing: ComponentType;
+  WritingItem: ComponentType;
+}
+
+export const companySites: Record<string, CompanySiteModule> = {
+  jito: {
+    Site: lazy(() => import('./jito/Site')),
+    Home: lazy(() => import('./jito/Home')),
+    Work: lazy(() => import('./jito/Work')),
+    WorkItem: lazy(() => import('./jito/WorkItem')),
+    About: lazy(() => import('./jito/About')),
+    Writing: lazy(() => import('./jito/Writing')),
+    WritingItem: lazy(() => import('./jito/WritingItem')),
+  },
+};
