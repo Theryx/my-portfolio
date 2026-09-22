@@ -74,7 +74,12 @@
       "Bash(git -C \"D:/Personal/Portfolio\" add react-portfolio/src/data/blog.ts react-portfolio/src/data/projects.ts)",
       "Bash(grep -v '^\\\\S*://.*//')",
       "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('scripts',{}\\),indent=2\\)\\)\")",
-      "Bash(python -c \"import json; d=json.load\\(open\\('D:/Personal/Portfolio/react-portfolio/package.json'\\)\\); print\\(json.dumps\\(d.get\\('scripts',{}\\),indent=2\\)\\)\")"
+      "Bash(python -c \"import json; d=json.load\\(open\\('D:/Personal/Portfolio/react-portfolio/package.json'\\)\\); print\\(json.dumps\\(d.get\\('scripts',{}\\),indent=2\\)\\)\")",
+      "Bash(curl -s \"https://react-portfolio-pi-topaz.vercel.app/api/projects?profile_id=brand-designer\")",
+      "Bash(curl -s \"https://react-portfolio-pi-topaz.vercel.app/api/blog?profile_id=brand-designer\")",
+      "Bash(ls -la .env* react-portfolio/.env*)",
+      "Bash(cat api/_lib/db.ts)",
+      "Bash(command -v pdftocairo pdfimages)"
     ]
   },
   "enableAllProjectMcpServers": true,

@@ -4,6 +4,10 @@
     "neon": {
       "type": "remote",
       "url": "https://mcp.neon.tech/mcp"
+    },
+    "supabase": {
+      "type": "remote",
+      "url": "https://mcp.supabase.com/mcp"
     }
   }
 }
