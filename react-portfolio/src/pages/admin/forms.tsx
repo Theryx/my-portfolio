@@ -1,226 +1,109 @@
 import { useState } from 'react';
 import { MarkdownEditor } from '../../components/MarkdownEditor';
-import { changePassword, type Profile, type Project, type BlogPost, type ProjectBlock } from '../../lib/api';
+import { changePassword, type Profile, type Project, type BlogPost, type ProjectBlock, type Company } from '../../lib/api';
 import { PasswordInput, ImageField, ArrayEditor, FaqEditor, CheckboxGroup, SpeakingImagesEditor } from './fields';
 import { BlockBuilder } from './BlockBuilder';
 
-// The page forms below each edit a slice of a profile but SAVE THE WHOLE object
-// (the API upserts every column, so a partial body would blank the rest). They
-// spread the loaded profile and override only their fields, merging social_links.
+// The forms below each edit a slice of a company but SAVE THE WHOLE object (the
+// API upserts every column, so a partial body would blank the rest). They spread
+// the loaded company and override only their fields, merging social_links.
 
-/* ─── Home page form ────────────────────────────────────────────────────── */
+/* ─── Company (microsite) form ──────────────────────────────────────────── */
 
-export function HomeForm({ profile, onSave, onCancel, saving }: {
-  profile: Profile;
-  onSave: (p: Partial<Profile>) => void;
-  onCancel: () => void;
-  saving: boolean;
-}) {
-  const [heroTitle, setHeroTitle] = useState(profile.hero_title || '');
-  const [heroSubtitle, setHeroSubtitle] = useState(profile.hero_subtitle || '');
-  const [introExpandedText, setIntroExpandedText] = useState(profile.intro_expanded_text || '');
-  const [now, setNow] = useState(profile.social_links?.now || '');
-  const [metricLabel, setMetricLabel] = useState(profile.social_links?.metric_label || '');
+const COMPANY_STATUSES = ['draft', 'published', 'archived'];
+const COMPANY_LAYOUTS = ['default', 'minimal', 'candidate-brief', 'bento'];
 
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSave({
-      ...profile,
-      hero_title: heroTitle,
-      hero_subtitle: heroSubtitle,
-      intro_expanded_text: introExpandedText,
-      social_links: { ...profile.social_links, now, metric_label: metricLabel },
-    });
-  };
-
-  return (
-    <form className="cms-form" onSubmit={submit}>
-      <fieldset className="cms-form__section">
-        <legend>Hero</legend>
-        <div className="cms-field">
-          <label htmlFor="hf-hero-title">Hero title</label>
-          <input id="hf-hero-title" value={heroTitle} onChange={(e) => setHeroTitle(e.target.value)} placeholder="e.g. Product Designer & Builder" />
-          <p className="cms-field__hint">The role shown after your name in the intro card.</p>
-        </div>
-        <div className="cms-field">
-          <label htmlFor="hf-hero-subtitle">Hero subtitle</label>
-          <textarea id="hf-hero-subtitle" value={heroSubtitle} onChange={(e) => setHeroSubtitle(e.target.value)} rows={3} placeholder="The sentence under your name in the intro card." />
-        </div>
-      </fieldset>
-
-      <fieldset className="cms-form__section">
-        <legend>Intro expander (“click to expand” card)</legend>
-        <p className="cms-field__hint">Shown as a second paragraph when a visitor expands your intro card on the home page, independent of the About page's Philosophy section.</p>
-        <div className="cms-field">
-          <label htmlFor="hf-intro-expanded">Expander text</label>
-          <textarea id="hf-intro-expanded" value={introExpandedText} onChange={(e) => setIntroExpandedText(e.target.value)} rows={4} />
-        </div>
-      </fieldset>
-
-      <fieldset className="cms-form__section">
-        <legend>Bento tiles</legend>
-        <div className="cms-field">
-          <label htmlFor="hf-now">“Now” status</label>
-          <input id="hf-now" value={now} onChange={(e) => setNow(e.target.value)} placeholder="e.g. Shipping my next venture with AI-assisted design & code" />
-          <p className="cms-field__hint">Shown in the “Now” tile on the home page.</p>
-        </div>
-        <div className="cms-field">
-          <label htmlFor="hf-metric">Years-metric label</label>
-          <input id="hf-metric" value={metricLabel} onChange={(e) => setMetricLabel(e.target.value)} placeholder="e.g. years designing & building products" />
-          <p className="cms-field__hint">Caption under the auto-counted years number.</p>
-        </div>
-      </fieldset>
-
-      <div className="cms-form__actions">
-        <button type="submit" disabled={saving} className="cms-btn cms-btn--primary">{saving ? 'Saving…' : 'Save home page'}</button>
-        <button type="button" onClick={onCancel} className="cms-btn">Cancel</button>
-      </div>
-    </form>
-  );
+// Parse a JSON-object textarea into an object, returning an error message when
+// the text is not a valid JSON object.
+function parseJsonObject(text: string, label: string): { value?: Record<string, unknown>; error?: string } {
+  if (!text.trim()) return { value: {} };
+  try {
+    const parsed = JSON.parse(text);
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+      return { error: `${label} must be a JSON object.` };
+    }
+    return { value: parsed as Record<string, unknown> };
+  } catch (e) {
+    return { error: `${label} is not valid JSON: ${(e as Error).message}` };
+  }
 }
 
-/* ─── About page form ───────────────────────────────────────────────────── */
-
-export function AboutForm({ profile, onSave, onCancel, saving }: {
-  profile: Profile;
-  onSave: (p: Partial<Profile>) => void;
+export function CompanyForm({ company, onSave, onCancel, saving }: {
+  company: Company | null;
+  onSave: (c: Partial<Company>) => void;
   onCancel: () => void;
   saving: boolean;
 }) {
-  const [bio, setBio] = useState(profile.bio || '');
-  const [tagline, setTagline] = useState(profile.tagline || '');
-  const [philosophyTitle, setPhilosophyTitle] = useState(profile.philosophy_title || '');
-  const [philosophyText, setPhilosophyText] = useState(profile.philosophy_text || '');
-  const [about, setAboutState] = useState(profile.about_content || {});
+  const [id, setId] = useState(company?.id || '');
+  const [name, setName] = useState(company?.name || '');
+  const [slug, setSlug] = useState(company?.slug || company?.id || '');
+  const [status, setStatus] = useState(company?.status || 'published');
+  const [layout, setLayout] = useState(company?.layout || 'default');
+  const [role, setRole] = useState(company?.role || '');
+  const [isActive, setIsActive] = useState(company?.is_active ?? true);
+
+  const [jobUrl, setJobUrl] = useState(company?.job_url || '');
+  const [jobDescription, setJobDescription] = useState(company?.job_description || '');
+
+  const [heroTitle, setHeroTitle] = useState(company?.hero_title || '');
+  const [heroSubtitle, setHeroSubtitle] = useState(company?.hero_subtitle || '');
+  const [tagline, setTagline] = useState(company?.tagline || '');
+  const [badges, setBadges] = useState<string[]>(company?.badges || []);
+
+  const [philosophyTitle, setPhilosophyTitle] = useState(company?.philosophy_title || '');
+  const [philosophyText, setPhilosophyText] = useState(company?.philosophy_text || '');
+  const [introExpandedText, setIntroExpandedText] = useState(company?.intro_expanded_text || '');
+
+  const [bio, setBio] = useState(company?.bio || '');
+  const [about, setAboutState] = useState(company?.about_content || {});
   const setAbout = (k: string, v: unknown) => setAboutState((a) => ({ ...a, [k]: v }));
 
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSave({
-      ...profile,
-      bio,
-      tagline,
-      philosophy_title: philosophyTitle,
-      philosophy_text: philosophyText,
-      about_content: about,
-    });
-  };
-
-  return (
-    <form className="cms-form" onSubmit={submit}>
-      <fieldset className="cms-form__section">
-        <legend>Intro</legend>
-        <div className="cms-field">
-          <label htmlFor="af-bio">Bio</label>
-          <textarea id="af-bio" value={bio} onChange={(e) => setBio(e.target.value)} rows={4} />
-        </div>
-        <div className="cms-field">
-          <label htmlFor="af-tagline">Tagline</label>
-          <textarea id="af-tagline" value={tagline} onChange={(e) => setTagline(e.target.value)} rows={2} />
-        </div>
-        <div className="cms-form__grid">
-          <div className="cms-field">
-            <label htmlFor="af-location">Location</label>
-            <input id="af-location" value={about.location ?? ''} onChange={(e) => setAbout('location', e.target.value)} placeholder="e.g. Douala" />
-          </div>
-          <div className="cms-field">
-            <label htmlFor="af-location-label">Location caption</label>
-            <input id="af-location-label" value={about.location_label ?? ''} onChange={(e) => setAbout('location_label', e.target.value)} placeholder="e.g. Cameroon 🇨🇲" />
-          </div>
-        </div>
-        <div className="cms-form__grid">
-          <div className="cms-field">
-            <label htmlFor="af-languages">Languages</label>
-            <input id="af-languages" value={about.languages ?? ''} onChange={(e) => setAbout('languages', e.target.value)} placeholder="e.g. EN & FR" />
-          </div>
-          <div className="cms-field">
-            <label htmlFor="af-languages-label">Languages caption</label>
-            <input id="af-languages-label" value={about.languages_label ?? ''} onChange={(e) => setAbout('languages_label', e.target.value)} placeholder="e.g. Bilingual, fully fluent" />
-          </div>
-        </div>
-        <div className="cms-field">
-          <label htmlFor="af-funfact">Fun fact</label>
-          <textarea id="af-funfact" value={about.fun_fact ?? ''} onChange={(e) => setAbout('fun_fact', e.target.value)} rows={2} />
-        </div>
-      </fieldset>
-
-      <fieldset className="cms-form__section">
-        <legend>Philosophy</legend>
-        <p className="cms-field__hint">Shown only on this About page, independent of the home page's intro expander.</p>
-        <div className="cms-field">
-          <label htmlFor="af-philo-title">Philosophy title</label>
-          <input id="af-philo-title" value={philosophyTitle} onChange={(e) => setPhilosophyTitle(e.target.value)} />
-        </div>
-        <div className="cms-field">
-          <label htmlFor="af-philo-text">Philosophy text</label>
-          <textarea id="af-philo-text" value={philosophyText} onChange={(e) => setPhilosophyText(e.target.value)} rows={4} />
-        </div>
-      </fieldset>
-
-      <fieldset className="cms-form__section">
-        <legend>Research &amp; speaking</legend>
-        <div className="cms-field">
-          <label htmlFor="af-speaking-intro">Intro</label>
-          <textarea id="af-speaking-intro" value={about.speaking_intro ?? ''} onChange={(e) => setAbout('speaking_intro', e.target.value)} rows={4} placeholder="Wrap **text** in double asterisks for bold. Use a blank line to separate paragraphs." />
-        </div>
-        <SpeakingImagesEditor
-          value={about.speaking_images ?? (about.speaking_image ? [about.speaking_image] : [])}
-          onChange={(urls) => {
-            setAbout('speaking_images', urls);
-            // Keep speaking_image in sync so older consumers still get a value.
-            setAbout('speaking_image', urls[0] ?? '');
-          }}
-        />
-      </fieldset>
-
-      <fieldset className="cms-form__section">
-        <legend>FAQs</legend>
-        <FaqEditor
-          label="Frequently asked questions"
-          value={about.faqs ?? []}
-          onChange={(v) => setAbout('faqs', v)}
-          hint="Question-and-answer pairs shown in the FAQ accordion."
-        />
-      </fieldset>
-
-      <div className="cms-form__actions">
-        <button type="submit" disabled={saving} className="cms-btn cms-btn--primary">{saving ? 'Saving…' : 'Save about page'}</button>
-        <button type="button" onClick={onCancel} className="cms-btn">Cancel</button>
-      </div>
-    </form>
-  );
-}
-
-/* ─── Profile meta form (identity, links, page intros) ──────────────────── */
-
-export function ProfileMetaForm({ profile, onSave, onCancel, saving }: {
-  profile: Profile | null;
-  onSave: (p: Partial<Profile>) => void;
-  onCancel: () => void;
-  saving: boolean;
-}) {
-  const [id, setId] = useState(profile?.id || '');
-  const [name, setName] = useState(profile?.name || '');
-  const [isActive, setIsActive] = useState(profile?.is_active ?? true);
-  const [badges, setBadges] = useState<string[]>(profile?.badges || []);
-  const links = profile?.social_links ?? {};
+  const links = company?.social_links ?? {};
   const [email, setEmail] = useState(links.email || '');
   const [linkedin, setLinkedin] = useState(links.linkedin || '');
   const [resume, setResume] = useState(links.resume || '');
   const [projectsIntro, setProjectsIntro] = useState(links.projects_intro || '');
   const [blogIntro, setBlogIntro] = useState(links.blog_intro || '');
-  const isNew = !profile?.id;
+
+  const [themeText, setThemeText] = useState(() => JSON.stringify(company?.theme_config ?? {}, null, 2));
+  const [seoText, setSeoText] = useState(() => JSON.stringify(company?.seo ?? {}, null, 2));
+  const [jsonError, setJsonError] = useState<string | null>(null);
+
+  const isNew = !company?.id;
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
+    const theme = parseJsonObject(themeText, 'Theme config');
+    const seo = parseJsonObject(seoText, 'SEO');
+    if (theme.error || seo.error) {
+      setJsonError(theme.error || seo.error || null);
+      return;
+    }
+    setJsonError(null);
     onSave({
-      ...(profile ?? {}),
+      ...(company ?? {}),
       id,
       name,
+      slug: slug || id,
+      status,
+      layout,
+      role,
       is_active: isActive,
+      job_url: jobUrl,
+      job_description: jobDescription,
+      hero_title: heroTitle,
+      hero_subtitle: heroSubtitle,
+      tagline,
       badges,
+      philosophy_title: philosophyTitle,
+      philosophy_text: philosophyText,
+      intro_expanded_text: introExpandedText,
+      bio,
+      about_content: about,
+      theme_config: theme.value,
+      seo: seo.value,
       social_links: {
-        ...(profile?.social_links ?? {}),
+        ...(company?.social_links ?? {}),
         email,
         linkedin,
         resume,
@@ -236,57 +119,185 @@ export function ProfileMetaForm({ profile, onSave, onCancel, saving }: {
         <legend>Identity</legend>
         <div className="cms-form__grid">
           <div className="cms-field">
-            <label htmlFor="pm-id">Profile ID (slug)</label>
-            <input id="pm-id" value={id} onChange={(e) => setId(e.target.value)} placeholder="e.g. product-design, design-engineer" required disabled={!isNew} />
-            {!isNew && <p className="cms-field__hint">The ID can't change once created; it's part of shared URLs.</p>}
+            <label htmlFor="cf-id">Company ID</label>
+            <input id="cf-id" value={id} onChange={(e) => setId(e.target.value)} placeholder="e.g. trust-wallet" required disabled={!isNew} />
+            {!isNew
+              ? <p className="cms-field__hint">The ID can't change once created; it's part of shared URLs.</p>
+              : <p className="cms-field__hint">Lowercase letters, numbers, "-" and "_".</p>}
           </div>
           <div className="cms-field">
-            <label htmlFor="pm-name">Display name</label>
-            <input id="pm-name" value={name} onChange={(e) => setName(e.target.value)} required />
+            <label htmlFor="cf-name">Display name</label>
+            <input id="cf-name" value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Trust Wallet" required />
+          </div>
+        </div>
+        <div className="cms-form__grid">
+          <div className="cms-field">
+            <label htmlFor="cf-slug">URL slug</label>
+            <input id="cf-slug" value={slug} onChange={(e) => setSlug(e.target.value)} placeholder="e.g. trust-wallet" />
+            <p className="cms-field__hint">Public microsite: <code>/c/{slug || id || 'slug'}</code></p>
+          </div>
+          <div className="cms-field">
+            <label htmlFor="cf-role">Target role</label>
+            <input id="cf-role" value={role} onChange={(e) => setRole(e.target.value)} placeholder="e.g. Design Engineer" />
+          </div>
+        </div>
+        <div className="cms-form__grid">
+          <div className="cms-field">
+            <label htmlFor="cf-status">Status</label>
+            <select id="cf-status" value={status} onChange={(e) => setStatus(e.target.value)}>
+              {COMPANY_STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
+            </select>
+          </div>
+          <div className="cms-field">
+            <label htmlFor="cf-layout">Layout</label>
+            <select id="cf-layout" value={layout} onChange={(e) => setLayout(e.target.value)}>
+              {COMPANY_LAYOUTS.map((l) => <option key={l} value={l}>{l}</option>)}
+            </select>
           </div>
         </div>
         <label className="cms-check">
           <input type="checkbox" checked={isActive} onChange={(e) => setIsActive(e.target.checked)} />
-          Active: visitors landing on the site without a <code>?profile=</code> link see the first active profile
+          Active: visitors landing on the site without a <code>?profile=</code> link see the first active company
         </label>
+      </fieldset>
+
+      <fieldset className="cms-form__section">
+        <legend>Job context</legend>
+        <div className="cms-field">
+          <label htmlFor="cf-job-url">Job posting URL</label>
+          <input id="cf-job-url" value={jobUrl} onChange={(e) => setJobUrl(e.target.value)} placeholder="https://jobs.ashbyhq.com/…" />
+        </div>
+        <div className="cms-field">
+          <label htmlFor="cf-job-desc">Job description</label>
+          <textarea id="cf-job-desc" value={jobDescription} onChange={(e) => setJobDescription(e.target.value)} rows={5} placeholder="Paste the role's mandate / requirements." />
+        </div>
+      </fieldset>
+
+      <fieldset className="cms-form__section">
+        <legend>Hero</legend>
+        <div className="cms-field">
+          <label htmlFor="cf-hero-title">Hero title</label>
+          <input id="cf-hero-title" value={heroTitle} onChange={(e) => setHeroTitle(e.target.value)} placeholder="e.g. From Figma to React Native." />
+        </div>
+        <div className="cms-field">
+          <label htmlFor="cf-hero-subtitle">Hero subtitle</label>
+          <textarea id="cf-hero-subtitle" value={heroSubtitle} onChange={(e) => setHeroSubtitle(e.target.value)} rows={3} />
+        </div>
+        <div className="cms-field">
+          <label htmlFor="cf-tagline">Tagline</label>
+          <textarea id="cf-tagline" value={tagline} onChange={(e) => setTagline(e.target.value)} rows={2} />
+        </div>
+        <ArrayEditor label="Badges" values={badges} onChange={setBadges} placeholder="e.g. Design Systems & Tokens" />
+      </fieldset>
+
+      <fieldset className="cms-form__section">
+        <legend>Philosophy &amp; intro</legend>
+        <div className="cms-field">
+          <label htmlFor="cf-philo-title">Philosophy title</label>
+          <input id="cf-philo-title" value={philosophyTitle} onChange={(e) => setPhilosophyTitle(e.target.value)} />
+        </div>
+        <div className="cms-field">
+          <label htmlFor="cf-philo-text">Philosophy text</label>
+          <textarea id="cf-philo-text" value={philosophyText} onChange={(e) => setPhilosophyText(e.target.value)} rows={4} />
+        </div>
+        <div className="cms-field">
+          <label htmlFor="cf-intro-expanded">Intro expander text</label>
+          <textarea id="cf-intro-expanded" value={introExpandedText} onChange={(e) => setIntroExpandedText(e.target.value)} rows={4} />
+        </div>
+      </fieldset>
+
+      <fieldset className="cms-form__section">
+        <legend>About</legend>
+        <div className="cms-field">
+          <label htmlFor="cf-bio">Bio</label>
+          <textarea id="cf-bio" value={bio} onChange={(e) => setBio(e.target.value)} rows={4} />
+        </div>
+        <div className="cms-form__grid">
+          <div className="cms-field">
+            <label htmlFor="cf-location">Location</label>
+            <input id="cf-location" value={about.location ?? ''} onChange={(e) => setAbout('location', e.target.value)} placeholder="e.g. Douala" />
+          </div>
+          <div className="cms-field">
+            <label htmlFor="cf-location-label">Location caption</label>
+            <input id="cf-location-label" value={about.location_label ?? ''} onChange={(e) => setAbout('location_label', e.target.value)} placeholder="e.g. Cameroon 🇨🇲" />
+          </div>
+        </div>
+        <div className="cms-form__grid">
+          <div className="cms-field">
+            <label htmlFor="cf-languages">Languages</label>
+            <input id="cf-languages" value={about.languages ?? ''} onChange={(e) => setAbout('languages', e.target.value)} placeholder="e.g. EN & FR" />
+          </div>
+          <div className="cms-field">
+            <label htmlFor="cf-languages-label">Languages caption</label>
+            <input id="cf-languages-label" value={about.languages_label ?? ''} onChange={(e) => setAbout('languages_label', e.target.value)} placeholder="e.g. Bilingual, fully fluent" />
+          </div>
+        </div>
+        <div className="cms-field">
+          <label htmlFor="cf-funfact">Fun fact</label>
+          <textarea id="cf-funfact" value={about.fun_fact ?? ''} onChange={(e) => setAbout('fun_fact', e.target.value)} rows={2} />
+        </div>
+        <div className="cms-field">
+          <label htmlFor="cf-speaking-intro">Research &amp; speaking intro</label>
+          <textarea id="cf-speaking-intro" value={about.speaking_intro ?? ''} onChange={(e) => setAbout('speaking_intro', e.target.value)} rows={4} placeholder="Wrap **text** in double asterisks for bold. Use a blank line to separate paragraphs." />
+        </div>
+        <SpeakingImagesEditor
+          value={about.speaking_images ?? (about.speaking_image ? [about.speaking_image] : [])}
+          onChange={(urls) => {
+            setAbout('speaking_images', urls);
+            // Keep speaking_image in sync so older consumers still get a value.
+            setAbout('speaking_image', urls[0] ?? '');
+          }}
+        />
+        <FaqEditor
+          label="Frequently asked questions"
+          value={about.faqs ?? []}
+          onChange={(v) => setAbout('faqs', v)}
+          hint="Question-and-answer pairs shown in the FAQ accordion."
+        />
       </fieldset>
 
       <fieldset className="cms-form__section">
         <legend>Contact links</legend>
         <div className="cms-field">
-          <label htmlFor="pm-email">Email</label>
-          <input id="pm-email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@example.com" />
+          <label htmlFor="cf-email">Email</label>
+          <input id="cf-email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@example.com" />
         </div>
         <div className="cms-field">
-          <label htmlFor="pm-linkedin">LinkedIn URL</label>
-          <input id="pm-linkedin" value={linkedin} onChange={(e) => setLinkedin(e.target.value)} placeholder="https://www.linkedin.com/in/…" />
+          <label htmlFor="cf-linkedin">LinkedIn URL</label>
+          <input id="cf-linkedin" value={linkedin} onChange={(e) => setLinkedin(e.target.value)} placeholder="https://www.linkedin.com/in/…" />
         </div>
         <div className="cms-field">
-          <label htmlFor="pm-resume">Résumé / CV URL</label>
-          <input id="pm-resume" value={resume} onChange={(e) => setResume(e.target.value)} placeholder="https://…" />
+          <label htmlFor="cf-resume">Résumé / CV URL</label>
+          <input id="cf-resume" value={resume} onChange={(e) => setResume(e.target.value)} placeholder="https://…" />
+        </div>
+        <div className="cms-form__grid">
+          <div className="cms-field">
+            <label htmlFor="cf-projects-intro">Projects page subtitle</label>
+            <textarea id="cf-projects-intro" value={projectsIntro} onChange={(e) => setProjectsIntro(e.target.value)} rows={2} />
+          </div>
+          <div className="cms-field">
+            <label htmlFor="cf-blog-intro">Blog page subtitle</label>
+            <textarea id="cf-blog-intro" value={blogIntro} onChange={(e) => setBlogIntro(e.target.value)} rows={2} />
+          </div>
         </div>
       </fieldset>
 
       <fieldset className="cms-form__section">
-        <legend>Page intros</legend>
+        <legend>Advanced</legend>
+        <p className="cms-field__hint">Free-form JSON merged into the microsite's theme and SEO metadata.</p>
         <div className="cms-field">
-          <label htmlFor="pm-projects-intro">Projects page subtitle</label>
-          <textarea id="pm-projects-intro" value={projectsIntro} onChange={(e) => setProjectsIntro(e.target.value)} rows={2} />
+          <label htmlFor="cf-theme">Theme config (JSON)</label>
+          <textarea id="cf-theme" value={themeText} onChange={(e) => setThemeText(e.target.value)} rows={5} spellCheck={false} style={{ fontFamily: 'monospace' }} />
         </div>
         <div className="cms-field">
-          <label htmlFor="pm-blog-intro">Blog page subtitle</label>
-          <textarea id="pm-blog-intro" value={blogIntro} onChange={(e) => setBlogIntro(e.target.value)} rows={2} />
+          <label htmlFor="cf-seo">SEO (JSON)</label>
+          <textarea id="cf-seo" value={seoText} onChange={(e) => setSeoText(e.target.value)} rows={5} spellCheck={false} style={{ fontFamily: 'monospace' }} />
         </div>
-      </fieldset>
-
-      <fieldset className="cms-form__section">
-        <legend>Badges</legend>
-        <ArrayEditor label="Badges" values={badges} onChange={setBadges} placeholder="e.g. Open to Product Design roles" />
-        <p className="cms-field__hint">Not currently shown on the public site.</p>
+        {jsonError && <p className="cms-field__hint" style={{ color: 'var(--color-error, #e5484d)' }}>{jsonError}</p>}
       </fieldset>
 
       <div className="cms-form__actions">
-        <button type="submit" disabled={saving} className="cms-btn cms-btn--primary">{saving ? 'Saving…' : 'Save profile'}</button>
+        <button type="submit" disabled={saving} className="cms-btn cms-btn--primary">{saving ? 'Saving…' : 'Save company'}</button>
         <button type="button" onClick={onCancel} className="cms-btn">Cancel</button>
       </div>
     </form>

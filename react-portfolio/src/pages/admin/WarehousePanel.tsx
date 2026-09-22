@@ -1,12 +1,15 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Plus, Pencil, Trash2, Save, X, ArrowUp, ArrowDown } from 'lucide-react';
+import { Plus, Pencil, Trash2, Save, X, Eye, EyeOff, Search, List, LayoutGrid } from 'lucide-react';
 import {
   getWarehouseEntries,
   upsertWarehouseEntry,
+  updateWarehouseEntry,
   deleteWarehouseEntry,
-  getAllProfiles,
+  getCompanies,
+  getAssets,
   type WarehouseEntry,
-  type Profile,
+  type Company,
+  type Asset,
   type CompanyLink,
 } from '../../lib/api';
 import { ArrayEditor } from './fields';
@@ -19,112 +22,21 @@ const ENTRY_TYPES = [
 type Toast = (message: string, type: 'success' | 'error') => void;
 const ID_RE = /^[a-zA-Z0-9_-]{1,100}$/;
 
+// Draft row for the per-company link editor.
+interface LinkDraft {
+  company_id: string;
+  linked: boolean;
+  sort_order: number;
+  is_visible: boolean;
+  override_content: string;
+  override_metadata: Record<string, unknown> | null;
+}
+
 function emptyEntry(): WarehouseEntry {
   return {
     id: '', type: 'note', title: '', content: '', metadata: {},
-    tags: [], is_hidden: false, sort_order: 0, company_ids: [], company_links: [],
+    tags: [], is_hidden: false, sort_order: 0, company_ids: [], asset_ids: [],
   };
-}
-
-// Normalise links whether the API returned rich links or just company_ids.
-function linksOf(e: WarehouseEntry): CompanyLink[] {
-  if (Array.isArray(e.company_links) && e.company_links.length) {
-    return e.company_links.map((l) => ({ ...l }));
-  }
-  return (e.company_ids ?? []).map((cid, i) => ({
-    company_id: cid,
-    sort_order: i,
-    is_visible: true,
-    override_content: null,
-    override_metadata: null,
-  }));
-}
-
-/** Per-company links: order, visibility and a company-only content rewrite. */
-function CompanyLinksEditor({ links, companies, onChange }: {
-  links: CompanyLink[];
-  companies: Profile[];
-  onChange: (links: CompanyLink[]) => void;
-}) {
-  const [pick, setPick] = useState('');
-  const available = companies.filter((c) => !links.some((l) => l.company_id === c.id));
-
-  const update = (i: number, patch: Partial<CompanyLink>) =>
-    onChange(links.map((l, idx) => (idx === i ? { ...l, ...patch } : l)));
-  const remove = (i: number) => onChange(links.filter((_, idx) => idx !== i));
-  const move = (i: number, dir: -1 | 1) => {
-    const j = i + dir;
-    if (j < 0 || j >= links.length) return;
-    const next = [...links];
-    [next[i], next[j]] = [next[j], next[i]];
-    onChange(next.map((l, idx) => ({ ...l, sort_order: idx })));
-  };
-  const add = (id: string) => {
-    if (!id || links.some((l) => l.company_id === id)) return;
-    onChange([...links, {
-      company_id: id, sort_order: links.length, is_visible: true,
-      override_content: null, override_metadata: null,
-    }]);
-    setPick('');
-  };
-
-  return (
-    <div className="cms-field">
-      <label>Companies</label>
-      <p className="cms-field__hint">
-        Which company microsites show this entry. Reorder, hide, or rewrite the
-        content for one company only (the override wins just for that company).
-      </p>
-      {links.length === 0 && <p className="cms-field__hint">Not shown on any company yet.</p>}
-      {links.map((l, i) => {
-        const name = companies.find((c) => c.id === l.company_id)?.name ?? l.company_id;
-        return (
-          <div
-            key={l.company_id}
-            style={{
-              border: '1px solid var(--cms-border, #33333a)', borderRadius: 8,
-              padding: 12, marginBottom: 10, display: 'flex', flexDirection: 'column', gap: 8,
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-              <strong style={{ flex: 1, minWidth: 120 }}>{name}</strong>
-              <button type="button" className="cms-icon-btn" onClick={() => move(i, -1)} disabled={i === 0} aria-label={`Move ${name} up`}>
-                <ArrowUp size={14} />
-              </button>
-              <button type="button" className="cms-icon-btn" onClick={() => move(i, 1)} disabled={i === links.length - 1} aria-label={`Move ${name} down`}>
-                <ArrowDown size={14} />
-              </button>
-              <label style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <input
-                  type="checkbox"
-                  checked={l.is_visible}
-                  onChange={(ev) => update(i, { is_visible: ev.target.checked })}
-                />
-                Visible
-              </label>
-              <button type="button" className="cms-icon-btn cms-icon-btn--danger" onClick={() => remove(i)} aria-label={`Remove ${name}`} title="Remove">
-                <X size={15} />
-              </button>
-            </div>
-            <textarea
-              rows={3}
-              placeholder="Optional: rewrite this entry's content for this company only"
-              value={l.override_content ?? ''}
-              onChange={(ev) => update(i, { override_content: ev.target.value || null })}
-            />
-          </div>
-        );
-      })}
-      {available.length > 0 && (
-        <div className="cms-field__row">
-          <select value={pick} onChange={(ev) => add(ev.target.value)} aria-label="Add a company">
-            <option value="">Add a company…</option>
-            {available.map((c) => <option key={c.id} value={c.id}>{c.name || c.id}</option>)}
-          </select>
-        </div>
-      )}
-    </div>
-  );
 }
 
 /**
@@ -133,23 +45,29 @@ function CompanyLinksEditor({ links, companies, onChange }: {
  */
 export default function WarehousePanel({ addToast }: { addToast: Toast }) {
   const [entries, setEntries] = useState<WarehouseEntry[]>([]);
-  const [companies, setCompanies] = useState<Profile[]>([]);
+  const [companies, setCompanies] = useState<Company[]>([]);
+  const [assets, setAssets] = useState<Asset[]>([]);
   const [loading, setLoading] = useState(true);
   const [typeFilter, setTypeFilter] = useState('all');
   const [search, setSearch] = useState('');
+  const [view, setView] = useState<'list' | 'grid'>('list');
   const [editing, setEditing] = useState<WarehouseEntry | null>(null);
   const [metaText, setMetaText] = useState('{}');
+  const [linkDrafts, setLinkDrafts] = useState<LinkDraft[]>([]);
   const [saving, setSaving] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState<WarehouseEntry | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const [e, c] = await Promise.all([
+      const [e, c, a] = await Promise.all([
         getWarehouseEntries({ include_hidden: true }),
-        getAllProfiles(),
+        getCompanies(),
+        getAssets(),
       ]);
       setEntries(e);
       setCompanies(c);
+      setAssets(a);
     } catch {
       addToast('Failed to load the warehouse', 'error');
     } finally {
@@ -158,6 +76,12 @@ export default function WarehousePanel({ addToast }: { addToast: Toast }) {
   }, [addToast]);
 
   useEffect(() => { load(); }, [load]);
+
+  const counts = useMemo(() => {
+    const c: Record<string, number> = { all: entries.length };
+    for (const e of entries) c[e.type] = (c[e.type] ?? 0) + 1;
+    return c;
+  }, [entries]);
 
   const visible = useMemo(() => {
     const term = search.trim().toLowerCase();
@@ -168,14 +92,45 @@ export default function WarehousePanel({ addToast }: { addToast: Toast }) {
     });
   }, [entries, typeFilter, search]);
 
+  const buildLinkDrafts = useCallback((entry: WarehouseEntry): LinkDraft[] => {
+    const byCompany = new Map((entry.company_links ?? []).map((l) => [l.company_id, l]));
+    const ids = entry.company_ids ?? [];
+    return companies.map((c) => {
+      const link = byCompany.get(c.id);
+      return {
+        company_id: c.id,
+        linked: ids.includes(c.id) || !!link,
+        sort_order: link?.sort_order ?? 0,
+        is_visible: link?.is_visible ?? true,
+        override_content: link?.override_content ?? '',
+        override_metadata: link?.override_metadata ?? null,
+      };
+    });
+  }, [companies]);
+
   const startNew = () => {
     setEditing(emptyEntry());
     setMetaText('{}');
+    setLinkDrafts(buildLinkDrafts(emptyEntry()));
   };
 
   const startEdit = (e: WarehouseEntry) => {
-    setEditing({ ...e, company_links: linksOf(e), tags: [...(e.tags ?? [])] });
+    setEditing({ ...e, company_ids: [...(e.company_ids ?? [])], tags: [...(e.tags ?? [])] });
     setMetaText(JSON.stringify(e.metadata ?? {}, null, 2));
+    setLinkDrafts(buildLinkDrafts(e));
+  };
+
+  const setLink = (companyId: string, patch: Partial<LinkDraft>) => {
+    setLinkDrafts((list) => list.map((l) => (l.company_id === companyId ? { ...l, ...patch } : l)));
+  };
+
+  const toggleAsset = (assetId: string) => {
+    setEditing((cur) => {
+      if (!cur) return cur;
+      const ids = cur.asset_ids ?? [];
+      const next = ids.includes(assetId) ? ids.filter((x) => x !== assetId) : [...ids, assetId];
+      return { ...cur, asset_ids: next };
+    });
   };
 
   const save = async () => {
@@ -195,15 +150,18 @@ export default function WarehousePanel({ addToast }: { addToast: Toast }) {
       addToast('Metadata is not valid JSON', 'error');
       return;
     }
+    const company_links: CompanyLink[] = linkDrafts
+      .filter((l) => l.linked)
+      .map((l) => ({
+        company_id: l.company_id,
+        sort_order: l.sort_order,
+        is_visible: l.is_visible,
+        override_content: l.override_content.trim() ? l.override_content : null,
+        override_metadata: l.override_metadata,
+      }));
     setSaving(true);
     try {
-      const payload: WarehouseEntry = {
-        ...editing,
-        metadata,
-        company_links: editing.company_links ?? [],
-      };
-      delete payload.company_ids;
-      await upsertWarehouseEntry(payload);
+      await upsertWarehouseEntry({ ...editing, metadata, company_links });
       addToast('Entry saved', 'success');
       setEditing(null);
       await load();
@@ -214,76 +172,172 @@ export default function WarehousePanel({ addToast }: { addToast: Toast }) {
     }
   };
 
-  const remove = async (e: WarehouseEntry) => {
-    if (!window.confirm(`Delete "${e.title}"? This cannot be undone.`)) return;
+  const toggleHidden = async (e: WarehouseEntry) => {
     try {
-      await deleteWarehouseEntry(e.id);
+      const saved = await updateWarehouseEntry(e.id, { is_hidden: !e.is_hidden });
+      setEntries((list) => list.map((x) => (x.id === saved.id ? { ...x, is_hidden: saved.is_hidden } : x)));
+      addToast(e.is_hidden ? 'Now visible' : 'Hidden', 'success');
+    } catch {
+      addToast('Failed to update visibility', 'error');
+    }
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteTarget) return;
+    try {
+      await deleteWarehouseEntry(deleteTarget.id);
       addToast('Entry deleted', 'success');
-      await load();
+      setEntries((list) => list.filter((x) => x.id !== deleteTarget.id));
     } catch {
       addToast('Delete failed', 'error');
+    } finally {
+      setDeleteTarget(null);
     }
   };
 
   if (editing) {
     const exists = entries.some((e) => e.id === editing.id);
+    const selectedAssets = new Set(editing.asset_ids ?? []);
     return (
       <section aria-label="Warehouse entry editor">
         <div className="cms-list-header">
           <h2 style={{ margin: 0 }}>{exists ? 'Edit entry' : 'New entry'}</h2>
+          <button className="cms-btn cms-btn--ghost" onClick={() => setEditing(null)} disabled={saving}>
+            <X size={15} /> Cancel
+          </button>
         </div>
         <div className="cms-editor">
-          <div className="cms-field">
-            <label>Id</label>
-            <input
-              value={editing.id}
-              onChange={(ev) => setEditing({ ...editing, id: ev.target.value })}
-              placeholder="e.g. experience-paysika"
-              disabled={exists}
-            />
-          </div>
-          <div className="cms-field">
-            <label>Type</label>
-            <select value={editing.type} onChange={(ev) => setEditing({ ...editing, type: ev.target.value })}>
-              {ENTRY_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
-            </select>
-          </div>
-          <div className="cms-field">
-            <label>Title</label>
-            <input value={editing.title} onChange={(ev) => setEditing({ ...editing, title: ev.target.value })} />
-          </div>
-          <div className="cms-field">
-            <label>Content (markdown)</label>
-            <textarea rows={10} value={editing.content} onChange={(ev) => setEditing({ ...editing, content: ev.target.value })} />
-          </div>
-          <ArrayEditor label="Tags" values={editing.tags ?? []} onChange={(tags) => setEditing({ ...editing, tags })} />
-          <div className="cms-field">
-            <label>Metadata (JSON)</label>
-            <textarea rows={6} value={metaText} onChange={(ev) => setMetaText(ev.target.value)} spellCheck={false} style={{ fontFamily: 'monospace' }} />
-          </div>
-          <CompanyLinksEditor
-            links={editing.company_links ?? []}
-            companies={companies}
-            onChange={(company_links) => setEditing({ ...editing, company_links })}
-          />
-          <div className="cms-field__row" style={{ alignItems: 'center' }}>
-            <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <input type="checkbox" checked={editing.is_hidden} onChange={(ev) => setEditing({ ...editing, is_hidden: ev.target.checked })} />
-              Hidden
-            </label>
-            <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              Sort order
-              <input
-                type="number"
-                value={editing.sort_order}
-                onChange={(ev) => setEditing({ ...editing, sort_order: Number(ev.target.value) })}
-                style={{ width: 90 }}
-              />
-            </label>
-          </div>
-          <div className="cms-field__row">
+          <fieldset className="cms-form__section">
+            <legend>Basics</legend>
+            <div className="cms-form__grid">
+              <div className="cms-field">
+                <label>Id</label>
+                <input
+                  value={editing.id}
+                  onChange={(ev) => setEditing({ ...editing, id: ev.target.value })}
+                  placeholder="e.g. experience-paysika"
+                  disabled={exists}
+                />
+              </div>
+              <div className="cms-field">
+                <label>Type</label>
+                <select value={editing.type} onChange={(ev) => setEditing({ ...editing, type: ev.target.value })}>
+                  {ENTRY_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
+                </select>
+              </div>
+            </div>
+            <div className="cms-field">
+              <label>Title</label>
+              <input value={editing.title} onChange={(ev) => setEditing({ ...editing, title: ev.target.value })} />
+            </div>
+            <div className="cms-field">
+              <label>Content (markdown)</label>
+              <textarea rows={10} value={editing.content} onChange={(ev) => setEditing({ ...editing, content: ev.target.value })} />
+            </div>
+            <ArrayEditor label="Tags" values={editing.tags ?? []} onChange={(tags) => setEditing({ ...editing, tags })} />
+          </fieldset>
+
+          <fieldset className="cms-form__section">
+            <legend>Companies</legend>
+            <p className="cms-field__hint">Link this entry to one or more microsites, with per-company ordering and visibility.</p>
+            {companies.length === 0 ? (
+              <p className="cms-field__hint">No companies yet. Create one in the Companies section.</p>
+            ) : (
+              <div className="cms-links">
+                {linkDrafts.map((l) => {
+                  const company = companies.find((c) => c.id === l.company_id);
+                  return (
+                    <div key={l.company_id} className={`cms-link-row ${l.linked ? 'cms-link-row--on' : ''}`}>
+                      <label className="cms-link-row__main">
+                        <input
+                          type="checkbox"
+                          checked={l.linked}
+                          onChange={(ev) => setLink(l.company_id, { linked: ev.target.checked })}
+                        />
+                        <span className="cms-link-row__name">{company?.name || l.company_id}</span>
+                      </label>
+                      {l.linked && (
+                        <div className="cms-link-row__opts">
+                          <label title="Order within the company">
+                            #
+                            <input
+                              type="number"
+                              value={l.sort_order}
+                              onChange={(ev) => setLink(l.company_id, { sort_order: Number(ev.target.value) || 0 })}
+                            />
+                          </label>
+                          <label title="Visible on this company">
+                            <input
+                              type="checkbox"
+                              checked={l.is_visible}
+                              onChange={(ev) => setLink(l.company_id, { is_visible: ev.target.checked })}
+                            />
+                            Visible
+                          </label>
+                        </div>
+                      )}
+                      {l.linked && (
+                        <details className="cms-link-row__override">
+                          <summary>Content override</summary>
+                          <textarea
+                            rows={4}
+                            value={l.override_content}
+                            placeholder="Leave empty to use the entry's content as-is."
+                            onChange={(ev) => setLink(l.company_id, { override_content: ev.target.value })}
+                          />
+                        </details>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </fieldset>
+
+          <fieldset className="cms-form__section">
+            <legend>Assets</legend>
+            <p className="cms-field__hint">Attach files from the asset library to this entry.</p>
+            {assets.length === 0 ? (
+              <p className="cms-field__hint">No assets yet. Upload some in the Assets section.</p>
+            ) : (
+              <div className="cms-asset-picker">
+                {assets.map((a) => (
+                  <label key={a.id} className={`cms-asset-chip ${selectedAssets.has(a.id) ? 'cms-asset-chip--on' : ''}`}>
+                    <input type="checkbox" checked={selectedAssets.has(a.id)} onChange={() => toggleAsset(a.id)} />
+                    <span>{a.filename}</span>
+                  </label>
+                ))}
+              </div>
+            )}
+          </fieldset>
+
+          <fieldset className="cms-form__section">
+            <legend>Metadata & ordering</legend>
+            <div className="cms-field">
+              <label>Metadata (JSON)</label>
+              <textarea rows={6} value={metaText} onChange={(ev) => setMetaText(ev.target.value)} spellCheck={false} style={{ fontFamily: 'monospace' }} />
+              <p className="cms-field__hint">Structured fields (tag, role, impact, content_blocks…) for project and article entries.</p>
+            </div>
+            <div className="cms-field__row" style={{ alignItems: 'center' }}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <input type="checkbox" checked={editing.is_hidden} onChange={(ev) => setEditing({ ...editing, is_hidden: ev.target.checked })} />
+                Hidden
+              </label>
+              <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                Sort order
+                <input
+                  type="number"
+                  value={editing.sort_order}
+                  onChange={(ev) => setEditing({ ...editing, sort_order: Number(ev.target.value) })}
+                  style={{ width: 90 }}
+                />
+              </label>
+            </div>
+          </fieldset>
+
+          <div className="cms-form__actions">
             <button className="cms-btn cms-btn--primary" onClick={save} disabled={saving}>
-              <Save size={15} /> {saving ? 'Saving…' : 'Save'}
+              <Save size={15} /> {saving ? 'Saving…' : 'Save entry'}
             </button>
             <button className="cms-btn cms-btn--ghost" onClick={() => setEditing(null)} disabled={saving}>
               <X size={15} /> Cancel
@@ -298,20 +352,69 @@ export default function WarehousePanel({ addToast }: { addToast: Toast }) {
     <section aria-label="Warehouse">
       <div className="cms-list-header">
         <div className="cms-list-header__filters">
-          <input placeholder="Search…" value={search} onChange={(e) => setSearch(e.target.value)} />
-          <select value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)}>
-            <option value="all">All types</option>
-            {ENTRY_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
-          </select>
+          <div className="cms-search">
+            <Search size={15} aria-hidden="true" />
+            <input placeholder="Search…" value={search} onChange={(e) => setSearch(e.target.value)} aria-label="Search warehouse" />
+          </div>
+        </div>
+        <div className="cms-view-toggle" role="group" aria-label="View mode">
+          <button className={`cms-icon-btn ${view === 'list' ? 'cms-icon-btn--active' : ''}`} onClick={() => setView('list')} aria-label="List view" aria-pressed={view === 'list'}><List size={16} /></button>
+          <button className={`cms-icon-btn ${view === 'grid' ? 'cms-icon-btn--active' : ''}`} onClick={() => setView('grid')} aria-label="Grid view" aria-pressed={view === 'grid'}><LayoutGrid size={16} /></button>
         </div>
         <button className="cms-btn cms-btn--primary" onClick={startNew}>
           <Plus size={15} /> New entry
         </button>
       </div>
+
+      <div className="cms-tabs" role="tablist" aria-label="Entry types">
+        <button
+          role="tab"
+          aria-selected={typeFilter === 'all'}
+          className={`cms-tab ${typeFilter === 'all' ? 'cms-tab--active' : ''}`}
+          onClick={() => setTypeFilter('all')}
+        >
+          All <span className="cms-tab__count">{counts.all ?? 0}</span>
+        </button>
+        {ENTRY_TYPES.map((t) => (
+          <button
+            key={t}
+            role="tab"
+            aria-selected={typeFilter === t}
+            className={`cms-tab ${typeFilter === t ? 'cms-tab--active' : ''}`}
+            onClick={() => setTypeFilter(t)}
+          >
+            {t} <span className="cms-tab__count">{counts[t] ?? 0}</span>
+          </button>
+        ))}
+      </div>
+
       {loading ? (
         <div className="cms-empty">Loading warehouse…</div>
       ) : visible.length === 0 ? (
         <div className="cms-empty">No entries match.</div>
+      ) : view === 'grid' ? (
+        <div className="cms-warehouse-grid">
+          {visible.map((e) => (
+            <article key={e.id} className="cms-warehouse-card">
+              <div className="cms-warehouse-card__top">
+                <span className="cms-badge cms-badge--muted">{e.type}</span>
+                {e.is_hidden && <span className="cms-badge cms-badge--muted">Hidden</span>}
+              </div>
+              <h3 className="cms-warehouse-card__title">{e.title}</h3>
+              <p className="cms-warehouse-card__meta"><code>{e.id}</code></p>
+              <p className="cms-warehouse-card__companies">
+                {(e.company_ids ?? []).map((cid) => companies.find((c) => c.id === cid)?.name ?? cid).join(', ') || 'no company'}
+              </p>
+              <div className="cms-company-card__actions">
+                <button className="cms-icon-btn" onClick={() => startEdit(e)} aria-label={`Edit ${e.title}`} title="Edit"><Pencil size={15} /></button>
+                <button className="cms-icon-btn" onClick={() => toggleHidden(e)} aria-label={e.is_hidden ? 'Show' : 'Hide'} title={e.is_hidden ? 'Show' : 'Hide'}>
+                  {e.is_hidden ? <Eye size={15} /> : <EyeOff size={15} />}
+                </button>
+                <button className="cms-icon-btn cms-icon-btn--danger" onClick={() => setDeleteTarget(e)} aria-label={`Delete ${e.title}`} title="Delete"><Trash2 size={15} /></button>
+              </div>
+            </article>
+          ))}
+        </div>
       ) : (
         <ul className="cms-list">
           {visible.map((e) => (
@@ -332,13 +435,35 @@ export default function WarehousePanel({ addToast }: { addToast: Toast }) {
                 <button className="cms-icon-btn" onClick={() => startEdit(e)} aria-label={`Edit ${e.title}`} title="Edit">
                   <Pencil size={15} />
                 </button>
-                <button className="cms-icon-btn cms-icon-btn--danger" onClick={() => remove(e)} aria-label={`Delete ${e.title}`} title="Delete">
+                <button className="cms-icon-btn" onClick={() => toggleHidden(e)} aria-label={e.is_hidden ? 'Show' : 'Hide'} title={e.is_hidden ? 'Show' : 'Hide'}>
+                  {e.is_hidden ? <Eye size={15} /> : <EyeOff size={15} />}
+                </button>
+                <button className="cms-icon-btn cms-icon-btn--danger" onClick={() => setDeleteTarget(e)} aria-label={`Delete ${e.title}`} title="Delete">
                   <Trash2 size={15} />
                 </button>
               </div>
             </li>
           ))}
         </ul>
+      )}
+
+      {deleteTarget && (
+        <div
+          className="cms-overlay"
+          role="alertdialog"
+          aria-modal="true"
+          aria-labelledby="cms-wh-delete-title"
+          onClick={(e) => e.target === e.currentTarget && setDeleteTarget(null)}
+        >
+          <div className="cms-dialog">
+            <h2 id="cms-wh-delete-title">Delete entry?</h2>
+            <p>"{deleteTarget.title}" will be permanently deleted. This cannot be undone.</p>
+            <div className="cms-form__actions">
+              <button className="cms-btn" onClick={() => setDeleteTarget(null)}>Cancel</button>
+              <button className="cms-btn cms-btn--danger" onClick={confirmDelete}>Delete</button>
+            </div>
+          </div>
+        </div>
       )}
     </section>
   );

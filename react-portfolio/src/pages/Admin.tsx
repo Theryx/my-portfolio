@@ -1,34 +1,33 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import './admin/cms.css';
 import {
-  LayoutDashboard, Users, FolderKanban, Newspaper, Settings, LogOut, RefreshCw,
+  LayoutDashboard, Building2, FolderKanban, Newspaper, Settings, LogOut, RefreshCw,
   ExternalLink, Search, Eye, EyeOff, Pencil, Trash2, Copy, ArrowUp, ArrowDown,
-  ArrowLeft, DatabaseZap, CheckCircle2, AlertTriangle, Sparkles, Home, UserRound,
-  GitMerge, Images
+  ArrowLeft, DatabaseZap, CheckCircle2, AlertTriangle, GitMerge, Images, Plus, Upload,
 } from 'lucide-react';
 import {
   login, logout, getSession,
   getAllProfiles, getAllProjects, getAllBlogPosts,
-  updateProfile, deleteProfile, upsertProject, updateProject, deleteProject,
+  upsertProject, updateProject, deleteProject,
   upsertBlogPost, updateBlogPost, deleteBlogPost, syncContentToDatabase,
   runMultiProfileMigration,
-  type Profile, type Project, type BlogPost, type SyncResult,
+  getWarehouseEntries,
+  type Profile, type Project, type BlogPost, type SyncResult, type WarehouseEntry,
 } from '../lib/api';
-import { HomeForm, AboutForm, ProfileMetaForm, ProjectForm, BlogForm, SecurityForm } from './admin/forms';
+import { ProjectForm, BlogForm, SecurityForm } from './admin/forms';
 import { PasswordInput } from './admin/fields';
-import { profilePresets } from '../data/profileCopy';
 import WarehousePanel from './admin/WarehousePanel';
+import CompanyPanel from './admin/CompanyPanel';
 import AssetPanel from './admin/AssetPanel';
 
 const MAX_ATTEMPTS = 5;
 const LOCKOUT_MS = 15 * 60 * 1000;
 
-type Section = 'dashboard' | 'home' | 'about' | 'warehouse' | 'assets' | 'profiles' | 'projects' | 'blog' | 'settings';
+type Section = 'overview' | 'warehouse' | 'companies' | 'assets' | 'projects' | 'articles' | 'settings';
 type Editing =
-  | { kind: 'profile'; item: Profile | null }
   | { kind: 'project'; item: Project | null }
   | { kind: 'post'; item: BlogPost | null };
-type DeleteTarget = { kind: 'profile' | 'project' | 'post'; id: string; label: string };
+type DeleteTarget = { kind: 'project' | 'post'; id: string; label: string };
 
 interface Toast {
   id: number;
@@ -39,36 +38,30 @@ interface Toast {
 let toastIdCounter = 0;
 
 const NAV: { id: Section; label: string; icon: typeof LayoutDashboard }[] = [
-  { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { id: 'home', label: 'Home page', icon: Home },
-  { id: 'about', label: 'About page', icon: UserRound },
+  { id: 'overview', label: 'Overview', icon: LayoutDashboard },
   { id: 'warehouse', label: 'Warehouse', icon: DatabaseZap },
+  { id: 'companies', label: 'Companies', icon: Building2 },
   { id: 'assets', label: 'Assets', icon: Images },
   { id: 'projects', label: 'Projects', icon: FolderKanban },
-  { id: 'blog', label: 'Articles', icon: Newspaper },
-  { id: 'profiles', label: 'Companies', icon: Users },
+  { id: 'articles', label: 'Articles', icon: Newspaper },
   { id: 'settings', label: 'Settings', icon: Settings },
 ];
 
 export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authLoading, setAuthLoading] = useState(true);
-  const [section, setSection] = useState<Section>('dashboard');
+  const [section, setSection] = useState<Section>('overview');
   const [editing, setEditing] = useState<Editing | null>(null);
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [warehouseEntries, setWarehouseEntries] = useState<WarehouseEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [toasts, setToasts] = useState<Toast[]>([]);
   const [deleteTarget, setDeleteTarget] = useState<DeleteTarget | null>(null);
   const [search, setSearch] = useState('');
   const [profileFilter, setProfileFilter] = useState<string>('all');
-  const [presetTarget, setPresetTarget] = useState<string | null>(null);
-  // Which profile the page-oriented Home/About editors are editing.
-  const [editProfileId, setEditProfileId] = useState<string>('');
-  // Bumped to remount (reset) the Home/About form on Cancel.
-  const [formNonce, setFormNonce] = useState(0);
   const lastFocusRef = useRef<HTMLElement | null>(null);
 
   const addToast = useCallback((message: string, type: 'success' | 'error') => {
@@ -94,6 +87,11 @@ export default function Admin() {
       setProfiles(p);
       setProjects(pr);
       setBlogPosts(b);
+      try {
+        setWarehouseEntries(await getWarehouseEntries({ include_hidden: true }));
+      } catch {
+        setWarehouseEntries([]);
+      }
     } catch (err) {
       if (import.meta.env.DEV) console.error('Error fetching data:', err);
       addToast('Failed to load data', 'error');
@@ -113,23 +111,6 @@ export default function Admin() {
   }, [section]);
 
   /* ── Save handlers (optimistic local updates, no full refetch) ── */
-
-  const saveProfile = async (profile: Partial<Profile>) => {
-    setSaving(true);
-    try {
-      const saved = await updateProfile(profile.id!, profile);
-      setProfiles((list) => {
-        const exists = list.some((p) => p.id === saved.id);
-        return exists ? list.map((p) => (p.id === saved.id ? saved : p)) : [...list, saved];
-      });
-      setEditing(null);
-      addToast('Profile saved', 'success');
-    } catch (err) {
-      addToast(err instanceof Error ? err.message : 'Failed to save profile', 'error');
-    } finally {
-      setSaving(false);
-    }
-  };
 
   const saveProject = async (project: Partial<Project>) => {
     setSaving(true);
@@ -211,12 +192,9 @@ export default function Admin() {
       if (deleteTarget.kind === 'project') {
         await deleteProject(deleteTarget.id);
         setProjects((l) => l.filter((p) => p.id !== deleteTarget.id));
-      } else if (deleteTarget.kind === 'post') {
+      } else {
         await deleteBlogPost(deleteTarget.id);
         setBlogPosts((l) => l.filter((p) => p.id !== deleteTarget.id));
-      } else {
-        await deleteProfile(deleteTarget.id);
-        setProfiles((l) => l.filter((p) => p.id !== deleteTarget.id));
       }
       addToast('Deleted', 'success');
     } catch (err) {
@@ -224,62 +202,6 @@ export default function Admin() {
     } finally {
       setDeleteTarget(null);
       lastFocusRef.current?.focus();
-    }
-  };
-
-  const handleApplyPreset = async (profileId: string) => {
-    setSaving(true);
-    try {
-      const preset = profilePresets[profileId];
-      if (!preset) throw new Error('Preset not found');
-
-      // Preserve the existing active flag so applying a preset never
-      // unintentionally publishes a draft profile to visitors.
-      const existingProfile = profiles.find(p => p.id === profileId);
-      const isActive = existingProfile ? existingProfile.is_active : false;
-
-      // 1) Profile fields (hero / philosophy / bio / badges) + social_links + about.
-      await updateProfile(profileId, {
-        ...preset.profile,
-        is_active: isActive,
-        social_links: preset.social_links,
-        about_content: {
-          speaking_intro: preset.about.speakingIntro,
-          faqs: preset.about.faqs,
-        },
-      });
-
-      // 2) Per-profile project case studies. Only insert if the id is new —
-      //    we never overwrite an existing project the user may have edited.
-      let createdProjects = 0;
-      for (const seed of preset.projects) {
-        if (!projects.some((p) => p.id === seed.id)) {
-          const profileIds = seed.profile_ids?.length ? seed.profile_ids : [profileId];
-          await upsertProject({ ...seed, profile_ids: profileIds } as Project);
-          createdProjects++;
-        }
-      }
-
-      // 3) Per-profile blog posts — same id-skip rule.
-      let createdPosts = 0;
-      for (const seed of preset.blogPosts) {
-        if (!blogPosts.some((p) => p.id === seed.id)) {
-          const profileIds = seed.profile_ids?.length ? seed.profile_ids : [profileId];
-          await upsertBlogPost({ ...seed, profile_ids: profileIds } as BlogPost);
-          createdPosts++;
-        }
-      }
-
-      const parts = ['Profile updated'];
-      if (createdProjects > 0) parts.push(`${createdProjects} project${createdProjects === 1 ? '' : 's'} created`);
-      if (createdPosts > 0) parts.push(`${createdPosts} post${createdPosts === 1 ? '' : 's'} created`);
-      addToast(parts.join(' · '), 'success');
-      await fetchAll();
-    } catch (err) {
-      addToast(err instanceof Error ? err.message : 'Failed to apply preset', 'error');
-    } finally {
-      setSaving(false);
-      setPresetTarget(null);
     }
   };
 
@@ -294,35 +216,6 @@ export default function Admin() {
       item: { ...project, id: '', is_hidden: true },
     });
   };
-
-  const profilesWithPresets = useMemo(() => {
-    const combined = [...profiles];
-    Object.keys(profilePresets).forEach((presetId) => {
-      if (!profiles.some((p) => p.id === presetId)) {
-        combined.push({
-          id: presetId,
-          name: profilePresets[presetId].profile.name,
-          is_active: false,
-          bio: '',
-          tagline: '',
-          hero_title: '',
-          hero_subtitle: '',
-          philosophy_title: '',
-          philosophy_text: '',
-          intro_expanded_text: '',
-          badges: [],
-          social_links: {},
-          about_content: {},
-        } as Profile);
-      }
-    });
-    return combined;
-  }, [profiles]);
-
-  // The profile currently targeted by the Home/About page editors.
-  const activeProfileId = profiles.find((p) => p.is_active)?.id;
-  const selectedProfileId = editProfileId || activeProfileId || profilesWithPresets[0]?.id || '';
-  const selectedProfile = profilesWithPresets.find((p) => p.id === selectedProfileId) ?? null;
 
   /* ── Derived lists ── */
 
@@ -375,9 +268,10 @@ export default function Admin() {
             >
               <Icon size={17} aria-hidden="true" />
               <span>{label}</span>
-              {id === 'profiles' && <span className="cms-sidebar__count">{profiles.length}</span>}
+              {id === 'warehouse' && <span className="cms-sidebar__count">{warehouseEntries.length}</span>}
+              {id === 'companies' && <span className="cms-sidebar__count">{profiles.length}</span>}
               {id === 'projects' && <span className="cms-sidebar__count">{projects.length}</span>}
-              {id === 'blog' && <span className="cms-sidebar__count">{blogPosts.length}</span>}
+              {id === 'articles' && <span className="cms-sidebar__count">{blogPosts.length}</span>}
             </button>
           ))}
         </nav>
@@ -409,13 +303,8 @@ export default function Admin() {
         </header>
 
         <div className="cms-content">
-          {loading && !editing ? (
-            <div className="cms-empty">Loading content…</div>
-          ) : editing ? (
+          {editing ? (
             <div className="cms-editor">
-              {editing.kind === 'profile' && (
-                <ProfileMetaForm profile={editing.item} onSave={saveProfile} onCancel={() => setEditing(null)} saving={saving} />
-              )}
               {editing.kind === 'project' && (
                 <ProjectForm project={editing.item} profiles={profiles} onSave={saveProject} onCancel={() => setEditing(null)} saving={saving} />
               )}
@@ -425,121 +314,18 @@ export default function Admin() {
             </div>
           ) : section === 'warehouse' ? (
             <WarehousePanel addToast={addToast} />
+          ) : section === 'companies' ? (
+            <CompanyPanel addToast={addToast} />
           ) : section === 'assets' ? (
             <AssetPanel addToast={addToast} />
-          ) : section === 'dashboard' ? (
-            <Dashboard
+          ) : section === 'overview' ? (
+            <Overview
               profiles={profiles}
               projects={projects}
               posts={blogPosts}
+              entries={warehouseEntries}
               onNavigate={setSection}
-              onSynced={fetchAll}
-              addToast={addToast}
             />
-          ) : section === 'home' || section === 'about' ? (
-            <section aria-label={section === 'home' ? 'Home page' : 'About page'}>
-              <div className="cms-list-header">
-                <div className="cms-list-header__filters">
-                  <label htmlFor="scope-profile" style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>Profile</label>
-                  <select
-                    id="scope-profile"
-                    value={selectedProfileId}
-                    onChange={(e) => { setEditProfileId(e.target.value); setFormNonce((n) => n + 1); }}
-                    aria-label="Profile to edit"
-                  >
-                    {profilesWithPresets.map((p) => (
-                      <option key={p.id} value={p.id}>{p.name}{p.is_active ? ' (Active)' : ''}</option>
-                    ))}
-                  </select>
-                </div>
-                <p className="cms-list-header__hint" style={{ margin: 0 }}>
-                  Editing the <strong>{section === 'home' ? 'Home' : 'About'}</strong> page for this profile; saves to that profile only.
-                </p>
-              </div>
-              {selectedProfile ? (
-                section === 'home' ? (
-                  <HomeForm
-                    key={`home-${selectedProfileId}-${formNonce}`}
-                    profile={selectedProfile}
-                    onSave={saveProfile}
-                    onCancel={() => setFormNonce((n) => n + 1)}
-                    saving={saving}
-                  />
-                ) : (
-                  <AboutForm
-                    key={`about-${selectedProfileId}-${formNonce}`}
-                    profile={selectedProfile}
-                    onSave={saveProfile}
-                    onCancel={() => setFormNonce((n) => n + 1)}
-                    saving={saving}
-                  />
-                )
-              ) : (
-                <div className="cms-empty">No profile available. Create one in the Profiles section.</div>
-              )}
-            </section>
-          ) : section === 'profiles' ? (
-            <section aria-label="Profiles">
-              <div className="cms-list-header">
-                <p className="cms-list-header__hint">
-                  Each profile is a complete persona: its own hero, philosophy, projects, and posts.
-                  Share one with <code>?profile=&lt;id&gt;</code>.
-                </p>
-                <button className="cms-btn cms-btn--primary" onClick={() => setEditing({ kind: 'profile', item: null })}>
-                  New profile
-                </button>
-              </div>
-              <ul className="cms-list">
-                {profilesWithPresets.map((profile) => {
-                  const existsInDb = profiles.some((p) => p.id === profile.id);
-                  return (
-                    <li key={profile.id} className="cms-item">
-                      <div className="cms-item__body">
-                        <div className="cms-item__title">
-                          {profile.name || '(unnamed)'}
-                          {profile.is_active && <span className="cms-badge cms-badge--live">Active</span>}
-                          {!existsInDb && <span className="cms-badge cms-badge--muted">Preset Available</span>}
-                        </div>
-                        <div className="cms-item__meta">
-                          <code>{profile.id}</code> · {profile.hero_title || (existsInDb ? 'No hero title' : 'Not created yet (click Sparkles to apply preset)')}
-                        </div>
-                      </div>
-                      <div className="cms-item__actions">
-                        {existsInDb && (
-                          <a className="cms-icon-btn" href={`/?profile=${profile.id}`} target="_blank" rel="noopener noreferrer" aria-label={`Preview ${profile.name}`} title="Preview">
-                            <ExternalLink size={15} />
-                          </a>
-                        )}
-                        {profilePresets[profile.id] && (
-                          <button
-                            className="cms-icon-btn"
-                            onClick={() => setPresetTarget(profile.id)}
-                            aria-label={`Apply suggested copy for ${profile.name}`}
-                            title="Apply suggested copy"
-                          >
-                            <Sparkles size={15} style={{ color: 'var(--color-accent)' }} />
-                          </button>
-                        )}
-                        {existsInDb && (
-                          <button className="cms-icon-btn" onClick={() => setEditing({ kind: 'profile', item: profile })} aria-label={`Edit ${profile.name}`} title="Edit">
-                            <Pencil size={15} />
-                          </button>
-                        )}
-                        {existsInDb && (
-                          <button
-                            className="cms-icon-btn cms-icon-btn--danger"
-                            onClick={(e) => requestDelete({ kind: 'profile', id: profile.id, label: `profile "${profile.name}" and ALL of its projects and posts` }, e)}
-                            aria-label={`Delete ${profile.name}`} title="Delete"
-                          >
-                            <Trash2 size={15} />
-                          </button>
-                        )}
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            </section>
           ) : section === 'projects' ? (
             <section aria-label="Projects">
               <ListControls
@@ -567,7 +353,7 @@ export default function Admin() {
                           </span>
                         </div>
                         <div className="cms-item__meta">
-                          <code>{project.id}</code> · {project.tag || 'no tag'} · {(project.profile_ids ?? []).map((pid) => profiles.find((p) => p.id === pid)?.name ?? pid).join(', ') || 'no profile'}
+                          <code>{project.id}</code> · {project.tag || 'no tag'} · {(project.profile_ids ?? []).map((pid) => profiles.find((p) => p.id === pid)?.name ?? pid).join(', ') || 'no company'}
                         </div>
                       </div>
                       <div className="cms-item__actions">
@@ -592,17 +378,17 @@ export default function Admin() {
                 </ul>
               )}
             </section>
-          ) : section === 'blog' ? (
-            <section aria-label="Blog posts">
+          ) : section === 'articles' ? (
+            <section aria-label="Articles">
               <ListControls
                 search={search} onSearch={setSearch}
                 profileFilter={profileFilter} onProfileFilter={setProfileFilter}
                 profiles={profiles}
-                actionLabel="New post"
+                actionLabel="New article"
                 onAction={() => setEditing({ kind: 'post', item: null })}
               />
               {visiblePosts.length === 0 ? (
-                <div className="cms-empty">No posts match.</div>
+                <div className="cms-empty">No articles match.</div>
               ) : (
                 <ul className="cms-list">
                   {visiblePosts.map((post, i) => (
@@ -619,7 +405,7 @@ export default function Admin() {
                           </span>
                         </div>
                         <div className="cms-item__meta">
-                          <code>{post.id}</code> · {post.date} · {(post.profile_ids ?? []).map((pid) => profiles.find((p) => p.id === pid)?.name ?? pid).join(', ') || 'no profile'}
+                          <code>{post.id}</code> · {post.date} · {(post.profile_ids ?? []).map((pid) => profiles.find((p) => p.id === pid)?.name ?? pid).join(', ') || 'no company'}
                         </div>
                       </div>
                       <div className="cms-item__actions">
@@ -642,9 +428,7 @@ export default function Admin() {
               )}
             </section>
           ) : (
-            <section aria-label="Settings">
-              <SecurityForm onSuccess={(m) => addToast(m, 'success')} onError={(m) => addToast(m, 'error')} />
-            </section>
+            <SettingsSection addToast={addToast} onSynced={fetchAll} />
           )}
         </div>
       </main>
@@ -654,16 +438,6 @@ export default function Admin() {
           label={deleteTarget.label}
           onConfirm={confirmDelete}
           onCancel={() => { setDeleteTarget(null); lastFocusRef.current?.focus(); }}
-        />
-      )}
-
-      {presetTarget && (
-        <ConfirmDialog
-          title="Apply suggested content?"
-          desc="Overwrites this profile's hero, bio, and philosophy text with the suggested professional copy, and creates any missing projects and blog posts for this profile. Existing projects or posts with the same id are left alone."
-          actionLabel={saving ? 'Applying…' : 'Apply'}
-          onConfirm={() => handleApplyPreset(presetTarget)}
-          onCancel={() => setPresetTarget(null)}
         />
       )}
 
@@ -687,8 +461,8 @@ function ListControls({ search, onSearch, profileFilter, onProfileFilter, profil
           <Search size={15} aria-hidden="true" />
           <input value={search} onChange={(e) => onSearch(e.target.value)} placeholder="Search…" aria-label="Search" />
         </div>
-        <select value={profileFilter} onChange={(e) => onProfileFilter(e.target.value)} aria-label="Filter by profile">
-          <option value="all">All profiles</option>
+        <select value={profileFilter} onChange={(e) => onProfileFilter(e.target.value)} aria-label="Filter by company">
+          <option value="all">All companies</option>
           {profiles.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
         </select>
       </div>
@@ -697,23 +471,117 @@ function ListControls({ search, onSearch, profileFilter, onProfileFilter, profil
   );
 }
 
-/* ─── Dashboard ──────────────────────────────────────────────────────────── */
+/* ─── Overview ──────────────────────────────────────────────────────────── */
 
-function Dashboard({ profiles, projects, posts, onNavigate, onSynced, addToast }: {
-  profiles: Profile[]; projects: Project[]; posts: BlogPost[];
+function Overview({ profiles, projects, posts, entries, onNavigate }: {
+  profiles: Profile[]; projects: Project[]; posts: BlogPost[]; entries: WarehouseEntry[];
   onNavigate: (s: Section) => void;
-  onSynced: () => void;
+}) {
+  const activeProfile = profiles.find((p) => p.is_active);
+  const hiddenEntries = entries.filter((e) => e.is_hidden).length;
+  const drafts = posts.filter((p) => p.is_hidden).length;
+  const hiddenProjects = projects.filter((p) => p.is_hidden).length;
+
+  const typeCounts = useMemo(() => {
+    const c: Record<string, number> = {};
+    for (const e of entries) c[e.type] = (c[e.type] ?? 0) + 1;
+    return Object.entries(c).sort((a, b) => b[1] - a[1]);
+  }, [entries]);
+
+  const linkedCount = (companyId: string) => entries.filter((e) => (e.company_ids ?? []).includes(companyId)).length;
+
+  return (
+    <div className="cms-dashboard">
+      <div className="cms-stats">
+        <button className="cms-stat" onClick={() => onNavigate('companies')}>
+          <span className="cms-stat__value">{profiles.length}</span>
+          <span className="cms-stat__label">Companies</span>
+          <span className="cms-stat__sub">{activeProfile ? `Active: ${activeProfile.name}` : 'No active company'}</span>
+        </button>
+        <button className="cms-stat" onClick={() => onNavigate('warehouse')}>
+          <span className="cms-stat__value">{entries.length}</span>
+          <span className="cms-stat__label">Warehouse entries</span>
+          <span className="cms-stat__sub">{hiddenEntries} hidden</span>
+        </button>
+        <button className="cms-stat" onClick={() => onNavigate('projects')}>
+          <span className="cms-stat__value">{projects.length}</span>
+          <span className="cms-stat__label">Projects</span>
+          <span className="cms-stat__sub">{hiddenProjects} hidden</span>
+        </button>
+        <button className="cms-stat" onClick={() => onNavigate('articles')}>
+          <span className="cms-stat__value">{posts.length}</span>
+          <span className="cms-stat__label">Articles</span>
+          <span className="cms-stat__sub">{drafts} draft{drafts === 1 ? '' : 's'}</span>
+        </button>
+      </div>
+
+      <div className="cms-overview-grid">
+        <div className="cms-card">
+          <div className="cms-card__header">
+            <Building2 size={18} aria-hidden="true" />
+            <h2>Company microsites</h2>
+          </div>
+          {profiles.length === 0 ? (
+            <p>No companies yet. Create one to start building a targeted microsite.</p>
+          ) : (
+            <ul className="cms-overview-list">
+              {profiles.map((c) => (
+                <li key={c.id}>
+                  <span className="cms-overview-list__name">
+                    {c.name}
+                    {c.is_active && <span className="cms-badge cms-badge--live">Active</span>}
+                  </span>
+                  <span className="cms-overview-list__meta">{linkedCount(c.id)} linked</span>
+                </li>
+              ))}
+            </ul>
+          )}
+          <button className="cms-btn cms-btn--primary" onClick={() => onNavigate('companies')}>
+            <Plus size={15} /> Manage companies
+          </button>
+        </div>
+
+        <div className="cms-card">
+          <div className="cms-card__header">
+            <DatabaseZap size={18} aria-hidden="true" />
+            <h2>Warehouse by type</h2>
+          </div>
+          {typeCounts.length === 0 ? (
+            <p>The warehouse is empty. Add bios, experience, projects, articles and more.</p>
+          ) : (
+            <div className="cms-chip-row">
+              {typeCounts.map(([type, count]) => (
+                <span key={type} className="cms-chip">
+                  {type} <strong>{count}</strong>
+                </span>
+              ))}
+            </div>
+          )}
+          <div className="cms-card__actions">
+            <button className="cms-btn cms-btn--primary" onClick={() => onNavigate('warehouse')}>
+              <DatabaseZap size={15} /> Open warehouse
+            </button>
+            <button className="cms-btn" onClick={() => onNavigate('assets')}>
+              <Upload size={15} /> Upload asset
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Settings (security + one-shot tools) ──────────────────────────────── */
+
+function SettingsSection({ addToast, onSynced }: {
   addToast: (m: string, t: 'success' | 'error') => void;
+  onSynced: () => void;
 }) {
   const [syncing, setSyncing] = useState(false);
   const [syncLog, setSyncLog] = useState<string[]>([]);
   const [syncResult, setSyncResult] = useState<SyncResult | null>(null);
   const [migrating, setMigrating] = useState(false);
   const [migrationResult, setMigrationResult] = useState<{ ok: boolean; blog_post_profiles: number; project_profiles: number; log?: string[] } | null>(null);
-
-  const drafts = posts.filter((p) => p.is_hidden).length;
-  const hiddenProjects = projects.filter((p) => p.is_hidden).length;
-  const activeProfile = profiles.find((p) => p.is_active);
 
   const runSync = async () => {
     setSyncing(true);
@@ -747,8 +615,6 @@ function Dashboard({ profiles, projects, posts, onNavigate, onSynced, addToast }
       onSynced();
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Migration failed';
-      // The endpoint returns 403 when MIGRATIONS_ENABLED is not set on Vercel —
-      // surface that as a hint so the user knows where to look.
       if (msg.toLowerCase().includes('not enabled') || msg.toLowerCase().includes('migrations are')) {
         addToast('Migration is disabled. Set MIGRATIONS_ENABLED=true on Vercel, redeploy, then retry.', 'error');
       } else {
@@ -760,23 +626,13 @@ function Dashboard({ profiles, projects, posts, onNavigate, onSynced, addToast }
   };
 
   return (
-    <div className="cms-dashboard">
-      <div className="cms-stats">
-        <button className="cms-stat" onClick={() => onNavigate('profiles')}>
-          <span className="cms-stat__value">{profiles.length}</span>
-          <span className="cms-stat__label">Profiles</span>
-          <span className="cms-stat__sub">{activeProfile ? `Active: ${activeProfile.name}` : 'No active profile'}</span>
-        </button>
-        <button className="cms-stat" onClick={() => onNavigate('projects')}>
-          <span className="cms-stat__value">{projects.length}</span>
-          <span className="cms-stat__label">Projects</span>
-          <span className="cms-stat__sub">{hiddenProjects} hidden</span>
-        </button>
-        <button className="cms-stat" onClick={() => onNavigate('blog')}>
-          <span className="cms-stat__value">{posts.length}</span>
-          <span className="cms-stat__label">Blog posts</span>
-          <span className="cms-stat__sub">{drafts} draft{drafts === 1 ? '' : 's'}</span>
-        </button>
+    <section aria-label="Settings" className="cms-dashboard">
+      <div className="cms-card">
+        <div className="cms-card__header">
+          <Settings size={18} aria-hidden="true" />
+          <h2>Credentials</h2>
+        </div>
+        <SecurityForm onSuccess={(m) => addToast(m, 'success')} onError={(m) => addToast(m, 'error')} />
       </div>
 
       <div className="cms-card">
@@ -814,7 +670,7 @@ function Dashboard({ profiles, projects, posts, onNavigate, onSynced, addToast }
         <p>
           One-shot backfill that switches blogs and projects from a single profile to the
           many-to-many link tables, so the same post or case study can appear under more than one
-          persona. Run this once after deploying the multi-profile update; every step is idempotent.
+          company. Run this once after deploying the multi-profile update; every step is idempotent.
         </p>
         <p className="cms-field__hint">
           Requires the <code>MIGRATIONS_ENABLED</code> environment variable to be set to{' '}
@@ -835,7 +691,7 @@ function Dashboard({ profiles, projects, posts, onNavigate, onSynced, addToast }
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -940,50 +796,6 @@ function DeleteDialog({ label, onConfirm, onCancel }: {
         <div className="cms-form__actions">
           <button ref={cancelRef} className="cms-btn" onClick={onCancel}>Cancel</button>
           <button className="cms-btn cms-btn--danger" onClick={onConfirm}>Delete</button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ─── Confirm dialog (focus-managed) ────────────────────────────────────── */
-
-function ConfirmDialog({ title, desc, actionLabel, onConfirm, onCancel, confirmType = 'primary' }: {
-  title: string;
-  desc: string;
-  actionLabel: string;
-  onConfirm: () => void;
-  onCancel: () => void;
-  confirmType?: 'primary' | 'danger';
-}) {
-  const confirmRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    confirmRef.current?.focus();
-  }, []);
-
-  return (
-    <div
-      className="cms-overlay"
-      role="alertdialog"
-      aria-modal="true"
-      aria-labelledby="cms-confirm-title"
-      aria-describedby="cms-confirm-desc"
-      onKeyDown={(e) => e.key === 'Escape' && onCancel()}
-      onClick={(e) => e.target === e.currentTarget && onCancel()}
-    >
-      <div className="cms-dialog">
-        <h2 id="cms-confirm-title">{title}</h2>
-        <p id="cms-confirm-desc">{desc}</p>
-        <div className="cms-form__actions">
-          <button className="cms-btn" onClick={onCancel}>Cancel</button>
-          <button
-            ref={confirmRef}
-            className={`cms-btn ${confirmType === 'danger' ? 'cms-btn--danger' : 'cms-btn--primary'}`}
-            onClick={onConfirm}
-          >
-            {actionLabel}
-          </button>
         </div>
       </div>
     </div>

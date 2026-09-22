@@ -122,12 +122,14 @@ export interface Company extends Profile {
   seo?: Record<string, unknown>;
 }
 
+// Per-company link on a warehouse entry: ordering, visibility and optional
+// content/metadata overrides for that company's microsite.
 export interface CompanyLink {
   company_id: string;
   sort_order: number;
   is_visible: boolean;
-  override_content: string | null;
-  override_metadata: Record<string, unknown> | null;
+  override_content?: string | null;
+  override_metadata?: Record<string, unknown> | null;
 }
 
 export interface WarehouseEntry {
@@ -140,8 +142,8 @@ export interface WarehouseEntry {
   is_hidden: boolean;
   sort_order: number;
   company_ids?: string[];
-  company_links?: CompanyLink[];
   asset_ids?: string[];
+  company_links?: CompanyLink[];
   company_sort_order?: number;
   created_at?: string;
   updated_at?: string;
@@ -470,6 +472,32 @@ export async function updateProfile(id: string, data: Partial<Profile>): Promise
 }
 
 export async function deleteProfile(id: string): Promise<void> {
+  await apiFetch(`/api/companies/${id}`, { method: 'DELETE' });
+}
+
+// Company-aware writers. Same endpoints as the profile helpers above, but typed
+// to the full Company shape (slug, role, job_url, job_description, status,
+// layout, theme_config, seo) so the microsite editor can persist every field.
+export async function getCompanies(): Promise<Company[]> {
+  return apiFetch<Company[]>('/api/companies');
+}
+
+export async function upsertCompany(data: Partial<Company>): Promise<Company> {
+  if (!data.id) throw new Error('Company id is required');
+  return apiFetch<Company>(`/api/companies/${data.id}`, {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
+export async function updateCompany(id: string, data: Partial<Company>): Promise<Company> {
+  return apiFetch<Company>(`/api/companies/${id}`, {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
+export async function deleteCompany(id: string): Promise<void> {
   await apiFetch(`/api/companies/${id}`, { method: 'DELETE' });
 }
 
