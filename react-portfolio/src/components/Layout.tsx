@@ -50,7 +50,8 @@ export default function Layout({ children }: LayoutProps) {
   if (isCompanySite) {
     return (
       <div className="layout">
-        <main className="main-content">{children}</main>
+        {/* No global header here, so drop its 72px offset. */}
+        <main className="main-content" style={{ paddingTop: 0 }}>{children}</main>
       </div>
     );
   }

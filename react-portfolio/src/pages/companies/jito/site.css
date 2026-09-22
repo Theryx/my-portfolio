@@ -20,7 +20,9 @@
   -webkit-font-smoothing: antialiased;
 }
 
-.jn a { color: inherit; }
+/* Note: do NOT add a broad `.jn a { color: inherit }` rule here. It outranks
+   the component classes below and makes solid buttons inherit dark text on a
+   dark fill. Each link sets its own colour instead. */
 
 .jn-skip {
   position: absolute;
@@ -58,6 +60,7 @@
   font-weight: 600;
   letter-spacing: -0.01em;
   text-decoration: none;
+  color: var(--jn-ink);
 }
 .jn-nav__links { display: flex; gap: 22px; margin-left: auto; }
 .jn-nav__link {
@@ -118,6 +121,7 @@
   font-size: 0.95rem;
   text-decoration: none;
   border: 1px solid transparent;
+  color: var(--jn-ink);
   transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
 }
 .jn-btn--solid { background: var(--jn-ink); color: var(--jn-paper); }
@@ -177,6 +181,7 @@
   align-items: center;
   padding: 22px 0;
   text-decoration: none;
+  color: inherit;
 }
 .jn-work__thumb {
   display: block;
@@ -206,6 +211,7 @@
   gap: 20px;
   padding: 18px 0;
   text-decoration: none;
+  color: inherit;
 }
 .jn-writing__title { font-family: var(--jn-serif); font-size: 1.15rem; }
 .jn-writing__meta { font-size: 0.84rem; color: var(--jn-muted); white-space: nowrap; }
@@ -221,6 +227,7 @@
   align-items: center;
   padding: 24px 0;
   text-decoration: none;
+  color: inherit;
 }
 .jn-index__num { font-family: var(--jn-serif); font-size: 0.95rem; color: var(--jn-muted); }
 .jn-index__body { display: flex; flex-direction: column; gap: 5px; }
@@ -276,6 +283,7 @@
 .jn-facts__item { display: flex; flex-direction: column; gap: 4px; }
 .jn-facts dt { font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--jn-muted); }
 .jn-facts dd { margin: 0; font-size: 0.96rem; }
+.jn-facts a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
 
 /* ── Prose ───────────────────────────────────────────────────── */
 .jn-prose { max-width: 70ch; margin-top: 8px; }
@@ -289,6 +297,8 @@
 .jn-prose h3 { font-family: var(--jn-serif); font-weight: 500; font-size: 1.2rem; margin: 30px 0 8px; }
 .jn-prose p { margin: 0 0 18px; }
 .jn-prose ul, .jn-prose ol { margin: 0 0 18px; padding-left: 22px; }
+.jn-prose ul { list-style: disc; }
+.jn-prose ol { list-style: decimal; }
 .jn-prose li { margin-bottom: 8px; }
 .jn-prose img { width: 100%; height: auto; border-radius: 12px; margin: 22px 0; display: block; }
 .jn-prose a { color: var(--jn-accent); text-decoration: underline; text-underline-offset: 3px; }
@@ -358,7 +368,7 @@
 @media (max-width: 760px) {
   .jn-nav__inner { padding: 14px 20px; gap: 14px; flex-wrap: wrap; }
   .jn-nav__links { gap: 16px; }
-  .jn-nav__cta { display: none; }
+  .jn-nav__cta { padding: 7px 14px; font-size: 0.85rem; }
   .jn-hero { padding: 64px 20px 48px; }
   .jn-section, .jn-section--page { padding-left: 20px; padding-right: 20px; }
   .jn-work__link { grid-template-columns: 110px 1fr; gap: 16px; }
