@@ -7,7 +7,7 @@ import { PageTransition } from '../components/PageTransition';
 import { ArrowLeft, Calendar, MapPin, ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getProjectById, type Project } from '../lib/api';
-import { shomiMarkdownImageMap, resolveProjectImage } from '../data/projects';
+import { resolveProjectImage } from '../data/projects';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { lightboxTrigger } from '../lib/a11y';
 import { ReadingProgress } from '../components/ReadingProgress';
@@ -218,7 +218,7 @@ export default function ProjectDetail() {
                     },
                     img: ({ src, alt, ...props }) => {
                       const decodedSrc = decodeURIComponent(src || '');
-                      const resolvedSrc = shomiMarkdownImageMap[decodedSrc] || src;
+                      const resolvedSrc = resolveProjectImage(decodedSrc) || src;
                       const isSideBySide = alt && alt.includes('[side-by-side]');
                       const cleanAlt = alt ? alt.replace('[side-by-side]', '').trim() : '';
                       return (
