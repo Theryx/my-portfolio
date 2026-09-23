@@ -493,6 +493,9 @@ import paysikaProcessDocs1 from '../assets/img/paysika/paysika-process-docs1.png
 import paysikaProductAssets from '../assets/img/paysika/paysika-product-assets.png';
 import paysikaMailerAssets from '../assets/img/paysika/paysika-mailer-assets.png';
 import paysikaResearchArchive from '../assets/img/paysika/paysika-research-archive.png';
+import paysikaEnvelopeV1 from '../assets/img/paysika/paysika-envelope-v1.jpg';
+import paysikaPackagingV2 from '../assets/img/paysika/paysika-packaging-v2.jpg';
+import paysikaRelayStand from '../assets/img/paysika/paysika-relay-stand.jpg';
 import paysikaRecognition from '../assets/img/paysika/paysika-recognition.png';
 // Case-study section images (referenced by filename from content blocks)
 import paysikaDesignRequirements from '../assets/img/paysika/paysika-design-requirements.png';
@@ -547,6 +550,9 @@ export const projectImageMap: Record<string, string> = {
   'paysika-product-assets.png': paysikaProductAssets,
   'paysika-mailer-assets.png': paysikaMailerAssets,
   'paysika-research-archive.png': paysikaResearchArchive,
+  'paysika-envelope-v1.jpg': paysikaEnvelopeV1,
+  'paysika-packaging-v2.jpg': paysikaPackagingV2,
+  'paysika-relay-stand.jpg': paysikaRelayStand,
   'brand-guide.png': paysikaBrandGuide,
   'design-system.png': paysikaDesignSystem,
   'design-files.png': paysikaDesignFiles,

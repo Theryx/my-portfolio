@@ -183,6 +183,39 @@ const paysikaStory = [
     ],
   },
   {
+    type: 'compare',
+    eyebrow: 'The packaging',
+    heading: 'The envelope, before and after',
+    left: {
+      label: 'Version 1',
+      image: 'paysika-envelope-v1.jpg',
+      caption: 'The first white envelope, handed over in the field. It left the office fine and often arrived creased, dirty or torn.',
+    },
+    right: {
+      label: 'Version 2',
+      image: 'paysika-packaging-v2.jpg',
+      caption: 'The redesigned sleeve, solid enough for the delivery chain.',
+    },
+  },
+  {
+    type: 'two-col',
+    heading: 'Most of our users had never held a card',
+    image: 'paysika-packaging-v2.jpg',
+    caption: 'The new packaging, with first-use instructions printed inside.',
+    markdown:
+      'In version 1, some people did not know how to use the card at an ATM, a supermarket or a POS terminal. Most of them were first-time card holders, so there was no habit to fall back on. We found this out when we asked users to post a photo with their card and their delivery agent, and the replies showed both the damaged envelopes and the confusion. In version 2 we printed short instructions inside the packaging, and the questions reaching customer service dropped with them.',
+  },
+  {
+    type: 'photos',
+    heading: 'At the relay point',
+    items: [
+      {
+        image: 'paysika-relay-stand.jpg',
+        caption: 'An activation stand in Douala, where cards are collected and the handover happens.',
+      },
+    ],
+  },
+  {
     type: 'two-col',
     heading: 'One app, two countries',
     imageSide: 'left',
