@@ -2,6 +2,7 @@ import { neon } from '@neondatabase/serverless';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { lovingTechBlocks } from './lovingtech-blocks.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const env = fs.readFileSync(path.join(__dirname, '../../.env.local'), 'utf8');
@@ -536,8 +537,18 @@ const links = [
     },
   },
   {
-    entry_id: 'project:crowdremit_fintech',
+    entry_id: 'project:lovingtech-cx',
     sort_order: 1,
+    metadata: {
+      content_blocks: lovingTechBlocks,
+      tagline: 'An internal support system and an order journey that run on WhatsApp.',
+      description:
+        'For four months I worked as a customer success consultant at Loving Tech, an online tech shop in Cameroon. I designed a WhatsApp support system with a bot and a bank of prepared answers that escalates to the right team, and the order journey from product discovery and cart to payment on delivery and order tracking.',
+    },
+  },
+  {
+    entry_id: 'project:crowdremit_fintech',
+    sort_order: 2,
     metadata: {
       content_blocks: crowdremitStory,
       tagline: 'We talked to people before we drew anything.',
@@ -547,7 +558,7 @@ const links = [
   },
   {
     entry_id: 'project:shomi_default',
-    sort_order: 2,
+    sort_order: 3,
     metadata: {
       content_blocks: shomiStory,
       tagline: 'A product taken from discovery to launch, and then stopped on purpose.',
@@ -557,7 +568,7 @@ const links = [
   },
   {
     entry_id: 'project:gefona_project-manager',
-    sort_order: 3,
+    sort_order: 4,
     metadata: {
       content_blocks: gefonaStory,
       image: 'gefona_logo.png',

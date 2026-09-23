@@ -496,6 +496,13 @@ import paysikaResearchArchive from '../assets/img/paysika/paysika-research-archi
 import paysikaEnvelopeV1 from '../assets/img/paysika/paysika-envelope-v1.jpg';
 import paysikaPackagingV2 from '../assets/img/paysika/paysika-packaging-v2.jpg';
 import paysikaRelayStand from '../assets/img/paysika/paysika-relay-stand.jpg';
+import lovingtechStorefront from '../assets/img/lovingtech/lovingtech-storefront.png';
+import lovingtechWhatsappBot from '../assets/img/lovingtech/lovingtech-whatsapp-bot.png';
+import lovingtechWhatsappApi from '../assets/img/lovingtech/lovingtech-whatsapp-api.jpg';
+import lovingtechCart from '../assets/img/lovingtech/lovingtech-cart.png';
+import lovingtechOrderConfirmation from '../assets/img/lovingtech/lovingtech-order-confirmation.png';
+import lovingtechOrderTracking from '../assets/img/lovingtech/lovingtech-order-tracking.png';
+import lovingtechTrackLookup from '../assets/img/lovingtech/lovingtech-track-lookup.png';
 import paysikaRecognition from '../assets/img/paysika/paysika-recognition.png';
 // Case-study section images (referenced by filename from content blocks)
 import paysikaDesignRequirements from '../assets/img/paysika/paysika-design-requirements.png';
@@ -553,6 +560,13 @@ export const projectImageMap: Record<string, string> = {
   'paysika-envelope-v1.jpg': paysikaEnvelopeV1,
   'paysika-packaging-v2.jpg': paysikaPackagingV2,
   'paysika-relay-stand.jpg': paysikaRelayStand,
+  'lovingtech-storefront.png': lovingtechStorefront,
+  'lovingtech-whatsapp-bot.png': lovingtechWhatsappBot,
+  'lovingtech-whatsapp-api.jpg': lovingtechWhatsappApi,
+  'lovingtech-cart.png': lovingtechCart,
+  'lovingtech-order-confirmation.png': lovingtechOrderConfirmation,
+  'lovingtech-order-tracking.png': lovingtechOrderTracking,
+  'lovingtech-track-lookup.png': lovingtechTrackLookup,
   'brand-guide.png': paysikaBrandGuide,
   'design-system.png': paysikaDesignSystem,
   'design-files.png': paysikaDesignFiles,
