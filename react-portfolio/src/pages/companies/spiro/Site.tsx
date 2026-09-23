@@ -6,7 +6,6 @@ import './site.css';
 const NAV = [
   { to: 'work', label: 'Work' },
   { to: 'about', label: 'About' },
-  { to: 'writing', label: 'Writing' },
 ];
 
 const DEFAULT_RESUME_URL =
@@ -43,7 +42,7 @@ export default function Site({ children }: { children: ReactNode }) {
             <LoopMark />
             <span className="lp-nav__name">
               Ndouken Theryx
-              <span>Experience and service design</span>
+              <span>UX Design Lead</span>
             </span>
           </Link>
           <nav className="lp-nav__links" aria-label="Site">
@@ -68,7 +67,7 @@ export default function Site({ children }: { children: ReactNode }) {
         <div className="lp-footer__inner">
           <div>
             <p className="lp-footer__name">Ndouken Theryx</p>
-            <p className="lp-footer__role">Experience and service design</p>
+            <p className="lp-footer__role">UX Design Lead</p>
           </div>
           <nav className="lp-footer__links" aria-label="Contact">
             <a href={`mailto:${email}`}>Email</a>

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, fireEvent, within } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import CompanyRouter from '../pages/companies/CompanyRouter';
 
@@ -9,12 +9,12 @@ vi.mock('../lib/api', () => {
     name: 'Spiro',
     slug: 'spiro',
     role: 'Global Customer Experience Lead',
-    tagline: 'Experience and service design across digital, physical and human touchpoints.',
+    tagline: 'UX Design Lead. I design the product and the parts around it.',
     hero_title: 'Ndouken Theryx',
-    hero_subtitle: 'I design experiences end to end: the digital screens, the physical moments and the people in between.',
-    badges: ['Journey mapping', 'Service design'],
+    hero_subtitle: 'I design the product and the parts people do not see.',
+    badges: ['UX design', 'Product design'],
     job_url: '',
-    philosophy_text: 'A journey is only real if it holds up in the field.',
+    philosophy_text: 'A flow that only works on a good day is not finished.',
     social_links: {
       email: 'ndouken@gmail.com',
       linkedin: 'https://www.linkedin.com/in/ndoukentheryx',
@@ -26,12 +26,12 @@ vi.mock('../lib/api', () => {
   const mockProjects = [
     {
       id: 'paysika_fintech',
-      tag: 'Service design',
+      tag: 'Fintech',
       title: 'PaySika',
       role: 'UX Design Lead',
       period: 'Nov 2022 - Aug 2026',
-      tagline: 'A card journey that runs from the app to a relay point.',
-      description: 'The physical card service end to end.',
+      tagline: 'The card that leaves the app.',
+      description: 'The physical card, from order to activation.',
       impact: '',
       image: '',
       responsibilities: [],
@@ -39,25 +39,31 @@ vi.mock('../lib/api', () => {
       content_blocks: [
         {
           type: 'steps',
-          eyebrow: 'The card journey',
+          eyebrow: 'The card, step by step',
           heading: 'Order, deliver, hand over, activate',
-          items: [{ title: 'Ordering', text: 'The delivery method, the fees and the timing on one screen.' }],
+          items: [
+            {
+              title: 'Ordering',
+              text: 'The delivery choice, the fee and the timing on one screen.',
+              image: 'https://example.com/order.png',
+            },
+          ],
         },
         {
           type: 'gallery',
-          heading: 'The work behind the screens',
+          heading: 'What held it together',
           items: [{ image: '', title: 'Relay point', description: 'A screenshot to add.' }],
         },
       ],
     },
     {
       id: 'crowdremit_fintech',
-      tag: 'Journey mapping',
+      tag: 'Cross-border',
       title: 'CrowdRemit',
       role: 'UX Researcher & Product Designer',
       period: 'Jan 2021 - Jun 2021',
-      tagline: 'End-to-end UX for cross-border transfers.',
-      description: 'Research first: interviews, journey maps, personas.',
+      tagline: 'We talked to people before we drew anything.',
+      description: 'Research first, then the app.',
       impact: '',
       image: '',
       responsibilities: [],
@@ -70,14 +76,13 @@ vi.mock('../lib/api', () => {
     {
       id: 'designing-a-back-office-for-physical-card-delivery-in-cameroon',
       title: 'Designing a Back Office for Physical Card Delivery in Cameroon',
-      excerpt: 'Status enforcement, agent workflows and two delivery models.',
+      excerpt: 'Status enforcement and two delivery models.',
       date: 'June 30, 2026',
       read_time: '10 min read',
       author: 'Ndouken Theryx',
       image: '',
       is_hidden: false,
-      content:
-        '# Designing a Back Office for Physical Card Delivery in Cameroon\n\nThe interface should make the correct action obvious.\n\n> Insert image here: the Distributions tab',
+      content: '# Designing a Back Office\n\nA note.\n\n> Insert image here: the Distributions tab',
     },
   ];
 
@@ -109,8 +114,8 @@ describe('Spiro mini-site', () => {
 
     expect(screen.getByRole('link', { name: 'Work' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'About' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Writing' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Skip to content' })).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: 'Writing' })).not.toBeInTheDocument();
   });
 
   it('renders a case study with its own block sequence', async () => {
@@ -128,17 +133,16 @@ describe('Spiro mini-site', () => {
     expect(screen.queryByRole('heading', { name: 'Overview' })).not.toBeInTheDocument();
   });
 
-  it('strips the duplicated H1 and turns a note into a placeholder', async () => {
-    renderAt('/c/spiro/writing/designing-a-back-office-for-physical-card-delivery-in-cameroon');
+  it('opens a project image in the lightbox and closes on the backdrop', async () => {
+    renderAt('/c/spiro/work/paysika_fintech');
 
-    await waitFor(() => {
-      expect(
-        screen.getByRole('heading', { name: /Back Office for Physical Card Delivery/i })
-      ).toBeInTheDocument();
-    });
+    const thumb = await screen.findByRole('button', { name: /View image: Ordering/i });
+    fireEvent.click(thumb);
 
-    const h1s = screen.getAllByRole('heading', { level: 1 });
-    expect(h1s).toHaveLength(1);
-    expect(screen.getAllByText(/Image to add/i).length).toBeGreaterThan(0);
+    const dialog = await screen.findByRole('dialog');
+    expect(within(dialog).getByText('Ordering')).toBeInTheDocument();
+
+    fireEvent.click(dialog);
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
   });
 });

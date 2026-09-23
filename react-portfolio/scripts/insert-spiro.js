@@ -34,7 +34,7 @@ Partner with the CX Digital and AI lead and country teams on change management a
 Ensure adoption improves customer experience and cost-to-serve, with clear success metrics tied to the Analytics KPI framework.
 Fluency in English and French is required.`;
 
-// Neutral portfolio copy. No tailoring language, no em dashes.
+// Neutral portfolio copy. Plain, human sentences. No tailoring language, no em dashes.
 const company = {
   id: 'spiro',
   slug: 'spiro',
@@ -43,16 +43,16 @@ const company = {
   job_url: 'https://www.spiro.net',
   job_description: JOB_DESCRIPTION,
   layout: 'spiro-portfolio-v1',
-  tagline: 'Experience and service design across digital, physical and human touchpoints.',
+  tagline: 'UX Design Lead. I design the product and the parts around it, from the app to the field.',
   hero_title: 'Ndouken Theryx',
   hero_subtitle:
-    'I design experiences end to end: the digital screens, the physical moments and the people in between. Most of that work has been at PaySika, an African neo-bank, where I mapped and rebuilt a card journey that runs from the app to a relay point.',
-  philosophy_title: 'A journey is only real if it holds up in the field.',
+    'I am a UX Design Lead. For four years I designed PaySika, an African neo-bank, from the first screen to the card people pick up at a relay point. I like the messy half of the work: delivery, support, and the small decisions that make a product feel safe to use.',
+  philosophy_title: 'A flow that only works on a good day is not finished.',
   philosophy_text:
-    'The best journeys are decided in the details: what a screen promises, what a person at a counter can actually do, and what happens when the network drops. I design with the field in the room, because that is where the friction shows up.',
+    'Most of the problems I have fixed were not visual. A camera step failed on cheap Android phones, so people gave up on sign-up. A handover took half an hour because of a paper form. I start by watching how something is actually used, then change the thing that causes the problem.',
   intro_expanded_text:
-    'I have spent the last years designing fintech experiences in Cameroon, from the first tap in an app to a card handed over at a relay point. I map the journey as it is, find where it leaks, and design the fix with the teams who run it. I work in English and French, and I like staying close to the people who use what we ship.',
-  badges: ['Journey mapping', 'Service design', 'Research and insights', 'Multi-market delivery'],
+    'I have spent the last few years designing fintech in Cameroon, mostly at PaySika. I built the design team there, owned the mobile and web product, and later took on the physical card: ordering, delivery, pickup and activation. Before that I co-founded an education product and designed a cross-border money transfer app. I work in English and French, and I try to stay close to the people who use what I make.',
+  badges: ['UX design', 'Product design', 'User research', 'Design systems'],
   social_links: {
     email: 'ndouken@gmail.com',
     linkedin: 'https://www.linkedin.com/in/ndoukentheryx',
@@ -60,8 +60,8 @@ const company = {
     company_name: 'Spiro',
     role_target: 'Global Customer Experience Lead',
     job_url: 'https://www.spiro.net',
-    now: 'Open to experience and service design roles',
-    metric_label: 'years designing services across digital and field touchpoints',
+    now: 'Open to UX design roles',
+    metric_label: 'years designing fintech products',
   },
   about_content: {
     location: 'Douala, Cameroon',
@@ -71,33 +71,33 @@ const company = {
     fun_fact: 'I value direct opinions, simple language, and a good plate of fish.',
     faqs: [
       {
-        question: 'How do you map a journey?',
+        question: 'How do you start a new project?',
         answer:
-          'I start with the as-is: interviews, support tickets and time with the people who run the service. Then I put the steps on one page, mark where it leaks, and take the map back to the teams who own each step. The map only matters if it changes a decision.',
+          'By watching people use the current one, if there is one. Support tickets, interviews, and time with the team that runs it. The first problem I hear is usually not the real one, so I try not to jump straight to a fix.',
       },
       {
-        question: 'How do you work with operations and product?',
+        question: 'How do you work with engineering and operations?',
         answer:
-          'Operations knows where the journey breaks and product knows what can ship. I sit between them, turn the friction into a clear problem, and keep one shared view of the fix so nobody is working from a different version.',
+          'I keep one shared picture of what we are changing and why, and I write down the details engineers need before they start. Operations usually knows where things break, so I bring them in early instead of handing them a finished design.',
       },
       {
         question: 'Which languages do you work in?',
         answer:
-          'Both French and English. I have written product copy, support content and campaigns in each, and I check that a journey reads the same way in both.',
+          'English and French. I have written product copy, support replies and campaign text in both, and I check that a screen reads the same way in each.',
       },
     ],
   },
   theme_config: {
     concept: 'loop',
-    accent: '#0f7a3d',
-    accent_text: '#0b6b34',
+    accent: '#1b3a6b',
+    accent_text: '#152c50',
     paper: '#f2f0e9',
     ink: '#12150f',
   },
   seo: {
-    title: 'Ndouken Theryx, experience and service design',
+    title: 'Ndouken Theryx, UX Design Lead',
     description:
-      'Experience and service designer working on journeys, field operations and multi-market delivery.',
+      'UX Design Lead working on fintech products, design systems and the field work around them.',
   },
 };
 
@@ -107,194 +107,192 @@ const IMG = {
   homeDelivery: 'https://res.cloudinary.com/duzedercz/image/upload/v1789530984/yjkbnsgaehonfiz8japv.png',
   relayQr: 'https://res.cloudinary.com/duzedercz/image/upload/v1789532584/kevdnzwpid0nqotsx38c.jpg',
   activation: 'https://res.cloudinary.com/duzedercz/image/upload/v1789531364/mjoi7juw2pfuywmeafup.png',
-  agentList: 'https://res.cloudinary.com/duzedercz/image/upload/v1789529537/glrqigcg6qhz79dqsqk6.png',
-  qrValidation: 'https://res.cloudinary.com/duzedercz/image/upload/v1789531743/pasd7qkl209hrk1gyej3.jpg',
 };
 
 // ── Per-project stories. Each project gets its own block sequence, so no two
 // read the same. Built only from facts already in the warehouse. ──
 
-const paysikaJourney = [
+const paysikaStory = [
   {
     type: 'intro',
-    eyebrow: 'Service design case study',
-    heading: 'A card journey that runs past the app',
-    text: 'At PaySika I led design from the MVP to a multi-product neo-bank. I owned the experience end to end: mobile, web, back office and the physical card. I measured it the way the business did, in retention, in support tickets, and in the minutes a customer spends at a relay point.',
+    eyebrow: 'PaySika',
+    heading: 'The card that leaves the app',
+    text: 'I led design at PaySika for four years, from the first version to a bank with several products. I designed the app, the internal tools and the physical card people collect at a relay point. I measured the work the way the business did: whether people stayed, how many asked for help, and how long they waited.',
   },
   {
     type: 'metrics',
-    heading: 'What the journey had to answer',
-    text: 'Three numbers decided whether the redesign worked.',
+    heading: 'What changed',
+    text: 'Three numbers moved after the redesign.',
     items: [
-      { value: '40%', label: 'Retention lift after the journey redesign', note: 'Measured in Mixpanel against the previous onboarding and KYC flow.' },
-      { value: '60%', label: 'Fewer support tickets', note: 'Most of the drop came from states that now explain themselves in the app.' },
-      { value: '30 to 10', label: 'Minutes for a relay-point handover', note: 'QR-code validation replaced the paper form and manual signature.' },
+      { value: '40%', label: 'more people stayed', note: 'Tracked in Mixpanel against the old sign-up and KYC flow.' },
+      { value: '60%', label: 'fewer support tickets', note: 'Most of the drop came from screens that now explain themselves.' },
+      { value: '30 to 10', label: 'minutes to hand over a card', note: 'We replaced the paper form with a QR code.' },
     ],
   },
   {
     type: 'steps',
-    eyebrow: 'Four touchpoints',
+    eyebrow: 'The card, step by step',
     heading: 'Order, deliver, hand over, activate',
-    text: 'Four moments in one experience, and three of them happen away from a screen.',
+    text: 'Four moments, and only one of them happens in the app.',
     items: [
       {
         title: 'Ordering',
-        text: 'The delivery method, the fees and the timing sit on the same screen as the decision, so nothing about the card is a surprise later.',
+        text: 'The delivery choice, the fee and the timing sit on the same screen, so nothing about the card is a surprise later.',
         image: IMG.ordering,
       },
       {
         title: 'Home delivery',
-        text: 'The delivery agent works from an internal app I designed: the order, the customer, the address, and one button to confirm the handover.',
+        text: 'Our agents worked from an app I designed: the order, the customer, the address, and one button to confirm.',
         image: IMG.homeDelivery,
       },
       {
         title: 'Relay-point pickup',
-        text: 'At the pickup point, QR validation records the handover the moment it happens and takes the queue from 30 minutes to 10.',
+        text: 'A QR code records the handover the moment it happens. The wait dropped from 30 minutes to 10.',
         image: IMG.relayQr,
       },
       {
         title: 'Activation',
-        text: 'Back in the app the card goes live, with the controls to block, replace or travel with it.',
+        text: 'Back in the app the card goes live, with the controls to block it, replace it or use it abroad.',
         image: IMG.activation,
       },
     ],
   },
   {
     type: 'two-col',
-    heading: 'One product, two sets of rules',
+    heading: 'One app, two countries',
     imageSide: 'left',
     image: 'paysika-design-requirements.png',
     caption: 'Part of the requirements set for the dashboard, branding, KYC and fees work.',
     markdown:
-      'When PaySika opened in Gabon, KYC in Cameroon was not KYC in Gabon: different documents, different checks, different expectations from the partner bank. I led the design across the mobile app and the back office so we kept one product with market-specific onboarding, rather than two apps that drift apart.',
+      'When PaySika opened in Gabon, KYC in Cameroon was not KYC in Gabon. Different documents, different checks, different rules from the partner bank. I redesigned the flow for the mobile app and the back office so we kept one product with a local sign-up, instead of two apps that slowly drift apart.',
   },
   {
     type: 'gallery',
-    eyebrow: 'Behind the process',
-    heading: 'The systems behind the shipped screens',
+    eyebrow: 'Behind the work',
+    heading: 'What held it together',
     items: [
       {
         image: 'design-system.png',
         title: 'One design system',
-        description: 'Tokens, components and text styles in Figma, the source every PaySika surface builds from.',
+        description: 'Tokens, components and text styles in Figma, used by every PaySika screen.',
       },
       {
         image: 'card-states.png',
-        title: 'Card state library',
-        description: 'Every physical and virtual card state, active, locked, expired or inactive, designed once and reused.',
+        title: 'Card states',
+        description: 'Every physical and virtual card state, active, locked, expired or inactive, drawn once and reused.',
       },
       {
         image: 'icon-library.png',
-        title: 'Icon library',
-        description: 'A shared icon set for card settings, mobile-money and bank partners, and card actions.',
+        title: 'Icons',
+        description: 'One icon set for card settings, mobile money and bank partners, so the product reads the same everywhere.',
       },
       {
         image: 'illustration-library.png',
-        title: 'Illustration library',
-        description: 'Reusable illustrations for onboarding, KYC, empty states and success moments.',
+        title: 'Illustrations',
+        description: 'Drawings for sign-up, KYC, empty screens and success moments.',
       },
       {
         image: 'paysika-research-archive.png',
-        title: 'Usability-testing archive',
-        description: 'The consent forms, scripts, observer guides and reports from the sessions that drove the redesign.',
+        title: 'Testing notes',
+        description: 'The consent forms, scripts and reports from the sessions that drove the redesign.',
       },
     ],
   },
   {
     type: 'richtext',
     markdown:
-      'The work that moved the numbers was not the visual layer. It was making every screen state what it costs, why an input is needed, and what just happened. A calm confirmation and a scary error state do different jobs, but they answer the same question for the user: is my money safe here?',
+      'The changes that moved the numbers were small. Every screen said what something cost, why we needed an input, and what had just happened. A calm confirmation and a scary error screen do different jobs, but they answer the same question: is my money safe here?',
   },
 ];
 
-const crowdremitResearch = [
+const crowdremitStory = [
   {
     type: 'intro',
-    eyebrow: 'Research and journey mapping',
-    heading: 'Map the journey before touching the pixels',
-    text: 'CrowdRemit let people send money between countries with clear fees. Before any screen was drawn I mapped how transfers actually happen, what people trust, what they fear, and what they check twice. The journey map came first; the interface followed it.',
+    eyebrow: 'CrowdRemit',
+    heading: 'We talked to people before we drew anything',
+    text: 'CrowdRemit let people send money between countries with clear fees. Before any screen was designed I wanted to know how a transfer really happens, what people trust, and what they check twice. That research shaped the whole app.',
   },
   {
     type: 'gallery',
-    eyebrow: 'Research before pixels',
-    heading: 'Starting from real behaviour',
+    eyebrow: 'First',
+    heading: 'What we heard from people',
     items: [
       {
         image: 'crowdremit_user_interviews.png',
-        title: 'Remote user interviews',
-        description: 'Moderated sessions with senders and recipients, focused on how transfers really happen.',
+        title: 'Interviews',
+        description: 'Remote sessions with senders and recipients, about how transfers actually happen.',
       },
       {
         image: 'crowdremit_journey_map.png',
-        title: 'Customer journey map',
-        description: 'Every step from intent to the received-money confirmation, and the anxiety at each one.',
+        title: 'The map',
+        description: 'Every step from wanting to send money to the confirmation that it arrived, and the worry in between.',
       },
       {
         image: 'crowdremit_user_stories.png',
         title: 'User stories',
-        description: 'Research turned into concrete scenarios the whole team could design and build against.',
+        description: 'What we heard, turned into scenarios the team could design against.',
       },
     ],
   },
   {
     type: 'compare',
-    eyebrow: 'An accessibility call',
+    eyebrow: 'Accessibility',
     heading: 'A contrast test made us rebrand',
     left: {
-      label: 'The contrast problem',
+      label: 'The problem',
       image: 'crowdremit_error_page_contrast.png',
-      caption: 'The original error and network screens, side by side with the accessible version.',
+      caption: 'The original error and network screens, next to the accessible version.',
     },
     right: {
-      label: 'The documented brand',
+      label: 'The new brand',
       image: 'crowdremit_brand_guidelines.png',
       caption: 'The new palette and type, written down so product and marketing stayed consistent.',
     },
   },
   {
     type: 'gallery',
-    eyebrow: 'The deliverables',
-    heading: 'The system and the surfaces',
+    eyebrow: 'What we shipped',
+    heading: 'The system and the screens',
     items: [
       {
         image: 'crowdremit_design_system.png',
         title: 'Design system',
-        description: 'Tokens, components and UI kits, so the teams built consistent screens across four surfaces.',
+        description: 'Tokens, components and UI kits, so four different surfaces looked like one product.',
       },
       {
         image: 'crowdremit_receiving_money.png',
-        title: 'Receive-first send flow',
-        description: 'The receive amount is the main input, with fees and rate on the same screen.',
+        title: 'Send money',
+        description: 'The amount received is the main input, with fees and rate on the same screen.',
       },
       {
         image: 'crowdremit_wireframe_screens.png',
-        title: 'Low-fidelity first',
-        description: 'Wireframes settled the skeleton before colour or copy could distract from it.',
+        title: 'Wireframes',
+        description: 'We settled the structure before colour or copy could get in the way.',
       },
       {
         image: 'crowdremit_landing_page.png',
-        title: 'Marketing site',
-        description: 'The public landing page, carrying the same identity as the product.',
+        title: 'Website',
+        description: 'The public landing page, with the same look as the product.',
       },
     ],
   },
   {
     type: 'richtext',
     markdown:
-      'The insight that shaped the flow was simple: people think in the amount that lands, not the exchange rate. Once the receive amount became the primary input, the rest of the screen had a job to do, and the fees stopped feeling hidden.',
+      'The idea that shaped the flow was simple. People care about the amount that lands, not the exchange rate. Once the amount received became the main input, the rest of the screen had a clear job and the fees stopped feeling hidden.',
   },
 ];
 
-const shomiLifecycle = [
+const shomiStory = [
   {
     type: 'intro',
-    eyebrow: 'Discovery and lifecycle',
+    eyebrow: 'Shomi',
     heading: 'A product that was built, launched, and then stopped on purpose',
-    text: 'I co-founded Kody and owned the product side of Shomi, interactive exam preparation for Cameroonian secondary-school students. With a two-person team and a $5,000 grant I ran the full lifecycle: discovery, backlog, launch, and the decision to stop.',
+    text: 'I co-founded Kody and owned the product side of Shomi, exam practice for Cameroonian secondary-school students. With a two-person team and a $5,000 grant I ran the whole thing: discovery, backlog, launch, and the decision to stop.',
   },
   {
     type: 'photos',
-    heading: 'Discovery with the students it was for',
+    heading: 'Getting to know the students first',
     items: [
       {
         image: 'Untitled 1.png',
@@ -302,17 +300,17 @@ const shomiLifecycle = [
       },
       {
         image: 'shomi_prexcel_classroom.png',
-        caption: 'Students at the partner exam-preparation school who tested the product.',
+        caption: 'Students at the partner exam school who tested the product.',
       },
     ],
   },
   {
     type: 'gallery',
-    heading: 'Prototypes and tests before production code',
+    heading: 'Prototypes and tests before any code',
     items: [
       {
         image: 'shomi_wireframes.png',
-        title: 'Wireframe flow',
+        title: 'Wireframes',
         description: 'The skeleton of the app, settled before any visual design started.',
       },
       {
@@ -327,8 +325,8 @@ const shomiLifecycle = [
       },
       {
         image: 'shomi_competitive_analysis.png',
-        title: 'Competitive landscape',
-        description: 'A board of adjacent products and patterns, used to place Shomi.',
+        title: 'Other products',
+        description: 'A board of similar products, used to work out where Shomi fit.',
       },
     ],
   },
@@ -338,17 +336,17 @@ const shomiLifecycle = [
       {
         icon: 'file',
         title: 'A funded start',
-        text: 'Won a $5,000 Tony Elumelu Foundation grant and directed the budget across the product lifecycle.',
+        text: 'Won a $5,000 Tony Elumelu Foundation grant and spread the budget across the build.',
       },
       {
         icon: 'target',
-        title: 'Scope as the strategy',
-        text: 'One platform, one audience, one validated need. Two adjacent ideas were turned down in the first month.',
+        title: 'Saying no early',
+        text: 'One platform, one audience, one real need. Two other ideas were dropped in the first month.',
       },
       {
         icon: 'shield',
         title: 'The sunset call',
-        text: 'When retention data showed the content model would not sustain, I owned the sunset and wrote the post-mortem.',
+        text: 'When retention showed the content model would not hold, I made the call to stop and wrote the post-mortem.',
       },
     ],
   },
@@ -365,69 +363,69 @@ const shomiLifecycle = [
   },
 ];
 
-const gefonaDelivery = [
+const gefonaStory = [
   {
     type: 'intro',
-    eyebrow: 'Programme delivery',
-    heading: 'One timeline for research, communications and money',
-    text: 'At the GEFONA Digital Foundation I ran delivery as the link between research, communications and finance, in a lean non-profit where a dropped ball is expensive. I owned the timelines, the reporting and the finance records.',
+    eyebrow: 'GEFONA',
+    heading: 'Keeping research, communications and money on one timeline',
+    text: 'At the GEFONA Digital Foundation I ran delivery between research, communications and finance, in a small non-profit where a dropped ball is expensive. I owned the timelines, the reporting and the finance records.',
   },
   {
     type: 'stat-cards',
     cards: [
       {
         icon: 'route',
-        title: 'One shared timeline',
+        title: 'One timeline',
         text: 'A research milestone, its announcement and its budget line moved together instead of surprising each other.',
       },
       {
         icon: 'message',
-        title: 'A steady reporting rhythm',
-        text: 'Stakeholders and funders got current numbers on a fixed cadence, without having to chase status.',
+        title: 'A steady rhythm',
+        text: 'Stakeholders and funders got current numbers on a fixed schedule, without having to chase status.',
       },
       {
         icon: 'file',
-        title: 'Finance you can audit',
+        title: 'Books you can audit',
         text: 'Budgeting and tracking kept clean enough to report against at any time.',
       },
     ],
   },
   {
     type: 'steps',
-    heading: 'How I kept three functions aligned',
+    heading: 'How I kept three teams aligned',
     items: [
       {
         title: 'Sequence the work in public',
-        text: 'Deliverables across contributors were ordered on one timeline, with status reported to stakeholders and funders.',
+        text: 'Work across contributors was ordered on one timeline, with status reported to stakeholders and funders.',
       },
       {
         title: 'Write for the audience',
-        text: 'External communications ran on the same rhythm as the research, so announcements matched the evidence.',
+        text: 'Communications ran on the same rhythm as the research, so announcements matched the evidence.',
       },
       {
         title: 'Make the budget readable',
-        text: 'Finance tracking stayed tied to funder lines, so every decision was made on real numbers.',
+        text: 'Finance tracking stayed tied to funder lines, so decisions were made on real numbers.',
       },
     ],
   },
   {
     type: 'gallery',
-    heading: 'Deliverables from the programmes',
+    heading: 'What the programmes produced',
     items: [
       {
         image: 'campaign-proposal.png',
         title: 'Sponsorship proposal',
-        description: 'A bilingual campaign proposal deck, from the problem statement to the advantages for partners.',
+        description: 'A bilingual campaign deck, from the problem to what partners get out of it.',
       },
       {
         image: 'onboarding-deck.png',
         title: 'Onboarding deck',
-        description: 'The introduction deck used with new contributors and partners.',
+        description: 'The deck used to bring in new contributors and partners.',
       },
       {
         image: 'content-archive.png',
         title: 'Content archive',
-        description: 'Social posts, campaign frames and articles, kept in one archive so communications stayed consistent.',
+        description: 'Posts, campaign frames and articles, kept in one place so the voice stayed consistent.',
       },
     ],
   },
@@ -437,60 +435,6 @@ const gefonaDelivery = [
       'In a small non-profit, communications and finance are not overhead, they are part of the delivery. Keeping them on the same timeline as the research is what stopped the surprises.',
   },
 ];
-
-// ── Article overrides: keep the original text, swap the placeholder notes for
-// real, existing images. Applied per company only. ──
-
-async function overrideArticle(entryId, imageList, metaImage, excerpt, signatureFrom) {
-  const rows = await sql`SELECT content FROM warehouse_entries WHERE id = ${entryId}`;
-  if (!rows.length) throw new Error(`Entry not found: ${entryId}`);
-  let content = rows[0].content || '';
-  let i = 0;
-  const noteRe = /^> \*\*\[[^\n]*\]\*\*[ \t]*$/gm;
-  const before = (content.match(noteRe) || []).length;
-  content = content.replace(noteRe, () => (i < imageList.length ? imageList[i++] : ''));
-  content = content.replace(/\n*> \*\*Images to add before publishing[\s\S]*$/m, '\n');
-  if (signatureFrom) {
-    content = content.replace(signatureFrom, '*Ndouken Theryx is a product and service designer based in Douala, Cameroon.*');
-  }
-  content = clean(content);
-  if (before !== imageList.length) {
-    console.warn(`  note: ${entryId} had ${before} image notes, ${imageList.length} images provided`);
-  }
-  const meta = { excerpt: excerpt || null };
-  if (metaImage) meta.image = metaImage;
-  return { content, meta };
-}
-
-const backOffice = await overrideArticle(
-  'article:designing-a-back-office-for-physical-card-delivery-in-cameroon',
-  [
-    `![The delivery agent app: the order list agents worked from in Douala and Yaounde](${IMG.agentList})`,
-    `![QR validation at the relay point, in place of the paper form](${IMG.qrValidation})`,
-    `![An agent order detail in the field, with the customer and address on one screen](${IMG.homeDelivery})`,
-    `![The customer card flow, where delivery method, fees and timing sit on one screen](${IMG.ordering})`,
-    `![The card flow, from order to activation](${IMG.activation})`,
-    '![Part of the requirements and process documentation for the back office](paysika-design-docs.png)',
-  ],
-  IMG.agentList,
-  'Status enforcement, agent workflows, and two delivery models sharing one back office.',
-  '*Theryx Lanvin is Lead Product Designer at PaySika, a Francophone African neo-bank. He contributes to OSS Cameroon as a frontend developer and designer.*'
-);
-
-const supportTickets = await overrideArticle(
-  'article:how-i-design-features-that-reduce-customer-support-tickets',
-  [
-    '![Card states and the in-app explanations that answer user questions](paysika-product-assets.png)',
-    '![The card state library, including the blocked state](card-states.png)',
-    '![The icon library used across the product](icon-library.png)',
-    '![The requirements and process documentation behind the error states](paysika-design-requirements.png)',
-    '![The design system the flows are built from](design-system.png)',
-    '![The illustration library used for empty and success moments](illustration-library.png)',
-  ],
-  null,
-  null,
-  '*Theryx Lanvin is Lead Product Designer at PaySika, a Francophone African neo-bank. He contributes to OSS Cameroon as a frontend developer and designer.*'
-);
 
 const now = new Date().toISOString();
 
@@ -527,18 +471,18 @@ const links = [
     entry_id: 'project:paysika_fintech',
     sort_order: 0,
     metadata: {
-      content_blocks: paysikaJourney,
-      tagline: 'Mapping and rebuilding a card journey that runs from the app to a relay point.',
+      content_blocks: paysikaStory,
+      tagline: 'The card that leaves the app.',
       description:
-        'As UX Design Lead and a founding-team member I led design at PaySika from MVP to a multi-product neo-bank. I owned the core mobile and web journeys, then the half of the experience that happens outside the app: the physical card, from ordering and home delivery to relay-point pickup and activation.',
+        'As UX Design Lead and a founding-team member I led design at PaySika from the first version to a multi-product bank. I owned the mobile and web product, then the physical card: ordering, home delivery, relay-point pickup and activation.',
     },
   },
   {
     entry_id: 'project:crowdremit_fintech',
     sort_order: 1,
     metadata: {
-      content_blocks: crowdremitResearch,
-      tagline: 'Research-led UX for cross-border transfers, built on a customer journey map.',
+      content_blocks: crowdremitStory,
+      tagline: 'We talked to people before we drew anything.',
       description:
         'As UX Researcher and Product Designer I designed the whole CrowdRemit experience across iOS, Android, the web app and the admin dashboard, plus the marketing site, and built the design system the engineering team implemented from.',
     },
@@ -547,34 +491,22 @@ const links = [
     entry_id: 'project:shomi_default',
     sort_order: 2,
     metadata: {
-      content_blocks: shomiLifecycle,
-      tagline: 'An ed-tech product taken from discovery to launch, and then stopped on purpose.',
+      content_blocks: shomiStory,
+      tagline: 'A product taken from discovery to launch, and then stopped on purpose.',
       description:
-        'Co-founder of Kody and product owner on Shomi: interactive exam preparation for Cameroonian secondary-school students. With a two-person team and a $5,000 grant I owned the full lifecycle: discovery, backlog, launch, and the decision to stop.',
+        'Co-founder of Kody and product owner on Shomi, exam practice for Cameroonian secondary-school students. With a two-person team and a $5,000 grant I owned the full build: discovery, backlog, launch, and the decision to stop.',
     },
   },
   {
     entry_id: 'project:gefona_project-manager',
     sort_order: 3,
     metadata: {
-      content_blocks: gefonaDelivery,
+      content_blocks: gefonaStory,
       image: 'gefona_logo.png',
       tagline: 'Programme delivery across research, communications and finance.',
       description:
-        'At the GEFONA Digital Foundation I ran delivery as the connective tissue between research, communications and finance, owning the timelines, the reporting and the finance records.',
+        'At the GEFONA Digital Foundation I ran delivery between research, communications and finance, owning the timelines, the reporting and the finance records.',
     },
-  },
-  {
-    entry_id: 'article:designing-a-back-office-for-physical-card-delivery-in-cameroon',
-    sort_order: 0,
-    content: backOffice.content,
-    metadata: backOffice.meta,
-  },
-  {
-    entry_id: 'article:how-i-design-features-that-reduce-customer-support-tickets',
-    sort_order: 1,
-    content: supportTickets.content,
-    metadata: supportTickets.meta,
   },
 ];
 
@@ -583,7 +515,7 @@ for (const l of links) {
     INSERT INTO company_entries (company_id, entry_id, sort_order, override_content, override_metadata, is_visible)
     VALUES (
       ${companyData.id}, ${l.entry_id}, ${l.sort_order},
-      ${l.content ?? null},
+      null,
       ${l.metadata ? JSON.stringify(cleanDeep(l.metadata)) : null}::jsonb,
       true
     )
@@ -594,6 +526,13 @@ for (const l of links) {
       is_visible = EXCLUDED.is_visible
   `;
 }
+
+// The profile has no blog section, so drop any article links for this company.
+const removed = await sql`
+  DELETE FROM company_entries
+  WHERE company_id = ${companyData.id} AND entry_id LIKE 'article:%'
+  RETURNING entry_id`;
+console.log('Removed article links:', removed.map((r) => r.entry_id));
 
 const check = await sql`SELECT id, slug, name, is_active, layout FROM companies WHERE id = ${companyData.id}`;
 const linkCount = await sql`SELECT COUNT(*)::int AS n FROM company_entries WHERE company_id = ${companyData.id}`;

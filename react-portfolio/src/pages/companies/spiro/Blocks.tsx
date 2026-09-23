@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
@@ -43,6 +43,81 @@ export function ImagePlaceholder({ note }: { note: string }) {
       <span className="lp-placeholder__tag">Image to add</span>
       <p className="lp-placeholder__note">{note}</p>
     </div>
+  );
+}
+
+/* ── Lightbox: small thumbnails open a full image with its caption. Clicking
+   the backdrop (outside the image) or pressing Escape closes it. ── */
+
+interface LightboxItem {
+  src: string;
+  caption?: string;
+}
+
+const LightboxContext = createContext<{ open: (item: LightboxItem) => void }>({
+  open: () => {},
+});
+
+function LightboxProvider({ children }: { children: ReactNode }) {
+  const [item, setItem] = useState<LightboxItem | null>(null);
+  const open = useCallback((next: LightboxItem) => setItem(next), []);
+
+  useEffect(() => {
+    if (!item) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setItem(null);
+    };
+    document.addEventListener('keydown', onKey);
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = previous;
+    };
+  }, [item]);
+
+  return (
+    <LightboxContext.Provider value={{ open }}>
+      {children}
+      {item && (
+        <div
+          className="lp-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label={item.caption || 'Image'}
+          onClick={() => setItem(null)}
+        >
+          <figure className="lp-lightbox__figure" onClick={(event) => event.stopPropagation()}>
+            <img src={item.src} alt={item.caption || ''} />
+            {item.caption && <figcaption>{item.caption}</figcaption>}
+          </figure>
+          <button
+            type="button"
+            className="lp-lightbox__close"
+            onClick={() => setItem(null)}
+            aria-label="Close image"
+            autoFocus
+          >
+            ×
+          </button>
+        </div>
+      )}
+    </LightboxContext.Provider>
+  );
+}
+
+/** A small clickable image that opens in the lightbox with its caption. */
+function Thumb({ src, caption, className }: { src: string; caption?: string; className?: string }) {
+  const { open } = useContext(LightboxContext);
+  return (
+    <button
+      type="button"
+      className={`lp-thumb${className ? ` ${className}` : ''}`}
+      onClick={() => open({ src, caption })}
+      aria-label={caption ? `View image: ${caption}` : 'View image'}
+    >
+      <img src={src} alt="" loading="lazy" />
+    </button>
   );
 }
 
@@ -91,8 +166,9 @@ export default function Blocks({
   if (!Array.isArray(blocks) || blocks.length === 0) return null;
 
   return (
-    <div className="lp-blocks">
-      {blocks.map((block, i) => {
+    <LightboxProvider>
+      <div className="lp-blocks">
+        {blocks.map((block, i) => {
         switch (block.type) {
           case 'intro':
             return (
@@ -138,7 +214,7 @@ export default function Blocks({
                     return (
                       <article className="lp-gallery__item" key={j}>
                         {src ? (
-                          <img src={src} alt={item.title || ''} loading="lazy" />
+                          <Thumb src={src} caption={item.title || item.description} />
                         ) : (
                           <ImagePlaceholder note={item.title || item.description || 'Image'} />
                         )}
@@ -168,7 +244,7 @@ export default function Blocks({
                   {block.items.map((item, j) => {
                     const src = resolveImage(item.image);
                     return src ? (
-                      <img key={j} src={src} alt={item.caption || ''} loading="lazy" />
+                      <Thumb key={j} src={src} caption={item.caption} />
                     ) : (
                       <ImagePlaceholder key={j} note={item.caption || 'Photo'} />
                     );
@@ -239,7 +315,7 @@ export default function Blocks({
                           {s.text && <p>{s.text}</p>}
                           {s.image && (
                             src
-                              ? <img src={src} alt={s.title} loading="lazy" />
+                              ? <Thumb src={src} caption={s.title} />
                               : <ImagePlaceholder note={s.title} />
                           )}
                         </div>
@@ -265,7 +341,7 @@ export default function Blocks({
                     const src = resolveImage(side.image);
                     return (
                       <figure className="lp-compare__side" key={j}>
-                        {src ? <img src={src} alt={side.label} loading="lazy" /> : <ImagePlaceholder note={side.label} />}
+                        {src ? <Thumb src={src} caption={side.caption || side.label} /> : <ImagePlaceholder note={side.label} />}
                         <figcaption>
                           <strong>{side.label}</strong>
                           {side.caption && <span>{side.caption}</span>}
@@ -287,7 +363,7 @@ export default function Blocks({
                     <LpMarkdown text={block.markdown} resolveImage={resolveImage} />
                   </div>
                   <figure className="lp-twocol__media">
-                    {src ? <img src={src} alt={block.heading || ''} loading="lazy" /> : <ImagePlaceholder note={block.heading || 'Image'} />}
+                    {src ? <Thumb src={src} caption={block.caption || block.heading} /> : <ImagePlaceholder note={block.heading || 'Image'} />}
                     {block.caption && <figcaption>{block.caption}</figcaption>}
                   </figure>
                 </div>
@@ -322,6 +398,7 @@ export default function Blocks({
             return null;
         }
       })}
-    </div>
+      </div>
+    </LightboxProvider>
   );
 }
