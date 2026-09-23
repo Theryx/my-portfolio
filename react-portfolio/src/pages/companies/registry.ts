@@ -35,4 +35,14 @@ export const companySites: Record<string, CompanySiteModule> = {
     Writing: lazy(() => import('./mtn-cameroon/Writing')),
     WritingItem: lazy(() => import('./mtn-cameroon/WritingItem')),
   },
+  spiro: {
+    Site: lazy(() => import('./spiro/Site')),
+    Loader: lazy(() => import('./spiro/Loader')),
+    Home: lazy(() => import('./spiro/Home')),
+    Work: lazy(() => import('./spiro/Work')),
+    WorkItem: lazy(() => import('./spiro/WorkItem')),
+    About: lazy(() => import('./spiro/About')),
+    Writing: lazy(() => import('./spiro/Writing')),
+    WritingItem: lazy(() => import('./spiro/WritingItem')),
+  },
 };
