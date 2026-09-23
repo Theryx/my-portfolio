@@ -69,6 +69,31 @@ const company = {
     languages: 'English and French',
     languages_label: 'Bilingual, fully fluent',
     fun_fact: 'I value direct opinions, simple language, and a good plate of fish.',
+    education: [
+      {
+        degree: 'Masters in Engineering, Land Survey',
+        school: 'National Advanced School of Public Works',
+        period: '08.2015 - 09.2020',
+      },
+    ],
+    skills: [
+      'Product, interaction design',
+      'Design system',
+      'User research, usability testing',
+      'User journey map',
+      'Brand identity and marketing',
+      'Spec writing and refinement',
+      'Product analysis',
+      'AI assisted development (Claude, Gemini)',
+    ],
+    certifications: [
+      { name: 'Google PMP Certification', meta: 'In progress, since August 2026' },
+      { name: 'Empathy in UX Design', meta: 'Issued February 2020' },
+      { name: 'Graphic Design Foundations: Typography', meta: 'Issued February 2020' },
+      { name: 'Human-Product Interaction Design', meta: 'Issued February 2020' },
+      { name: 'Fundamentals of Digital Marketing', meta: 'Issued October 2019' },
+      { name: 'Growth-Driven Design Certification', meta: 'Issued February 2020' },
+    ],
     faqs: [
       {
         question: 'How do you start a new project?',

@@ -20,7 +20,19 @@ vi.mock('../lib/api', () => {
       linkedin: 'https://www.linkedin.com/in/ndoukentheryx',
       resume: 'https://example.com/cv.pdf',
     },
-    about_content: {},
+    about_content: {
+      location: 'Douala, Cameroon',
+      languages: 'English and French',
+      education: [
+        {
+          degree: 'Masters in Engineering, Land Survey',
+          school: 'National Advanced School of Public Works',
+          period: '08.2015 - 09.2020',
+        },
+      ],
+      skills: ['Product, interaction design', 'Design system'],
+      certifications: [{ name: 'Google PMP Certification', meta: 'In progress, since August 2026' }],
+    },
   };
 
   const mockProjects = [
@@ -144,5 +156,19 @@ describe('Spiro mini-site', () => {
 
     fireEvent.click(dialog);
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+  });
+
+  it('renders education, skills and certifications on the about page', async () => {
+    renderAt('/c/spiro/about');
+
+    await waitFor(() => {
+      expect(screen.getByRole('heading', { name: 'Education' })).toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Masters in Engineering, Land Survey')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Skills' })).toBeInTheDocument();
+    expect(screen.getByText('Product, interaction design')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Licenses and Certifications' })).toBeInTheDocument();
+    expect(screen.getByText('Google PMP Certification')).toBeInTheDocument();
   });
 });

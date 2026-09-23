@@ -21,6 +21,12 @@ export interface AboutContent {
   speaking_image?: string;
   /** Up to 3 images shown in the Research & Speaking collage. */
   speaking_images?: string[];
+  /** Education entries shown on the About page. */
+  education?: { degree?: string; school?: string; period?: string }[];
+  /** Short skill labels. */
+  skills?: string[];
+  /** Licenses and certifications. */
+  certifications?: { name?: string; meta?: string }[];
   faqs?: ProfileFaq[];
 }
 

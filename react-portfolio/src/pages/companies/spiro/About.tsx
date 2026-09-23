@@ -20,6 +20,9 @@ export default function About() {
   ];
 
   const faqs = Array.isArray(about.faqs) ? about.faqs : [];
+  const education = Array.isArray(about.education) ? about.education : [];
+  const skills = Array.isArray(about.skills) ? about.skills : [];
+  const certifications = Array.isArray(about.certifications) ? about.certifications : [];
 
   return (
     <section className="lp-section lp-section--page">
@@ -59,6 +62,44 @@ export default function About() {
             Email me
           </a>
         </div>
+
+        {education.length > 0 && (
+          <section className="lp-cred">
+            <h2 className="lp-cred__title">Education</h2>
+            <ul className="lp-cred__list">
+              {education.map((e, i) => (
+                <li className="lp-cred__item" key={i}>
+                  {e.degree && <strong>{e.degree}</strong>}
+                  {e.school && <span>{e.school}</span>}
+                  {e.period && <em>{e.period}</em>}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {skills.length > 0 && (
+          <section className="lp-cred">
+            <h2 className="lp-cred__title">Skills</h2>
+            <ul className="lp-skills">
+              {skills.map((s, i) => <li key={i}>{s}</li>)}
+            </ul>
+          </section>
+        )}
+
+        {certifications.length > 0 && (
+          <section className="lp-cred">
+            <h2 className="lp-cred__title">Licenses and Certifications</h2>
+            <ul className="lp-cred__list">
+              {certifications.map((c, i) => (
+                <li className="lp-cred__item" key={i}>
+                  {c.name && <strong>{c.name}</strong>}
+                  {c.meta && <em>{c.meta}</em>}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         {faqs.length > 0 && (
           <div className="lp-faq">
