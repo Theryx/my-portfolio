@@ -134,6 +134,8 @@ export default function ProjectDetail() {
           </div>
 
           <div className="project-detail__body">
+            {!hasBlocks && !project.content && (
+              <>
             <section className="project-detail__section">
               <h2>Overview</h2>
               <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.description}</ReactMarkdown>
@@ -178,6 +180,9 @@ export default function ProjectDetail() {
                   <ReactMarkdown remarkPlugins={[remarkGfm]}>{project.result_text}</ReactMarkdown>
                 </div>
               </section>
+            )}
+
+              </>
             )}
 
             {hasBlocks && (

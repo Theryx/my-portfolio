@@ -81,53 +81,51 @@ export default function WorkItem() {
         </div>
       )}
 
-      <div className="jn-prose">
-        {project.description && (
-          <section>
-            <h2>Overview</h2>
-            <JitoMarkdown text={project.description} resolveImage={resolveProjectImage} />
-          </section>
-        )}
-
-        {project.responsibilities && project.responsibilities.length > 0 && (
-          <section>
-            <h2>What I did</h2>
-            <ul>
-              {project.responsibilities.map((r, i) => <li key={i}>{r}</li>)}
-            </ul>
-          </section>
-        )}
-
-        {project.challenge_text && (
-          <section>
-            <h2>{project.challenge || 'The challenge'}</h2>
-            <JitoMarkdown text={project.challenge_text} resolveImage={resolveProjectImage} />
-          </section>
-        )}
-
-        {project.solution_text && (
-          <section>
-            <h2>{project.solution || 'The solution'}</h2>
-            <JitoMarkdown text={project.solution_text} resolveImage={resolveProjectImage} />
-          </section>
-        )}
-
-        {project.result_text && (
-          <section>
-            <h2>{project.result || 'The result'}</h2>
-            <JitoMarkdown text={project.result_text} resolveImage={resolveProjectImage} />
-          </section>
-        )}
-      </div>
-
       {hasBlocks ? (
         <Blocks blocks={project.content_blocks!} resolveImage={resolveProjectImage} />
+      ) : project.content ? (
+        <div className="jn-prose">
+          <JitoMarkdown text={project.content} resolveImage={resolveProjectImage} />
+        </div>
       ) : (
-        project.content && (
-          <div className="jn-prose">
-            <JitoMarkdown text={project.content} resolveImage={resolveProjectImage} />
-          </div>
-        )
+        <div className="jn-prose">
+          {project.description && (
+            <section>
+              <h2>Overview</h2>
+              <JitoMarkdown text={project.description} resolveImage={resolveProjectImage} />
+            </section>
+          )}
+
+          {project.responsibilities && project.responsibilities.length > 0 && (
+            <section>
+              <h2>What I did</h2>
+              <ul>
+                {project.responsibilities.map((r, i) => <li key={i}>{r}</li>)}
+              </ul>
+            </section>
+          )}
+
+          {project.challenge_text && (
+            <section>
+              <h2>{project.challenge || 'The challenge'}</h2>
+              <JitoMarkdown text={project.challenge_text} resolveImage={resolveProjectImage} />
+            </section>
+          )}
+
+          {project.solution_text && (
+            <section>
+              <h2>{project.solution || 'The solution'}</h2>
+              <JitoMarkdown text={project.solution_text} resolveImage={resolveProjectImage} />
+            </section>
+          )}
+
+          {project.result_text && (
+            <section>
+              <h2>{project.result || 'The result'}</h2>
+              <JitoMarkdown text={project.result_text} resolveImage={resolveProjectImage} />
+            </section>
+          )}
+        </div>
       )}
     </article>
   );

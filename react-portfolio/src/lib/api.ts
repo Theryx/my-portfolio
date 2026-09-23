@@ -59,11 +59,32 @@ export interface ProjectPhotoItem {
   image: string;
   caption?: string;
 }
+export interface ProjectMetricItem {
+  value: string;      // the headline number, e.g. '40%' or '4'
+  label: string;
+  note?: string;
+}
+export interface ProjectStepItem {
+  title: string;
+  text?: string;
+  image?: string;
+}
+export interface ProjectCompareSide {
+  label: string;
+  image: string;
+  caption?: string;
+}
 export type ProjectBlock =
   | { type: 'intro'; eyebrow?: string; heading: string; text?: string }
   | { type: 'stat-cards'; variant?: 'artifacts'; cards: ProjectStatCard[] }
   | { type: 'gallery'; eyebrow?: string; heading?: string; text?: string; items: ProjectGalleryItem[] }
   | { type: 'photos'; heading?: string; text?: string; items: ProjectPhotoItem[] }
+  | { type: 'quote'; text: string; attribution?: string; role?: string; image?: string }
+  | { type: 'metrics'; heading?: string; text?: string; items: ProjectMetricItem[] }
+  | { type: 'steps'; eyebrow?: string; heading?: string; text?: string; items: ProjectStepItem[] }
+  | { type: 'compare'; eyebrow?: string; heading?: string; text?: string; left: ProjectCompareSide; right: ProjectCompareSide }
+  | { type: 'two-col'; heading?: string; markdown: string; image: string; imageSide?: 'left' | 'right'; caption?: string }
+  | { type: 'embed'; heading?: string; text?: string; url: string; caption?: string; poster?: string }
   | { type: 'richtext'; markdown: string };
 
 export interface Project {

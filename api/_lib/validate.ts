@@ -69,40 +69,70 @@ export function isAboutContent(v: unknown): boolean {
 // Structured project case-study sections. An ordered array of typed blocks,
 // each a small object whose shape depends on `type`. Kept permissive on optional
 // fields but strict on types, string lengths, and array bounds.
-const BLOCK_TYPES = new Set(['intro', 'stat-cards', 'gallery', 'photos', 'richtext']);
+const BLOCK_TYPES = new Set([
+  'intro', 'stat-cards', 'gallery', 'photos', 'quote', 'metrics',
+  'steps', 'compare', 'two-col', 'embed', 'richtext',
+]);
 function isShort(v: unknown): boolean { return v === undefined || v === null || (typeof v === 'string' && v.length <= SHORT_TEXT); }
+function isObj(v: unknown): v is Record<string, unknown> {
+  return !!v && typeof v === 'object' && !Array.isArray(v);
+}
+function isReqShort(v: unknown): boolean { return typeof v === 'string' && v.length > 0 && v.length <= SHORT_TEXT; }
+function isReqLong(v: unknown): boolean { return typeof v === 'string' && v.length > 0 && v.length <= LONG_TEXT; }
+function isHttpUrl(v: unknown): boolean { return typeof v === 'string' && v.length <= SHORT_TEXT && /^https?:\/\//i.test(v); }
 export function isContentBlocks(v: unknown): boolean {
   if (v === undefined || v === null) return true;
   if (!Array.isArray(v) || v.length > 50) return false;
   return v.every((blk) => {
-    if (!blk || typeof blk !== 'object' || Array.isArray(blk)) return false;
-    const o = blk as Record<string, unknown>;
+    if (!isObj(blk)) return false;
+    const o = blk;
     if (typeof o.type !== 'string' || !BLOCK_TYPES.has(o.type)) return false;
     switch (o.type) {
       case 'intro':
-        return isShort(o.eyebrow) && typeof o.heading === 'string' && o.heading.length <= SHORT_TEXT && isLongText(o.text);
+        return isShort(o.eyebrow) && isReqShort(o.heading) && isLongText(o.text);
       case 'richtext':
         return isLongText(o.markdown);
       case 'stat-cards': {
         if (!Array.isArray(o.cards) || o.cards.length > 30) return false;
-        return o.cards.every((c) => {
-          if (!c || typeof c !== 'object' || Array.isArray(c)) return false;
-          const card = c as Record<string, unknown>;
-          return isShort(card.icon) && typeof card.title === 'string' && card.title.length <= SHORT_TEXT
-            && isLongText(card.text) && isShort(card.note);
-        });
+        return o.cards.every((c) => isObj(c)
+          && isShort(c.icon) && isReqShort(c.title) && isLongText(c.text) && isShort(c.note));
       }
       case 'gallery':
       case 'photos': {
         if (!isShort(o.eyebrow) || !isShort(o.heading) || !isLongText(o.text)) return false;
         if (!Array.isArray(o.items) || o.items.length > 30) return false;
         return o.items.every((it) => {
-          if (!it || typeof it !== 'object' || Array.isArray(it)) return false;
-          const item = it as Record<string, unknown>;
-          if (typeof item.image !== 'string' || item.image.length > SHORT_TEXT) return false;
-          return isShort(item.title) && isLongText(item.description) && isLongText(item.caption);
+          if (!isObj(it)) return false;
+          if (typeof it.image !== 'string' || it.image.length > SHORT_TEXT) return false;
+          return isShort(it.title) && isLongText(it.description) && isLongText(it.caption);
         });
       }
+      case 'quote':
+        return isReqLong(o.text) && isShort(o.attribution) && isShort(o.role) && isShort(o.image);
+      case 'metrics': {
+        if (!isShort(o.heading) || !isLongText(o.text)) return false;
+        if (!Array.isArray(o.items) || o.items.length < 1 || o.items.length > 30) return false;
+        return o.items.every((it) => isObj(it) && isReqShort(it.value) && isReqShort(it.label) && isShort(it.note));
+      }
+      case 'steps': {
+        if (!isShort(o.eyebrow) || !isShort(o.heading) || !isLongText(o.text)) return false;
+        if (!Array.isArray(o.items) || o.items.length < 1 || o.items.length > 30) return false;
+        return o.items.every((it) => isObj(it) && isReqShort(it.title) && isLongText(it.text) && isShort(it.image));
+      }
+      case 'compare': {
+        if (!isShort(o.eyebrow) || !isShort(o.heading) || !isLongText(o.text)) return false;
+        const side = (s: unknown) => isObj(s) && isReqShort(s.label)
+          && typeof s.image === 'string' && s.image.length <= SHORT_TEXT && isShort(s.caption);
+        return side(o.left) && side(o.right);
+      }
+      case 'two-col':
+        return isShort(o.heading) && isLongText(o.markdown)
+          && typeof o.image === 'string' && o.image.length <= SHORT_TEXT
+          && (o.imageSide === undefined || o.imageSide === 'left' || o.imageSide === 'right')
+          && isShort(o.caption);
+      case 'embed':
+        return isShort(o.heading) && isLongText(o.text) && isHttpUrl(o.url)
+          && isShort(o.caption) && isShort(o.poster);
       default:
         return false;
     }

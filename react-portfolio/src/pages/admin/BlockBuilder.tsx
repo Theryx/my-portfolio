@@ -12,8 +12,14 @@ const ICON_OPTIONS = ['', 'users', 'clipboard', 'target', 'chart', 'shield', 'fi
 const BLOCK_TYPES: { type: ProjectBlock['type']; label: string }[] = [
   { type: 'intro', label: 'Intro' },
   { type: 'stat-cards', label: 'Stat cards' },
+  { type: 'metrics', label: 'Metrics' },
   { type: 'gallery', label: 'Gallery' },
   { type: 'photos', label: 'Photos' },
+  { type: 'quote', label: 'Quote' },
+  { type: 'steps', label: 'Steps' },
+  { type: 'compare', label: 'Compare' },
+  { type: 'two-col', label: 'Two column' },
+  { type: 'embed', label: 'Embed' },
   { type: 'richtext', label: 'Rich text' },
 ];
 
@@ -23,6 +29,12 @@ function newBlock(type: ProjectBlock['type']): ProjectBlock {
     case 'stat-cards': return { type, cards: [{ title: '', text: '' }] };
     case 'gallery': return { type, heading: '', items: [{ image: '', title: '', description: '' }] };
     case 'photos': return { type, heading: '', items: [{ image: '', caption: '' }] };
+    case 'quote': return { type, text: '', attribution: '' };
+    case 'metrics': return { type, heading: '', items: [{ value: '', label: '' }] };
+    case 'steps': return { type, heading: '', items: [{ title: '', text: '' }] };
+    case 'compare': return { type, left: { label: '', image: '' }, right: { label: '', image: '' } };
+    case 'two-col': return { type, markdown: '', image: '' };
+    case 'embed': return { type, url: '' };
     case 'richtext': return { type, markdown: '' };
   }
 }
@@ -173,7 +185,7 @@ export function BlockBuilder({ value, onChange }: {
         );
       }
       default:
-        return null;
+        return <p className="cms-field__hint">This section type is edited in JSON mode. Switch to JSON above.</p>;
     }
   }
 }

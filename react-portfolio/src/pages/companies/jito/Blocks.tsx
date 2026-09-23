@@ -8,6 +8,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import type { ProjectBlock } from '../../../lib/api';
+import MediaEmbed from '../../../components/MediaEmbed';
 
 const ICONS: Record<string, LucideIcon> = {
   users: Users,
@@ -173,6 +174,134 @@ export default function Blocks({
                     );
                   })}
                 </div>
+              </section>
+            );
+
+          case 'quote':
+            return (
+              <section className="jn-block" key={i}>
+                <blockquote className="jn-quote">
+                  <p>{block.text}</p>
+                  {(block.attribution || block.role) && (
+                    <footer className="jn-quote__by">
+                      {block.attribution}
+                      {block.role ? `${block.attribution ? ', ' : ''}${block.role}` : ''}
+                    </footer>
+                  )}
+                </blockquote>
+                {block.image && (
+                  resolveImage(block.image)
+                    ? <img className="jn-quote__img" src={resolveImage(block.image)} alt={block.attribution || ''} loading="lazy" />
+                    : <ImagePlaceholder note={block.attribution || 'Portrait'} />
+                )}
+              </section>
+            );
+
+          case 'metrics':
+            return (
+              <section className="jn-block" key={i}>
+                {(block.heading || block.text) && (
+                  <div className="jn-block__head">
+                    {block.heading && <h2 className="jn-block__heading">{block.heading}</h2>}
+                    {block.text && <p className="jn-block__text">{block.text}</p>}
+                  </div>
+                )}
+                <div className="jn-metrics">
+                  {block.items.map((m, j) => (
+                    <div className="jn-metric" key={j}>
+                      <strong>{m.value}</strong>
+                      <span>{m.label}</span>
+                      {m.note && <em>{m.note}</em>}
+                    </div>
+                  ))}
+                </div>
+              </section>
+            );
+
+          case 'steps':
+            return (
+              <section className="jn-block" key={i}>
+                {(block.eyebrow || block.heading || block.text) && (
+                  <div className="jn-block__head">
+                    {block.eyebrow && <span className="jn-eyebrow">{block.eyebrow}</span>}
+                    {block.heading && <h2 className="jn-block__heading">{block.heading}</h2>}
+                    {block.text && <p className="jn-block__text">{block.text}</p>}
+                  </div>
+                )}
+                <ol className="jn-steps">
+                  {block.items.map((s, j) => {
+                    const src = s.image ? resolveImage(s.image) : '';
+                    return (
+                      <li className="jn-step" key={j}>
+                        <span className="jn-step__num">{String(j + 1).padStart(2, '0')}</span>
+                        <div className="jn-step__body">
+                          <h3>{s.title}</h3>
+                          {s.text && <p>{s.text}</p>}
+                          {src && <img src={src} alt={s.title} loading="lazy" />}
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ol>
+              </section>
+            );
+
+          case 'compare':
+            return (
+              <section className="jn-block" key={i}>
+                {(block.eyebrow || block.heading || block.text) && (
+                  <div className="jn-block__head">
+                    {block.eyebrow && <span className="jn-eyebrow">{block.eyebrow}</span>}
+                    {block.heading && <h2 className="jn-block__heading">{block.heading}</h2>}
+                    {block.text && <p className="jn-block__text">{block.text}</p>}
+                  </div>
+                )}
+                <div className="jn-compare">
+                  {[block.left, block.right].map((side, j) => {
+                    const src = resolveImage(side.image);
+                    return (
+                      <figure className="jn-compare__side" key={j}>
+                        {src ? <img src={src} alt={side.label} loading="lazy" /> : <ImagePlaceholder note={side.label} />}
+                        <figcaption>
+                          <strong>{side.label}</strong>
+                          {side.caption && <span>{side.caption}</span>}
+                        </figcaption>
+                      </figure>
+                    );
+                  })}
+                </div>
+              </section>
+            );
+
+          case 'two-col': {
+            const src = resolveImage(block.image);
+            return (
+              <section className="jn-block" key={i}>
+                {block.heading && <h2 className="jn-block__heading">{block.heading}</h2>}
+                <div className={`jn-twocol${block.imageSide === 'left' ? ' is-reversed' : ''}`}>
+                  <div className="jn-twocol__text jn-prose">
+                    <JitoMarkdown text={block.markdown} resolveImage={resolveImage} />
+                  </div>
+                  <figure className="jn-twocol__media">
+                    {src ? <img src={src} alt={block.heading || ''} loading="lazy" /> : <ImagePlaceholder note={block.heading || 'Image'} />}
+                    {block.caption && <figcaption>{block.caption}</figcaption>}
+                  </figure>
+                </div>
+              </section>
+            );
+          }
+
+          case 'embed':
+            return (
+              <section className="jn-block" key={i}>
+                {(block.heading || block.text) && (
+                  <div className="jn-block__head">
+                    {block.heading && <h2 className="jn-block__heading">{block.heading}</h2>}
+                    {block.text && <p className="jn-block__text">{block.text}</p>}
+                  </div>
+                )}
+                <MediaEmbed url={block.url} poster={block.poster} title={block.heading} />
+                {block.caption && <p className="jn-embed__caption">{block.caption}</p>}
               </section>
             );
 
