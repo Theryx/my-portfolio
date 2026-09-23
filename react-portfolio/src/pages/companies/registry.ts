@@ -5,6 +5,7 @@ import { lazy, type ComponentType, type ReactNode } from 'react';
 // Companies without an entry fall back to the generic single-page brief.
 export interface CompanySiteModule {
   Site: ComponentType<{ children: ReactNode }>;
+  Loader: ComponentType<{ full?: boolean }>;
   Home: ComponentType;
   Work: ComponentType;
   WorkItem: ComponentType;
@@ -16,6 +17,7 @@ export interface CompanySiteModule {
 export const companySites: Record<string, CompanySiteModule> = {
   jito: {
     Site: lazy(() => import('./jito/Site')),
+    Loader: lazy(() => import('./jito/Loader')),
     Home: lazy(() => import('./jito/Home')),
     Work: lazy(() => import('./jito/Work')),
     WorkItem: lazy(() => import('./jito/WorkItem')),

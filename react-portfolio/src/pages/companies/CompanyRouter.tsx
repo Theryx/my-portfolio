@@ -1,7 +1,6 @@
 import { Suspense } from 'react';
 import { Routes, Route, Navigate, useParams } from 'react-router-dom';
 import { CompanyProvider } from '../../context/CompanyContext';
-import { LoadingScreen } from '../../components/ui/LoadingScreen';
 import CompanyPage from '../CompanyPage';
 import { companySites } from './registry';
 
@@ -15,11 +14,11 @@ export default function CompanyRouter() {
     return <CompanyPage slug={slug} />;
   }
 
-  const { Site, Home, Work, WorkItem, About, Writing, WritingItem } = site;
+  const { Site, Loader, Home, Work, WorkItem, About, Writing, WritingItem } = site;
 
   return (
     <CompanyProvider slug={slug}>
-      <Suspense fallback={<LoadingScreen />}>
+      <Suspense fallback={<Loader full />}>
         <Site>
           <Routes>
             <Route index element={<Home />} />

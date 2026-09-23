@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useCompany } from '../../../context/CompanyContext';
+import Loader from './Loader';
 
 export default function Writing() {
   const { base, posts, loading } = useCompany();
@@ -17,7 +18,7 @@ export default function Writing() {
       </header>
 
       {loading && visible.length === 0 ? (
-        <p className="jn-muted">Loading writing.</p>
+        <Loader />
       ) : visible.length === 0 ? (
         <p className="jn-muted">Nothing published yet.</p>
       ) : (

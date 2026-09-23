@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useCompany } from '../../../context/CompanyContext';
 import { resolveProjectImage } from '../../../data/projects';
+import Loader from './Loader';
 
 export default function Work() {
   const { base, projects, loading } = useCompany();
@@ -18,7 +19,7 @@ export default function Work() {
       </header>
 
       {loading && visible.length === 0 ? (
-        <p className="jn-muted">Loading work.</p>
+        <Loader />
       ) : visible.length === 0 ? (
         <p className="jn-muted">No projects yet.</p>
       ) : (

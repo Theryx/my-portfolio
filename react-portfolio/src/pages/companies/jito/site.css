@@ -269,8 +269,17 @@
 }
 .jn-article__lede { margin: 16px 0 0; font-size: 1.12rem; color: var(--jn-muted); }
 .jn-article__byline { margin: 14px 0 0; font-size: 0.88rem; color: var(--jn-muted); }
-.jn-article__hero { margin: 40px 0; border-radius: 14px; overflow: hidden; border: 1px solid var(--jn-line); background: var(--jn-surface); }
-.jn-article__hero img { width: 100%; display: block; }
+.jn-article__hero { margin: 36px 0; display: flex; justify-content: center; }
+.jn-article__hero img {
+  max-width: 100%;
+  max-height: 440px;
+  width: auto;
+  height: auto;
+  display: block;
+  border-radius: 14px;
+  border: 1px solid var(--jn-line);
+  background: var(--jn-surface);
+}
 
 .jn-facts {
   display: grid;
@@ -401,8 +410,44 @@
 }
 .jn-imgplaceholder__note { margin: 0; color: var(--jn-muted); font-size: 0.92rem; max-width: 40ch; }
 
-.jn-article__hero--empty { border-style: dashed; border-color: #cfc9bb; background: none; }
-.jn-article__hero--empty .jn-imgplaceholder { border: 0; background: none; min-height: 120px; }
+.jn-article__hero--empty { border: 1px dashed #cfc9bb; border-radius: 14px; }
+.jn-article__hero--empty .jn-imgplaceholder { border: 0; background: none; min-height: 120px; width: 100%; }
+
+/* ── Bespoke loading state ───────────────────────────────────── */
+.jn-loader {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: #f7f5f0;
+}
+.jn-loader--full { min-height: 100vh; }
+.jn-loader__mark { width: 44px; height: 44px; }
+.jn-loader__mark circle {
+  fill: none;
+  stroke: #1e6f4b;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 120;
+  stroke-dashoffset: 120;
+  animation: jn-loader-draw 1.3s ease-in-out infinite;
+}
+.jn-loader__word {
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  color: #6e6a5e;
+}
+@keyframes jn-loader-draw {
+  0% { stroke-dashoffset: 120; }
+  55% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -120; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .jn-loader__mark circle { animation: none; stroke-dashoffset: 0; }
+}
 
 /* ── About ───────────────────────────────────────────────────── */
 .jn-about { max-width: 62ch; }

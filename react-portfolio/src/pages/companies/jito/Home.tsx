@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useCompany } from '../../../context/CompanyContext';
 import { resolveProjectImage } from '../../../data/projects';
+import Loader from './Loader';
 
 const FALLBACK_INTRO =
   'I am a product designer who works across UX, interface and front-end code. For nearly four years I led design at PaySika, an African fintech, building payments, KYC and card experiences and the token system behind them.';
@@ -36,7 +37,7 @@ export default function Home() {
         </div>
 
         {loading && selected.length === 0 ? (
-          <p className="jn-muted">Loading work.</p>
+          <Loader />
         ) : (
           <ul className="jn-work">
             {selected.map((project) => {

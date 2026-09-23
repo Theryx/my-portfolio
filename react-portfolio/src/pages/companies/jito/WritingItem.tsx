@@ -4,6 +4,7 @@ import { useCompany } from '../../../context/CompanyContext';
 import { resolveBlogImage } from '../../../data/blog';
 import { usePageMeta } from '../../../hooks/usePageMeta';
 import { JitoMarkdown, ImagePlaceholder } from './Blocks';
+import Loader from './Loader';
 
 export default function WritingItem() {
   const { id } = useParams<{ id: string }>();
@@ -18,7 +19,7 @@ export default function WritingItem() {
   });
 
   if (loading && !post) {
-    return <section className="jn-section jn-section--page"><p className="jn-muted">Loading.</p></section>;
+    return <Loader />;
   }
 
   if (!post) {
