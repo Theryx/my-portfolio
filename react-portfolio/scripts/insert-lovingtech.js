@@ -33,7 +33,7 @@ const entry = {
   metadata: {
     tag: 'E-commerce · Customer success',
     role: 'Customer Success Consultant',
-    period: 'January to April',
+    period: 'January to April 2026',
     location: 'Douala, Cameroon',
     image: 'lovingtech-storefront.png',
     tagline: 'An internal support system and an order journey that run on WhatsApp.',
@@ -43,7 +43,7 @@ const entry = {
       'Designed a WhatsApp support system where a bot answers common questions from a bank of prepared answers and escalates the rest to the right team',
       'Designed the delivery follow-up, where the customer confirms receipt and sends a photo as proof',
       'Designed the order journey: product discovery, cart, checkout, and the choice between paying online and paying on delivery',
-      'Designed order tracking with a reference and a link, an email at each state change, and a button to check the status',
+      'Designed order tracking where the customer enters an order code on the website to see the status, with an email and a button at each state change',
     ],
     content_blocks: lovingTechBlocks,
     source_project_id: 'lovingtech-cx',
@@ -63,12 +63,13 @@ await sql`
 
 const assets = [
   { id: 'asset:lovingtech-storefront', filename: 'lovingtech-storefront.png', mime: 'image/png', description: 'The Loving Tech storefront.', tags: ['lovingtech', 'ecommerce', 'storefront'] },
-  { id: 'asset:lovingtech-whatsapp-bot', filename: 'lovingtech-whatsapp-bot.png', mime: 'image/png', description: 'The WhatsApp support bot and its message templates.', tags: ['lovingtech', 'whatsapp', 'support', 'bot'] },
-  { id: 'asset:lovingtech-whatsapp-api', filename: 'lovingtech-whatsapp-api.jpg', mime: 'image/jpeg', description: 'How the WhatsApp API integrates with Loving Tech.', tags: ['lovingtech', 'whatsapp', 'api'] },
+  { id: 'asset:lovingtech-whatsapp-bot', filename: 'lovingtech-whatsapp-bot.jpg', mime: 'image/jpeg', description: 'The WhatsApp support bot and its message templates.', tags: ['lovingtech', 'whatsapp', 'support', 'bot'] },
   { id: 'asset:lovingtech-cart', filename: 'lovingtech-cart.png', mime: 'image/png', description: 'The cart drawer with payment on delivery.', tags: ['lovingtech', 'cart', 'checkout'] },
+  { id: 'asset:lovingtech-checkout', filename: 'lovingtech-checkout.png', mime: 'image/png', description: 'The checkout page with contact details and delivery choice.', tags: ['lovingtech', 'checkout', 'order'] },
   { id: 'asset:lovingtech-order-confirmation', filename: 'lovingtech-order-confirmation.png', mime: 'image/png', description: 'The order confirmation screen.', tags: ['lovingtech', 'order', 'confirmation'] },
   { id: 'asset:lovingtech-order-tracking', filename: 'lovingtech-order-tracking.png', mime: 'image/png', description: 'The order tracking states.', tags: ['lovingtech', 'order', 'tracking'] },
   { id: 'asset:lovingtech-track-lookup', filename: 'lovingtech-track-lookup.png', mime: 'image/png', description: 'The order reference lookup screen.', tags: ['lovingtech', 'order', 'tracking'] },
+  { id: 'asset:lovingtech-gozem', filename: 'lovingtech-gozem.jpg', mime: 'image/jpeg', description: 'A Gozem delivery rider, the delivery partner for Loving Tech.', tags: ['lovingtech', 'delivery', 'gozem'] },
 ];
 
 for (const a of assets) {
@@ -79,6 +80,9 @@ for (const a of assets) {
       filename = EXCLUDED.filename, url = EXCLUDED.url, mime_type = EXCLUDED.mime_type,
       description = EXCLUDED.description, tags = EXCLUDED.tags`;
 }
+
+// Drop the earlier mislabelled asset id, if present.
+await sql`DELETE FROM assets WHERE id = 'asset:lovingtech-whatsapp-api'`;
 
 const check = await sql`SELECT id, title, jsonb_array_length(metadata->'content_blocks') AS blocks FROM warehouse_entries WHERE id = ${entry.id}`;
 console.log('Entry:', check[0]);

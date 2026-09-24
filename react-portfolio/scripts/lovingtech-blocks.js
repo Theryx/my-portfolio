@@ -44,14 +44,9 @@ export const lovingTechBlocks = [
     heading: 'The support system',
     items: [
       {
-        image: 'lovingtech-whatsapp-bot.png',
+        image: 'lovingtech-whatsapp-bot.jpg',
         title: 'The WhatsApp bot',
         description: 'The bot answering from prepared templates, confirming delivery and handing over to a person.',
-      },
-      {
-        image: 'lovingtech-whatsapp-api.jpg',
-        title: 'The WhatsApp API',
-        description: 'How the WhatsApp API connects to the shop so a message reaches the right team.',
       },
     ],
   },
@@ -74,9 +69,18 @@ export const lovingTechBlocks = [
       },
       {
         title: 'Track the order',
-        text: 'Every order gets a reference and a tracking link. The state moves from received to confirmed to shipped to delivered, and each change sends an email with a button to check the status.',
+        text: 'Every order gets a tracking code. The customer enters it on the website to see the status. The state moves from received to confirmed to shipped to delivered, and each change sends an email with a button to check it.',
       },
     ],
+  },
+  {
+    type: 'two-col',
+    eyebrow: 'The delivery partner',
+    heading: 'The last mile had no API',
+    image: 'lovingtech-gozem.jpg',
+    caption: 'A Gozem rider. Gozem handled the delivery, but there was no API to connect to the shop.',
+    markdown:
+      'Delivery was handled by Gozem, and Gozem had no API we could plug into the website. So there was no live position when a rider was coming to collect the parcel, and no live follow-up while it was on the way. Every status change was updated by hand, at fixed moments, by the team. The tracking we shipped shows clear states instead of a live map, because that is what we could actually know. The real fix is an integration with the delivery partner, and that is a conversation worth having.',
   },
   {
     type: 'gallery',
@@ -94,6 +98,11 @@ export const lovingTechBlocks = [
         description: 'The cart drawer, with payment on delivery after inspection.',
       },
       {
+        image: 'lovingtech-checkout.png',
+        title: 'Checkout',
+        description: 'Contact details, delivery or pickup, and the order summary.',
+      },
+      {
         image: 'lovingtech-order-confirmation.png',
         title: 'Order confirmation',
         description: 'The order is saved with a reference, then the customer confirms on WhatsApp.',
@@ -106,7 +115,7 @@ export const lovingTechBlocks = [
       {
         image: 'lovingtech-track-lookup.png',
         title: 'Track any order',
-        description: 'Customers can look up any order with the reference they were sent.',
+        description: 'Customers enter their order code on the website to see the status.',
       },
     ],
   },
@@ -126,7 +135,7 @@ export const lovingTechBlocks = [
       {
         icon: 'route',
         title: 'Every order has a status',
-        text: 'A reference and a tracking link, with an email and a button at every state change.',
+        text: 'A tracking code the customer enters on the website, with an email and a button at every state change.',
       },
     ],
   },
