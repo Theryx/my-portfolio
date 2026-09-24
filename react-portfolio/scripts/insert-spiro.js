@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { lovingTechBlocks } from './lovingtech-blocks.js';
+import { gefonaStory } from './gefona-blocks.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const env = fs.readFileSync(path.join(__dirname, '../../.env.local'), 'utf8');
@@ -342,79 +343,6 @@ const crowdremitStory = [
   },
 ];
 
-const gefonaStory = [
-  {
-    type: 'intro',
-    eyebrow: 'GEFONA',
-    heading: 'Keeping research, communications and money on one timeline',
-    text: 'At the GEFONA Digital Foundation I ran delivery between research, communications and finance, in a small non-profit where a dropped ball is expensive. I owned the timelines, the reporting and the finance records.',
-  },
-  {
-    type: 'stat-cards',
-    cards: [
-      {
-        icon: 'route',
-        title: 'One timeline',
-        text: 'A research milestone, its announcement and its budget line moved together instead of surprising each other.',
-      },
-      {
-        icon: 'message',
-        title: 'A steady rhythm',
-        text: 'Stakeholders and funders got current numbers on a fixed schedule, without having to chase status.',
-      },
-      {
-        icon: 'file',
-        title: 'Books you can audit',
-        text: 'Budgeting and tracking kept clean enough to report against at any time.',
-      },
-    ],
-  },
-  {
-    type: 'steps',
-    heading: 'How I kept three teams aligned',
-    items: [
-      {
-        title: 'Sequence the work in public',
-        text: 'Work across contributors was ordered on one timeline, with status reported to stakeholders and funders.',
-      },
-      {
-        title: 'Write for the audience',
-        text: 'Communications ran on the same rhythm as the research, so announcements matched the evidence.',
-      },
-      {
-        title: 'Make the budget readable',
-        text: 'Finance tracking stayed tied to funder lines, so decisions were made on real numbers.',
-      },
-    ],
-  },
-  {
-    type: 'gallery',
-    heading: 'What the programmes produced',
-    items: [
-      {
-        image: 'campaign-proposal.png',
-        title: 'Sponsorship proposal',
-        description: 'A bilingual campaign deck, from the problem to what partners get out of it.',
-      },
-      {
-        image: 'onboarding-deck.png',
-        title: 'Onboarding deck',
-        description: 'The deck used to bring in new contributors and partners.',
-      },
-      {
-        image: 'content-archive.png',
-        title: 'Content archive',
-        description: 'Posts, campaign frames and articles, kept in one place so the voice stayed consistent.',
-      },
-    ],
-  },
-  {
-    type: 'richtext',
-    markdown:
-      'In a small non-profit, communications and finance are not overhead, they are part of the delivery. Keeping them on the same timeline as the research is what stopped the surprises.',
-  },
-];
-
 const now = new Date().toISOString();
 
 const companyData = cleanDeep(company);
@@ -481,10 +409,10 @@ const links = [
     sort_order: 3,
     metadata: {
       content_blocks: gefonaStory,
-      image: 'gefona_logo.png',
+      image: 'gefona-reports.png',
       tagline: 'Programme delivery across research, communications and finance.',
       description:
-        'At the GEFONA Digital Foundation I ran delivery between research, communications and finance, owning the timelines, the reporting and the finance records.',
+        'At the GEFONA Digital Foundation I ran delivery between research, communications and finance, and led the research itself: the 2020 report on application security in Cameroon and the 2021 edition across West and Central Africa.',
     },
   },
 ];

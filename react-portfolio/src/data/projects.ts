@@ -537,6 +537,7 @@ import gefonaOnboardingDeck from '../assets/img/gefona/onboarding-deck.png';
 import gefonaWebsiteRedesign from '../assets/img/gefona/website-redesign-figma.png';
 import gefonaCampaignProposal from '../assets/img/gefona/campaign-proposal.png';
 import gefonaContentArchive from '../assets/img/gefona/content-archive.png';
+import gefonaReports from '../assets/img/gefona/gefona-reports.png';
 
 export const projectImageMap: Record<string, string> = {
   'PaySika website.PNG': paysikaImage,
@@ -598,7 +599,8 @@ export const projectImageMap: Record<string, string> = {
   'onboarding-deck.png': gefonaOnboardingDeck,
   'website-redesign-figma.png': gefonaWebsiteRedesign,
   'campaign-proposal.png': gefonaCampaignProposal,
-  'content-archive.png': gefonaContentArchive
+  'content-archive.png': gefonaContentArchive,
+  'gefona-reports.png': gefonaReports
 };
 
 // Resolve a stored project image string to a real asset URL.
