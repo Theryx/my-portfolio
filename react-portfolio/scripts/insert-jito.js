@@ -38,7 +38,7 @@ const company = {
   social_links: {
     email: 'ndouken@gmail.com',
     linkedin: 'https://www.linkedin.com/in/ndoukentheryx',
-    resume: 'https://drive.google.com/open?id=1OzU-HPN-l2s9Le4iSFd44F6PK4Z0W6bp&usp=drive_fs',
+    resume: 'https://drive.google.com/open?id=1YaPoFPM99oGFvA4fChx-QOSarJ2GGHI_&usp=drive_fs',
     company_name: 'Jito Foundation',
     role_target: 'Product Designer',
     job_url: JOB_URL,

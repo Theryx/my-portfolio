@@ -34,7 +34,7 @@ interface CompanyPageProps {
 }
 
 const DEFAULT_RESUME_URL =
-  'https://drive.google.com/open?id=1OzU-HPN-l2s9Le4iSFd44F6PK4Z0W6bp&usp=drive_fs';
+  'https://drive.google.com/open?id=1YaPoFPM99oGFvA4fChx-QOSarJ2GGHI_&usp=drive_fs';
 
 export default function CompanyPage({ slug: propSlug }: CompanyPageProps) {
   const { slug: routeSlug } = useParams<{ slug?: string }>();

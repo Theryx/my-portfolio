@@ -41,7 +41,7 @@ export interface ProfilePreset {
 const NDOUKEN_EMAIL = 'ndouken@gmail.com';
 const NDOUKEN_LINKEDIN = 'https://www.linkedin.com/in/ndoukentheryx';
 const NDOUKEN_RESUME =
-  'https://drive.google.com/open?id=1OzU-HPN-l2s9Le4iSFd44F6PK4Z0W6bp&usp=drive_fs';
+  'https://drive.google.com/open?id=1YaPoFPM99oGFvA4fChx-QOSarJ2GGHI_&usp=drive_fs';
 
 function commonLinks(extras: Record<string, string>): Record<string, string> {
   return {

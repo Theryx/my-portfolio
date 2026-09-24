@@ -57,7 +57,7 @@ const company = {
   social_links: {
     email: 'ndouken@gmail.com',
     linkedin: 'https://www.linkedin.com/in/ndoukentheryx',
-    resume: 'https://drive.google.com/open?id=1OzU-HPN-l2s9Le4iSFd44F6PK4Z0W6bp&usp=drive_fs',
+    resume: 'https://drive.google.com/open?id=1YaPoFPM99oGFvA4fChx-QOSarJ2GGHI_&usp=drive_fs',
     company_name: 'Spiro',
     role_target: 'Global Customer Experience Lead',
     job_url: 'https://www.spiro.net',
@@ -342,86 +342,6 @@ const crowdremitStory = [
   },
 ];
 
-const shomiStory = [
-  {
-    type: 'intro',
-    eyebrow: 'Shomi',
-    heading: 'A product that was built, launched, and then stopped on purpose',
-    text: 'I co-founded Kody and owned the product side of Shomi, exam practice for Cameroonian secondary-school students. With a two-person team and a $5,000 grant I ran the whole thing: discovery, backlog, launch, and the decision to stop.',
-  },
-  {
-    type: 'photos',
-    heading: 'Getting to know the students first',
-    items: [
-      {
-        image: 'Untitled 1.png',
-        caption: 'A research session with a student, working through the flow on a phone.',
-      },
-      {
-        image: 'shomi_prexcel_classroom.png',
-        caption: 'Students at the partner exam school who tested the product.',
-      },
-    ],
-  },
-  {
-    type: 'gallery',
-    heading: 'Prototypes and tests before any code',
-    items: [
-      {
-        image: 'shomi_wireframes.png',
-        title: 'Wireframes',
-        description: 'The skeleton of the app, settled before any visual design started.',
-      },
-      {
-        image: 'shomi_usability_testing.png',
-        title: 'A finding worth acting on',
-        description: 'Before and after the paper list, once testing showed the actions were hard to find.',
-      },
-      {
-        image: 'Untitled 3.png',
-        title: 'What students spent',
-        description: 'One of the survey cuts that shaped the first backlog.',
-      },
-      {
-        image: 'shomi_competitive_analysis.png',
-        title: 'Other products',
-        description: 'A board of similar products, used to work out where Shomi fit.',
-      },
-    ],
-  },
-  {
-    type: 'stat-cards',
-    cards: [
-      {
-        icon: 'file',
-        title: 'A funded start',
-        text: 'Won a $5,000 Tony Elumelu Foundation grant and spread the budget across the build.',
-      },
-      {
-        icon: 'target',
-        title: 'Saying no early',
-        text: 'One platform, one audience, one real need. Two other ideas were dropped in the first month.',
-      },
-      {
-        icon: 'shield',
-        title: 'The sunset call',
-        text: 'When retention showed the content model would not hold, I made the call to stop and wrote the post-mortem.',
-      },
-    ],
-  },
-  {
-    type: 'quote',
-    text: 'Can we keep this product fed sustainably at our team size? That question belonged in week one, not month six.',
-    attribution: 'From the post-mortem',
-    role: 'Shomi',
-  },
-  {
-    type: 'richtext',
-    markdown:
-      'Shipping the MVP was the easy half. The harder lesson was that a product whose retention depends on a content stream you cannot afford is not a product yet, however well it is designed. I now ask the operational question while the scope is still being written.',
-  },
-];
-
 const gefonaStory = [
   {
     type: 'intro',
@@ -557,18 +477,8 @@ const links = [
     },
   },
   {
-    entry_id: 'project:shomi_default',
-    sort_order: 3,
-    metadata: {
-      content_blocks: shomiStory,
-      tagline: 'A product taken from discovery to launch, and then stopped on purpose.',
-      description:
-        'Co-founder of Kody and product owner on Shomi, exam practice for Cameroonian secondary-school students. With a two-person team and a $5,000 grant I owned the full build: discovery, backlog, launch, and the decision to stop.',
-    },
-  },
-  {
     entry_id: 'project:gefona_project-manager',
-    sort_order: 4,
+    sort_order: 3,
     metadata: {
       content_blocks: gefonaStory,
       image: 'gefona_logo.png',
@@ -602,6 +512,13 @@ const removed = await sql`
   WHERE company_id = ${companyData.id} AND entry_id LIKE 'article:%'
   RETURNING entry_id`;
 console.log('Removed article links:', removed.map((r) => r.entry_id));
+
+// Shomi was removed from this profile.
+const removedShomi = await sql`
+  DELETE FROM company_entries
+  WHERE company_id = ${companyData.id} AND entry_id = 'project:shomi_default'
+  RETURNING entry_id`;
+console.log('Removed shomi link:', removedShomi.map((r) => r.entry_id));
 
 const check = await sql`SELECT id, slug, name, is_active, layout FROM companies WHERE id = ${companyData.id}`;
 const linkCount = await sql`SELECT COUNT(*)::int AS n FROM company_entries WHERE company_id = ${companyData.id}`;

@@ -35,6 +35,7 @@ const entry = {
     role: 'Customer Success Consultant',
     period: 'January to April 2026',
     location: 'Douala, Cameroon',
+    site: 'https://lovingtech.shop/',
     image: 'lovingtech-storefront.png',
     tagline: 'An internal support system and an order journey that run on WhatsApp.',
     description:
