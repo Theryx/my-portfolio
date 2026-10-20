@@ -4,10 +4,30 @@
     {
       "name": "preview",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["vite", "preview", "--port", "4173", "--strictPort"],
+      "runtimeArgs": [
+        "vite",
+        "preview",
+        "--port",
+        "4173",
+        "--strictPort"
+      ],
       "cwd": "react-portfolio",
       "port": 4173,
       "autoPort": false
+    },
+    {
+      "name": "studio-live",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev:live",
+        "--",
+        "--port",
+        "5173",
+        "--strictPort"
+      ],
+      "cwd": "react-portfolio",
+      "port": 5173
     }
   ]
 }

@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { getDb } from '../_lib/db.js';
+import { saveApplication } from '../_lib/application.js';
 import { requireAuth } from '../_lib/auth.js';
 import { validateCompanyBody } from '../_lib/validate.js';
 
@@ -47,7 +48,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           updated_at = ${now}
         RETURNING *
       `;
-      return res.status(200).json(rows[0]);
+      const application = await saveApplication(sql, companyId, b.application);
+      return res.status(200).json(application ? { ...rows[0], application } : rows[0]);
     }
 
     if (req.method === 'DELETE') {

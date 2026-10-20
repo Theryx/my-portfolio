@@ -47,7 +47,9 @@ export default function Layout({ children }: LayoutProps) {
 
   const toggleTheme = () => setIsDark(prev => !prev);
 
-  if (isCompanySite) {
+  // The Studio admin and company microsites are self-contained: they bring
+  // their own chrome, so the global header and footer are skipped for them.
+  if (isAdmin || isCompanySite) {
     return (
       <div className="layout">
         {/* No global header here, so drop its 72px offset. */}
@@ -145,46 +147,44 @@ export default function Layout({ children }: LayoutProps) {
 
       <footer className="footer footer--bento">
         <div className="container">
-          {!isAdmin && (
-            <div className="footer__cta">
-              <h2 className="footer__cta-title">
-                {footerCta.lead}{' '}
-                <ProfileLink to={footerCta.to} className="footer__cta-link">
-                  <em>{footerCta.em}</em>
-                </ProfileLink>
-              </h2>
-              <div className="footer__cta-actions">
-                <button
-                  type="button"
-                  className="btn btn--primary"
-                  onClick={() => {
-                    navigator.clipboard.writeText(contactEmail);
-                    setEmailCopied(true);
-                    setTimeout(() => setEmailCopied(false), 2000);
-                  }}
-                >
-                  {emailCopied ? 'Email copied ✓' : 'Copy my email'}
-                </button>
-                <a
-                  href={linkedinUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn--secondary"
-                >
-                  LinkedIn
-                </a>
-                <a
-                  href={resumeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn--secondary"
-                  aria-label="Download CV / Resume (PDF)"
-                >
-                  View CV
-                </a>
-              </div>
+          <div className="footer__cta">
+            <h2 className="footer__cta-title">
+              {footerCta.lead}{' '}
+              <ProfileLink to={footerCta.to} className="footer__cta-link">
+                <em>{footerCta.em}</em>
+              </ProfileLink>
+            </h2>
+            <div className="footer__cta-actions">
+              <button
+                type="button"
+                className="btn btn--primary"
+                onClick={() => {
+                  navigator.clipboard.writeText(contactEmail);
+                  setEmailCopied(true);
+                  setTimeout(() => setEmailCopied(false), 2000);
+                }}
+              >
+                {emailCopied ? 'Email copied ✓' : 'Copy my email'}
+              </button>
+              <a
+                href={linkedinUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn--secondary"
+              >
+                LinkedIn
+              </a>
+              <a
+                href={resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn--secondary"
+                aria-label="Download CV / Resume (PDF)"
+              >
+                View CV
+              </a>
             </div>
-          )}
+          </div>
           <div className="footer__meta">
             <p className="footer__text">
               &copy; {new Date().getFullYear()} Ndouken Theryx. All rights reserved.

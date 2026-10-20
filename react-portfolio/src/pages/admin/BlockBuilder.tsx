@@ -1,244 +1,299 @@
 import { useState } from 'react';
-import { ChevronUp, ChevronDown, Trash2, Plus, Code2, LayoutList } from 'lucide-react';
-import { MarkdownEditor } from '../../components/MarkdownEditor';
-import { ImageField, JsonBlocksEditor } from './fields';
+import { ChevronUp, ChevronDown, Trash2, Plus, Code2, LayoutList, Copy } from 'lucide-react';
 import type { ProjectBlock } from '../../lib/api';
+import { TextArea, TextInput, SelectInput, MarkdownInput, Switch } from './ui';
+import { ImageInput } from './AssetPicker';
 
-/* Visual editor for a project's content_blocks. Edits the same array the JSON
-   editor produces; a mode toggle lets power users drop into raw JSON. */
+/* Visual editor for a case study's content_blocks: the ordered sections every
+   portfolio site renders. Each block type is described by a small schema, so
+   all eleven types get a real form. A JSON mode stays available for anything
+   the forms don't cover. */
 
-const ICON_OPTIONS = ['', 'users', 'clipboard', 'target', 'chart', 'shield', 'file', 'award', 'sparkles', 'rocket', 'line', 'layers', 'branch', 'message'];
+type Kind = 'text' | 'textarea' | 'markdown' | 'image' | 'url' | 'icon' | 'side';
+interface FieldDef { key: string; label: string; kind: Kind; optional?: boolean; hint?: string }
+interface ListDef { key: 'items' | 'cards'; label: string; fields: FieldDef[]; blank: Record<string, unknown> }
+interface BlockDef { type: ProjectBlock['type']; label: string; description: string; fields: FieldDef[]; list?: ListDef; flags?: { key: string; label: string; on: unknown }[] }
 
-const BLOCK_TYPES: { type: ProjectBlock['type']; label: string }[] = [
-  { type: 'intro', label: 'Intro' },
-  { type: 'stat-cards', label: 'Stat cards' },
-  { type: 'metrics', label: 'Metrics' },
-  { type: 'gallery', label: 'Gallery' },
-  { type: 'photos', label: 'Photos' },
-  { type: 'quote', label: 'Quote' },
-  { type: 'steps', label: 'Steps' },
-  { type: 'compare', label: 'Compare' },
-  { type: 'two-col', label: 'Two column' },
-  { type: 'embed', label: 'Embed' },
-  { type: 'richtext', label: 'Rich text' },
+const ICONS = ['', 'users', 'clipboard', 'target', 'chart', 'shield', 'file', 'award', 'sparkles', 'rocket', 'line', 'layers', 'branch', 'message', 'route'];
+
+const eyebrow: FieldDef = { key: 'eyebrow', label: 'Eyebrow', kind: 'text', optional: true, hint: 'Small label above the heading.' };
+const heading: FieldDef = { key: 'heading', label: 'Heading', kind: 'text', optional: true };
+const text: FieldDef = { key: 'text', label: 'Text', kind: 'textarea', optional: true };
+
+const BLOCKS: BlockDef[] = [
+  { type: 'intro', label: 'Intro', description: 'Opening heading and paragraph.', fields: [eyebrow, { ...heading, optional: false }, text] },
+  {
+    type: 'metrics', label: 'Metrics', description: 'Headline numbers with labels.', fields: [heading, text],
+    list: { key: 'items', label: 'Metric', blank: { value: '', label: '' }, fields: [
+      { key: 'value', label: 'Value', kind: 'text', hint: 'e.g. 40% or 30 to 10' },
+      { key: 'label', label: 'Label', kind: 'text' },
+      { key: 'note', label: 'Note', kind: 'text', optional: true },
+    ] },
+  },
+  {
+    type: 'stat-cards', label: 'Cards', description: 'Short cards with an icon, title and text.', fields: [],
+    flags: [{ key: 'variant', label: 'Artifacts variant (wider grid for placeholder cards)', on: 'artifacts' }],
+    list: { key: 'cards', label: 'Card', blank: { title: '', text: '' }, fields: [
+      { key: 'icon', label: 'Icon', kind: 'icon', optional: true },
+      { key: 'title', label: 'Title', kind: 'text' },
+      { key: 'text', label: 'Text', kind: 'textarea', optional: true },
+      { key: 'note', label: 'Note', kind: 'text', optional: true, hint: 'Small italic caption.' },
+    ] },
+  },
+  {
+    type: 'steps', label: 'Steps', description: 'A numbered sequence, optionally with images.', fields: [eyebrow, heading, text],
+    list: { key: 'items', label: 'Step', blank: { title: '', text: '' }, fields: [
+      { key: 'title', label: 'Title', kind: 'text' },
+      { key: 'text', label: 'Text', kind: 'textarea', optional: true },
+      { key: 'image', label: 'Image', kind: 'image', optional: true },
+    ] },
+  },
+  {
+    type: 'compare', label: 'Before / after', description: 'Two images side by side.', fields: [eyebrow, heading, text,
+      { key: 'left', label: 'Left', kind: 'side' }, { key: 'right', label: 'Right', kind: 'side' }],
+  },
+  {
+    type: 'two-col', label: 'Text and image', description: 'Markdown next to an image.', fields: [eyebrow, heading,
+      { key: 'markdown', label: 'Text', kind: 'markdown' },
+      { key: 'image', label: 'Image', kind: 'image' },
+      { key: 'caption', label: 'Caption', kind: 'text', optional: true }],
+    flags: [{ key: 'imageSide', label: 'Image on the left', on: 'left' }],
+  },
+  {
+    type: 'gallery', label: 'Gallery', description: 'Images with titles and descriptions.', fields: [eyebrow, heading, text],
+    list: { key: 'items', label: 'Item', blank: { image: '', title: '', description: '' }, fields: [
+      { key: 'image', label: 'Image', kind: 'image' },
+      { key: 'title', label: 'Title', kind: 'text', optional: true },
+      { key: 'description', label: 'Description', kind: 'textarea', optional: true },
+    ] },
+  },
+  {
+    type: 'photos', label: 'Photos', description: 'Photos with captions.', fields: [heading, text],
+    list: { key: 'items', label: 'Photo', blank: { image: '', caption: '' }, fields: [
+      { key: 'image', label: 'Image', kind: 'image' },
+      { key: 'caption', label: 'Caption', kind: 'text', optional: true },
+    ] },
+  },
+  {
+    type: 'quote', label: 'Quote', description: 'A testimonial or pull quote.', fields: [
+      { key: 'text', label: 'Quote', kind: 'textarea' },
+      { key: 'attribution', label: 'Who said it', kind: 'text', optional: true },
+      { key: 'role', label: 'Their role', kind: 'text', optional: true },
+      { key: 'image', label: 'Photo', kind: 'image', optional: true }],
+  },
+  {
+    type: 'embed', label: 'Video / embed', description: 'A video or prototype link.', fields: [heading, text,
+      { key: 'url', label: 'URL', kind: 'url', hint: 'YouTube, Vimeo, Loom or Figma link.' },
+      { key: 'caption', label: 'Caption', kind: 'text', optional: true },
+      { key: 'poster', label: 'Poster image', kind: 'image', optional: true }],
+  },
+  { type: 'richtext', label: 'Rich text', description: 'Free-form Markdown.', fields: [{ key: 'markdown', label: 'Markdown', kind: 'markdown' }] },
 ];
 
-function newBlock(type: ProjectBlock['type']): ProjectBlock {
-  switch (type) {
-    case 'intro': return { type, heading: '', text: '' };
-    case 'stat-cards': return { type, cards: [{ title: '', text: '' }] };
-    case 'gallery': return { type, heading: '', items: [{ image: '', title: '', description: '' }] };
-    case 'photos': return { type, heading: '', items: [{ image: '', caption: '' }] };
-    case 'quote': return { type, text: '', attribution: '' };
-    case 'metrics': return { type, heading: '', items: [{ value: '', label: '' }] };
-    case 'steps': return { type, heading: '', items: [{ title: '', text: '' }] };
-    case 'compare': return { type, left: { label: '', image: '' }, right: { label: '', image: '' } };
-    case 'two-col': return { type, markdown: '', image: '' };
-    case 'embed': return { type, url: '' };
-    case 'richtext': return { type, markdown: '' };
+const DEF = Object.fromEntries(BLOCKS.map((b) => [b.type, b])) as Record<string, BlockDef>;
+
+function blankBlock(def: BlockDef): ProjectBlock {
+  const b: Record<string, unknown> = { type: def.type };
+  for (const f of def.fields) {
+    if (f.kind === 'side') b[f.key] = { label: '', image: '' };
+    else if (!f.optional) b[f.key] = '';
   }
+  if (def.list) b[def.list.key] = [{ ...def.list.blank }];
+  return b as unknown as ProjectBlock;
 }
 
-const cardStyle: React.CSSProperties = {
-  border: '1px solid rgba(128,128,128,0.25)', borderRadius: 10, padding: 14, marginBottom: 12,
-};
-const rowStyle: React.CSSProperties = { display: 'flex', gap: 8, alignItems: 'center', justifyContent: 'space-between' };
+type Obj = Record<string, unknown>;
+const clean = (v: string) => (v === '' ? undefined : v);
+let keySeed = 0;
+const newKey = () => `b${++keySeed}`;
 
 export function BlockBuilder({ value, onChange }: {
   value: ProjectBlock[] | undefined;
   onChange: (v: ProjectBlock[] | undefined) => void;
 }) {
-  const blocks: ProjectBlock[] = Array.isArray(value) ? value : [];
+  const blocks = (Array.isArray(value) ? value : []) as unknown as Obj[];
   const [mode, setMode] = useState<'visual' | 'json'>('visual');
-  const [jsonKey, setJsonKey] = useState(0);
+  // Stable React keys that follow blocks through moves, so open inputs keep
+  // focus. Re-derived when the list changes from outside (e.g. JSON mode).
+  const [keys, setKeys] = useState<string[]>(() => blocks.map(() => newKey()));
+  if (keys.length !== blocks.length) setKeys(blocks.map(() => newKey()));
 
-  const commit = (next: ProjectBlock[]) => onChange(next.length ? next : undefined);
-  const patchBlock = (i: number, patch: Record<string, unknown>) =>
-    commit(blocks.map((b, idx) => (idx === i ? ({ ...b, ...patch } as ProjectBlock) : b)));
-  const moveBlock = (i: number, dir: -1 | 1) => {
+  const commit = (next: Obj[], nextKeys: string[]) => {
+    setKeys(nextKeys);
+    onChange(next.length ? (next as unknown as ProjectBlock[]) : undefined);
+  };
+  const patch = (i: number, p: Obj) => commit(blocks.map((b, idx) => (idx === i ? { ...b, ...p } : b)), keys);
+  const move = (i: number, dir: -1 | 1) => {
     const j = i + dir;
     if (j < 0 || j >= blocks.length) return;
     const n = [...blocks];
+    const k = [...keys];
     [n[i], n[j]] = [n[j], n[i]];
-    commit(n);
+    [k[i], k[j]] = [k[j], k[i]];
+    commit(n, k);
   };
-  const removeBlock = (i: number) => commit(blocks.filter((_, idx) => idx !== i));
-  const addBlock = (type: ProjectBlock['type']) => commit([...blocks, newBlock(type)]);
-
-  // sub-array (cards / items) helpers
-  const patchList = (bi: number, key: 'cards' | 'items', list: unknown[]) => patchBlock(bi, { [key]: list });
-  const updateItem = (bi: number, key: 'cards' | 'items', ii: number, patch: Record<string, unknown>, list: Record<string, unknown>[]) =>
-    patchList(bi, key, list.map((it, idx) => (idx === ii ? { ...it, ...patch } : it)));
-  const moveItem = (bi: number, key: 'cards' | 'items', ii: number, dir: -1 | 1, list: unknown[]) => {
-    const j = ii + dir;
-    if (j < 0 || j >= list.length) return;
-    const n = [...list];
-    [n[ii], n[j]] = [n[j], n[ii]];
-    patchList(bi, key, n);
+  const remove = (i: number) => commit(blocks.filter((_, idx) => idx !== i), keys.filter((_, idx) => idx !== i));
+  const duplicate = (i: number) => {
+    const n = [...blocks];
+    const k = [...keys];
+    n.splice(i + 1, 0, structuredClone(blocks[i]));
+    k.splice(i + 1, 0, newKey());
+    commit(n, k);
   };
-  const removeItem = (bi: number, key: 'cards' | 'items', ii: number, list: unknown[]) => patchList(bi, key, list.filter((_, idx) => idx !== ii));
-
-  if (mode === 'json') {
-    return (
-      <div>
-        <ModeToggle mode={mode} onVisual={() => setMode('visual')} onJson={() => { setJsonKey((k) => k + 1); setMode('json'); }} />
-        <JsonBlocksEditor
-          key={jsonKey}
-          label="Content blocks (raw JSON)"
-          value={blocks}
-          onChange={(v) => commit((v as ProjectBlock[]) ?? [])}
-          hint="Advanced. Switch back to Visual to use the form editor."
-        />
-      </div>
-    );
-  }
+  const add = (def: BlockDef) => commit([...blocks, blankBlock(def) as unknown as Obj], [...keys, newKey()]);
 
   return (
-    <div>
-      <ModeToggle mode={mode} onVisual={() => setMode('visual')} onJson={() => { setJsonKey((k) => k + 1); setMode('json'); }} />
-
-      {blocks.length === 0 && <p className="cms-field__hint">No sections yet. Add one below.</p>}
-
-      {blocks.map((block, i) => (
-        <div key={i} style={cardStyle}>
-          <div style={{ ...rowStyle, marginBottom: 10 }}>
-            <strong style={{ textTransform: 'capitalize' }}>{block.type.replace('-', ' ')}</strong>
-            <span style={{ display: 'flex', gap: 4 }}>
-              <button type="button" className="cms-icon-btn" onClick={() => moveBlock(i, -1)} disabled={i === 0} aria-label="Move up"><ChevronUp size={15} /></button>
-              <button type="button" className="cms-icon-btn" onClick={() => moveBlock(i, 1)} disabled={i === blocks.length - 1} aria-label="Move down"><ChevronDown size={15} /></button>
-              <button type="button" className="cms-icon-btn" onClick={() => removeBlock(i)} aria-label="Delete section"><Trash2 size={15} /></button>
-            </span>
-          </div>
-          {renderBlockEditor(block, i)}
+    <div className="cms-blocks">
+      <div className="cms-row cms-row--between">
+        <span className="cms-field__hint">
+          {blocks.length ? `${blocks.length} section${blocks.length === 1 ? '' : 's'}` : 'No sections yet'}
+        </span>
+        <div className="cms-segmented" role="group" aria-label="Editor mode">
+          <button type="button" aria-pressed={mode === 'visual'} onClick={() => setMode('visual')}><LayoutList size={13} /> Visual</button>
+          <button type="button" aria-pressed={mode === 'json'} onClick={() => setMode('json')}><Code2 size={13} /> JSON</button>
         </div>
-      ))}
-
-      <div className="cms-field__row" style={{ flexWrap: 'wrap' }}>
-        <span className="cms-field__hint" style={{ marginRight: 4 }}>Add section:</span>
-        {BLOCK_TYPES.map((t) => (
-          <button key={t.type} type="button" className="cms-btn cms-btn--ghost" onClick={() => addBlock(t.type)}>
-            <Plus size={13} /> {t.label}
-          </button>
-        ))}
       </div>
+
+      {mode === 'json' ? (
+        <JsonBlocks value={blocks} onChange={(v) => commit(v, v.map(() => newKey()))} />
+      ) : (
+        <>
+          {blocks.map((block, i) => {
+            const def = DEF[String(block.type)];
+            return (
+              <div key={keys[i] ?? i} className="cms-block">
+                <div className="cms-block__head">
+                  <span className="cms-block__type">
+                    <span className="cms-block__index">{i + 1}</span>
+                    {def?.label ?? String(block.type)}
+                  </span>
+                  <button type="button" className="cms-icon-btn" onClick={() => move(i, -1)} disabled={i === 0} aria-label={`Move section ${i + 1} up`}><ChevronUp size={15} /></button>
+                  <button type="button" className="cms-icon-btn" onClick={() => move(i, 1)} disabled={i === blocks.length - 1} aria-label={`Move section ${i + 1} down`}><ChevronDown size={15} /></button>
+                  <button type="button" className="cms-icon-btn" onClick={() => duplicate(i)} aria-label={`Duplicate section ${i + 1}`}><Copy size={14} /></button>
+                  <button type="button" className="cms-icon-btn cms-icon-btn--danger" onClick={() => remove(i)} aria-label={`Delete section ${i + 1}`}><Trash2 size={15} /></button>
+                </div>
+                <div className="cms-block__body">
+                  {def ? <BlockForm def={def} block={block} onPatch={(p) => patch(i, p)} /> : (
+                    <p className="cms-field__hint">Unknown section type "{String(block.type)}". Edit it in JSON mode.</p>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+          <div className="cms-section" style={{ padding: 14, gap: 10 }}>
+            <span className="cms-field__label">Add a section</span>
+            <div className="cms-addmenu">
+              {BLOCKS.map((def) => (
+                <button key={def.type} type="button" className="cms-btn cms-btn--sm" onClick={() => add(def)} title={def.description}>
+                  <Plus size={13} /> {def.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
+}
 
-  function renderBlockEditor(block: ProjectBlock, i: number) {
-    switch (block.type) {
-      case 'intro':
-        return (
-          <>
-            <TextField label="Eyebrow (small label)" value={block.eyebrow || ''} onChange={(v) => patchBlock(i, { eyebrow: v })} />
-            <TextField label="Heading" value={block.heading} onChange={(v) => patchBlock(i, { heading: v })} />
-            <TextArea label="Text" value={block.text || ''} onChange={(v) => patchBlock(i, { text: v })} />
-          </>
-        );
-      case 'richtext':
-        return <MarkdownEditor label="Markdown" value={block.markdown} onChange={(v) => patchBlock(i, { markdown: v })} rows={8} />;
-      case 'stat-cards': {
-        const cards = block.cards as unknown as Record<string, unknown>[];
-        return (
-          <>
-            <label className="cms-check">
-              <input type="checkbox" checked={block.variant === 'artifacts'} onChange={(e) => patchBlock(i, { variant: e.target.checked ? 'artifacts' : undefined })} />
-              Artifacts variant (wider grid, for placeholder cards)
-            </label>
-            {cards.map((c, ci) => (
-              <div key={ci} style={{ ...cardStyle, marginTop: 10, background: 'rgba(128,128,128,0.05)' }}>
-                <ItemHeader label={`Card ${ci + 1}`} onUp={() => moveItem(i, 'cards', ci, -1, cards)} onDown={() => moveItem(i, 'cards', ci, 1, cards)} onDelete={() => removeItem(i, 'cards', ci, cards)} upDisabled={ci === 0} downDisabled={ci === cards.length - 1} />
-                <IconSelect value={(c.icon as string) || ''} onChange={(v) => updateItem(i, 'cards', ci, { icon: v || undefined }, cards)} />
-                <TextField label="Title" value={(c.title as string) || ''} onChange={(v) => updateItem(i, 'cards', ci, { title: v }, cards)} />
-                <TextArea label="Text" value={(c.text as string) || ''} onChange={(v) => updateItem(i, 'cards', ci, { text: v }, cards)} />
-                <TextField label="Note (italic caption, optional)" value={(c.note as string) || ''} onChange={(v) => updateItem(i, 'cards', ci, { note: v || undefined }, cards)} />
+function BlockForm({ def, block, onPatch }: { def: BlockDef; block: Obj; onPatch: (p: Obj) => void }) {
+  const list = def.list ? ((block[def.list.key] as Obj[] | undefined) ?? []) : [];
+  const setList = (next: Obj[]) => def.list && onPatch({ [def.list.key]: next });
+
+  return (
+    <>
+      {def.fields.map((f) => (
+        <FieldFor key={f.key} def={f} value={block[f.key]} onChange={(v) => onPatch({ [f.key]: v })} />
+      ))}
+      {def.flags?.map((flag) => (
+        <Switch
+          key={flag.key}
+          label={flag.label}
+          checked={block[flag.key] === flag.on}
+          onChange={(on) => onPatch({ [flag.key]: on ? flag.on : undefined })}
+        />
+      ))}
+      {def.list && (
+        <div className="cms-stack" style={{ gap: 8 }}>
+          {list.map((item, ii) => (
+            <div key={ii} className="cms-block__item">
+              <div className="cms-block__itemhead">
+                <span>{def.list!.label} {ii + 1}</span>
+                <span className="cms-row" style={{ gap: 2 }}>
+                  <button type="button" className="cms-icon-btn" disabled={ii === 0} aria-label={`Move ${def.list!.label.toLowerCase()} ${ii + 1} up`}
+                    onClick={() => { const n = [...list]; [n[ii - 1], n[ii]] = [n[ii], n[ii - 1]]; setList(n); }}><ChevronUp size={14} /></button>
+                  <button type="button" className="cms-icon-btn" disabled={ii === list.length - 1} aria-label={`Move ${def.list!.label.toLowerCase()} ${ii + 1} down`}
+                    onClick={() => { const n = [...list]; [n[ii + 1], n[ii]] = [n[ii], n[ii + 1]]; setList(n); }}><ChevronDown size={14} /></button>
+                  <button type="button" className="cms-icon-btn cms-icon-btn--danger" aria-label={`Remove ${def.list!.label.toLowerCase()} ${ii + 1}`}
+                    onClick={() => setList(list.filter((_, idx) => idx !== ii))}><Trash2 size={14} /></button>
+                </span>
               </div>
-            ))}
-            <button type="button" className="cms-btn cms-btn--ghost" onClick={() => patchList(i, 'cards', [...cards, { title: '', text: '' }])}><Plus size={13} /> Add card</button>
-          </>
-        );
-      }
-      case 'gallery':
-      case 'photos': {
-        const items = block.items as unknown as Record<string, unknown>[];
-        const isGallery = block.type === 'gallery';
-        return (
-          <>
-            {isGallery && <TextField label="Eyebrow" value={(block as { eyebrow?: string }).eyebrow || ''} onChange={(v) => patchBlock(i, { eyebrow: v || undefined })} />}
-            <TextField label="Heading" value={block.heading || ''} onChange={(v) => patchBlock(i, { heading: v || undefined })} />
-            <TextArea label="Text" value={block.text || ''} onChange={(v) => patchBlock(i, { text: v || undefined })} />
-            {items.map((it, ii) => (
-              <div key={ii} style={{ ...cardStyle, marginTop: 10, background: 'rgba(128,128,128,0.05)' }}>
-                <ItemHeader label={`Item ${ii + 1}`} onUp={() => moveItem(i, 'items', ii, -1, items)} onDown={() => moveItem(i, 'items', ii, 1, items)} onDelete={() => removeItem(i, 'items', ii, items)} upDisabled={ii === 0} downDisabled={ii === items.length - 1} />
-                <ImageField label="Image" value={(it.image as string) || ''} onChange={(v) => updateItem(i, 'items', ii, { image: v }, items)} hint="Cloudinary URL or bundled filename." />
-                {isGallery ? (
-                  <>
-                    <TextField label="Title" value={(it.title as string) || ''} onChange={(v) => updateItem(i, 'items', ii, { title: v || undefined }, items)} />
-                    <TextArea label="Description" value={(it.description as string) || ''} onChange={(v) => updateItem(i, 'items', ii, { description: v || undefined }, items)} />
-                  </>
-                ) : (
-                  <TextField label="Caption" value={(it.caption as string) || ''} onChange={(v) => updateItem(i, 'items', ii, { caption: v || undefined }, items)} />
-                )}
-              </div>
-            ))}
-            <button type="button" className="cms-btn cms-btn--ghost" onClick={() => patchList(i, 'items', [...items, isGallery ? { image: '', title: '', description: '' } : { image: '', caption: '' }])}><Plus size={13} /> Add item</button>
-          </>
-        );
-      }
-      default:
-        return <p className="cms-field__hint">This section type is edited in JSON mode. Switch to JSON above.</p>;
+              {def.list!.fields.map((f) => (
+                <FieldFor key={f.key} def={f} value={item[f.key]}
+                  onChange={(v) => setList(list.map((it, idx) => (idx === ii ? { ...it, [f.key]: v } : it)))} />
+              ))}
+            </div>
+          ))}
+          <div>
+            <button type="button" className="cms-btn cms-btn--sm" onClick={() => setList([...list, { ...def.list!.blank }])}>
+              <Plus size={13} /> Add {def.list.label.toLowerCase()}
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
+function FieldFor({ def, value, onChange }: { def: FieldDef; value: unknown; onChange: (v: unknown) => void }) {
+  const str = typeof value === 'string' ? value : '';
+  const set = (v: string) => onChange(def.optional ? clean(v) : v);
+  const common = { label: def.label, hint: def.hint, optional: def.optional };
+  switch (def.kind) {
+    case 'textarea': return <TextArea {...common} value={str} onChange={set} rows={3} />;
+    case 'markdown': return <MarkdownInput {...common} value={str} onChange={set} rows={6} />;
+    case 'image': return <ImageInput {...common} value={str} onChange={set} />;
+    case 'url': return <TextInput {...common} type="url" value={str} onChange={set} placeholder="https://…" />;
+    case 'icon': return <SelectInput {...common} value={str} onChange={set} options={ICONS.map((i) => ({ value: i, label: i || 'No icon' }))} />;
+    case 'side': {
+      const side = (value as Obj | undefined) ?? { label: '', image: '' };
+      const setSide = (k: string, v: string) => onChange({ ...side, [k]: k === 'caption' ? clean(v) : v });
+      return (
+        <div className="cms-block__item">
+          <div className="cms-block__itemhead"><span>{def.label} side</span></div>
+          <TextInput label="Label" value={String(side.label ?? '')} onChange={(v) => setSide('label', v)} placeholder="e.g. Before" />
+          <ImageInput label="Image" value={String(side.image ?? '')} onChange={(v) => setSide('image', v)} />
+          <TextInput label="Caption" optional value={String(side.caption ?? '')} onChange={(v) => setSide('caption', v)} />
+        </div>
+      );
     }
+    default: return <TextInput {...common} value={str} onChange={set} />;
   }
 }
 
-function ModeToggle({ mode, onVisual, onJson }: { mode: 'visual' | 'json'; onVisual: () => void; onJson: () => void }) {
+function JsonBlocks({ value, onChange }: { value: Obj[]; onChange: (v: Obj[]) => void }) {
+  const [text, setText] = useState(() => (value.length ? JSON.stringify(value, null, 2) : '[]'));
+  const [error, setError] = useState<string | null>(null);
+  const handle = (t: string) => {
+    setText(t);
+    try {
+      const parsed = JSON.parse(t || '[]');
+      if (!Array.isArray(parsed)) { setError('The top level must be a list of sections: [ … ].'); return; }
+      setError(null);
+      onChange(parsed);
+    } catch (e) {
+      setError(`Not valid JSON yet: ${(e as Error).message}`);
+    }
+  };
   return (
-    <div className="cms-field__row" style={{ marginBottom: 10 }}>
-      <button type="button" className={`cms-btn ${mode === 'visual' ? 'cms-btn--primary' : 'cms-btn--ghost'}`} onClick={onVisual}><LayoutList size={13} /> Visual</button>
-      <button type="button" className={`cms-btn ${mode === 'json' ? 'cms-btn--primary' : 'cms-btn--ghost'}`} onClick={onJson}><Code2 size={13} /> JSON</button>
-    </div>
-  );
-}
-
-function ItemHeader({ label, onUp, onDown, onDelete, upDisabled, downDisabled }: {
-  label: string; onUp: () => void; onDown: () => void; onDelete: () => void; upDisabled: boolean; downDisabled: boolean;
-}) {
-  return (
-    <div style={{ ...rowStyle, marginBottom: 8 }}>
-      <span className="cms-field__hint">{label}</span>
-      <span style={{ display: 'flex', gap: 4 }}>
-        <button type="button" className="cms-icon-btn" onClick={onUp} disabled={upDisabled} aria-label="Move up"><ChevronUp size={14} /></button>
-        <button type="button" className="cms-icon-btn" onClick={onDown} disabled={downDisabled} aria-label="Move down"><ChevronDown size={14} /></button>
-        <button type="button" className="cms-icon-btn" onClick={onDelete} aria-label="Delete"><Trash2 size={14} /></button>
-      </span>
-    </div>
-  );
-}
-
-function TextField({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
-  return (
-    <div className="cms-field">
-      <label>{label}</label>
-      <input value={value} onChange={(e) => onChange(e.target.value)} />
-    </div>
-  );
-}
-
-function TextArea({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
-  return (
-    <div className="cms-field">
-      <label>{label}</label>
-      <textarea value={value} onChange={(e) => onChange(e.target.value)} rows={3} />
-    </div>
-  );
-}
-
-function IconSelect({ value, onChange }: { value: string; onChange: (v: string) => void }) {
-  return (
-    <div className="cms-field">
-      <label>Icon</label>
-      <select value={value} onChange={(e) => onChange(e.target.value)}>
-        {ICON_OPTIONS.map((o) => <option key={o} value={o}>{o || '(none)'}</option>)}
-      </select>
-    </div>
+    <TextArea
+      label="Sections (JSON)"
+      value={text}
+      onChange={handle}
+      rows={18}
+      mono
+      error={error}
+      hint="Changes apply as soon as the JSON is valid. Switch back to Visual to use the forms."
+    />
   );
 }

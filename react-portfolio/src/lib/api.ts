@@ -147,6 +147,21 @@ export interface Company extends Profile {
   layout?: string;
   theme_config?: Record<string, unknown>;
   seo?: Record<string, unknown>;
+  application?: CompanyApplication | null;
+}
+
+// Job-application tracking on a company. `kind` splits real applications from
+// the main-site personas; the rest drives the Studio pipeline.
+export type ApplicationStage = 'researching' | 'building' | 'ready' | 'applied' | 'interviewing' | 'closed';
+export type ApplicationOutcome = 'offer' | 'rejected' | 'withdrawn' | 'no-reply';
+
+export interface CompanyApplication {
+  kind?: 'application' | 'persona';
+  stage?: ApplicationStage;
+  outcome?: ApplicationOutcome | null;
+  fit_score?: number | null;
+  applied_at?: string | null;
+  notes?: string | null;
 }
 
 // Per-company link on a warehouse entry: ordering, visibility and optional

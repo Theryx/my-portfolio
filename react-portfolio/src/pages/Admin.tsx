@@ -1,587 +1,308 @@
-import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './admin/cms.css';
 import {
-  LayoutDashboard, Building2, FolderKanban, Newspaper, Settings, LogOut, RefreshCw,
-  ExternalLink, Search, Eye, EyeOff, Pencil, Trash2, Copy, ArrowUp, ArrowDown,
-  ArrowLeft, DatabaseZap, CheckCircle2, AlertTriangle, GitMerge, Images, Plus, Upload,
+  LayoutDashboard, Briefcase, Library, Globe, Images, Settings, LogOut, ExternalLink, Search,
+  CheckCircle2, AlertTriangle, Sun, Moon, Plus, Upload, ArrowRight, DatabaseZap, GitMerge, Clock,
+  type LucideIcon,
 } from 'lucide-react';
 import {
-  login, logout, getSession,
-  getAllProfiles, getAllProjects, getAllBlogPosts,
-  upsertProject, updateProject, deleteProject,
-  upsertBlogPost, updateBlogPost, deleteBlogPost, syncContentToDatabase,
-  runMultiProfileMigration,
-  getWarehouseEntries,
-  type Profile, type Project, type BlogPost, type SyncResult, type WarehouseEntry,
+  login, logout, getSession, syncContentToDatabase, runMultiProfileMigration, type SyncResult,
 } from '../lib/api';
-import { ProjectForm, BlogForm, SecurityForm } from './admin/forms';
 import { PasswordInput } from './admin/fields';
-import WarehousePanel from './admin/WarehousePanel';
-import CompanyPanel from './admin/CompanyPanel';
+import { SecurityForm } from './admin/forms';
+import { PageHead, Section, Pill, Disclosure, Thumb } from './admin/ui';
+import LibraryPanel from './admin/LibraryPanel';
+import ApplicationsPanel, { Fit } from './admin/ApplicationsPanel';
+import MainSitePanel from './admin/MainSitePanel';
 import AssetPanel from './admin/AssetPanel';
+import { useStudioData, isApplication, STAGES, STAGE_BY_ID, stageOf, type StudioData, type Toast } from './admin/data';
+import { useHashRoute, hrefFor, type SectionId } from './admin/route';
+import { ENTRY_TYPES, typeOf, relativeDate } from './admin/entryTypes';
 
 const MAX_ATTEMPTS = 5;
 const LOCKOUT_MS = 15 * 60 * 1000;
 
-type Section = 'overview' | 'warehouse' | 'companies' | 'assets' | 'projects' | 'articles' | 'settings';
-type Editing =
-  | { kind: 'project'; item: Project | null }
-  | { kind: 'post'; item: BlogPost | null };
-type DeleteTarget = { kind: 'project' | 'post'; id: string; label: string };
+interface ToastItem { id: number; message: string; type: 'success' | 'error' }
+let toastSeq = 0;
 
-interface Toast {
-  id: number;
-  message: string;
-  type: 'success' | 'error';
-}
-
-let toastIdCounter = 0;
-
-const NAV: { id: Section; label: string; icon: typeof LayoutDashboard }[] = [
-  { id: 'overview', label: 'Overview', icon: LayoutDashboard },
-  { id: 'warehouse', label: 'Warehouse', icon: DatabaseZap },
-  { id: 'companies', label: 'Companies', icon: Building2 },
-  { id: 'assets', label: 'Assets', icon: Images },
-  { id: 'projects', label: 'Projects', icon: FolderKanban },
-  { id: 'articles', label: 'Articles', icon: Newspaper },
-  { id: 'settings', label: 'Settings', icon: Settings },
+const NAV: { id: SectionId; label: string; short: string; icon: LucideIcon }[] = [
+  { id: 'overview', label: 'Overview', short: 'Home', icon: LayoutDashboard },
+  { id: 'applications', label: 'Applications', short: 'Apps', icon: Briefcase },
+  { id: 'library', label: 'Library', short: 'Library', icon: Library },
+  { id: 'assets', label: 'Assets', short: 'Assets', icon: Images },
+  { id: 'main-site', label: 'Main site', short: 'Site', icon: Globe },
+  { id: 'settings', label: 'Settings', short: 'Settings', icon: Settings },
 ];
 
 export default function Admin() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authed, setAuthed] = useState(false);
   const [authLoading, setAuthLoading] = useState(true);
-  const [section, setSection] = useState<Section>('overview');
-  const [editing, setEditing] = useState<Editing | null>(null);
-  const [profiles, setProfiles] = useState<Profile[]>([]);
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
-  const [warehouseEntries, setWarehouseEntries] = useState<WarehouseEntry[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [toasts, setToasts] = useState<Toast[]>([]);
-  const [deleteTarget, setDeleteTarget] = useState<DeleteTarget | null>(null);
-  const [search, setSearch] = useState('');
-  const [profileFilter, setProfileFilter] = useState<string>('all');
-  const lastFocusRef = useRef<HTMLElement | null>(null);
+  const [toasts, setToasts] = useState<ToastItem[]>([]);
 
-  const addToast = useCallback((message: string, type: 'success' | 'error') => {
-    toastIdCounter += 1;
-    const id = toastIdCounter;
+  const toast = useCallback<Toast>((message, type) => {
+    const id = ++toastSeq;
     setToasts((t) => [...t, { id, message, type }]);
-    setTimeout(() => setToasts((t) => t.filter((x) => x.id !== id)), 3500);
+    setTimeout(() => setToasts((t) => t.filter((x) => x.id !== id)), 4000);
   }, []);
 
   useEffect(() => {
+    document.title = 'Studio · Ndouken Theryx';
     getSession()
-      .then((authenticated) => {
-        setIsAuthenticated(authenticated);
-        setAuthLoading(false);
-      })
-      .catch(() => setAuthLoading(false));
+      .then((ok) => setAuthed(ok))
+      .catch(() => undefined)
+      .finally(() => setAuthLoading(false));
   }, []);
 
-  const fetchAll = useCallback(async () => {
-    setLoading(true);
-    try {
-      const [p, pr, b] = await Promise.all([getAllProfiles(), getAllProjects(), getAllBlogPosts()]);
-      setProfiles(p);
-      setProjects(pr);
-      setBlogPosts(b);
-      try {
-        setWarehouseEntries(await getWarehouseEntries({ include_hidden: true }));
-      } catch {
-        setWarehouseEntries([]);
-      }
-    } catch (err) {
-      if (import.meta.env.DEV) console.error('Error fetching data:', err);
-      addToast('Failed to load data', 'error');
-    } finally {
-      setLoading(false);
-    }
-  }, [addToast]);
+  if (authLoading) return <div className="cms cms-loading-screen">Opening Studio…</div>;
+
+  return (
+    <>
+      {authed
+        ? <Studio toast={toast} onLogout={() => setAuthed(false)} />
+        : <LoginScreen onSuccess={() => setAuthed(true)} toast={toast} />}
+      <Toasts toasts={toasts} />
+    </>
+  );
+}
+
+/* ─── Shell ─────────────────────────────────────────────────────────────── */
+
+function Studio({ toast, onLogout }: { toast: Toast; onLogout: () => void }) {
+  const data = useStudioData(true, toast);
+  const [route, navigate] = useHashRoute();
+  const [paletteOpen, setPaletteOpen] = useState(false);
+  const [dark, toggleTheme] = useTheme();
 
   useEffect(() => {
-    if (isAuthenticated) fetchAll();
-  }, [isAuthenticated, fetchAll]);
-
-  // Reset list controls when switching sections
-  useEffect(() => {
-    setSearch('');
-    setEditing(null);
-  }, [section]);
-
-  /* ── Save handlers (optimistic local updates, no full refetch) ── */
-
-  const saveProject = async (project: Partial<Project>) => {
-    setSaving(true);
-    try {
-      const saved = await upsertProject(project as Project);
-      setProjects((list) => {
-        const exists = list.some((p) => p.id === saved.id);
-        return exists ? list.map((p) => (p.id === saved.id ? saved : p)) : [...list, saved];
-      });
-      setEditing(null);
-      addToast('Project saved', 'success');
-    } catch (err) {
-      addToast(err instanceof Error ? err.message : 'Failed to save project', 'error');
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const saveBlogPost = async (post: Partial<BlogPost>) => {
-    setSaving(true);
-    try {
-      const saved = await upsertBlogPost(post as BlogPost);
-      setBlogPosts((list) => {
-        const exists = list.some((p) => p.id === saved.id);
-        return exists ? list.map((p) => (p.id === saved.id ? saved : p)) : [...list, saved];
-      });
-      setEditing(null);
-      addToast('Post saved', 'success');
-    } catch (err) {
-      addToast(err instanceof Error ? err.message : 'Failed to save post', 'error');
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const toggleHidden = async (kind: 'project' | 'post', item: Project | BlogPost) => {
-    try {
-      if (kind === 'project') {
-        const saved = await updateProject(item.id, { is_hidden: !item.is_hidden });
-        setProjects((list) => list.map((p) => (p.id === saved.id ? { ...p, is_hidden: saved.is_hidden } : p)));
-      } else {
-        const saved = await updateBlogPost(item.id, { is_hidden: !item.is_hidden });
-        setBlogPosts((list) => list.map((p) => (p.id === saved.id ? { ...p, is_hidden: saved.is_hidden } : p)));
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setPaletteOpen((o) => !o);
       }
-      addToast(item.is_hidden ? 'Now visible on the site' : 'Hidden from the site', 'success');
-    } catch {
-      addToast('Failed to update visibility', 'error');
-    }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  const counts: Partial<Record<SectionId, number>> = {
+    applications: data.companies.filter(isApplication).filter((c) => stageOf(c) !== 'closed').length,
+    library: data.entries.length,
   };
 
-  const move = async (kind: 'project' | 'post', list: (Project | BlogPost)[], index: number, dir: -1 | 1) => {
-    const a = list[index];
-    const b = list[index + dir];
-    if (!a || !b) return;
-    const aOrder = b.sort_order === a.sort_order ? a.sort_order + dir : b.sort_order;
-    const bOrder = a.sort_order;
-    try {
-      if (kind === 'project') {
-        await Promise.all([
-          updateProject(a.id, { sort_order: aOrder }),
-          updateProject(b.id, { sort_order: bOrder }),
-        ]);
-        setProjects((l) => l.map((p) => (p.id === a.id ? { ...p, sort_order: aOrder } : p.id === b.id ? { ...p, sort_order: bOrder } : p)));
-      } else {
-        await Promise.all([
-          updateBlogPost(a.id, { sort_order: aOrder }),
-          updateBlogPost(b.id, { sort_order: bOrder }),
-        ]);
-        setBlogPosts((l) => l.map((p) => (p.id === a.id ? { ...p, sort_order: aOrder } : p.id === b.id ? { ...p, sort_order: bOrder } : p)));
-      }
-    } catch {
-      addToast('Failed to reorder', 'error');
-    }
-  };
-
-  const confirmDelete = async () => {
-    if (!deleteTarget) return;
-    try {
-      if (deleteTarget.kind === 'project') {
-        await deleteProject(deleteTarget.id);
-        setProjects((l) => l.filter((p) => p.id !== deleteTarget.id));
-      } else {
-        await deleteBlogPost(deleteTarget.id);
-        setBlogPosts((l) => l.filter((p) => p.id !== deleteTarget.id));
-      }
-      addToast('Deleted', 'success');
-    } catch (err) {
-      addToast(err instanceof Error ? err.message : 'Failed to delete', 'error');
-    } finally {
-      setDeleteTarget(null);
-      lastFocusRef.current?.focus();
-    }
-  };
-
-  const requestDelete = (target: DeleteTarget, e: React.MouseEvent) => {
-    lastFocusRef.current = e.currentTarget as HTMLElement;
-    setDeleteTarget(target);
-  };
-
-  const duplicateProject = (project: Project) => {
-    setEditing({
-      kind: 'project',
-      item: { ...project, id: '', is_hidden: true },
-    });
-  };
-
-  /* ── Derived lists ── */
-
-  const visibleProjects = useMemo(() => {
-    const q = search.toLowerCase();
-    return [...projects]
-      .filter((p) => profileFilter === 'all' || (p.profile_ids ?? []).includes(profileFilter))
-      .filter((p) => !q || p.title.toLowerCase().includes(q) || p.id.toLowerCase().includes(q) || p.tag.toLowerCase().includes(q))
-      .sort((a, b) => a.sort_order - b.sort_order);
-  }, [projects, profileFilter, search]);
-
-  const visiblePosts = useMemo(() => {
-    const q = search.toLowerCase();
-    return [...blogPosts]
-      .filter((p) => profileFilter === 'all' || (p.profile_ids ?? []).includes(profileFilter))
-      .filter((p) => !q || p.title.toLowerCase().includes(q) || p.id.toLowerCase().includes(q))
-      .sort((a, b) => a.sort_order - b.sort_order);
-  }, [blogPosts, profileFilter, search]);
-
-  /* ── Render ── */
-
-  if (authLoading) {
-    return <div className="cms-loading-screen">Loading…</div>;
-  }
-
-  if (!isAuthenticated) {
-    return <LoginScreen onSuccess={() => setIsAuthenticated(true)} toasts={toasts} addToast={addToast} />;
-  }
-
-  const sectionTitle = editing
-    ? editing.item && (editing.item as { id?: string }).id
-      ? `Edit ${editing.kind}`
-      : `New ${editing.kind}`
-    : NAV.find((n) => n.id === section)?.label ?? '';
+  const go = (id: SectionId) => navigate(hrefFor(id));
+  const signOut = async () => { await logout(); onLogout(); };
 
   return (
     <div className="cms">
-      <aside className="cms-sidebar">
-        <div className="cms-sidebar__brand">
-          <span className="cms-sidebar__dot" aria-hidden="true" />
-          Studio
-        </div>
-        <nav className="cms-sidebar__nav" aria-label="CMS sections">
-          {NAV.map(({ id, label, icon: Icon }) => (
-            <button
-              key={id}
-              className={`cms-sidebar__link ${section === id && !editing ? 'cms-sidebar__link--active' : ''}`}
-              onClick={() => { setSection(id); setEditing(null); }}
-              aria-current={section === id ? 'page' : undefined}
-            >
+      <aside className="cms-sidebar" aria-label="Studio">
+        <div className="cms-brand"><span className="cms-brand__mark" aria-hidden="true">N</span> Studio</div>
+        <button type="button" className="cms-search-trigger" onClick={() => setPaletteOpen(true)}>
+          <Search size={14} aria-hidden="true" /><span>Jump to…</span><kbd className="cms-kbd">Ctrl K</kbd>
+        </button>
+        <nav className="cms-nav" aria-label="Sections">
+          {NAV.filter((n) => n.id !== 'settings').map(({ id, label, icon: Icon }) => (
+            <a key={id} href={hrefFor(id)} className="cms-nav__link" aria-current={route.section === id ? 'page' : undefined}
+              onClick={(e) => { e.preventDefault(); go(id); }}>
               <Icon size={17} aria-hidden="true" />
-              <span>{label}</span>
-              {id === 'warehouse' && <span className="cms-sidebar__count">{warehouseEntries.length}</span>}
-              {id === 'companies' && <span className="cms-sidebar__count">{profiles.length}</span>}
-              {id === 'projects' && <span className="cms-sidebar__count">{projects.length}</span>}
-              {id === 'articles' && <span className="cms-sidebar__count">{blogPosts.length}</span>}
-            </button>
+              <span className="cms-nav__label">{label}</span>
+              {counts[id] != null && <span className="cms-nav__count">{counts[id]}</span>}
+            </a>
           ))}
         </nav>
-        <div className="cms-sidebar__footer">
-          <a className="cms-sidebar__link" href="/" target="_blank" rel="noopener noreferrer">
-            <ExternalLink size={17} aria-hidden="true" /><span>View site</span>
+        <div className="cms-nav__footer">
+          <a href={hrefFor('settings')} className="cms-nav__link" aria-current={route.section === 'settings' ? 'page' : undefined}
+            onClick={(e) => { e.preventDefault(); go('settings'); }}>
+            <Settings size={17} aria-hidden="true" /><span className="cms-nav__label">Settings</span>
           </a>
-          <button className="cms-sidebar__link" onClick={async () => { await logout(); setIsAuthenticated(false); }}>
-            <LogOut size={17} aria-hidden="true" /><span>Log out</span>
+          <a className="cms-nav__link" href="/" target="_blank" rel="noopener noreferrer">
+            <ExternalLink size={17} aria-hidden="true" /><span className="cms-nav__label">View public site</span>
+          </a>
+          <button type="button" className="cms-nav__link" onClick={toggleTheme}>
+            {dark ? <Sun size={17} aria-hidden="true" /> : <Moon size={17} aria-hidden="true" />}
+            <span className="cms-nav__label">{dark ? 'Light mode' : 'Dark mode'}</span>
+          </button>
+          <button type="button" className="cms-nav__link" onClick={signOut}>
+            <LogOut size={17} aria-hidden="true" /><span className="cms-nav__label">Sign out</span>
           </button>
         </div>
       </aside>
 
-      <main className="cms-main">
-        <header className="cms-topbar">
-          {editing ? (
-            <button className="cms-btn cms-btn--ghost" onClick={() => setEditing(null)}>
-              <ArrowLeft size={15} aria-hidden="true" /> Back
+      <div className="cms-main">
+        <div className="cms-mobile-top">
+          <div className="cms-brand"><span className="cms-brand__mark" aria-hidden="true">N</span> Studio</div>
+          <div className="cms-row" style={{ gap: 2 }}>
+            <button type="button" className="cms-icon-btn" onClick={() => setPaletteOpen(true)} aria-label="Jump to"><Search size={17} /></button>
+            <button type="button" className="cms-icon-btn" onClick={toggleTheme} aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}>
+              {dark ? <Sun size={17} /> : <Moon size={17} />}
             </button>
-          ) : (
-            <h1 className="cms-topbar__title">{sectionTitle}</h1>
-          )}
-          {editing && <h1 className="cms-topbar__title">{sectionTitle}</h1>}
-          {!editing && (
-            <button className="cms-btn cms-btn--ghost" onClick={fetchAll} disabled={loading}>
-              <RefreshCw size={15} aria-hidden="true" /> {loading ? 'Refreshing…' : 'Refresh'}
-            </button>
-          )}
-        </header>
-
-        <div className="cms-content">
-          {editing ? (
-            <div className="cms-editor">
-              {editing.kind === 'project' && (
-                <ProjectForm project={editing.item} profiles={profiles} onSave={saveProject} onCancel={() => setEditing(null)} saving={saving} />
-              )}
-              {editing.kind === 'post' && (
-                <BlogForm post={editing.item} profiles={profiles} onSave={saveBlogPost} onCancel={() => setEditing(null)} saving={saving} />
-              )}
-            </div>
-          ) : section === 'warehouse' ? (
-            <WarehousePanel addToast={addToast} />
-          ) : section === 'companies' ? (
-            <CompanyPanel addToast={addToast} />
-          ) : section === 'assets' ? (
-            <AssetPanel addToast={addToast} />
-          ) : section === 'overview' ? (
-            <Overview
-              profiles={profiles}
-              projects={projects}
-              posts={blogPosts}
-              entries={warehouseEntries}
-              onNavigate={setSection}
-            />
-          ) : section === 'projects' ? (
-            <section aria-label="Projects">
-              <ListControls
-                search={search} onSearch={setSearch}
-                profileFilter={profileFilter} onProfileFilter={setProfileFilter}
-                profiles={profiles}
-                actionLabel="New project"
-                onAction={() => setEditing({ kind: 'project', item: null })}
-              />
-              {visibleProjects.length === 0 ? (
-                <div className="cms-empty">No projects match.</div>
-              ) : (
-                <ul className="cms-list">
-                  {visibleProjects.map((project, i) => (
-                    <li key={project.id} className="cms-item">
-                      <div className="cms-item__order">
-                        <button className="cms-icon-btn" disabled={i === 0} onClick={() => move('project', visibleProjects, i, -1)} aria-label="Move up"><ArrowUp size={14} /></button>
-                        <button className="cms-icon-btn" disabled={i === visibleProjects.length - 1} onClick={() => move('project', visibleProjects, i, 1)} aria-label="Move down"><ArrowDown size={14} /></button>
-                      </div>
-                      <div className="cms-item__body">
-                        <div className="cms-item__title">
-                          {project.title}
-                          <span className={`cms-badge ${project.is_hidden ? 'cms-badge--muted' : 'cms-badge--live'}`}>
-                            {project.is_hidden ? 'Hidden' : 'Live'}
-                          </span>
-                        </div>
-                        <div className="cms-item__meta">
-                          <code>{project.id}</code> · {project.tag || 'no tag'} · {(project.profile_ids ?? []).map((pid) => profiles.find((p) => p.id === pid)?.name ?? pid).join(', ') || 'no company'}
-                        </div>
-                      </div>
-                      <div className="cms-item__actions">
-                        <a className="cms-icon-btn" href={`/projects/${project.id}?profile=${project.profile_ids?.[0] ?? ''}`} target="_blank" rel="noopener noreferrer" aria-label={`Preview ${project.title}`} title="Preview">
-                          <ExternalLink size={15} />
-                        </a>
-                        <button className="cms-icon-btn" onClick={() => toggleHidden('project', project)} aria-label={project.is_hidden ? 'Show on site' : 'Hide from site'} title={project.is_hidden ? 'Show' : 'Hide'}>
-                          {project.is_hidden ? <Eye size={15} /> : <EyeOff size={15} />}
-                        </button>
-                        <button className="cms-icon-btn" onClick={() => duplicateProject(project)} aria-label={`Duplicate ${project.title}`} title="Duplicate">
-                          <Copy size={15} />
-                        </button>
-                        <button className="cms-icon-btn" onClick={() => setEditing({ kind: 'project', item: project })} aria-label={`Edit ${project.title}`} title="Edit">
-                          <Pencil size={15} />
-                        </button>
-                        <button className="cms-icon-btn cms-icon-btn--danger" onClick={(e) => requestDelete({ kind: 'project', id: project.id, label: `project "${project.title}"` }, e)} aria-label={`Delete ${project.title}`} title="Delete">
-                          <Trash2 size={15} />
-                        </button>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </section>
-          ) : section === 'articles' ? (
-            <section aria-label="Articles">
-              <ListControls
-                search={search} onSearch={setSearch}
-                profileFilter={profileFilter} onProfileFilter={setProfileFilter}
-                profiles={profiles}
-                actionLabel="New article"
-                onAction={() => setEditing({ kind: 'post', item: null })}
-              />
-              {visiblePosts.length === 0 ? (
-                <div className="cms-empty">No articles match.</div>
-              ) : (
-                <ul className="cms-list">
-                  {visiblePosts.map((post, i) => (
-                    <li key={post.id} className="cms-item">
-                      <div className="cms-item__order">
-                        <button className="cms-icon-btn" disabled={i === 0} onClick={() => move('post', visiblePosts, i, -1)} aria-label="Move up"><ArrowUp size={14} /></button>
-                        <button className="cms-icon-btn" disabled={i === visiblePosts.length - 1} onClick={() => move('post', visiblePosts, i, 1)} aria-label="Move down"><ArrowDown size={14} /></button>
-                      </div>
-                      <div className="cms-item__body">
-                        <div className="cms-item__title">
-                          {post.title}
-                          <span className={`cms-badge ${post.is_hidden ? 'cms-badge--muted' : 'cms-badge--live'}`}>
-                            {post.is_hidden ? 'Draft' : 'Published'}
-                          </span>
-                        </div>
-                        <div className="cms-item__meta">
-                          <code>{post.id}</code> · {post.date} · {(post.profile_ids ?? []).map((pid) => profiles.find((p) => p.id === pid)?.name ?? pid).join(', ') || 'no company'}
-                        </div>
-                      </div>
-                      <div className="cms-item__actions">
-                        <a className="cms-icon-btn" href={`/blog/${post.id}?profile=${post.profile_ids?.[0] ?? ''}`} target="_blank" rel="noopener noreferrer" aria-label={`Preview ${post.title}`} title="Preview">
-                          <ExternalLink size={15} />
-                        </a>
-                        <button className="cms-icon-btn" onClick={() => toggleHidden('post', post)} aria-label={post.is_hidden ? 'Publish' : 'Unpublish'} title={post.is_hidden ? 'Publish' : 'Unpublish'}>
-                          {post.is_hidden ? <Eye size={15} /> : <EyeOff size={15} />}
-                        </button>
-                        <button className="cms-icon-btn" onClick={() => setEditing({ kind: 'post', item: post })} aria-label={`Edit ${post.title}`} title="Edit">
-                          <Pencil size={15} />
-                        </button>
-                        <button className="cms-icon-btn cms-icon-btn--danger" onClick={(e) => requestDelete({ kind: 'post', id: post.id, label: `post "${post.title}"` }, e)} aria-label={`Delete ${post.title}`} title="Delete">
-                          <Trash2 size={15} />
-                        </button>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </section>
-          ) : (
-            <SettingsSection addToast={addToast} onSynced={fetchAll} />
-          )}
+            <button type="button" className="cms-icon-btn" onClick={signOut} aria-label="Sign out"><LogOut size={17} /></button>
+          </div>
         </div>
-      </main>
 
-      {deleteTarget && (
-        <DeleteDialog
-          label={deleteTarget.label}
-          onConfirm={confirmDelete}
-          onCancel={() => { setDeleteTarget(null); lastFocusRef.current?.focus(); }}
-        />
-      )}
+        <main className={`cms-page${route.section === 'applications' && !route.id ? ' cms-page--wide' : ''}`}>
+          {route.section === 'overview' && <Overview data={data} navigate={navigate} />}
+          {route.section === 'applications' && <ApplicationsPanel data={data} route={route} navigate={navigate} toast={toast} />}
+          {route.section === 'library' && <LibraryPanel data={data} route={route} navigate={navigate} toast={toast} />}
+          {route.section === 'main-site' && <MainSitePanel data={data} route={route} navigate={navigate} toast={toast} />}
+          {route.section === 'assets' && <AssetPanel data={data} toast={toast} />}
+          {route.section === 'settings' && <SettingsPanel toast={toast} onSynced={data.reload} />}
+        </main>
+      </div>
 
-      <ToastContainer toasts={toasts} />
+      <nav className="cms-tabbar" aria-label="Sections">
+        {NAV.map(({ id, short, label, icon: Icon }) => (
+          <a key={id} href={hrefFor(id)} className="cms-tabbar__link" aria-current={route.section === id ? 'page' : undefined} aria-label={label}
+            onClick={(e) => { e.preventDefault(); go(id); }}>
+            <Icon size={19} aria-hidden="true" />
+            <span aria-hidden="true">{short}</span>
+          </a>
+        ))}
+      </nav>
+
+      {paletteOpen && <CommandPalette data={data} navigate={navigate} onClose={() => setPaletteOpen(false)} />}
     </div>
   );
 }
 
-/* ─── List controls (search + filter + primary action) ──────────────────── */
-
-function ListControls({ search, onSearch, profileFilter, onProfileFilter, profiles, actionLabel, onAction }: {
-  search: string; onSearch: (v: string) => void;
-  profileFilter: string; onProfileFilter: (v: string) => void;
-  profiles: Profile[];
-  actionLabel: string; onAction: () => void;
-}) {
-  return (
-    <div className="cms-list-header">
-      <div className="cms-list-header__filters">
-        <div className="cms-search">
-          <Search size={15} aria-hidden="true" />
-          <input value={search} onChange={(e) => onSearch(e.target.value)} placeholder="Search…" aria-label="Search" />
-        </div>
-        <select value={profileFilter} onChange={(e) => onProfileFilter(e.target.value)} aria-label="Filter by company">
-          <option value="all">All companies</option>
-          {profiles.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
-        </select>
-      </div>
-      <button className="cms-btn cms-btn--primary" onClick={onAction}>{actionLabel}</button>
-    </div>
-  );
+function useTheme(): [boolean, () => void] {
+  const [dark, setDark] = useState(() => document.documentElement.getAttribute('data-theme') !== 'light');
+  const toggle = () => {
+    const next = !dark;
+    document.documentElement.setAttribute('data-theme', next ? 'dark' : 'light');
+    try { localStorage.setItem('theme', next ? 'dark' : 'light'); } catch { /* storage unavailable */ }
+    setDark(next);
+  };
+  return [dark, toggle];
 }
 
 /* ─── Overview ──────────────────────────────────────────────────────────── */
 
-function Overview({ profiles, projects, posts, entries, onNavigate }: {
-  profiles: Profile[]; projects: Project[]; posts: BlogPost[]; entries: WarehouseEntry[];
-  onNavigate: (s: Section) => void;
-}) {
-  const activeProfile = profiles.find((p) => p.is_active);
-  const hiddenEntries = entries.filter((e) => e.is_hidden).length;
-  const drafts = posts.filter((p) => p.is_hidden).length;
-  const hiddenProjects = projects.filter((p) => p.is_hidden).length;
+function greeting(): string {
+  const h = new Date().getHours();
+  return h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening';
+}
 
-  const typeCounts = useMemo(() => {
+function Overview({ data, navigate }: { data: StudioData; navigate: (href: string) => void }) {
+  const apps = data.companies.filter(isApplication);
+  const active = apps
+    .filter((c) => stageOf(c) !== 'closed')
+    .sort((a, b) => STAGES.findIndex((s) => s.id === stageOf(b)) - STAGES.findIndex((s) => s.id === stageOf(a)));
+  const counts = useMemo(() => {
     const c: Record<string, number> = {};
-    for (const e of entries) c[e.type] = (c[e.type] ?? 0) + 1;
-    return Object.entries(c).sort((a, b) => b[1] - a[1]);
-  }, [entries]);
-
-  const linkedCount = (companyId: string) => entries.filter((e) => (e.company_ids ?? []).includes(companyId)).length;
+    for (const e of data.entries) c[e.type] = (c[e.type] ?? 0) + 1;
+    return c;
+  }, [data.entries]);
+  const recent = [...data.entries]
+    .filter((e) => e.updated_at)
+    .sort((a, b) => String(b.updated_at).localeCompare(String(a.updated_at)))
+    .slice(0, 6);
+  const shown = data.companies.find((c) => c.is_active);
+  const today = new Date().toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' });
 
   return (
-    <div className="cms-dashboard">
-      <div className="cms-stats">
-        <button className="cms-stat" onClick={() => onNavigate('companies')}>
-          <span className="cms-stat__value">{profiles.length}</span>
-          <span className="cms-stat__label">Companies</span>
-          <span className="cms-stat__sub">{activeProfile ? `Active: ${activeProfile.name}` : 'No active company'}</span>
-        </button>
-        <button className="cms-stat" onClick={() => onNavigate('warehouse')}>
-          <span className="cms-stat__value">{entries.length}</span>
-          <span className="cms-stat__label">Warehouse entries</span>
-          <span className="cms-stat__sub">{hiddenEntries} hidden</span>
-        </button>
-        <button className="cms-stat" onClick={() => onNavigate('projects')}>
-          <span className="cms-stat__value">{projects.length}</span>
-          <span className="cms-stat__label">Projects</span>
-          <span className="cms-stat__sub">{hiddenProjects} hidden</span>
-        </button>
-        <button className="cms-stat" onClick={() => onNavigate('articles')}>
-          <span className="cms-stat__value">{posts.length}</span>
-          <span className="cms-stat__label">Articles</span>
-          <span className="cms-stat__sub">{drafts} draft{drafts === 1 ? '' : 's'}</span>
-        </button>
-      </div>
-
-      <div className="cms-overview-grid">
-        <div className="cms-card">
-          <div className="cms-card__header">
-            <Building2 size={18} aria-hidden="true" />
-            <h2>Company microsites</h2>
-          </div>
-          {profiles.length === 0 ? (
-            <p>No companies yet. Create one to start building a targeted microsite.</p>
-          ) : (
-            <ul className="cms-overview-list">
-              {profiles.map((c) => (
-                <li key={c.id}>
-                  <span className="cms-overview-list__name">
-                    {c.name}
-                    {c.is_active && <span className="cms-badge cms-badge--live">Active</span>}
-                  </span>
-                  <span className="cms-overview-list__meta">{linkedCount(c.id)} linked</span>
-                </li>
-              ))}
-            </ul>
-          )}
-          <button className="cms-btn cms-btn--primary" onClick={() => onNavigate('companies')}>
-            <Plus size={15} /> Manage companies
-          </button>
-        </div>
-
-        <div className="cms-card">
-          <div className="cms-card__header">
-            <DatabaseZap size={18} aria-hidden="true" />
-            <h2>Warehouse by type</h2>
-          </div>
-          {typeCounts.length === 0 ? (
-            <p>The warehouse is empty. Add bios, experience, projects, articles and more.</p>
-          ) : (
-            <div className="cms-chip-row">
-              {typeCounts.map(([type, count]) => (
-                <span key={type} className="cms-chip">
-                  {type} <strong>{count}</strong>
-                </span>
+    <>
+      <PageHead title={greeting()} sub={today} />
+      <div className="cms-overview">
+        <div className="cms-stack">
+          <Section
+            title="Applications"
+            description={active.length ? `${active.length} in progress` : 'Nothing in progress'}
+            actions={<button type="button" className="cms-btn cms-btn--sm" onClick={() => navigate(hrefFor('applications'))}>Open board <ArrowRight size={13} /></button>}
+          >
+            <div className="cms-stagebar">
+              {STAGES.map((s) => (
+                <button key={s.id} type="button" className="cms-stagebar__item" onClick={() => navigate(hrefFor('applications', undefined, undefined, { stage: s.id }))}>
+                  <span className="cms-stagebar__value">{apps.filter((c) => stageOf(c) === s.id).length}</span>
+                  <span className="cms-stagebar__label">{s.label}</span>
+                </button>
               ))}
             </div>
-          )}
-          <div className="cms-card__actions">
-            <button className="cms-btn cms-btn--primary" onClick={() => onNavigate('warehouse')}>
-              <DatabaseZap size={15} /> Open warehouse
-            </button>
-            <button className="cms-btn" onClick={() => onNavigate('assets')}>
-              <Upload size={15} /> Upload asset
-            </button>
-          </div>
+            {active.length > 0 && (
+              <ul className="cms-rows">
+                {active.slice(0, 5).map((c) => {
+                  const s = STAGE_BY_ID[stageOf(c)];
+                  return (
+                    <li key={c.id} className="cms-rowitem">
+                      <button type="button" className="cms-rowitem__main" onClick={() => navigate(hrefFor('applications', c.id))}>
+                        <span className="cms-rowitem__title"><span>{c.name}</span></span>
+                        <span className="cms-rowitem__meta">
+                          <span>{c.role || 'No role'}</span>
+                          {c.application?.fit_score != null && <><span className="cms-dotsep" /><Fit score={c.application.fit_score} /></>}
+                        </span>
+                      </button>
+                      <Pill tone={s.tone}>{s.label}</Pill>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </Section>
+
+          <Section title="Recently edited" actions={<button type="button" className="cms-btn cms-btn--sm" onClick={() => navigate(hrefFor('library'))}>Library <ArrowRight size={13} /></button>}>
+            {recent.length === 0 ? <p className="cms-field__hint">{data.loading ? 'Loading…' : 'Nothing yet.'}</p> : (
+              <ul className="cms-rows">
+                {recent.map((e) => {
+                  const t = typeOf(e.type);
+                  return (
+                    <li key={e.id} className="cms-rowitem">
+                      {t.imageKey ? <Thumb src={String(e.metadata?.[t.imageKey] ?? '')} /> : <span className="cms-thumb"><t.icon size={16} aria-hidden="true" /></span>}
+                      <button type="button" className="cms-rowitem__main" onClick={() => navigate(hrefFor('library', e.id))}>
+                        <span className="cms-rowitem__title"><span>{e.title}</span></span>
+                        <span className="cms-rowitem__meta">{t.label}<span className="cms-dotsep" /><Clock size={12} aria-hidden="true" /> {relativeDate(e.updated_at)}</span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </Section>
+        </div>
+
+        <div className="cms-stack">
+          <Section title="Quick actions">
+            <div className="cms-quick">
+              <button type="button" className="cms-btn" onClick={() => navigate(hrefFor('applications', 'new'))}><Plus size={14} /> Application</button>
+              <button type="button" className="cms-btn" onClick={() => navigate(hrefFor('library', 'new', undefined, { type: 'project' }))}><Plus size={14} /> Project</button>
+              <button type="button" className="cms-btn" onClick={() => navigate(hrefFor('assets'))}><Upload size={14} /> Upload</button>
+              <a className="cms-btn" href="/" target="_blank" rel="noopener noreferrer"><ExternalLink size={14} /> Public site</a>
+            </div>
+          </Section>
+
+          <Section title="Library" description="What the AI can draw on when it tailors a portfolio.">
+            <div className="cms-health">
+              {ENTRY_TYPES.filter((t) => t.core || counts[t.type]).map((t) => {
+                const n = counts[t.type] ?? 0;
+                return (
+                  <button key={t.type} type="button" className={`cms-health__item${n ? '' : ' cms-health__item--missing'}`}
+                    onClick={() => navigate(n ? hrefFor('library', undefined, undefined, { type: t.type }) : hrefFor('library', 'new', undefined, { type: t.type }))}>
+                    <span>{t.plural}</span>
+                    <strong>{n || 'Add'}</strong>
+                  </button>
+                );
+              })}
+            </div>
+          </Section>
+
+          <Section title="Public site">
+            <p className="cms-field__hint">
+              {shown ? <>Visitors see <strong style={{ color: 'var(--s-text)' }}>{shown.name}</strong>.</> : 'No profile is shown to visitors.'}
+            </p>
+            <div><button type="button" className="cms-btn cms-btn--sm" onClick={() => navigate(hrefFor('main-site'))}>Manage profiles <ArrowRight size={13} /></button></div>
+          </Section>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
-/* ─── Settings (security + one-shot tools) ──────────────────────────────── */
+/* ─── Settings ──────────────────────────────────────────────────────────── */
 
-function SettingsSection({ addToast, onSynced }: {
-  addToast: (m: string, t: 'success' | 'error') => void;
-  onSynced: () => void;
-}) {
+function SettingsPanel({ toast, onSynced }: { toast: Toast; onSynced: () => void }) {
   const [syncing, setSyncing] = useState(false);
   const [syncLog, setSyncLog] = useState<string[]>([]);
   const [syncResult, setSyncResult] = useState<SyncResult | null>(null);
   const [migrating, setMigrating] = useState(false);
-  const [migrationResult, setMigrationResult] = useState<{ ok: boolean; blog_post_profiles: number; project_profiles: number; log?: string[] } | null>(null);
+  const [migrationResult, setMigrationResult] = useState<{ blog_post_profiles: number; project_profiles: number; log?: string[] } | null>(null);
 
   const runSync = async () => {
     setSyncing(true);
@@ -590,14 +311,10 @@ function SettingsSection({ addToast, onSynced }: {
     try {
       const result = await syncContentToDatabase((msg) => setSyncLog((l) => [...l, msg]));
       setSyncResult(result);
-      if (result.errors.length === 0) {
-        addToast(`Sync complete: ${result.updated.length} updated, ${result.created.length} created`, 'success');
-      } else {
-        addToast(`Sync finished with ${result.errors.length} error(s)`, 'error');
-      }
+      toast(result.errors.length ? `Sync finished with ${result.errors.length} error(s)` : 'Sync complete', result.errors.length ? 'error' : 'success');
       onSynced();
     } catch (err) {
-      addToast(err instanceof Error ? err.message : 'Sync failed', 'error');
+      toast(err instanceof Error ? err.message : 'Sync failed', 'error');
     } finally {
       setSyncing(false);
     }
@@ -608,100 +325,155 @@ function SettingsSection({ addToast, onSynced }: {
     try {
       const result = await runMultiProfileMigration();
       setMigrationResult(result);
-      addToast(
-        `Migration complete: ${result.blog_post_profiles} blog links, ${result.project_profiles} project links`,
-        'success',
-      );
+      toast('Migration complete', 'success');
       onSynced();
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Migration failed';
-      if (msg.toLowerCase().includes('not enabled') || msg.toLowerCase().includes('migrations are')) {
-        addToast('Migration is disabled. Set MIGRATIONS_ENABLED=true on Vercel, redeploy, then retry.', 'error');
-      } else {
-        addToast(msg, 'error');
-      }
+      toast(/not enabled|migrations are/i.test(msg) ? 'Migrations are off. Set MIGRATIONS_ENABLED=true on Vercel, redeploy, then retry.' : msg, 'error');
     } finally {
       setMigrating(false);
     }
   };
 
   return (
-    <section aria-label="Settings" className="cms-dashboard">
-      <div className="cms-card">
-        <div className="cms-card__header">
-          <Settings size={18} aria-hidden="true" />
-          <h2>Credentials</h2>
-        </div>
-        <SecurityForm onSuccess={(m) => addToast(m, 'success')} onError={(m) => addToast(m, 'error')} />
-      </div>
+    <>
+      <PageHead title="Settings" />
+      <div className="cms-stack">
+        <Section title="Sign-in details" description="Change the email or password you use for Studio.">
+          <SecurityForm onSuccess={(m) => toast(m, 'success')} onError={(m) => toast(m, 'error')} />
+        </Section>
 
-      <div className="cms-card">
-        <div className="cms-card__header">
-          <DatabaseZap size={18} aria-hidden="true" />
-          <h2>Content sync</h2>
-        </div>
-        <p>
-          Imports the case studies and blog content bundled in the code into the database, so
-          everything becomes editable here. It only fills fields that are currently empty in the
-          database; nothing you've already edited in the CMS is overwritten. Safe to run any time.
-        </p>
-        <button className="cms-btn cms-btn--primary" onClick={runSync} disabled={syncing}>
-          {syncing ? 'Syncing…' : 'Sync content to database'}
-        </button>
-        {(syncLog.length > 0 || syncResult) && (
-          <div className="cms-sync-log" role="status" aria-live="polite">
-            {syncLog.map((line, i) => <div key={i} className="cms-sync-log__line">{line}</div>)}
-            {syncResult && (
-              <div className="cms-sync-log__summary">
-                {syncResult.errors.length === 0
-                  ? <><CheckCircle2 size={14} aria-hidden="true" /> Done: {syncResult.updated.length} updated, {syncResult.created.length} created, {syncResult.skipped.length} already in sync.</>
-                  : <><AlertTriangle size={14} aria-hidden="true" /> {syncResult.errors.length} failed: {syncResult.errors.map((e) => e.id).join(', ')}</>}
+        <Disclosure title={<><DatabaseZap size={16} aria-hidden="true" /> Maintenance</>}>
+          <p className="cms-field__hint">One-off tools from earlier migrations. You should rarely need them.</p>
+
+          <div className="cms-section" style={{ gap: 10 }}>
+            <h3 className="cms-section__title">Import bundled content</h3>
+            <p className="cms-section__desc">
+              Copies case studies and posts that live in the code into the Library. It only fills fields that are empty,
+              so nothing you edited here is overwritten.
+            </p>
+            <div><button type="button" className="cms-btn" onClick={runSync} disabled={syncing}>{syncing ? 'Importing…' : 'Import bundled content'}</button></div>
+            {(syncLog.length > 0 || syncResult) && (
+              <div className="cms-log" role="status" aria-live="polite">
+                {syncLog.map((line, i) => <div key={i}>{line}</div>)}
+                {syncResult && (
+                  <div className="cms-log__summary">
+                    {syncResult.errors.length === 0
+                      ? <><CheckCircle2 size={14} aria-hidden="true" /> {syncResult.updated.length} updated, {syncResult.created.length} created, {syncResult.skipped.length} already in sync.</>
+                      : <><AlertTriangle size={14} aria-hidden="true" /> {syncResult.errors.length} failed: {syncResult.errors.map((e) => e.id).join(', ')}</>}
+                  </div>
+                )}
               </div>
             )}
           </div>
-        )}
-      </div>
 
-      <div className="cms-card">
-        <div className="cms-card__header">
-          <GitMerge size={18} aria-hidden="true" />
-          <h2>Multi-profile migration</h2>
-        </div>
-        <p>
-          One-shot backfill that switches blogs and projects from a single profile to the
-          many-to-many link tables, so the same post or case study can appear under more than one
-          company. Run this once after deploying the multi-profile update; every step is idempotent.
-        </p>
-        <p className="cms-field__hint">
-          Requires the <code>MIGRATIONS_ENABLED</code> environment variable to be set to{' '}
-          <code>true</code> on Vercel. Remove it again after a successful run.
-        </p>
-        <button className="cms-btn cms-btn--primary" onClick={runMigration} disabled={migrating}>
-          {migrating ? 'Migrating…' : 'Run multi-profile migration'}
-        </button>
-        {migrationResult && (
-          <div className="cms-sync-log" role="status" aria-live="polite">
-            <div className="cms-sync-log__summary">
-              <CheckCircle2 size={14} aria-hidden="true" /> Done: {migrationResult.blog_post_profiles}{' '}
-              blog links and {migrationResult.project_profiles} project links created.
-            </div>
-            {migrationResult.log?.map((line, i) => (
-              <div key={i} className="cms-sync-log__line">{line}</div>
-            ))}
+          <div className="cms-section" style={{ gap: 10 }}>
+            <h3 className="cms-section__title"><GitMerge size={15} aria-hidden="true" style={{ verticalAlign: '-2px' }} /> Multi-profile migration</h3>
+            <p className="cms-section__desc">
+              Backfills the many-to-many links so one entry can appear on several sites. Safe to re-run. Needs
+              {' '}<code>MIGRATIONS_ENABLED=true</code> on Vercel; remove it again afterwards.
+            </p>
+            <div><button type="button" className="cms-btn" onClick={runMigration} disabled={migrating}>{migrating ? 'Running…' : 'Run migration'}</button></div>
+            {migrationResult && (
+              <div className="cms-log" role="status" aria-live="polite">
+                <div className="cms-log__summary"><CheckCircle2 size={14} aria-hidden="true" /> {migrationResult.blog_post_profiles} post links and {migrationResult.project_profiles} project links created.</div>
+                {migrationResult.log?.map((line, i) => <div key={i}>{line}</div>)}
+              </div>
+            )}
           </div>
-        )}
+        </Disclosure>
       </div>
-    </section>
+    </>
   );
 }
 
-/* ─── Login ──────────────────────────────────────────────────────────────── */
+/* ─── Command palette ───────────────────────────────────────────────────── */
 
-function LoginScreen({ onSuccess, toasts, addToast }: {
-  onSuccess: () => void;
-  toasts: Toast[];
-  addToast: (m: string, t: 'success' | 'error') => void;
+interface PaletteItem { key: string; label: string; kind: string; icon: LucideIcon; href: string; text: string }
+
+function CommandPalette({ data, navigate, onClose }: {
+  data: StudioData;
+  navigate: (href: string) => void;
+  onClose: () => void;
 }) {
+  const [query, setQuery] = useState('');
+  const [index, setIndex] = useState(0);
+  const listRef = useRef<HTMLUListElement>(null);
+  const previous = useRef<HTMLElement | null>(document.activeElement as HTMLElement | null);
+  useEffect(() => () => previous.current?.focus?.(), []);
+
+  const items = useMemo<PaletteItem[]>(() => [
+    ...NAV.map((n) => ({ key: `nav:${n.id}`, label: n.label, kind: 'Go to', icon: n.icon, href: hrefFor(n.id), text: n.label })),
+    { key: 'new:app', label: 'New application', kind: 'Create', icon: Plus, href: hrefFor('applications', 'new'), text: 'new application job' },
+    ...ENTRY_TYPES.map((t) => ({ key: `new:${t.type}`, label: `New ${t.label.toLowerCase()}`, kind: 'Create', icon: Plus, href: hrefFor('library', 'new', undefined, { type: t.type }), text: `new add ${t.label} ${t.plural}` })),
+    ...data.companies.map((c) => {
+      const app = isApplication(c);
+      return { key: `co:${c.id}`, label: c.name, kind: app ? 'Application' : 'Profile', icon: app ? Briefcase : Globe, href: hrefFor(app ? 'applications' : 'main-site', c.id), text: `${c.name} ${c.role ?? ''} ${c.id}` };
+    }),
+    ...data.entries.map((e) => {
+      const t = typeOf(e.type);
+      return { key: `e:${e.id}`, label: e.title || e.id, kind: t.label, icon: t.icon, href: hrefFor('library', e.id), text: `${e.title} ${e.id} ${e.type}` };
+    }),
+  ], [data.companies, data.entries]);
+
+  const results = useMemo(() => {
+    const words = query.toLowerCase().split(/\s+/).filter(Boolean);
+    const list = words.length ? items.filter((it) => words.every((w) => it.text.toLowerCase().includes(w))) : items.slice(0, NAV.length + 1);
+    return list.slice(0, 40);
+  }, [items, query]);
+
+  useEffect(() => {
+    listRef.current?.querySelector('[aria-selected="true"]')?.scrollIntoView({ block: 'nearest' });
+  }, [index]);
+
+  const pick = (it: PaletteItem | undefined) => {
+    if (!it) return;
+    onClose();
+    navigate(it.href);
+  };
+
+  return (
+    <div className="cms-overlay cms-overlay--top" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
+      <div className="cms-palette" role="dialog" aria-modal="true" aria-label="Jump to">
+        <input
+          className="cms-palette__input"
+          autoFocus
+          value={query}
+          onChange={(e) => { setQuery(e.target.value); setIndex(0); }}
+          placeholder="Jump to a section, application or entry…"
+          role="combobox"
+          aria-expanded="true"
+          aria-controls="cms-palette-list"
+          aria-activedescendant={results[index] ? `pal-${index}` : undefined}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') { e.preventDefault(); onClose(); }
+            else if (e.key === 'ArrowDown') { e.preventDefault(); setIndex((i) => Math.min(i + 1, results.length - 1)); }
+            else if (e.key === 'ArrowUp') { e.preventDefault(); setIndex((i) => Math.max(i - 1, 0)); }
+            else if (e.key === 'Enter') { e.preventDefault(); pick(results[index]); }
+          }}
+        />
+        {results.length === 0 ? <p className="cms-palette__empty">No matches.</p> : (
+          <ul className="cms-palette__list" id="cms-palette-list" role="listbox" ref={listRef}>
+            {results.map((it, i) => (
+              <li key={it.key} role="presentation">
+                <button type="button" id={`pal-${i}`} role="option" aria-selected={i === index} className="cms-palette__item"
+                  onMouseMove={() => setIndex(i)} onClick={() => pick(it)} tabIndex={-1}>
+                  <it.icon size={16} aria-hidden="true" />
+                  <span>{it.label}</span>
+                  <span className="cms-palette__kind">{it.kind}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Sign in ───────────────────────────────────────────────────────────── */
+
+function LoginScreen({ onSuccess, toast }: { onSuccess: () => void; toast: Toast }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -709,9 +481,14 @@ function LoginScreen({ onSuccess, toasts, addToast }: {
   const getLockout = () => {
     try {
       const raw = localStorage.getItem('admin_lockout');
-      if (!raw) return null;
-      return JSON.parse(raw) as { attempts: number; since: number };
+      return raw ? (JSON.parse(raw) as { attempts: number; since: number }) : null;
     } catch { return null; }
+  };
+  const setLockout = (v: { attempts: number; since: number } | null) => {
+    try {
+      if (v) localStorage.setItem('admin_lockout', JSON.stringify(v));
+      else localStorage.removeItem('admin_lockout');
+    } catch { /* storage unavailable */ }
   };
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -721,27 +498,21 @@ function LoginScreen({ onSuccess, toasts, addToast }: {
       const elapsed = Date.now() - lockout.since;
       if (elapsed < LOCKOUT_MS) {
         const remaining = Math.ceil((LOCKOUT_MS - elapsed) / 60000);
-        addToast(`Too many failed attempts. Try again in ${remaining} minute${remaining !== 1 ? 's' : ''}.`, 'error');
+        toast(`Too many failed attempts. Try again in ${remaining} minute${remaining !== 1 ? 's' : ''}.`, 'error');
         return;
       }
-      localStorage.removeItem('admin_lockout');
+      setLockout(null);
     }
-
     setSubmitting(true);
     try {
       await login(email, password);
-      localStorage.removeItem('admin_lockout');
+      setLockout(null);
       onSuccess();
     } catch {
       const current = getLockout();
       const attempts = (current?.attempts ?? 0) + 1;
-      localStorage.setItem('admin_lockout', JSON.stringify({ attempts, since: current?.since ?? Date.now() }));
-      addToast(
-        attempts >= MAX_ATTEMPTS
-          ? 'Locked for 15 minutes after too many failed attempts.'
-          : 'Invalid credentials',
-        'error'
-      );
+      setLockout({ attempts, since: current?.since ?? Date.now() });
+      toast(attempts >= MAX_ATTEMPTS ? 'Locked for 15 minutes after too many failed attempts.' : 'That email and password do not match.', 'error');
     } finally {
       setSubmitting(false);
     }
@@ -750,65 +521,36 @@ function LoginScreen({ onSuccess, toasts, addToast }: {
   return (
     <div className="cms-login">
       <form className="cms-login__card" onSubmit={handleLogin}>
-        <h1>Studio</h1>
-        <p className="cms-login__sub">Sign in to manage your portfolio</p>
+        <div className="cms-brand" style={{ padding: 0 }}><span className="cms-brand__mark" aria-hidden="true">N</span> Studio</div>
+        <h1>Sign in</h1>
+        <p className="cms-login__sub">Manage your library, applications and sites.</p>
         <div className="cms-field">
-          <label htmlFor="login-email">Email</label>
-          <input id="login-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" required />
+          <label className="cms-field__label" htmlFor="login-email">Email</label>
+          <input id="login-email" className="cms-input" type="email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" required />
         </div>
         <div className="cms-field">
-          <label htmlFor="login-password">Password</label>
+          <label className="cms-field__label" htmlFor="login-password">Password</label>
           <PasswordInput id="login-password" value={password} onChange={setPassword} autoComplete="current-password" />
         </div>
         <button type="submit" disabled={submitting} className="cms-btn cms-btn--primary cms-btn--block">
           {submitting ? 'Signing in…' : 'Sign in'}
         </button>
+        <a className="cms-btn cms-btn--ghost cms-btn--block" href="/">Back to the public site</a>
       </form>
-      <ToastContainer toasts={toasts} />
     </div>
   );
 }
 
-/* ─── Delete dialog (focus-managed) ─────────────────────────────────────── */
+/* ─── Toasts ────────────────────────────────────────────────────────────── */
 
-function DeleteDialog({ label, onConfirm, onCancel }: {
-  label: string; onConfirm: () => void; onCancel: () => void;
-}) {
-  const cancelRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    cancelRef.current?.focus();
-  }, []);
-
+function Toasts({ toasts }: { toasts: ToastItem[] }) {
   return (
-    <div
-      className="cms-overlay"
-      role="alertdialog"
-      aria-modal="true"
-      aria-labelledby="cms-delete-title"
-      aria-describedby="cms-delete-desc"
-      onKeyDown={(e) => e.key === 'Escape' && onCancel()}
-      onClick={(e) => e.target === e.currentTarget && onCancel()}
-    >
-      <div className="cms-dialog">
-        <h2 id="cms-delete-title">Delete permanently?</h2>
-        <p id="cms-delete-desc">The {label} will be permanently deleted. This cannot be undone.</p>
-        <div className="cms-form__actions">
-          <button ref={cancelRef} className="cms-btn" onClick={onCancel}>Cancel</button>
-          <button className="cms-btn cms-btn--danger" onClick={onConfirm}>Delete</button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ─── Toasts ─────────────────────────────────────────────────────────────── */
-
-function ToastContainer({ toasts }: { toasts: Toast[] }) {
-  return (
-    <div className="cms-toasts" role="status" aria-live="polite" aria-atomic="false">
+    <div className="cms-toasts" role="status" aria-live="polite">
       {toasts.map((t) => (
-        <div key={t.id} className={`cms-toast cms-toast--${t.type}`}>{t.message}</div>
+        <div key={t.id} className={`cms-toast cms-toast--${t.type}`}>
+          {t.type === 'success' ? <CheckCircle2 size={16} aria-hidden="true" /> : <AlertTriangle size={16} aria-hidden="true" />}
+          {t.message}
+        </div>
       ))}
     </div>
   );
