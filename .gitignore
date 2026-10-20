@@ -11,3 +11,6 @@ dist/
 .codex/
 .codex-remote-attachments/
 .env*
+
+# Per-application working notes from the tailored-portfolio skill (job text, fit analysis, design notes)
+applications/
