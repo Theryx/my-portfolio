@@ -2,7 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import crypto from 'crypto';
 import { getDb } from '../_lib/db.js';
 import { requireAuth } from '../_lib/auth.js';
-import { validateAssetBody, isId } from '../_lib/validate.js';
+import { validateAssetBody, isEntryId } from '../_lib/validate.js';
 
 // The asset library: images, PDFs, resumes — anything the warehouse can
 // reference. Files live on Cloudinary; we store the URL + metadata.
@@ -32,7 +32,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
       const validationError = validateAssetBody(b);
       if (validationError) return res.status(400).json({ error: validationError });
-      if (!isId(b.id)) return res.status(400).json({ error: 'Invalid id' });
+      if (!isEntryId(b.id)) return res.status(400).json({ error: 'Invalid id' });
       const now = new Date().toISOString();
       const rows = await sql`
         INSERT INTO assets (id, filename, url, mime_type, size, description, tags, created_at)

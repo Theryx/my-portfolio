@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { getDb } from '../_lib/db.js';
 import { requireAuth, verifyAuth } from '../_lib/auth.js';
-import { validateWarehouseEntryBody, isId } from '../_lib/validate.js';
+import { validateWarehouseEntryBody, isEntryId } from '../_lib/validate.js';
 
 // The warehouse is the single source of truth for everything "about me":
 // bios, experience, skills, projects, articles, notes, assets, etc.
@@ -121,7 +121,7 @@ async function handleUpsert(
   const b = req.body ?? {};
   const validationError = validateWarehouseEntryBody(b);
   if (validationError) return res.status(400).json({ error: validationError });
-  if (!isId(b.id)) return res.status(400).json({ error: 'Invalid id' });
+  if (!isEntryId(b.id)) return res.status(400).json({ error: 'Invalid id' });
 
   const now = new Date().toISOString();
   const rows = await sql`

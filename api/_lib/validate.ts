@@ -22,6 +22,12 @@ export function isId(v: unknown): boolean {
   return typeof v === 'string' && /^[a-zA-Z0-9_-]{1,100}$/.test(v);
 }
 
+// Warehouse entry and asset ids carry a type prefix (`project:paysika`,
+// `asset:gefona-reports`), so they also allow ":".
+export function isEntryId(v: unknown): boolean {
+  return typeof v === 'string' && /^[a-zA-Z0-9_:-]{1,120}$/.test(v);
+}
+
 // Validate a list of profile ids (many-to-many). Accepts `undefined` only when
 // the caller opts in via `{ required: false }`.
 export function isProfileIdList(v: unknown, { required = true } = {}): boolean {
@@ -209,6 +215,12 @@ export function isIdList(v: unknown): boolean {
   return v.every(isId);
 }
 
+export function isEntryIdList(v: unknown): boolean {
+  if (v === undefined || v === null) return true;
+  if (!Array.isArray(v)) return false;
+  return v.every(isEntryId);
+}
+
 // Rich company links: per-company ordering, visibility and content overrides.
 export function isCompanyLinks(v: unknown): boolean {
   if (v === undefined || v === null) return true;
@@ -225,6 +237,26 @@ export function isCompanyLinks(v: unknown): boolean {
   });
 }
 
+// Job-application tracking stored on a company (its `application` column).
+const APPLICATION_STAGES = ['researching', 'building', 'ready', 'applied', 'interviewing', 'closed'];
+const APPLICATION_KINDS = ['application', 'persona'];
+const APPLICATION_OUTCOMES = ['offer', 'rejected', 'withdrawn', 'no-reply'];
+
+export function isApplication(v: unknown): boolean {
+  if (v === undefined || v === null) return true;
+  if (!isPlainObject(v)) return false;
+  const o = v as Record<string, unknown>;
+  const optIn = (x: unknown, list: string[]) => x === undefined || x === null || x === '' || (typeof x === 'string' && list.includes(x));
+  if (!optIn(o.kind, APPLICATION_KINDS)) return false;
+  if (!optIn(o.stage, APPLICATION_STAGES)) return false;
+  if (!optIn(o.outcome, APPLICATION_OUTCOMES)) return false;
+  if (o.fit_score !== undefined && o.fit_score !== null
+    && (typeof o.fit_score !== 'number' || o.fit_score < 0 || o.fit_score > 100)) return false;
+  if (!isShortText(o.applied_at, { required: false })) return false;
+  if (!isLongText(o.notes)) return false;
+  return JSON.stringify(o).length <= SHORT_TEXT * 40;
+}
+
 export function validateCompanyBody(b: Record<string, unknown>): string | null {
   if (!isShortText(b.name)) return 'Invalid name';
   if (b.id !== undefined && !isId(b.id)) return 'Invalid id';
@@ -239,6 +271,7 @@ export function validateCompanyBody(b: Record<string, unknown>): string | null {
   if (!isAboutContent(b.about_content)) return 'Invalid about_content';
   if (!isJsonObject(b.theme_config)) return 'Invalid theme_config';
   if (!isJsonObject(b.seo)) return 'Invalid seo';
+  if (!isApplication(b.application)) return 'Invalid application';
   if (b.social_links !== undefined && b.social_links !== null) {
     if (!isPlainObject(b.social_links)) return 'Invalid social_links';
     for (const [k, v] of Object.entries(b.social_links as Record<string, unknown>)) {
@@ -249,7 +282,7 @@ export function validateCompanyBody(b: Record<string, unknown>): string | null {
 }
 
 export function validateWarehouseEntryBody(b: Record<string, unknown>): string | null {
-  if (b.id !== undefined && !isId(b.id)) return 'Invalid id';
+  if (b.id !== undefined && !isEntryId(b.id)) return 'Invalid id';
   if (!isShortText(b.type)) return 'Invalid type';
   if (!isShortText(b.title)) return 'Invalid title';
   if (!isLongText(b.content)) return 'Invalid content';
@@ -257,7 +290,7 @@ export function validateWarehouseEntryBody(b: Record<string, unknown>): string |
   if (!isStringArray(b.tags)) return 'Invalid tags';
   if (b.company_ids !== undefined && !isIdList(b.company_ids)) return 'Invalid company_ids';
   if (!isCompanyLinks(b.company_links)) return 'Invalid company_links';
-  if (b.asset_ids !== undefined && !isIdList(b.asset_ids)) return 'Invalid asset_ids';
+  if (b.asset_ids !== undefined && !isEntryIdList(b.asset_ids)) return 'Invalid asset_ids';
   if (b.sort_order !== undefined && b.sort_order !== null && typeof b.sort_order !== 'number') {
     return 'Invalid sort_order';
   }
@@ -268,7 +301,7 @@ export function validateWarehouseEntryBody(b: Record<string, unknown>): string |
 }
 
 export function validateAssetBody(b: Record<string, unknown>, { requireId = true } = {}): string | null {
-  if (requireId && !isId(b.id)) return 'Invalid id';
+  if (requireId && !isEntryId(b.id)) return 'Invalid id';
   if (!isShortText(b.filename)) return 'Invalid filename';
   if (!isShortText(b.url)) return 'Invalid url';
   for (const f of ['mime_type'] as const) {
