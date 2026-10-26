@@ -118,8 +118,52 @@ Score the job against the evidence, not against how good the job sounds.
 Never round a score up to reach 60, and never count a requirement as met
 because a project "could" show it.
 
-**Check-in:** share the score, the verdict and the main gaps. Wait for him to
-say go before Stage 4.
+### Close the gaps (honestly)
+
+Whenever the score is below 100%, do not stop at naming the gaps. For each gap
+that matters, propose what would raise the match, and say **why it matters for
+this job** (which requirement it satisfies and how much weight it carries).
+Ndouken wants these proposals every time. Offer them in this order, and
+say how each one is backed up:
+
+1. **Work he has really done but never recorded.** Ask pointed questions about
+   the requirement ("The job asks for customer-experience ownership. Did you
+   handle support escalations, complaints or feedback at PaySika?"). If he says
+   yes, it goes into the Library as a new or extended entry, and the proposal
+   says where the proof lives: tickets, Figma or Notion files, Mixpanel
+   dashboards, emails, shipped screens, a colleague who can confirm it.
+2. **Credentials he can actually earn.** Name a specific course or
+   certification, who issues it, roughly how long and how much it takes, and
+   which requirement it covers. It goes into the Library only once he holds
+   it, or as "in progress" only if he has really enrolled.
+3. **A small real piece of work that creates evidence.** For example a case
+   study write-up of something he already shipped, a short audit, a prototype
+   or a repo, with a rough size and what it would prove.
+4. **Better framing of what exists.** A requirement marked Partial may become
+   Strong when the same work is described in the job's own terms. Show the
+   rewritten line and the Library entry it comes from.
+5. **How to talk about what is still missing.** An honest line for the
+   interview or cover note, for gaps that cannot be closed in time.
+
+Every proposal ends with a **How to back it up** line that points at real,
+checkable evidence. If there is none, say so and drop the proposal.
+
+**Never propose, draft or build any of these**, even when asked, and even when
+the fit score is low:
+- experience, roles, responsibilities or projects he has not done;
+- certifications, degrees or awards he does not hold, or "in progress" claims
+  for courses he has not started;
+- invented metrics, clients, titles, dates, references or testimonials;
+- invented "backing" for any of the above (fake documents, screenshots or
+  stories).
+
+If Ndouken asks for one of these, decline in a sentence and steer to the
+options above. He is free to edit his own Library, but this skill does not
+write falsehoods into it or onto a site. A true gap is better handled by
+skipping the application, closing the gap, or being open about it.
+
+**Check-in:** share the score, the verdict, the main gaps and the proposals
+for closing them. Wait for him to say go before Stage 4.
 
 ## Stage 4: Propose projects
 
