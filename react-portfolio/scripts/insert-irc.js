@@ -270,7 +270,7 @@ await sql`
     philosophy_text, intro_expanded_text, badges, social_links, about_content,
     created_at, updated_at
   ) VALUES (
-    ${c.id}, ${c.name}, ${c.slug}, false, ${c.role},
+    ${c.id}, ${c.name}, ${c.slug}, true, ${c.role},
     ${c.job_description}, ${c.job_url}, 'published', ${c.layout},
     ${JSON.stringify(c.theme_config)}, ${JSON.stringify(c.seo)},
     ${c.tagline}, ${c.hero_title}, ${c.hero_subtitle},
@@ -279,7 +279,7 @@ await sql`
     ${JSON.stringify(c.about_content)}, ${now}, ${now}
   )
   ON CONFLICT (id) DO UPDATE SET
-    name = EXCLUDED.name, slug = EXCLUDED.slug, is_active = false,
+    name = EXCLUDED.name, slug = EXCLUDED.slug, is_active = true,
     role = EXCLUDED.role, job_description = EXCLUDED.job_description,
     job_url = EXCLUDED.job_url, status = EXCLUDED.status, layout = EXCLUDED.layout,
     theme_config = EXCLUDED.theme_config, seo = EXCLUDED.seo,
