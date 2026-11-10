@@ -55,7 +55,7 @@ const company = {
   social_links: {
     email: 'ndouken@gmail.com',
     linkedin: 'https://www.linkedin.com/in/ndoukentheryx',
-    resume: 'https://drive.google.com/file/d/1UWdwiOxHdClXElgw1AdvpZygTiDOXjqp/view',
+    resume: 'https://drive.google.com/file/d/1ZDQk_z-ac5ecBlWmjE6vgK5_KuiwEWnH/view',
     role_line: 'UX designer and researcher',
     company_name: 'International Rescue Committee',
     role_target: 'Associate Designer',
