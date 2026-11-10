@@ -812,7 +812,7 @@ const projectManagerPreset: ProfilePreset = {
     name: 'Product Manager & B2B Solutions Lead',
     is_active: false,
     bio:
-      'Product Manager with a technical and systems background, leading end-to-end Product Lifecycle Management (PLM) across telecom rails, B2B fintech integrations, ed-tech, and digital policy. Nearly four years at PaySika orchestrating cross-functional delivery between engineering, MTN MoMo and mobile money APIs, compliance, and enterprise partners; co-founder of Kody, leading business case development and GTM for a $5,000 Tony Elumelu Foundation-funded venture. I turn business goals into prioritized backlogs, robust product roadmaps, and measurable market impact.',
+      'Product Manager with a technical and systems background, leading end-to-end Product Lifecycle Management (PLM) across telecom rails, B2B fintech integrations, ed-tech, and digital policy. Nearly four years at PaySika orchestrating cross-functional delivery between engineering, MTN MoMo and mobile money APIs, compliance, and enterprise partners; product designer at Kody, leading business case development and GTM for a $5,000 Tony Elumelu Foundation-funded venture. I turn business goals into prioritized backlogs, robust product roadmaps, and measurable market impact.',
     tagline: 'Bridging business strategy, telecom rails, and flawless product delivery.',
     hero_title: 'Product Manager & B2B Solutions Lead',
     hero_subtitle:
@@ -886,10 +886,10 @@ Working in regulated fintech required continuous alignment with partner banks, c
         'Secured $5,000 TEF seed investment, developed the business case, and led product from conception to Go-To-Market.',
       image: 'shomi-cover.png',
       description:
-        'Co-founder of Kody and Product Owner on Shomi. Developed the investment business case to secure $5,000 in seed funding from the Tony Elumelu Foundation, built and launched the mobile-first MVP with our engineering team, and managed the full product lifecycle from market research to Go-To-Market.',
+        'Product Designer and Product Owner on Shomi at Kody. Developed the investment business case to secure $5,000 in seed funding from the Tony Elumelu Foundation, built and launched the mobile-first MVP with our engineering team, and managed the full product lifecycle from market research to Go-To-Market.',
       impact: 'Secured $5,000 funding, built investment models, and delivered an MVP tested with 100+ students and educators.',
       site: '',
-      role: 'Co-founder & Product Manager',
+      role: 'Product Designer & Product Manager',
       period: 'Dec 2019 - Dec 2020',
       location: 'Cameroon',
       responsibilities: [
@@ -909,9 +909,9 @@ Working in regulated fintech required continuous alignment with partner banks, c
         'Successfully delivered the MVP and operated the platform for 12 months. Documented a thorough post-mortem analyzing content production costs, unit economics, and student engagement patterns—a framework that now informs my business case modeling for all digital products.',
       is_hidden: false,
       sort_order: 1,
-      content: `## What co-founding taught me about Product Management
+      content: `## What building Kody taught me about Product Management
 
-Co-founding compressed essential PM lessons into one venture: investment business case rigor, customer discovery, and honest lifecycle management.
+Building Kody compressed essential PM lessons into one venture: investment business case rigor, customer discovery, and honest lifecycle management.
 
 ### Developing the Investment Business Case
 To secure the $5,000 Tony Elumelu Foundation grant, I built comprehensive financial models, addressable market sizing (TAM/SAM/SOM), and operational roadmaps, pitching the strategic ROI of digital exam preparation in Cameroon.
@@ -1039,7 +1039,7 @@ The redesign drove the 40% retention lift and 60% support-ticket reduction PaySi
     },
     {
       id: 'pm_kody_5k_to_mvp',
-      title: 'Co-founding Kody: from $5,000 funding to a live MVP in 6 months',
+      title: 'Building Kody: from $5,000 funding to a live MVP in 6 months',
       excerpt:
         'A two-person team, $5,000 from the Tony Elumelu Foundation, and an ed-tech idea. Here\'s what shipping our MVP taught me that I still use as a PM today.',
       date: 'March 21, 2026',
@@ -1049,14 +1049,14 @@ The redesign drove the 40% retention lift and 60% support-ticket reduction PaySi
       image: 'shomi-cover.png',
       is_hidden: false,
       sort_order: 1,
-      content: `# Co-founding Kody: from $5,000 funding to a live MVP in 6 months
+      content: `# Building Kody: from $5,000 funding to a live MVP in 6 months
 
 In 2019, my friend and I won $5,000 from the Tony Elumelu Foundation for an ed-tech idea we called Shomi: interactive prep booklets for Cameroonian secondary-school students. Six months later we shipped a live MVP. A year later we sunset it. Both halves of that story taught me PM lessons I still use.
 
 ## What worked
 
 ### Tight scope from week one
-One product, one platform, one audience. We had two other ideas we could have run with the same funding. We said no to both in the first month. Holding scope is the loneliest part of founding work and the part that separates shipping from almost-shipping.
+One product, one platform, one audience. We had two other ideas we could have run with the same funding. We said no to both in the first month. Holding scope is the loneliest part of early-stage work and the part that separates shipping from almost-shipping.
 
 ### A user-research partnership
 PREXCEL, a local exam-prep school, became our partner. They gave us direct access to the students we were designing for. Without that partnership we'd have built for an imagined audience.

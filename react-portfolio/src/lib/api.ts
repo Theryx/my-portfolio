@@ -385,12 +385,12 @@ if (!fallbackProfiles.default) {
     tagline: 'I design and build user-centric digital products.',
     hero_title: 'Product Designer & Builder',
     hero_subtitle:
-      'I design and ship digital products end to end: UX, interface, and code. Led design at PaySika, co-founded ventures, and build in the open. Based in Cameroon.',
+      'I design and ship digital products end to end: UX, interface, and code. Led design at PaySika, designed for early-stage ventures, and build in the open. Based in Cameroon.',
     philosophy_title: 'I design experiences that bridge technology and human needs.',
     philosophy_text:
-      'I work across design and engineering to turn ideas into products people trust. Nearly four years leading UX design at PaySika, plus co-founding ventures and shipping code, taught me that the strongest products come from one person owning the whole loop: research, interface, and implementation.',
+      'I work across design and engineering to turn ideas into products people trust. Nearly four years leading UX design at PaySika, plus designing for early-stage ventures and shipping code, taught me that the strongest products come from one person owning the whole loop: research, interface, and implementation.',
     intro_expanded_text:
-      'I work across design and engineering to turn ideas into products people trust. Nearly four years leading UX design at PaySika, plus co-founding ventures and shipping code, taught me that the strongest products come from one person owning the whole loop: research, interface, and implementation.',
+      'I work across design and engineering to turn ideas into products people trust. Nearly four years leading UX design at PaySika, plus designing for early-stage ventures and shipping code, taught me that the strongest products come from one person owning the whole loop: research, interface, and implementation.',
     badges: ['Design · Engineering · Product'],
     social_links: {},
     about_content: {

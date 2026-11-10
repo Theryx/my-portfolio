@@ -53,7 +53,7 @@ vi.mock('../lib/api', () => {
       id: 'shomi_project-manager',
       tag: 'EdTech',
       title: 'Shomi',
-      role: 'Co-founder & Product Owner',
+      role: 'Product Designer & Product Owner',
       period: 'Dec 2019 - Dec 2020',
       tagline: 'Owned an ed-tech product end to end.',
       description: 'Grant-funded MVP and a documented sunset.',

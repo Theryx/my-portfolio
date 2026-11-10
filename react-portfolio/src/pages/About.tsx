@@ -102,7 +102,7 @@ export default function About() {
             <motion.div className="bento-card about-bento__main" variants={tileVariants}>
               <img src={myProfile} alt="Ndouken Theryx" className="about-bento__photo" loading="lazy" />
               <p className="about__text">
-                {profile?.bio || 'I am a product designer who also builds: I work across UX, interface, and front-end code to ship digital products end to end. I have been building and leading the design team at PaySika since December 2021, alongside co-founding ventures and shipping real-world applications.'}
+                {profile?.bio || 'I am a product designer who also builds: I work across UX, interface, and front-end code to ship digital products end to end. I have been building and leading the design team at PaySika since December 2021, alongside designing for early-stage ventures and shipping real-world applications.'}
               </p>
               <p className="about__text about-bento__tagline">
                 {profile?.tagline || 'I bridge the gap between design and development. I believe in clean design, simple language, and practical problem-solving.'}
