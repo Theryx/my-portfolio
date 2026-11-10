@@ -120,6 +120,12 @@ export const lovingTechBlocks = [
     ],
   },
   {
+    type: 'intro',
+    eyebrow: 'Handover',
+    heading: 'Leaving the team able to fix it',
+    text: 'Before I left, I documented how the support system works and trained the staff to use AI to debug it, so they could handle any issues without me.',
+  },
+  {
     type: 'stat-cards',
     cards: [
       {

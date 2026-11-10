@@ -15,6 +15,16 @@ export interface CompanySiteModule {
 }
 
 export const companySites: Record<string, CompanySiteModule> = {
+  carnet: {
+    Site: lazy(() => import('./irc/Site')),
+    Loader: lazy(() => import('./irc/Loader')),
+    Home: lazy(() => import('./irc/Home')),
+    Work: lazy(() => import('./irc/Work')),
+    WorkItem: lazy(() => import('./irc/WorkItem')),
+    About: lazy(() => import('./irc/About')),
+    Writing: lazy(() => import('./irc/Writing')),
+    WritingItem: lazy(() => import('./irc/WritingItem')),
+  },
   jito: {
     Site: lazy(() => import('./jito/Site')),
     Loader: lazy(() => import('./jito/Loader')),
