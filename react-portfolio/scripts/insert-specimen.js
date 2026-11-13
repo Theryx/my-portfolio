@@ -59,7 +59,33 @@ const productToMarketing = byHeading(paysikaBrand, 'From product to marketing');
 const offScreen = byHeading(paysikaBrand, 'Brand assets, merch & events');
 offScreen.heading = 'Off the screen';
 offScreen.text =
-  'I designed the paid ads for Meta and Google, and the flyers, roll-up banners and brochures for our fair stands. I also produced the merchandise and event material that carried the brand into the street: co-branded billboards, mugs, notebooks and tote bags.';
+  'I also produced the merchandise and event material that carried the brand into the street: co-branded billboards, mugs, notebooks and tote bags.';
+const ads = {
+  type: 'gallery',
+  eyebrow: 'Ads',
+  heading: 'Ads for Meta and Google',
+  text: 'I designed the paid ads for Meta and Google: card launches, challenges, seasonal deals and how-to posts, all in the same colours and layout as the app.',
+  items: [{ image: 'paysika-ads-sheet.png', title: 'A sample of the ads', description: 'Square and portrait formats, each with the app on screen and the store badges.' }],
+};
+const fairPrint = {
+  type: 'gallery',
+  eyebrow: 'Print',
+  heading: 'Flyers, roll-ups and the stand',
+  text: 'For the fairs we joined, I designed the flyers and roll-up banners that explained the card in a few seconds: what it costs, how to top it up, and where to download the app. I also designed the stand entrance, the photo booth frame, the team t-shirts and the badges.',
+  items: [
+    { image: 'paysika-flyer.jpg', title: 'Flyer', description: 'A free virtual Visa card, four services and a QR code to the app.' },
+    { image: 'paysika-roll-up.jpg', title: 'Roll-up banner', description: 'The same services as icons, readable from across the hall.' },
+    { image: 'paysika-fair-stand.jpg', title: 'On the stand', description: 'The flyers and banners in use, while the team signs people up.' },
+    { image: 'paysika-booth.jpg', title: 'Entrance, photo booth, t-shirts and badges', description: 'The team at the stand entrance, holding the photo booth frame.' },
+  ],
+};
+const theCard = {
+  type: 'gallery',
+  eyebrow: 'The card',
+  heading: 'The card people waited for',
+  text: 'I extended the identity onto the physical Visa debit card, so the first thing a customer held after the delivery looked like the app they already knew.',
+  items: [{ image: 'paysika-card-front.jpg', title: 'The PaySika Visa card' }],
+};
 const packagingCompare = byHeading(paysikaProduct, 'The envelope, before and after');
 const packagingWhy = byHeading(paysikaProduct, 'Most of our users had never held a card');
 
@@ -75,7 +101,10 @@ const paysikaStory = [
   designSystem,
   brandGuide,
   productToMarketing,
+  ads,
+  fairPrint,
   offScreen,
+  theCard,
   packagingCompare,
   packagingWhy,
 ];
@@ -85,7 +114,7 @@ const gConcept = byHeading(gueemshome, 'From concept to a system');
 const gApplied = byHeading(gueemshome, 'One monogram, a colour per scent');
 const gPrint = byHeading(gueemshome, 'In the hand, on the shelf');
 gPrint.text =
-  'The identity carries into things people hold: business cards, a bilingual thank-you card in every order, gift packaging, flyers and brochures. Each was designed and then produced, so the brand feels as considered off the screen as on it.';
+  'The identity carries into things people hold: business cards, a bilingual thank-you card in every order, gift packaging, flyers and brochures. I designed each piece and the founder had them printed, so the brand feels as considered off the screen as on it.';
 const gOnline = byHeading(gueemshome, 'Online and everywhere');
 gOnline.items = gOnline.items.map((it) =>
   it.image === 'spray-lifestyle.jpg'
@@ -147,9 +176,11 @@ const shomiStory = [
   },
   {
     type: 'gallery',
-    heading: 'The changes after testing',
+    heading: 'From tested prototype to launch',
+    text: 'After the changes from testing, we launched on the Play Store. I designed the launch ad around the finished screens: exam nights, past questions, challenges and solutions.',
     items: [
       { image: 'shomi_usability_testing.png', title: 'Before and after the tests' },
+      { image: 'shomi-ad.jpg', title: 'The launch ad', description: 'The Play Store launch ad, with the final app screens.' },
     ],
   },
   {
@@ -283,6 +314,7 @@ const company = {
   social_links: {
     email: 'ndouken@gmail.com',
     linkedin: 'https://www.linkedin.com/in/ndoukentheryx',
+    resume: 'https://drive.google.com/file/d/19ETN9pIDDzj5cUs61Sr7aQOlcrZQvUqX/view',
     role_line: 'Product designer',
   },
   about_content: {
@@ -364,10 +396,12 @@ const company = {
       { image: 'paysika-packaging-v2.jpg', kind: 'Packaging', project: 'paysika_fintech' },
       { image: 'business-card-printed.jpg', kind: 'Print', project: 'gueemshome_brand-designer' },
       { image: 'design-system.png', kind: 'Design system', project: 'paysika_fintech' },
-      { image: 'shomi_usability_testing.png', kind: 'Usability test', project: 'shomi_project-manager' },
+      { image: 'shomi-ad.jpg', kind: 'Launch ad', project: 'shomi_project-manager' },
       { image: 'social-feed.png', kind: 'Social', project: 'gueemshome_brand-designer' },
       { image: 'careathon24-reveal-card.webp', kind: 'Campaign', project: 'careathon-brand' },
       { image: 'brand-guide.png', kind: 'Brand guide', project: 'paysika_fintech' },
+      { image: 'paysika-ads-sheet.png', kind: 'Ads', project: 'paysika_fintech' },
+      { image: 'paysika-flyer.jpg', kind: 'Flyer', project: 'paysika_fintech' },
       { image: 'shomi_wireframes.png', kind: 'Wireframes', project: 'shomi_project-manager' },
       { image: 'packaging-gift.jpg', kind: 'Packaging', project: 'gueemshome_brand-designer' },
       { image: 'billboards.png', kind: 'Out of home', project: 'paysika_fintech' },
@@ -450,7 +484,7 @@ const links = [
       role: 'Product Designer',
       period: '2019 to 2020',
       location: 'Cameroon',
-      image: 'shomi_wireframes.png',
+      image: 'shomi-ad.jpg',
       impact: '',
       content_blocks: shomiStory,
     },
