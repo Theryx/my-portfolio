@@ -77,7 +77,23 @@ const customerStory = [
 ];
 
 // ── PaySika in the field: the agents' app photos stay on the riders' app page ──
-const fieldStory = field.filter((b) => b.heading !== 'The app our agents used');
+const usabilitySession = {
+  type: 'photos',
+  eyebrow: 'Usability testing',
+  heading: 'A usability session',
+  text: 'Besides the field visits, I ran moderated usability sessions. Participants signed a consent form before coming in, then went through the whole journey, from discovering the app to onboarding, identity checks and creating a card, while I followed a test script.',
+  items: [
+    {
+      image: 'paysika-usability-session.webp',
+      caption: 'A participant going through the app, with the test script on the table.',
+    },
+  ],
+};
+const fieldStory = field.flatMap((b) => {
+  if (b.heading === 'The app our agents used') return [];
+  if (b.heading === 'Consent, scripts and reports') return [usabilitySession, b];
+  return [b];
+});
 
 // ── The company row ──
 // Copy kept plain on purpose: it should read as a portfolio, not an answer to one job.

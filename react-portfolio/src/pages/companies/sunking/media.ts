@@ -2,10 +2,18 @@ import type { Company } from '../../../lib/api';
 import { resolveProjectImage } from '../../../data/projects';
 import { resolveBlogImage } from '../../../data/blog';
 
-// Project images (bundled map and Cloudinary URLs), then article images.
+import usabilitySession from '../../../assets/img/paysika/Research/paysika-usability-session.webp';
+
+// Images added for this site, keyed by the names used in its stories.
+const localImages: Record<string, string> = {
+  'paysika-usability-session.webp': usabilitySession,
+};
+
+// This site's own images, then project images (bundled map and Cloudinary
+// URLs), then article images.
 export function resolveMedia(src: string | undefined): string {
   if (!src) return '';
-  return resolveProjectImage(src) || resolveBlogImage(src);
+  return localImages[src] || resolveProjectImage(src) || resolveBlogImage(src);
 }
 
 /** One line of a project's field card: who, device, network, language, outcome. */
