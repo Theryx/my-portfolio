@@ -26,6 +26,11 @@ vi.mock('../lib/api', () => {
     theme_config: {
       facts: [{ value: '+40%', label: 'retention' }],
       practice: [{ title: 'Go into the field', text: 'Once a month.' }],
+      ai: {
+        title: 'How I design with AI',
+        steps: [{ title: 'Work out the decisions first', text: 'With Claude.' }],
+        notes: [{ title: 'Where it falls short', text: 'It does not replace testing.' }],
+      },
       projects: {
         'paysika-riders-app': {
           side: 'Agent app',
@@ -113,6 +118,8 @@ describe('Product designer mini-site (sunking)', () => {
     expect(screen.getByText('Agent app')).toBeInTheDocument();
     expect(screen.getByText('Cheap smartphones')).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'How I work' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'How I design with AI' })).toBeInTheDocument();
+    expect(screen.getByText('Where it falls short')).toBeInTheDocument();
     expect(screen.queryByRole('link', { name: 'Writing' })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Daylight/ })).not.toBeInTheDocument();
   });

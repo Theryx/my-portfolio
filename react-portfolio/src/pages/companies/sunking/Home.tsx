@@ -14,6 +14,13 @@ interface Fact {
   label: string;
 }
 
+interface AiSection {
+  title?: string;
+  lede?: string;
+  steps?: PracticeItem[];
+  notes?: PracticeItem[];
+}
+
 const FALLBACK_TITLE = "I'm Ndouken, a product designer from Cameroon.";
 
 export default function Home() {
@@ -21,6 +28,7 @@ export default function Home() {
   const theme = themeOf(company);
   const practice = (Array.isArray(theme.practice) ? theme.practice : []) as PracticeItem[];
   const facts = (Array.isArray(theme.facts) ? theme.facts : []) as Fact[];
+  const ai = (theme.ai && typeof theme.ai === 'object' ? theme.ai : null) as AiSection | null;
   const email = company?.social_links?.email || 'ndouken@gmail.com';
 
   return (
@@ -53,6 +61,36 @@ export default function Home() {
         {typeof theme.work_lede === 'string' && <p className="dl-section__lede">{theme.work_lede}</p>}
         {loading && projects.length === 0 ? <Loader /> : <Rows projects={projects} base={base} company={company} />}
       </section>
+
+      {ai && (ai.steps?.length ?? 0) > 0 && (
+        <section className="dl-section" aria-labelledby="dl-ai-head">
+          <div className="dl-section__head">
+            <h2 id="dl-ai-head" className="dl-h2">{ai.title || 'How I design with AI'}</h2>
+          </div>
+          {ai.lede && <p className="dl-section__lede">{ai.lede}</p>}
+          <ol className="dl-ai">
+            {ai.steps!.map((s, i) => (
+              <li key={s.title} className="dl-ai__step">
+                <span className="dl-ai__no">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <h3>{s.title}</h3>
+                  <p>{s.text}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          {(ai.notes?.length ?? 0) > 0 && (
+            <dl className="dl-ai__notes">
+              {ai.notes!.map((n) => (
+                <div key={n.title}>
+                  <dt>{n.title}</dt>
+                  <dd>{n.text}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+        </section>
+      )}
 
       {practice.length > 0 && (
         <section className="dl-section" aria-labelledby="dl-practice-head">
