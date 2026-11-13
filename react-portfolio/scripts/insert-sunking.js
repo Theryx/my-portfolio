@@ -65,6 +65,16 @@ const oldKyc = {
     { image: 'paysika-kyc-old-4-profile.webp', title: 'Unverified profile', description: 'The profile while the account waited for verification.' },
   ],
 };
+const newKyc = {
+  type: 'gallery',
+  eyebrow: 'After',
+  heading: 'The new identity check',
+  text: 'After the redesign, the identity check became a summary of its steps: personal details, selfie, ID document, taxpayer number and address. People could start from any step and come back later to finish where they left off, and each step showed its own status.',
+  items: [
+    { image: 'paysika-kyc-new-1-summary.webp', title: 'Start anywhere', description: 'Every step waiting for information, in any order.' },
+    { image: 'paysika-kyc-new-2-review.webp', title: 'Under review', description: 'Submitted steps marked as under review.' },
+  ],
+};
 const twoMarkets = byHeading(paysika, 'One product, two sets of rules');
 twoMarkets.text = twoMarkets.text.replace('I led the design across', 'I worked on the design across');
 if (/\bled\b/.test(twoMarkets.text)) throw new Error('twoMarkets still says led');
@@ -92,6 +102,7 @@ const customerStory = [
   outcomes,
   leak,
   oldKyc,
+  newKyc,
   pickup,
   twoMarkets,
   behind,
