@@ -65,4 +65,14 @@ export const companySites: Record<string, CompanySiteModule> = {
     Writing: lazy(() => import('./spiro/Writing')),
     WritingItem: lazy(() => import('./spiro/WritingItem')),
   },
+  sunking: {
+    Site: lazy(() => import('./sunking/Site')),
+    Loader: lazy(() => import('./sunking/Loader')),
+    Home: lazy(() => import('./sunking/Home')),
+    Work: lazy(() => import('./sunking/Work')),
+    WorkItem: lazy(() => import('./sunking/WorkItem')),
+    About: lazy(() => import('./sunking/About')),
+    Writing: lazy(() => import('./sunking/Writing')),
+    WritingItem: lazy(() => import('./sunking/WritingItem')),
+  },
 };
