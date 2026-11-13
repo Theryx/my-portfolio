@@ -65,6 +65,17 @@ const oldKyc = {
     { image: 'paysika-kyc-old-4-profile.webp', title: 'Unverified profile', description: 'The profile while the account waited for verification.' },
   ],
 };
+// Back-office screens Ndouken designed (mock data and a specimen passport).
+const backOffice = {
+  type: 'gallery',
+  eyebrow: 'Back office',
+  heading: 'The tools behind the app',
+  text: 'I also designed the back office the team worked in. Identity checks arrived in a backlog that operators could search and filter, and each request opened on the same sections as the app, with a box to tick once a section had been checked.',
+  items: [
+    { image: 'paysika-bo-kyc-review.webp', title: 'Identity check backlog', description: 'Requests filtered by status, minors and date, with the personal details next to the ID document. The data and passport are samples.' },
+    { image: 'paysika-bo-access-codes.webp', title: 'Campaign access codes', description: 'Create a code with a volume of keys, and see past codes and whether they are active or expired.' },
+  ],
+};
 const newKyc = {
   type: 'gallery',
   eyebrow: 'After',
@@ -104,6 +115,7 @@ const customerStory = [
   leak,
   oldKyc,
   newKyc,
+  backOffice,
   pickup,
   twoMarkets,
   behind,
