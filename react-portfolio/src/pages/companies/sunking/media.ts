@@ -4,11 +4,13 @@ import { resolveBlogImage } from '../../../data/blog';
 
 import usabilitySession from '../../../assets/img/paysika/Research/paysika-usability-session.webp';
 import riderApp from '../../../assets/img/paysika/Riders/paysika-rider-app.webp';
+import fairTalk from '../../../assets/img/paysika/Events/paysika-fair-talk.webp';
 
 // Images added for this site, keyed by the names used in its stories.
 const localImages: Record<string, string> = {
   'paysika-usability-session.webp': usabilitySession,
   'paysika-rider-app.webp': riderApp,
+  'paysika-fair-talk.webp': fairTalk,
 };
 
 // This site's own images, then project images (bundled map and Cloudinary

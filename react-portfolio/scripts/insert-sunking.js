@@ -98,9 +98,15 @@ const usabilitySession = {
     },
   ],
 };
+const atTheFair = {
+  type: 'photos',
+  heading: 'At the fairs',
+  items: [{ image: 'paysika-fair-talk.webp', caption: 'At our stand, talking visitors through the PaySika app.' }],
+};
 const fieldStory = field.flatMap((b) => {
   if (b.heading === 'The app our agents used') return [];
   if (b.heading === 'Consent, scripts and reports') return [usabilitySession, b];
+  if (b.heading === 'How a field visit went') return [b, atTheFair];
   return [b];
 });
 
