@@ -5,12 +5,20 @@ import { resolveBlogImage } from '../../../data/blog';
 import usabilitySession from '../../../assets/img/paysika/Research/paysika-usability-session.webp';
 import riderApp from '../../../assets/img/paysika/Riders/paysika-rider-app.webp';
 import fairTalk from '../../../assets/img/paysika/Events/paysika-fair-talk.webp';
+import kycOld1 from '../../../assets/img/paysika/KYC/paysika-kyc-old-1-start.webp';
+import kycOld2 from '../../../assets/img/paysika/KYC/paysika-kyc-old-2-details.webp';
+import kycOld3 from '../../../assets/img/paysika/KYC/paysika-kyc-old-3-document.webp';
+import kycOld4 from '../../../assets/img/paysika/KYC/paysika-kyc-old-4-profile.webp';
 
 // Images added for this site, keyed by the names used in its stories.
 const localImages: Record<string, string> = {
   'paysika-usability-session.webp': usabilitySession,
   'paysika-rider-app.webp': riderApp,
   'paysika-fair-talk.webp': fairTalk,
+  'paysika-kyc-old-1-start.webp': kycOld1,
+  'paysika-kyc-old-2-details.webp': kycOld2,
+  'paysika-kyc-old-3-document.webp': kycOld3,
+  'paysika-kyc-old-4-profile.webp': kycOld4,
 };
 
 // This site's own images, then project images (bundled map and Cloudinary

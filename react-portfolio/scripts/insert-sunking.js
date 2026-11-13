@@ -52,6 +52,19 @@ const field = await blocksOf('project:paysika-field');
 const outcomes = structuredClone(paysika.find((b) => b.type === 'stat-cards'));
 outcomes.cards = outcomes.cards.filter((c) => c.title !== 'Design team lead');
 const leak = byHeading(paysika, 'Where the funnel was leaking');
+// The old identity check, from screenshots Ndouken sent (phone, email and profile QR blurred).
+const oldKyc = {
+  type: 'gallery',
+  eyebrow: 'Before',
+  heading: 'The old identity check',
+  text: 'Four screens from the identity check before the redesign, from the first screen to a profile still waiting for verification.',
+  items: [
+    { image: 'paysika-kyc-old-1-start.webp', title: 'Start', description: 'Why we ask, and a promise that it takes a few minutes.' },
+    { image: 'paysika-kyc-old-2-details.webp', title: 'Personal details', description: 'Name, neighbourhood, city and country.' },
+    { image: 'paysika-kyc-old-3-document.webp', title: 'Choosing a document', description: 'One option still showed an untranslated key, driver_license.' },
+    { image: 'paysika-kyc-old-4-profile.webp', title: 'Unverified profile', description: 'The profile while the account waited for verification.' },
+  ],
+};
 const twoMarkets = byHeading(paysika, 'One product, two sets of rules');
 twoMarkets.text = twoMarkets.text.replace('I led the design across', 'I worked on the design across');
 if (/\bled\b/.test(twoMarkets.text)) throw new Error('twoMarkets still says led');
@@ -78,6 +91,7 @@ const customerStory = [
   },
   outcomes,
   leak,
+  oldKyc,
   pickup,
   twoMarkets,
   behind,
