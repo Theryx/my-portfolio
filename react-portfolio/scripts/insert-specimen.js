@@ -523,7 +523,7 @@ await sql`
 
 await sql`
   UPDATE companies
-  SET application = ${JSON.stringify({ kind: 'application', stage: 'ready', fit_score: 98 })}::jsonb
+  SET application = ${JSON.stringify({ kind: 'application', stage: 'applied', fit_score: 98, applied_on: '2026-11-13' })}::jsonb
   WHERE id = ${c.id}`;
 
 for (const l of links) {
