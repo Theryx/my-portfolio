@@ -37,6 +37,15 @@ const byHeading = (blocks, heading) => {
 };
 
 const paysika = await blocksOf('project:paysika_fintech');
+const riders = await blocksOf('project:paysika-riders-app');
+
+// ── The riders' app: the rider photo, bundled with this site ──
+const RIDER_PHOTO = { image: 'paysika-rider-app.webp', caption: 'One of our riders going through the app.' };
+const ridersStory = riders.map((b) =>
+  b.type === 'photos' && b.heading === 'The app our riders used'
+    ? { ...b, items: [RIDER_PHOTO, ...b.items.filter((i) => i.image !== RIDER_PHOTO.image)] }
+    : b,
+);
 const field = await blocksOf('project:paysika-field');
 
 // ── PaySika, the customer side ──
@@ -263,6 +272,8 @@ const links = [
     metadata: {
       role: ROLE,
       tagline: 'The app our delivery riders used to get new orders and find customers, on cheap phones with weak connections.',
+      image: 'paysika-rider-app.webp',
+      content_blocks: ridersStory,
     },
   },
   { entry_id: 'project:paysika-field', sort_order: 2, metadata: { role: ROLE, content_blocks: fieldStory } },
