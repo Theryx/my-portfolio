@@ -63,9 +63,9 @@ pickup.text = 'At the relay point, customers scanned a QR code with the PaySika 
 const customerStory = [
   {
     type: 'intro',
-    eyebrow: 'PaySika, 2022 to 2026',
+    eyebrow: 'PaySika, 2021 to 2026',
     heading: 'A bank app for people new to banking',
-    text: 'I worked on PaySika for nearly four years, from the first version to a bank app used by thousands of people in Cameroon and Gabon. Many of them were holding a card for the first time. This page covers the customer side: onboarding, identity checks, transactions, the card and the design system.',
+    text: 'I worked on PaySika for nearly five years, from the first version to a bank app used by thousands of people in Cameroon and Gabon. Many of them were holding a card for the first time. This page covers the customer side: onboarding, identity checks, transactions, the card and the design system.',
   },
   outcomes,
   leak,
@@ -79,7 +79,7 @@ const customerStory = [
 // ── PaySika in the field: the agents' app photos stay on the riders' app page ──
 const usabilitySession = {
   type: 'photos',
-  eyebrow: 'Usability testing',
+  eyebrow: 'Usability testing, June 2022',
   heading: 'A usability session',
   text: 'Besides the field visits, I ran moderated usability sessions. Participants signed a consent form before coming in, then went through the whole journey, from discovering the app to onboarding, identity checks and creating a card, while I followed a test script.',
   items: [
@@ -108,7 +108,7 @@ const company = {
   tagline: 'Product designer from Cameroon.',
   hero_title: "I'm Ndouken, a product designer from Cameroon. Most of my work has been in fintech.",
   hero_subtitle:
-    'I spent nearly four years at PaySika, a bank app in Cameroon and Gabon. I worked on the customer app, the app our delivery riders used, and a lot of what happened between the app and the customer. I also like to get out and watch people use what I design.',
+    'I spent nearly five years at PaySika, a bank app in Cameroon and Gabon. I worked on the customer app, the app our delivery riders used, and a lot of what happened between the app and the customer. I also like to get out and watch people use what I design.',
   philosophy_title: 'A few habits',
   philosophy_text: '',
   intro_expanded_text: [
@@ -134,7 +134,7 @@ const company = {
       { label: 'Motion', items: ['Icon and illustration animation', 'Video editing'] },
     ],
     experience: [
-      { role: 'Senior Product Designer', org: 'PaySika', place: 'Douala', period: 'Nov 2022 to Aug 2026' },
+      { role: 'Senior Product Designer', org: 'PaySika', place: 'Douala', period: 'Dec 2021 to Aug 2026' },
       { role: 'Customer Success Consultant', org: 'Loving Tech', place: 'Douala', period: 'Jan to Apr 2026' },
       { role: 'UI/UX Consultant, part-time', org: 'Matanga Agency', place: 'Remote', period: 'Dec 2023 to Feb 2024' },
       { role: 'Co-maintainer', org: 'Jobsika, OSS Cameroon', place: 'Cameroon', period: '2022 to 2024' },
@@ -252,7 +252,7 @@ const links = [
       tag: 'Fintech',
       tagline: 'A bank app in Cameroon and Gabon, for people who were often getting their first card.',
       role: ROLE,
-      period: '2022 to 2026',
+      period: '2021 to 2026',
       location: 'Douala, Cameroon',
       content_blocks: customerStory,
     },

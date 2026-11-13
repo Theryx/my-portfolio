@@ -1,8 +1,8 @@
 // Facts Ndouken confirmed on 2026-11-13 about a PaySika usability session photo:
 // the session covered the whole journey (discovery, onboarding, KYC, card creation),
 // the sheet on the table is the test script, participants signed a consent form before
-// entering, and the participant agreed to the photo being shown. He dates it to 2021,
-// which conflicts with the PaySika start date on record, so the year is kept unconfirmed.
+// entering, and the participant agreed to the photo being shown. He first dated it 2021, then corrected it to June 2022;
+// fix-paysika-start-date.js records the date.
 // The image is bundled with the sunking site: src/assets/img/paysika/Research/paysika-usability-session.webp
 import { neon } from '@neondatabase/serverless';
 import fs from 'fs';
