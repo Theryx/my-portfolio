@@ -1,7 +1,8 @@
 // New warehouse project: Louci and Cici as one piece about how Ndouken designs and builds
 // with AI (he asked on 2026-11-13 to merge them, since readers care about the process more
 // than the apps). The loop comes from article:de_ai ("AI in the loop, taste in the
-// driver's seat"); the rules come from the Louci and Cici entries. Screens and captions
+// driver's seat") first; on 2026-11-13 he described how AI fits into designing them, and that
+// replaced the build loop. The rules come from the Louci and Cici entries and his answers. Screens and captions
 // come from scripts/add-app-screenshots.js and show invented demo data only.
 // Also records the Gabon soft-launch facts behind the campaign access codes screen.
 import { neon } from '@neondatabase/serverless';
@@ -31,18 +32,24 @@ const blocks = [
     type: 'intro',
     eyebrow: '2026',
     heading: 'Two side projects, built with AI',
-    text: 'Louci is a personal finance app for Cameroon that works out what is safe to spend before the next income. Cici pulls what needs my attention from my other apps into one list and suggests what to do next. I designed both and built them with AI-assisted development. They are here mostly for how they were made.',
+    text: 'Louci is a personal finance app for Cameroon that works out what is safe to spend before the next income. Cici pulls what needs my attention from my other apps into one list and suggests what to do next. I designed both and built them with AI, using Claude, Codex and Antigravity. This page is about how AI fits into designing them.',
   },
   {
     type: 'steps',
-    eyebrow: 'The loop',
-    heading: 'How I work with AI on a build',
+    eyebrow: 'The process',
+    heading: 'How AI fits into the design',
+    text: 'There is no single process. It goes back and forth, and each project is a bit different, but the same parts keep coming back.',
     items: [
-      { title: 'Brief with constraints', text: 'I write the brief myself, with the constraints I already know: who it is for, what success looks like, what we will not do. AI is bad at inventing constraints and good at applying the ones you state.' },
-      { title: 'Layout by hand', text: 'I sketch two or three layouts before AI sees anything. If it generates layouts first, I anchor on its output and stop looking.' },
-      { title: 'Scaffold with Claude', text: 'I describe the component in plain words, with its states and accessibility, and paste an existing component as a style reference. About 60% of the scaffold ships; the 40% I rewrite is where the design choices are.' },
-      { title: 'Review it like a sceptic', text: 'Before I push, I paste the change back and ask for three things that will break in production.' },
+      { title: 'Research first', text: 'I start by looking at what already exists, on Dribbble, Behance and Mobbin. Claude helps with the research.' },
+      { title: 'Brainstorm and look for gaps', text: 'AI helps me brainstorm, find gaps and challenge my ideas before I commit to one.' },
+      { title: 'A quick proof of concept', text: 'AI builds a rough working version fast, so I can try an idea instead of imagining it.' },
+      { title: 'AI sets the skeleton, I refine the edges', text: 'It is co-creation. AI proposes the structure, and the details and the decisions are mine.' },
+      { title: 'Reviews', text: 'AI checks the UI copy and looks for gaps and inconsistencies in the flows.' },
     ],
+  },
+  {
+    type: 'richtext',
+    markdown: 'It does not always go well. Several times AI proposed a design that was completely off from what I had in mind, and it is not good at accessibility, so I check that myself.',
   },
   {
     type: 'steps',
@@ -50,7 +57,7 @@ const blocks = [
     heading: 'Where the AI stops',
     items: [
       { title: 'It never calculates a number', text: 'In Louci the assistant answers questions about your own data, but every figure comes from tested code, not from the model.' },
-      { title: 'Nothing changes without a yes', text: 'Changes the Louci assistant proposes wait on a card that shows each field, and deleting was left out on purpose. In Cici, anything with a risk or a cost waits for my confirmation.' },
+      { title: 'Nothing changes without a yes', text: 'When building, AI never writes to the database or creates anything without my approval. Changes the Louci assistant proposes wait on a card that shows each field, and deleting was left out on purpose. In Cici, anything with a risk or a cost waits for my confirmation.' },
       { title: 'Everything is logged', text: 'Cici keeps a plain-language log of every sync, suggestion and action, with the state before and after.' },
     ],
   },
@@ -79,7 +86,7 @@ const entry = {
     period: '2026',
     location: 'Douala, Cameroon',
     image: 'cici-01-plate.png',
-    tagline: 'Two side projects, and the way I design and build with AI.',
+    tagline: 'Two side projects, and how AI fits into the way I design them.',
     description:
       'Louci, a personal finance app for Cameroon, and Cici, a list of what needs my attention across my apps. I designed both and built them with AI-assisted development, with firm rules on what the AI is allowed to do.',
     responsibilities: [

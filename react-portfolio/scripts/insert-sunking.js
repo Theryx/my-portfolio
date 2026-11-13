@@ -309,7 +309,7 @@ const company = {
         side: 'Side projects',
         field: [
           { label: 'What', value: 'A finance app and an attention list' },
-          { label: 'Built with', value: 'Claude, AI-assisted development' },
+          { label: 'Built with', value: 'Claude, Codex, Antigravity' },
           { label: 'Rule', value: 'The AI never acts without a yes' },
         ],
       },
