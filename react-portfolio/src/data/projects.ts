@@ -539,7 +539,61 @@ import gefonaCampaignProposal from '../assets/img/gefona/campaign-proposal.png';
 import gefonaContentArchive from '../assets/img/gefona/content-archive.png';
 import gefonaReports from '../assets/img/gefona/gefona-reports.png';
 
+// Demo screenshots of Cici, Louci and the estate manager (invented data only)
+import appCici01PlateMobile from '../assets/img/apps/cici-01-plate-mobile.png';
+import appCici01Plate from '../assets/img/apps/cici-01-plate.png';
+import appCici02TaskOpenInApp from '../assets/img/apps/cici-02-task-open-in-app.png';
+import appCici03CiciSuggestions from '../assets/img/apps/cici-03-cici-suggestions.png';
+import appCici04SuggestionAwaitingConfirm from '../assets/img/apps/cici-04-suggestion-awaiting-confirm.png';
+import appCici05SuggestionConfirmed from '../assets/img/apps/cici-05-suggestion-confirmed.png';
+import appCici06AuditWhatCiciDid from '../assets/img/apps/cici-06-audit-what-cici-did.png';
+import appCici07SourcesConnectedApps from '../assets/img/apps/cici-07-sources-connected-apps.png';
+import appCici08SourceFinance from '../assets/img/apps/cici-08-source-finance.png';
+import appEstate01DashboardMobile from '../assets/img/apps/estate-01-dashboard-mobile.png';
+import appEstate01Dashboard from '../assets/img/apps/estate-01-dashboard.png';
+import appEstate02TenantsList from '../assets/img/apps/estate-02-tenants-list.png';
+import appEstate03TenantsByFloor from '../assets/img/apps/estate-03-tenants-by-floor.png';
+import appEstate04TenantArrears from '../assets/img/apps/estate-04-tenant-arrears.png';
+import appEstate05Payments from '../assets/img/apps/estate-05-payments.png';
+import appEstate06Expenses from '../assets/img/apps/estate-06-expenses.png';
+import appEstate07FloorsAndRooms from '../assets/img/apps/estate-07-floors-and-rooms.png';
+import appEstate08TenantPortal from '../assets/img/apps/estate-08-tenant-portal.png';
+import appLouciAccounts from '../assets/img/apps/louci-accounts.png';
+import appLouciAssistant from '../assets/img/apps/louci-assistant.png';
+import appLouciCashFlow from '../assets/img/apps/louci-cash-flow.png';
+import appLouciDashboardMobile from '../assets/img/apps/louci-dashboard-mobile.png';
+import appLouciDashboard from '../assets/img/apps/louci-dashboard.png';
+import appLouciGoals from '../assets/img/apps/louci-goals.png';
+import appLouciInsights from '../assets/img/apps/louci-insights.png';
+import appLouciTransactions from '../assets/img/apps/louci-transactions.png';
+
 export const projectImageMap: Record<string, string> = {
+  'cici-01-plate-mobile.png': appCici01PlateMobile,
+  'cici-01-plate.png': appCici01Plate,
+  'cici-02-task-open-in-app.png': appCici02TaskOpenInApp,
+  'cici-03-cici-suggestions.png': appCici03CiciSuggestions,
+  'cici-04-suggestion-awaiting-confirm.png': appCici04SuggestionAwaitingConfirm,
+  'cici-05-suggestion-confirmed.png': appCici05SuggestionConfirmed,
+  'cici-06-audit-what-cici-did.png': appCici06AuditWhatCiciDid,
+  'cici-07-sources-connected-apps.png': appCici07SourcesConnectedApps,
+  'cici-08-source-finance.png': appCici08SourceFinance,
+  'estate-01-dashboard-mobile.png': appEstate01DashboardMobile,
+  'estate-01-dashboard.png': appEstate01Dashboard,
+  'estate-02-tenants-list.png': appEstate02TenantsList,
+  'estate-03-tenants-by-floor.png': appEstate03TenantsByFloor,
+  'estate-04-tenant-arrears.png': appEstate04TenantArrears,
+  'estate-05-payments.png': appEstate05Payments,
+  'estate-06-expenses.png': appEstate06Expenses,
+  'estate-07-floors-and-rooms.png': appEstate07FloorsAndRooms,
+  'estate-08-tenant-portal.png': appEstate08TenantPortal,
+  'louci-accounts.png': appLouciAccounts,
+  'louci-assistant.png': appLouciAssistant,
+  'louci-cash-flow.png': appLouciCashFlow,
+  'louci-dashboard-mobile.png': appLouciDashboardMobile,
+  'louci-dashboard.png': appLouciDashboard,
+  'louci-goals.png': appLouciGoals,
+  'louci-insights.png': appLouciInsights,
+  'louci-transactions.png': appLouciTransactions,
   'PaySika website.PNG': paysikaImage,
   'paysika_mockup.png': paysikaMockup,
   'Screenshot of the UI of Jobsika.PNG': jobsikaImage,
