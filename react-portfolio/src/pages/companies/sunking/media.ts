@@ -11,6 +11,7 @@ import kycOld3 from '../../../assets/img/paysika/KYC/paysika-kyc-old-3-document.
 import kycOld4 from '../../../assets/img/paysika/KYC/paysika-kyc-old-4-profile.webp';
 import kycNew1 from '../../../assets/img/paysika/KYC/paysika-kyc-new-1-summary.webp';
 import kycNew2 from '../../../assets/img/paysika/KYC/paysika-kyc-new-2-review.webp';
+import kycNew3 from '../../../assets/img/paysika/KYC/paysika-kyc-new-3-ui-update.webp';
 
 // Images added for this site, keyed by the names used in its stories.
 const localImages: Record<string, string> = {
@@ -23,6 +24,7 @@ const localImages: Record<string, string> = {
   'paysika-kyc-old-4-profile.webp': kycOld4,
   'paysika-kyc-new-1-summary.webp': kycNew1,
   'paysika-kyc-new-2-review.webp': kycNew2,
+  'paysika-kyc-new-3-ui-update.webp': kycNew3,
 };
 
 // This site's own images, then project images (bundled map and Cloudinary

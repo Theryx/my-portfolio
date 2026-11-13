@@ -73,6 +73,7 @@ const newKyc = {
   items: [
     { image: 'paysika-kyc-new-1-summary.webp', title: 'Start anywhere', description: 'Every step waiting for information, in any order.' },
     { image: 'paysika-kyc-new-2-review.webp', title: 'Under review', description: 'Submitted steps marked as under review.' },
+    { image: 'paysika-kyc-new-3-ui-update.webp', title: 'A later UI update', description: 'The same flow after a visual update, with an info icon on each step that explains what it asks for.' },
   ],
 };
 const twoMarkets = byHeading(paysika, 'One product, two sets of rules');
