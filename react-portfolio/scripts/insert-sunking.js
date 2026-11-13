@@ -70,10 +70,10 @@ const backOffice = {
   type: 'gallery',
   eyebrow: 'Back office',
   heading: 'The tools behind the app',
-  text: 'I also designed the back office the team worked in. Identity checks arrived in a backlog that operators could search and filter, and each request opened on the same sections as the app, with a box to tick once a section had been checked.',
+  text: 'I also designed the back office the team worked in. Identity checks arrived in a backlog that operators could search and filter, and each request opened on the same sections as the app, with a box to tick once a section had been checked. When we soft-launched in Gabon, marketing used it to hand out access codes gradually, in controlled numbers.',
   items: [
     { image: 'paysika-bo-kyc-review.webp', title: 'Identity check backlog', description: 'Requests filtered by status, minors and date, with the personal details next to the ID document. The data and passport are samples.' },
-    { image: 'paysika-bo-access-codes.webp', title: 'Campaign access codes', description: 'Create a code with a volume of keys, and see past codes and whether they are active or expired.' },
+    { image: 'paysika-bo-access-codes.webp', title: 'Access codes for the Gabon soft launch', description: 'Marketing created each code with a volume: the number of people who could use it, 450 for the active one. Past codes show whether they are active or expired.' },
   ],
 };
 const newKyc = {
@@ -121,69 +121,6 @@ const customerStory = [
   behind,
   system,
   trust,
-];
-
-// ── Louci and Cici: side projects where the AI is part of the product ──
-// Screens and captions come from scripts/add-app-screenshots.js (demo data only).
-const DEMO = 'Every screen below runs on invented demo data.';
-const louciStory = [
-  {
-    type: 'intro',
-    eyebrow: 'Louci, 2026',
-    heading: 'What can I safely spend today?',
-    text: `Louci puts cash, mobile money and bank accounts in one place, in XAF, and works out what is safe to spend before the next income. Expected income that has not arrived is never counted as spendable. I designed it and built it with AI-assisted development. ${DEMO}`,
-  },
-  {
-    type: 'steps',
-    eyebrow: 'The assistant',
-    heading: 'Where the AI stops',
-    items: [
-      { title: 'It never calculates a number', text: 'The assistant answers questions about your own data, but the forecast and every figure come from tested code, not from the model.' },
-      { title: 'Nothing changes without a yes', text: 'Any change it proposes waits on a card that shows each field until you confirm it. Deleting was left out on purpose.' },
-    ],
-  },
-  {
-    type: 'gallery',
-    eyebrow: 'The screens',
-    heading: 'From balances to a safe daily amount',
-    items: [
-      { image: 'louci-dashboard.png', title: 'Dashboard', description: 'Available money, upcoming bills and what is left to spend today.' },
-      { image: 'louci-accounts.png', title: 'Accounts', description: 'Cash, Orange Money, MTN MoMo, bank and savings in one view.' },
-      { image: 'louci-cash-flow.png', title: 'Cash flow', description: 'A 7, 30 and 90 day forecast that shows the lowest projected balance.' },
-      { image: 'louci-assistant.png', title: 'The assistant', description: 'Answers questions about your own data. It never calculates a number or changes anything without a confirmation.' },
-    ],
-  },
-];
-const ciciStory = [
-  {
-    type: 'intro',
-    eyebrow: 'Cici, 2026',
-    heading: 'One list of what needs my attention',
-    text: `Cici pulls what matters from my finance app, my estate app and the Loving Tech shop into a single list, and suggests what to do next. The first screen is a short list of urgent items instead of charts. I designed it and built it with AI-assisted development. ${DEMO}`,
-  },
-  {
-    type: 'steps',
-    eyebrow: 'How it works',
-    heading: 'Detect, suggest, confirm, execute, audit',
-    items: [
-      { title: 'Detect', text: 'Rules spot things like overdue rent, orders ready for delivery, low stock or a budget limit.' },
-      { title: 'Suggest', text: 'Each one becomes a task with a suggested action.' },
-      { title: 'Confirm', text: 'Anything that carries a risk or a cost waits for my confirmation.' },
-      { title: 'Execute', text: 'Once I confirm, Cici writes back to the app the task came from.' },
-      { title: 'Audit', text: 'Every action is logged, with the state before and after.' },
-    ],
-  },
-  {
-    type: 'gallery',
-    eyebrow: 'The screens',
-    heading: 'From the list to the log',
-    items: [
-      { image: 'cici-01-plate.png', title: 'The Plate', description: 'Everything that needs attention, from my apps and my own tasks, in one list.' },
-      { image: 'cici-03-cici-suggestions.png', title: 'Suggestions', description: 'Cici suggests actions based on rules, such as an overdue rent or low stock.' },
-      { image: 'cici-04-suggestion-awaiting-confirm.png', title: 'Nothing happens until I say yes', description: 'A suggestion waits for my confirmation before anything changes.' },
-      { image: 'cici-06-audit-what-cici-did.png', title: 'What Cici did', description: 'A plain-language log of every sync, suggestion and action.' },
-    ],
-  },
 ];
 
 // ── PaySika in the field: the agents' app photos stay on the riders' app page ──
@@ -368,22 +305,12 @@ const company = {
           { label: 'How often', value: 'Last Friday of the month' },
         ],
       },
-      'louci-finance': {
-        title: 'Louci',
-        side: 'Side project',
+      'ai-side-projects': {
+        side: 'Side projects',
         field: [
-          { label: 'Market', value: 'Cameroon, in XAF' },
-          { label: 'Platforms', value: 'Web app, and an Android app that reads mobile-money SMS' },
-          { label: 'Built with', value: 'AI-assisted development' },
-        ],
-      },
-      'cici-command-center': {
-        title: 'Cici',
-        side: 'Side project',
-        field: [
-          { label: 'What', value: 'My finance, estate and shop apps in one list' },
-          { label: 'Platforms', value: 'Web app and a mobile companion' },
-          { label: 'Built with', value: 'AI-assisted development' },
+          { label: 'What', value: 'A finance app and an attention list' },
+          { label: 'Built with', value: 'Claude, AI-assisted development' },
+          { label: 'Rule', value: 'The AI never acts without a yes' },
         ],
       },
       crowdremit_fintech: {
@@ -429,16 +356,7 @@ const links = [
   },
   { entry_id: 'project:paysika-field', sort_order: 2, metadata: { role: ROLE, content_blocks: fieldStory } },
   { entry_id: 'project:crowdremit_fintech', sort_order: 3, metadata: null },
-  {
-    entry_id: 'project:louci-finance',
-    sort_order: 4,
-    metadata: { period: '2026', image: 'louci-dashboard.png', content_blocks: louciStory },
-  },
-  {
-    entry_id: 'project:cici-command-center',
-    sort_order: 5,
-    metadata: { period: '2026', image: 'cici-01-plate.png', content_blocks: ciciStory },
-  },
+  { entry_id: 'project:ai-side-projects', sort_order: 4, metadata: null },
 ];
 
 const c = cleanDeep(company);
@@ -485,6 +403,11 @@ for (const l of links) {
       override_metadata = EXCLUDED.override_metadata, is_visible = EXCLUDED.is_visible
   `;
 }
+
+await sql`
+  DELETE FROM company_entries
+  WHERE company_id = ${c.id} AND NOT (entry_id = ANY(${links.map((l) => l.entry_id)}))
+`;
 
 const check = await sql`SELECT id, slug, is_active, layout, application FROM companies WHERE id = ${c.id}`;
 const count = await sql`SELECT COUNT(*)::int AS n FROM company_entries WHERE company_id = ${c.id}`;
