@@ -24,6 +24,7 @@ is gitignored because it holds the fit analysis. Use these files:
 - `fit.md`: the fit analysis.
 - `projects.md`: the project plan.
 - `design.md`: the design brief, with the inspiration links.
+- `cv/`: the tailored CV, its HTML source and the PDF (see Stage 8).
 
 ## Stage 1: Read the job
 
@@ -325,6 +326,29 @@ phone width.
   merging so the site deploys. Do both only when he says it is ready. Never
   push or merge without his go-ahead.
 - Afterwards, give him the live link to send with the application.
+
+## Stage 8: The CV
+
+Every application gets its own CV, made from the warehouse to match the site.
+Never reuse another application's CV.
+
+1. Write it as HTML in `applications/<slug>/cv/cv.html`, two A4 pages at
+   most, and print it to PDF with headless Edge or Chrome
+   (`--headless --print-to-pdf --no-pdf-header-footer`). Read the PDF back to
+   check the page count and the layout.
+2. **Name the file after the company it is for:**
+   `Ndouken_Theryx_CV_<Company>.pdf`, with the company name in words joined by
+   underscores (`Ndouken_Theryx_CV_Sun_King.pdf`,
+   `Ndouken_Theryx_CV_Bold_Entrepreneur.pdf`). Ndouken wants every CV to show
+   which company it was made for.
+3. Use the same facts, titles and dates as the site. Follow the copy rules
+   below. Leave out anything the warehouse marks as unconfirmed.
+4. Upload it to his Google Drive under the same name, and attach the same file
+   to the application form. Ask before changing its sharing. The site's CV
+   link (`social_links.resume`) only works once the file is shared with anyone
+   who has the link.
+5. Personal details that are not in the warehouse, such as his phone number
+   or home address, go on the CV only when he gives them for this application.
 
 ## Copy rules
 
