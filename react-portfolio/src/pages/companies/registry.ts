@@ -75,4 +75,14 @@ export const companySites: Record<string, CompanySiteModule> = {
     Writing: lazy(() => import('./sunking/Writing')),
     WritingItem: lazy(() => import('./sunking/WritingItem')),
   },
+  wave: {
+    Site: lazy(() => import('./wave/Site')),
+    Loader: lazy(() => import('./wave/Loader')),
+    Home: lazy(() => import('./wave/Home')),
+    Work: lazy(() => import('./wave/Work')),
+    WorkItem: lazy(() => import('./wave/WorkItem')),
+    About: lazy(() => import('./wave/About')),
+    Writing: lazy(() => import('./wave/Writing')),
+    WritingItem: lazy(() => import('./wave/WritingItem')),
+  },
 };
